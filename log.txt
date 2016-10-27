@@ -1,0 +1,1728 @@
+jeudi 27 octobre 2016, 15:53:56 (UTC+0200)
+jeudi 27 octobre 2016, 15:54:48 (UTC+0200)
+jeudi 27 octobre 2016, 15:55:30 (UTC+0200)
+jeudi 27 octobre 2016, 15:55:53 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 15:55:53 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 13:55:53 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 15:58:08 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 15:58:08 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 13:58:09 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:00:05 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:00:05 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:00:05 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:17:23 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:17:23 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:17:23 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:17:48 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:17:48 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:17:48 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:18:35 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:18:35 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:18:35 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:19:05 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:19:05 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:19:05 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:20:19 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:20:19 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:20:19 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:20:57 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:20:57 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:20:57 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:21:31 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:21:31 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:21:31 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:21:46 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:21:46 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:21:46 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:24:49 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:24:49 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:24:49 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:25:24 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:25:24 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:25:24 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:25:37 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:25:37 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:25:37 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:25:51 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:25:51 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:25:51 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:30:06 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:30:06 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:30:06 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:30:31 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:30:31 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:30:31 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:31:02 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:31:03 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:31:03 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:31:22 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:31:22 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:31:22 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:32:36 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:32:36 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:32:37 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:32:58 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:32:58 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:32:58 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:34:49 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:34:54 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:34:54 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:35:02 (UTC+0200)
+jeudi 27 octobre 2016, 16:36:29 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:36:34 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:36:34 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="8c03baa1ab50385a" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:37:57 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:38:00 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:38:01 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:38:18 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:38:21 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:38:21 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:39:06 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:39:08 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:39:09 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:39:15 (UTC+0200)
+jeudi 27 octobre 2016, 16:39:32 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:39:33 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:39:34 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:40:30 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:40:35 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:40:35 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="c6b3cebcfb3465ad" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:54:48 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:55:06 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:55:06 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+		<center><strong><font face="Verdana" color="red">Une erreur est survenue lors de l'authentification, veuillez re-essayer.</font></strong></center><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a> utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 16:56:28 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:56:33 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:56:33 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="c6b3cebcfb3465ad" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:57:21 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:57:28 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:57:28 GMT
+Server: lighttpd/1.4.35
+
+<html>
+<head><title>Redirecting...</title></head>
+<body>
+<span style="font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">
+<b>Redirecting to <a href="/">/</a>...</b>
+</span>
+<script type="text/javascript">
+//<![CDATA[
+LogoutWin = window.open('', 'Logout', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=256,height=64');
+if (LogoutWin) {
+	LogoutWin.document.write('<html>');
+	LogoutWin.document.write('<head><title>Logout</title></head>') ;
+	LogoutWin.document.write('<body bgcolor="#435370">');
+	LogoutWin.document.write('<div align="center" style="color: #ffffff; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; font-size: 11px;">') ;
+	LogoutWin.document.write('<b>Click the button below to disconnect</b><p />');
+	LogoutWin.document.write('<form method="POST" action="https://portail-invites-lan.insa-toulouse.fr:8003/">');
+	LogoutWin.document.write('<input name="logout_id" type="hidden" value="c6b3cebcfb3465ad" />');
+	LogoutWin.document.write('<input name="zone" type="hidden" value="invites_insa" />');
+	LogoutWin.document.write('<input name="logout" type="submit" value="Logout" />');
+	LogoutWin.document.write('</form>');
+	LogoutWin.document.write('</div></body>');
+	LogoutWin.document.write('</html>');
+	LogoutWin.document.close();
+}
+
+document.location.href="/";
+//]]>
+</script>
+</body>
+</html>
+jeudi 27 octobre 2016, 16:58:43 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 16:58:52 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 14:58:52 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a>  utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 17:00:18 (UTC+0200)
+HTTP/1.1 200 OK
+Expires: Sat, 29 Oct 2016 17:00:28 GMT
+Expires: 0
+Cache-Control: max-age=180000
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-type: text/html
+Transfer-Encoding: chunked
+Date: Thu, 27 Oct 2016 15:00:28 GMT
+Server: lighttpd/1.4.35
+
+<script type="text/javascript">
+
+function checkCharte()
+{
+	if (document.getElementById("ck_charte").checked == true)
+		document.getElementById("btn_cnx").disabled=false;
+	else
+		document.getElementById("btn_cnx").disabled=true;
+}
+
+</script>
+
+<div id=corps style="background-color : #FFFFFF;">
+
+<div id=insa_head style="height: 118px; margin-left: 70px; margin-right: 70px; background: url(captiveportal-bg.jpg); width=100%;">
+ <div id=insa_logo style="position: relative; float: left;">
+  <img style="padding: 15px;" alt="logo insa" src="captiveportal-logo.png" />
+ </div>
+ <div style="padding-top: 40px; padding-left: 100px; position: relative; float: left;">
+
+  <strong><font size=6 face="Verdana, Georgia, Arial" color=#69686D>Connexion au r&eacute;seau de l'INSA</font></strong>
+ </div>
+</div>
+
+<div id=menu>
+        <br /><br /><br /> <br />
+        <h3 style="text-align: center; color: #F68B01; font-family: Verdana;">Veuillez entrer vos identifiants de connexion :</h3><br />
+	<font color="#69686D" face="Verdana" size=1><center>Pour les utilisateurs qui ont un compte <a target="_blank" href="http://mipwifi.univ-tlse3.fr/">MIP WIFI</a>  utilisez comme identifiant : login@domaine_etablissement</center></font>
+	<br />
+	
+
+</div>
+        <div id=identification>
+                <form method="post" action="https://portail-invites-lan.insa-toulouse.fr:8003/" style="text-align: center;">
+			<table align=center>
+			 <tr>
+                        	<td><font face="Verdana"  color="#69686D">Identifiant : </font></td><td><input name="auth_user" type="text"><br /><br /></td></tr>
+				<td><font face="Verdana" color="#69686D">Mot de passe : </font></td><td><input name="auth_pass" type="password"><br /><br /></td></tr>
+			 </tr>
+			</table>
+			<br />
+
+                        <input name="redirurl" type="hidden" value="/">
+
+			<input type=checkbox id=ck_charte name=checkbox_charte onClick="checkCharte()"/>&nbsp;
+			<font face="Verdana" color="#69686D">J'ai lu et j'accepte les conditions de la <a href="captiveportal-charte.pdf">charte informatique</a><br /></font>
+			<br /><br />
+
+                        <input id="btn_cnx" disabled=true name="accept" type="submit" value="Connexion">
+                </form>
+</div>
+
+
+</div>
+
+
+jeudi 27 octobre 2016, 17:06:19 (UTC+0200)
+jeudi 27 octobre 2016, 17:06:27 (UTC+0200)
+jeudi 27 octobre 2016, 17:07:42 (UTC+0200)
