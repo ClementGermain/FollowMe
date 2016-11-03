@@ -8,6 +8,7 @@ enum {MOTOR_LEFT, MOTOR_RIGHT, MOTOR_FRONT};
 enum {MOTOR_PWM, MOTOR_SPEED};
 
 void runUI();
+void initializeMotorWindow();
 
 #endif
 

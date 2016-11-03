@@ -1,35 +1,40 @@
+#include <string>
+#include <opencv2/opencv.hpp>
 #include "MainUI.hpp"
 #include "Camera.hpp"
 #include "CommandLine.hpp"
 
 using namespace std;
-
+int main() {
+	runUI();
+	return 0;
+}
 void runUI() {
 	/// Initialize ///
 	// Camera
 	Camera camera("Camera preview");
-	camera.startPreview();
+	camera.openPreview();
 
 	// Motor trackbars
 	initializeMotorWindow();
 
 	/// Main loop ///
 	// read & execute commands
-	readCommandsLines();
+	readCommandLines();
 
 	/// Ending ///
 	// Camera
-	camera.stopPreview();
+	camera.closePreview();
 }
 
-const char * motorTrackbarNames[6] = {
+string motorTrackbarNames[6] = {
 	"Left PWM",
 	"Left Speed",
 	"Right PWM",
 	"Right Speed",
 	"Front PWM",
 	"Front Speed"
-}
+};
 
 // Define button and trackbar of the control panel
 // Control panel can be open with <ctrl+p>
@@ -38,7 +43,7 @@ void initializeMotorWindow() {
 	int initValue = 0;
 	
 	for(int i = 0; i < 6; i++)
-		cv::createTrackbar(motorTrackbarNames+i, "Motors", &initValue, 100);
+		cv::createTrackbar(motorTrackbarNames[i], "Motors", &initValue, 100);
 }
 
 // Update trackbar position

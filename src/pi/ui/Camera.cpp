@@ -1,8 +1,11 @@
-#include <opencv2/opencv2.hpp>
+#include <opencv2/opencv.hpp>
+#include <iostream>
 #include <pthread.h>
+#include <unistd.h>
 #include "RaspiCamCV.h"
+#include "Camera.hpp"
 
-void * loopPreview(void * data);
+using namespace std;
 
 Camera::Camera(const char * winName, int width, int height, int framerate)
 	: windowName(winName), raspiCam(NULL), threadRunning(false)
@@ -23,17 +26,17 @@ Camera::~Camera() {
 	closePreview();
 
 	// Release camera
-	raspiCamCvReleaseCapture(raspiCam);
-	raspiCam = NULL;
+	raspiCamCvReleaseCapture(&raspiCam);
 }
 
 void Camera::openPreview() {
 	// Open a window
-	cv::namedWindow(windowNameCam, WINDOW_AUTOSIZE);
+	cv::namedWindow(windowName, cv::WINDOW_AUTOSIZE);
+	cv::waitKey(100);
 
 	// Start thread
 	threadRunning = true;
-	pthread_create(&thread, NULL, loopPreview, this);
+	pthread_create(&thread, NULL, Camera::loopPreview, this);
 }
 
 void Camera::closePreview() {
@@ -43,19 +46,19 @@ void Camera::closePreview() {
 	}
 
 	// Close the window
-	cv::destroyWindow(windowNameCam);
+	cv::destroyWindow(windowName);
 }
 
 void Camera::getImage(cv::Mat & out) {
 	out = raspiCamCvQueryFrame(raspiCam);
 }
 
-void * loopPreview(void * data) {
+void * Camera::loopPreview(void * data) {
 	Camera * that = (Camera*) data;
 
 	while(that->threadRunning) {
+		cv::waitKey(500);
 		that->updatePreview();
-		usleep(100*1000);
 	}
 
 	return NULL;
@@ -68,7 +71,7 @@ void Camera::updatePreview() {
 		
 		if(imageCam.data) {
 			// Display frame
-			cv::imshow(windowNameCam, imageCam);
+			cv::imshow(windowName, imageCam);
 		}
 	}
 }
