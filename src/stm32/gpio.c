@@ -13,7 +13,6 @@ void Init_GPIO(GPIO_TypeDef * GPIO, int Pin, GPIOMode_TypeDef Mode)
  
 }
 
-
 void Init_GPIO_Out(GPIO_TypeDef * GPIO, int Pin)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
