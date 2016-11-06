@@ -14,13 +14,13 @@ void Init_Timer(TIM_TypeDef* TIM){
   TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 }
 
-void Init_PWM(TIM_TypeDef* TIM, float RapportCycl, int Channel)
+void Init_PWM(TIM_TypeDef* TIM, float DutyCycle, int Channel)
 {
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 	
   TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
   TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
-  TIM_OCInitStructure.TIM_Pulse = (int) ( ((float) 11250) * RapportCycl);
+  TIM_OCInitStructure.TIM_Pulse = (int) ( ((float) 11250) * DutyCycle);
   TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	
 	switch(Channel){
@@ -46,5 +46,16 @@ void Init_PWM(TIM_TypeDef* TIM, float RapportCycl, int Channel)
 
 
 void Set_PWM_DutyCycle(TIM_TypeDef* TIM, float DutyCycle, int Channel){
-	Init_PWM(TIM, DutyCycle, Channel);
+	uint16_t CCR = (uint16_t) ( ((float) 11250) * DutyCycle);
+	
+	switch (Channel){
+		case TIM_Channel_1:
+			TIM->CCR1 = CCR;
+		case TIM_Channel_2:
+			TIM->CCR2 = CCR;
+		case TIM_Channel_3:
+			TIM->CCR3 = CCR;
+		case TIM_Channel_4:
+			TIM->CCR4 = CCR;
+	}
 }
