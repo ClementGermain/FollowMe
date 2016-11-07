@@ -5,10 +5,10 @@
 #include "gpio.h"
 #include "pwm.h"
 
-#define TIM_Forward 										TIM1
-#define TIM_Backward 										TIM1
-#define TIM_Left 												TIM1
-#define TIM_Right		 										TIM1
+#define TIM_Forward 										TIM4
+#define TIM_Backward 										TIM4
+#define TIM_Left 												TIM4
+#define TIM_Right		 										TIM4
 #define TIM_Channel_Forward							TIM_Channel_1
 #define TIM_Channel_Backward						TIM_Channel_2
 #define TIM_Channel_Left								TIM_Channel_3
@@ -23,31 +23,31 @@ typedef struct {
 } GPIO_Pin_TypeDef;  
 
 /**
-	*	@brief Init all the motors's PWM
+	*	@brief Init all the motors's PWM and GPIO
 	*	@retval None
 */
-void Init_PWM_All_Motor(void);
+void Init_All_Motor(void);
 
 /**
-	*	@brief Init a single motor's PWM
+	*	@brief Init a single motor's PWM and GPIO
 	* @param TIM: Timer of the Motor's PWM
 	*	@param Channel: Channel of the Motor's PWM
 	*	@retval None
 */
-void Init_PWM_Single_Motor(TIM_TypeDef * TIM, int Channel);
+void Init_Single_Motor(TIM_TypeDef * TIM, int Channel);
 /**
 	*	@brief Make the car turn Left
 	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
 	*	@retval None
 */
-void Turn_Left(int Rot);
+void Turn_Left(float Rot);
 
 /**
 	*	@brief Make the car turn Right
 	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
 	*	@retval None
 */
-void Turn_Right(int Rot);
+void Turn_Right(float Rot);
 
 /**
 	*	@brief Stop Turn the front wheels
@@ -66,14 +66,14 @@ void Reset_Direction(void); // We need to figure it how to do this !!!!
 	*	@parma Speed: Set the speed to roll (value between 0-1)
 	*	@retval None
 */
-void Go_Forward(int Speed);
+void Go_Forward(float Speed);
 
 /**
 	*	@brief Make the car go forward
 	*	@parma Speed: Set the speed to roll (value between 0-1)
 	*	@retval None
 */
-void Go_Back(int Speed);
+void Go_Back(float Speed);
 
 /**
 	*	@brief Stop the Car
@@ -86,7 +86,7 @@ void Stop_Car(void);
 	*	@parma Value: Speed or Rotation
 	*	@retval Correct duty cycle of the PMW's motors
 */
-int Calcul_DutyCycle(int Value);
+float Calcul_DutyCycle(float Value);
 
 /**
 	*	@brief A procedure function to test the above functions
