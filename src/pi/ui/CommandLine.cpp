@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <istream>
+#include <cstdarg>
+#include "CommandLine.hpp"
 
 using namespace std;
 
@@ -17,7 +20,7 @@ using namespace std;
  * $> exit
  **/
 
-Menu::Menu(string name, int id, MenuCallback func, ...) :
+Menu::Menu(string const& name, int id, MenuCallback func, ...) :
 	name(name), id(id), callback(func)
 {
 	va_list args;
@@ -42,11 +45,11 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 	input >> word;
 
 	if(!word.empty()) {
-		for(Menu i : items) {
-			if(i.name.compare(word) == 0) {
-				pathId.push_back(i.id);
-				pathName.push_back(i.name);
-				return i.handleInput(input, pathId, pathName);
+		for(Menu * i : items) {
+			if(i->name.compare(word) == 0) {
+				pathId.push_back(i->id);
+				pathName.push_back(i->name);
+				return i->handleInput(input, pathId, pathName);
 			}
 		}
 
@@ -55,14 +58,14 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 			for(string s : pathName)
 				cout << s << " ";
 			cout << ":" << endl;
-			for(Menu i : items)
-				cout << "\t-" << i.name << endl;
+			for(Menu * i : items)
+				cout << "\t-" << i->name << endl;
 
 			return 0;
 		}
-		else if(items.empty() && func != NULL) {
+		else if(items.empty() && callback != NULL) {
 			input.seekg(pos);
-			return func(input, pathId, pathName);
+			return callback(input, pathId, pathName);
 		}
 		else {
 			return -1;
@@ -70,8 +73,8 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 	}
 	else {
 		input.seekg(pos);
-		if(items.empty() && func != NULL)
-			return func(input, pathId, pathName);
+		if(items.empty() && callback != NULL)
+			return callback(input, pathId, pathName);
 		else
 			return -1;
 	}
@@ -81,8 +84,9 @@ int CommandInterpreter::nextCommand() {
 	string line;
 	getline(cin, line);
 	stringstream stream(line);
-
-	return menu->handleInput(stream);
+	vector<int> i;
+	vector<string> s;
+	return menu->handleInput(stream, i, s);
 }
 
 void CommandInterpreter::finish() {
@@ -92,7 +96,7 @@ void CommandInterpreter::finish() {
 int CommandInterpreter::readCommandLines() {
 	end = false;
 	int result = 0;
-	while(!end && (result = interpreter.nextCommand()) >= 0);
+	while(!end && (result = nextCommand()) >= 0);
 	return result;
 }
 
