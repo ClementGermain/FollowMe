@@ -1,9 +1,7 @@
 #ifndef __MOTOR__
 #define __MOTOR__
 
-#include "stm32f10x.h"
-#include "gpio.h"
-#include "pwm.h"
+#include "include.h"
 
 #define TIM_Forward 										TIM4
 #define TIM_Backward 										TIM3

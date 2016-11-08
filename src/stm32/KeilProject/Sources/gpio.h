@@ -1,7 +1,7 @@
 #ifndef __GPIO__
 #define __GPIO__
 
-#include "stm32f10x.h"
+#include "include.h"
 
 /** @brief Init a GPIO Pin in a specific mode 
 	*	@param GPIO: GPIOA or GPIOB
