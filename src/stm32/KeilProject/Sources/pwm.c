@@ -1,13 +1,27 @@
 #include "pwm.h"
 
-void Init_Timer(TIM_TypeDef* TIM){
+int AUTORELOAD_VALUE_TIM1 = 0;
+int AUTORELOAD_VALUE_TIM2 = 0;
+int AUTORELOAD_VALUE_TIM3 = 0;
+int AUTORELOAD_VALUE_TIM4 = 0;
 
-	int PrescalerValue = (uint16_t) (SystemCoreClock / 72000000);
+void Init_Timer(TIM_TypeDef* TIM, int Frequency){
 
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	
-  TIM_TimeBaseStructure.TIM_Period = 11250 * 2 - 1;
-  TIM_TimeBaseStructure.TIM_Prescaler = PrescalerValue - 1;
+	int AutoReload_Value_Calcul = 72000000 /(2* Frequency);
+	
+	if (TIM == TIM1)
+		AUTORELOAD_VALUE_TIM1 = AutoReload_Value_Calcul;
+	else if (TIM == TIM2)
+		AUTORELOAD_VALUE_TIM2 = AutoReload_Value_Calcul;
+	else if (TIM == TIM3)
+		AUTORELOAD_VALUE_TIM3 = AutoReload_Value_Calcul;
+	else if (TIM == TIM4)
+		AUTORELOAD_VALUE_TIM4 = AutoReload_Value_Calcul;
+	
+  TIM_TimeBaseStructure.TIM_Period = AutoReload_Value_Calcul - 1;
+  TIM_TimeBaseStructure.TIM_Prescaler = 1 - 1;
   TIM_TimeBaseStructure.TIM_ClockDivision = 0;
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
  
@@ -44,8 +58,20 @@ void Init_PWM(TIM_TypeDef* TIM, int Channel)
 }
 
 
-void Set_PWM_DutyCycle(TIM_TypeDef* TIM, float DutyCycle, int Channel){
-	uint16_t CCR = (uint16_t) ( ((float) 11250 * 2) * DutyCycle);
+void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle){
+	
+	int period = 0;
+	
+	if (TIM == TIM1)
+		period = AUTORELOAD_VALUE_TIM1;
+	else if (TIM == TIM2)
+		period = AUTORELOAD_VALUE_TIM2;
+	else if (TIM == TIM3)
+		period = AUTORELOAD_VALUE_TIM3;
+	else if (TIM == TIM4)
+		period = AUTORELOAD_VALUE_TIM4;
+	
+	uint16_t CCR = (uint16_t) ( ((float) period) * DutyCycle);
 	
 	switch (Channel){
 		case TIM_Channel_1:

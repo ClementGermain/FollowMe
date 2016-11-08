@@ -10,23 +10,24 @@ void Init_All_Motor(void){
 void Init_Single_Motor(TIM_TypeDef* TIM, int Channel){
 	GPIO_Pin_TypeDef GPIO_Pin = Find_GPIO_Pin(TIM, Channel);
 	Init_GPIO_PWM(GPIO_Pin.GPIO, GPIO_Pin.Pin);
+	Init_Timer(TIM, 1000);
 	Init_PWM(TIM, Channel);
-	Set_PWM_DutyCycle(TIM, 0.0, Channel);
+	Set_PWM_DutyCycle(TIM, Channel, 0.0);
 }
 
 void Turn_Left(float Rot){
-	Set_PWM_DutyCycle(TIM_Right, 0.0, TIM_Channel_Right);
-	Set_PWM_DutyCycle(TIM_Left, Calcul_DutyCycle(Rot), TIM_Channel_Left);
+	Set_PWM_DutyCycle(TIM_Right, TIM_Channel_Right, 0.0);
+	Set_PWM_DutyCycle(TIM_Left, TIM_Channel_Left, Calcul_DutyCycle(Rot));
 }
 
 void Turn_Right(float Rot){
-	Set_PWM_DutyCycle(TIM_Left, 0.0, TIM_Channel_Left);
-	Set_PWM_DutyCycle(TIM_Right, Calcul_DutyCycle(Rot), TIM_Channel_Right);
+	Set_PWM_DutyCycle(TIM_Left, TIM_Channel_Left, 0.0);
+	Set_PWM_DutyCycle(TIM_Right, TIM_Channel_Right, Calcul_DutyCycle(Rot));
 }
 
 void Stop_Turn(void){
-	Set_PWM_DutyCycle(TIM_Left, 0.0, TIM_Channel_Left);
-	Set_PWM_DutyCycle(TIM_Right, 0.0, TIM_Channel_Right);
+	Set_PWM_DutyCycle(TIM_Left, TIM_Channel_Left, 0.0);
+	Set_PWM_DutyCycle(TIM_Right, TIM_Channel_Right, 0.0);
 }
 
 void Reset_Direction(void){ 
@@ -35,23 +36,23 @@ void Reset_Direction(void){
 }
 
 void Go_Forward(float Speed){
-	Set_PWM_DutyCycle(TIM_Backward, 0.0, TIM_Channel_Backward);
-	Set_PWM_DutyCycle(TIM_Forward, Calcul_DutyCycle(Speed), TIM_Channel_Forward);
+	Set_PWM_DutyCycle(TIM_Backward, TIM_Channel_Backward, 0.0);
+	Set_PWM_DutyCycle(TIM_Forward, TIM_Channel_Forward, Calcul_DutyCycle(Speed));
 }
 
 void Go_Back(float Speed){
-	Set_PWM_DutyCycle(TIM_Forward, 0.0, TIM_Channel_Forward);
-	Set_PWM_DutyCycle(TIM_Backward, Calcul_DutyCycle(Speed), TIM_Channel_Backward);
+	Set_PWM_DutyCycle(TIM_Forward, TIM_Channel_Forward, 0.0);
+	Set_PWM_DutyCycle(TIM_Backward, TIM_Channel_Backward, Calcul_DutyCycle(Speed));
 }
 
 void Stop_Car(void){
-	Set_PWM_DutyCycle(TIM_Forward, 0.0, TIM_Channel_Forward);
-	Set_PWM_DutyCycle(TIM_Backward, 0.0, TIM_Channel_Backward);
+	Set_PWM_DutyCycle(TIM_Forward, TIM_Channel_Forward, 0.0);
+	Set_PWM_DutyCycle(TIM_Backward, TIM_Channel_Backward, 0.0);
 }
 
 float Calcul_DutyCycle(float Value){
 	if (Value >= 0.0 && Value <= 1.0)
-		return Value ;// * MaxDutyCycle;
+		return Value * MaxDutyCycle;
 	else
 		return 0.0;
 }
