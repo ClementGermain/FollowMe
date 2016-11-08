@@ -9,7 +9,7 @@ RCAM_LDFLAGS=-L$(USERLAND_LIB) -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host 
 RCAM_CXXFLAGS=-I$(RASPICAM_CV_DIR)
 
 
-CXXFLAGS=-Wall $(RCAM_CXXFLAGS) -MD
+CXXFLAGS=-Wall -std=c++11 $(RCAM_CXXFLAGS) -MD
 LDFLAGS=$(OCV_LDFLAGS) $(RCAM_LDFLAGS)
 
 OBJECTS=MainUI.o \

@@ -68,7 +68,14 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 			return callback(input, pathId, pathName);
 		}
 		else {
-			return -1;
+			cout << "# ";
+			for(string s : pathName)
+				cout << s << " ";
+			cout << ":" << endl;
+			for(Menu * i : items)
+				cout << "\t-" << i->name << endl;
+
+			return 1;
 		}
 	}
 	else {
@@ -76,7 +83,15 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 		if(items.empty() && callback != NULL)
 			return callback(input, pathId, pathName);
 		else
-			return -1;
+			return 1;
+	}
+}
+
+void Menu::print(int depth) {
+	for(Menu * m : items) {
+		for(int i=depth;--i>=0;)cout << "    ";
+		cout << m->name << " " << m->id << " "<<m->callback<<endl;
+		m->print(depth+1);
 	}
 }
 

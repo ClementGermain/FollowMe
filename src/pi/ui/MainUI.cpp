@@ -29,19 +29,20 @@ void runUI() {
 	Menu options("", 0, 0,
 		new Menu("motor", 0, 0, 
 			new Menu("pwm", 0, commandMotor,
-				new Menu("left", 1, commandMotor),
-				new Menu("right", 2, commandMotor),
-				new Menu("back", 3, commandMotor),
-				new Menu("front", 4, commandMotor),
-				new Menu("all", 7, commandMotor),
+				new Menu("left", 1, commandMotor, NULL),
+				new Menu("right", 2, commandMotor, NULL),
+				new Menu("back", 3, commandMotor, NULL),
+				new Menu("front", 4, commandMotor, NULL),
+				new Menu("all", 7, commandMotor, NULL),
 				NULL
 			),
 			NULL
 		),
-		new Menu("keyboard", 0, keyboardControl),
-		new Menu("exit", 0, exitInterpreter),
+		new Menu("keyboard", 0, keyboardControl, NULL),
+		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
+	options.print();
 	interpreter.setMenu(&options);
 
 	/// Main loop ///
@@ -107,4 +108,5 @@ void updateMotorTrackbar(int motorPos, int type, int value) {
 
 int keyboardControl(istream & input, vector<int> i, vector<string> s) {
 	cout << "TODO keyboard control"<<endl;
+	return 0;
 }

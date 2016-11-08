@@ -12,11 +12,12 @@ class Menu {
 		Menu(std::string const& name, int id, MenuCallback func, ...);
 		~Menu();
 		int handleInput(std::istream & input, std::vector<int> & path, std::vector<std::string> & pathName);
+		void print(int depth = 0);
 	private:
 		std::vector<Menu*> items;
 		const std::string name;
-		MenuCallback callback;
 		const int id;
+		MenuCallback callback;
 };
 
 class CommandInterpreter {
