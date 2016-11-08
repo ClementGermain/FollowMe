@@ -9,6 +9,13 @@ int main() {
 	runUI();
 	return 0;
 }
+
+int keyboardControl(istream & input, vector<int> i, vector<string> s);
+int exitInterpreter(istream & input, vector<int> i, vector<string> s);
+int commandMotor(istream & input, vector<int> i, vector<string> s);
+
+CommandInterpreter interpreter;
+
 void runUI() {
 	/// Initialize ///
 	// Camera
@@ -18,13 +25,57 @@ void runUI() {
 	// Motor trackbars
 	initializeMotorWindow();
 
+	// Command lines
+	Menu options("", 0, 0,
+		new Menu("motor", 0, 0, 
+			new Menu("pwm", 0, commandMotor,
+				new Menu("left", 1, commandMotor),
+				new Menu("right", 2, commandMotor),
+				new Menu("back", 3, commandMotor),
+				new Menu("front", 4, commandMotor),
+				new Menu("all", 7, commandMotor),
+				NULL
+			),
+			NULL
+		),
+		new Menu("keyboard", 0, keyboardControl),
+		new Menu("exit", 0, exitInterpreter),
+		NULL
+	);
+	interpreter.setMenu(&options);
+
 	/// Main loop ///
 	// read & execute commands
-	readCommandLines();
+	interpreter.readCommandLines();
 
 	/// Ending ///
 	// Camera
 	camera.closePreview();
+}
+
+int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
+	interpreter.finish();
+	return 0;
+}
+
+int commandMotor(istream & input, vector<int> i, vector<string> s) {
+	int pwm;
+	input >> pwm;
+	if(input.fail()) {
+		cout << "Missing PWM value" << endl;
+		return 1;
+	}
+	
+	cout << "TODO send pwm to motor {";
+	if(i.back() & 1)
+		cout << "l";
+	if(i.back() & 2)
+		cout << "r";
+	if(i.back() & 4)
+		cout << "f";
+	cout <<"} with value "<< pwm <<endl;
+
+	return 0;
 }
 
 string motorTrackbarNames[6] = {
@@ -54,4 +105,6 @@ void updateMotorTrackbar(int motorPos, int type, int value) {
 	cv::setTrackbarPos(motorTrackbarNames[motorPos*2+type], "Motors", value);
 }
 
-
+int keyboardControl(istream & input, vector<int> i, vector<string> s) {
+	cout << "TODO keyboard control"<<endl;
+}
