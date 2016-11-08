@@ -31,6 +31,7 @@ int main(void)
 	Turn_Right(1.0);
 	Go_Back(1.0);
 	
+	Test_SPI();
 
 	
   while (1)

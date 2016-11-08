@@ -417,6 +417,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>SPI_Interface</GroupName>
+          <Files>
+            <File>
+              <FileName>SPI_Interface.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\SPI_Interface\SPI_Interface.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Board Support</GroupName>
         </Group>
         <Group>
