@@ -45,7 +45,7 @@ void Init_PWM(TIM_TypeDef* TIM, int Channel)
 
 
 void Set_PWM_DutyCycle(TIM_TypeDef* TIM, float DutyCycle, int Channel){
-	uint16_t CCR = (uint16_t) ( ((float) 11250 * 4) * DutyCycle);
+	uint16_t CCR = (uint16_t) ( ((float) 11250 * 2) * DutyCycle);
 	
 	switch (Channel){
 		case TIM_Channel_1:

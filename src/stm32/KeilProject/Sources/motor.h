@@ -6,7 +6,7 @@
 #include "pwm.h"
 
 #define TIM_Forward 										TIM4
-#define TIM_Backward 										TIM4
+#define TIM_Backward 										TIM3
 #define TIM_Left 												TIM4
 #define TIM_Right		 										TIM4
 #define TIM_Channel_Forward							TIM_Channel_1

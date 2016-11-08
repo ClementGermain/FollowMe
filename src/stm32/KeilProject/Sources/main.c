@@ -22,10 +22,16 @@ int main(void)
 	// RCC Configuration
   RCC_Configuration();
 	
+	// Put a hight level on GPIO_PIN_9 to enable motor's driver
+	Init_GPIO_Out(GPIOA, GPIO_Pin_9);
+	GPIO_SetBits(GPIOA, GPIO_Pin_9);
+	
 	Init_All_Motor();
 	
-	Turn_Left(1.0);
-	Go_Forward(1.0);
+	Turn_Right(1.0);
+	Go_Back(1.0);
+	
+
 	
   while (1)
   {}
