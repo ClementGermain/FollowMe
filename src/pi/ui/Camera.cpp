@@ -30,13 +30,15 @@ Camera::~Camera() {
 }
 
 void Camera::openPreview() {
-	// Open a window
-	cv::namedWindow(windowName, cv::WINDOW_AUTOSIZE);
-	cv::waitKey(100);
+	if(!threadRunning) {
+		// Open a window
+		cv::namedWindow(windowName, cv::WINDOW_AUTOSIZE);
+		cv::waitKey(100);
 
-	// Start thread
-	threadRunning = true;
-	pthread_create(&thread, NULL, Camera::loopPreview, this);
+		// Start thread
+		threadRunning = true;
+		pthread_create(&thread, NULL, Camera::loopPreview, this);
+	}
 }
 
 void Camera::closePreview() {

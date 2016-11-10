@@ -11,8 +11,9 @@ class Menu {
 	public:
 		Menu(std::string const& name, int id, MenuCallback func, ...);
 		~Menu();
-		int handleInput(std::istream & input, std::vector<int> & path, std::vector<std::string> & pathName);
+		int handleInput(std::istream & input, std::vector<int> & pathId, std::vector<std::string> & pathName);
 		void print(int depth = 0);
+		void printHelp(std::vector<std::string> pathName);
 	private:
 		std::vector<Menu*> items;
 		const std::string name;
@@ -22,10 +23,10 @@ class Menu {
 
 class CommandInterpreter {
 	public:
+		CommandInterpreter();
 		void setMenu(Menu * m) { menu = m; }
 		int readCommandLines();
 		int nextCommand();
-		void finish();
 	private:
 		Menu * menu;
 		bool end;

@@ -39,6 +39,15 @@ Menu::~Menu() {
 		delete i;
 }
 
+void Menu::printHelp(vector<string> & pathName) {
+	cout << "#> ";
+	for(string s : pathName)
+		cout << s << " ";
+	cout << ":" << endl;
+	for(Menu * i : items)
+		cout << "\t-" << i->name << endl;
+}
+
 int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pathName) {
 	string word;
 	int pos = input.tellg();
@@ -47,6 +56,7 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 	if(!word.empty()) {
 		for(Menu * i : items) {
 			if(i->name.compare(word) == 0) {
+				// Navigate recursively in menu
 				pathId.push_back(i->id);
 				pathName.push_back(i->name);
 				return i->handleInput(input, pathId, pathName);
@@ -54,35 +64,28 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 		}
 
 		if(word.compare("help") == 0) {
-			cout << "# ";
-			for(string s : pathName)
-				cout << s << " ";
-			cout << ":" << endl;
-			for(Menu * i : items)
-				cout << "\t-" << i->name << endl;
-
+			// Display help
+			printHelp(pathName);
 			return 0;
 		}
 		else if(items.empty() && callback != NULL) {
+			// this is a leaf menu, call the callback function
 			input.seekg(pos);
 			return callback(input, pathId, pathName);
 		}
 		else {
-			cout << "# ";
-			for(string s : pathName)
-				cout << s << " ";
-			cout << ":" << endl;
-			for(Menu * i : items)
-				cout << "\t-" << i->name << endl;
-
+			// the given input is unknown in this menu
+			printHelp(pathName);
 			return 1;
 		}
 	}
 	else {
 		input.seekg(pos);
 		if(items.empty() && callback != NULL)
+			// this is a leaf menu, call the callback function
 			return callback(input, pathId, pathName);
 		else
+			// leaf or not leaf, that is the problem
 			return 1;
 	}
 }
@@ -95,6 +98,11 @@ void Menu::print(int depth) {
 	}
 }
 
+CommandInterpreter::CommandInterpreter() :
+	menu(NULL), end(true)
+{
+}
+
 int CommandInterpreter::nextCommand() {
 	string line;
 	getline(cin, line);
@@ -104,14 +112,15 @@ int CommandInterpreter::nextCommand() {
 	return menu->handleInput(stream, i, s);
 }
 
-void CommandInterpreter::finish() {
-	end = true;
-}
-
 int CommandInterpreter::readCommandLines() {
 	end = false;
 	int result = 0;
+
+	// Read command in loop until the end/error
 	while(!end && (result = nextCommand()) >= 0);
+	
+	end = true;
+	
 	return result;
 }
 

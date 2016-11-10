@@ -13,14 +13,13 @@ int main() {
 int keyboardControl(istream & input, vector<int> i, vector<string> s);
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
+int cameraPreview(istream & input, vector<int> i, vector<string> s);
 
-CommandInterpreter interpreter;
+Camera camera("Camera preview");
 
 void runUI() {
 	/// Initialize ///
-	// Camera
-	Camera camera("Camera preview");
-	camera.openPreview();
+	CommandInterpreter interpreter;
 
 	// Motor trackbars
 	initializeMotorWindow();
@@ -39,10 +38,18 @@ void runUI() {
 			NULL
 		),
 		new Menu("keyboard", 0, keyboardControl, NULL),
+		new Menu("camera", 0, 0, 
+			new Menu("preview", 0, 0,
+				new Menu("open", 1, cameraPreview, NULL),
+				new Menu("close", 2, cameraPreview, NULL),
+				NULL
+			),
+			NULL
+		),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
-	options.print();
+	//options.print();
 	interpreter.setMenu(&options);
 
 	/// Main loop ///
@@ -55,8 +62,7 @@ void runUI() {
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
-	interpreter.finish();
-	return 0;
+	return -1;
 }
 
 int commandMotor(istream & input, vector<int> i, vector<string> s) {
@@ -77,6 +83,15 @@ int commandMotor(istream & input, vector<int> i, vector<string> s) {
 	cout <<"} with value "<< pwm <<endl;
 
 	return 0;
+}
+
+int cameraPreview(istream & input, vector<int> i, vector<string> s) {
+	if(i.back() == 1) {
+		camera.openPreview();
+	}
+	else if(i.back() == 2) {
+		camera.closePreview();
+	}
 }
 
 string motorTrackbarNames[6] = {
