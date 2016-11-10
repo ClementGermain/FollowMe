@@ -1,6 +1,7 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <thread>
+#include <chrono>
 #include <unistd.h>
 #include "MainUI.hpp"
 #include "Camera.hpp"
@@ -26,10 +27,10 @@ Camera camera("Camera preview");
 void runUI() {
 	/// Initialize ///
 	CommandInterpreter interpreter;
-	startWaitKeyLoop_OpenCV();
-
 	// Motor trackbars
 	initializeMotorWindow();
+
+	startWaitKeyLoop_OpenCV();
 
 	// Command lines
 	Menu options("", 0, 0,
@@ -58,7 +59,7 @@ void runUI() {
 	);
 	//options.print();
 	interpreter.setMenu(&options);
-
+		cout << "reading cl"<<endl;
 	/// Main loop ///
 	// read & execute commands
 	interpreter.readCommandLines();
@@ -141,7 +142,8 @@ thread * threadWaitKey;
 bool threadWaitKeyRunning = false;
 void loopWaitKey() {
 	while(threadWaitKeyRunning) {
-		cv::waitKey(100);
+		this_thread::sleep_for(chrono::milliseconds(10));
+		cv::waitKey(20);
 	}
 }
 

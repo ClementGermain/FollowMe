@@ -8,7 +8,7 @@ RCAM_LDFLAGS=-L$(USERLAND_LIB) -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host 
 # Raspicam_cv C++ flags
 RCAM_CXXFLAGS=-I$(RASPICAM_CV_DIR)
 # SDL flags
-SDL_FLAGS=-lSDL -lSDLmain
+SDL_FLAGS=-lSDL2
 
 CXXFLAGS=-Wall -std=c++11 $(RCAM_CXXFLAGS) -MD
 LDFLAGS=$(OCV_LDFLAGS) $(RCAM_LDFLAGS) $(SDL_FLAGS)
