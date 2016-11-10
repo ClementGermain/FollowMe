@@ -16,6 +16,13 @@ void runKeyboardControl() {
 	if(!(screen = SDL_SetVideoMode(200, 200, 24, SDL_HWSURFACE)))
 		return;
 
+	SDL_WM_SetCaption("Use arrow keys to control the car", NULL);
+
+	SDL_Surface * background = SDL_LoadBitmap("../../../res/img/arrows.bmp");
+	SDL_BlitSurface(background, NULL, screen, NULL);
+	SDL_Flip(screen);
+	SDL_FreeSurface(background);
+
 	// Disable key repeat
 	SDL_EnableKeyRepeat(0, 0);
 
