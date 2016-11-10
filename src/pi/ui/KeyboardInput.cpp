@@ -18,7 +18,7 @@ void runKeyboardControl() {
 
 	SDL_WM_SetCaption("Use arrow keys to control the car", NULL);
 
-	SDL_Surface * background = SDL_LoadBitmap("../../../res/img/arrows.bmp");
+	SDL_Surface * background = SDL_LoadBMP("../../../res/img/arrows.bmp");
 	SDL_BlitSurface(background, NULL, screen, NULL);
 	SDL_Flip(screen);
 	SDL_FreeSurface(background);

@@ -127,7 +127,9 @@ int CommandInterpreter::readCommandLines() {
 
 	// Read command in loop until the end/error
 	while(!end && (result = nextCommand()) >= 0);
-	
+
+	cout << "\nEnd." << endl;
+
 	end = true;
 	
 	return result;
