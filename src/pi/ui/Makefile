@@ -7,14 +7,16 @@ RCAM_LDFLAGS=-L$(USERLAND_LIB) -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host 
 		   -L$(RASPICAM_CV_DIR) -lraspicamcv -lpthread
 # Raspicam_cv C++ flags
 RCAM_CXXFLAGS=-I$(RASPICAM_CV_DIR)
-
+# SDL flags
+SDL_FLAGS=-lSDL -lSDLmain
 
 CXXFLAGS=-Wall -std=c++11 $(RCAM_CXXFLAGS) -MD
-LDFLAGS=$(OCV_LDFLAGS) $(RCAM_LDFLAGS)
+LDFLAGS=$(OCV_LDFLAGS) $(RCAM_LDFLAGS) $(SDL_FLAGS)
 
 OBJECTS=MainUI.o \
 		Camera.o \
-		CommandLine.o
+		CommandLine.o \
+		KeyboardInput.o
 
 TARGET=testUI
 

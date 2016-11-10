@@ -1,6 +1,9 @@
 #include <SDL/SDL.h>
 #include <iostream>
 
+
+using namespace std;
+
 void commandMotorFront(int direction);
 void commandMotorBack(int direction);
 
@@ -46,7 +49,9 @@ void runKeyboardControl() {
 			case SDLK_LEFT:
 				keycode++;
 			case SDLK_RIGHT:
-				isKeyDown[keyCode] = !isUp;
+				isKeyDown[keycode] = !isUp;
+				break;
+			default:
 				break;
 			}
 		}
