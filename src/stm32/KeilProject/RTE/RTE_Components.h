@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'Barstow' 
- * Target:  'Target 1' 
+ * Target:  'Real' 
  */
 
 #ifndef RTE_COMPONENTS_H
@@ -16,6 +16,8 @@
  */
 #define CMSIS_device_header "stm32f10x.h"
 
+#define RTE_CMSIS_RTOS                  /* CMSIS-RTOS */
+        #define RTE_CMSIS_RTOS_RTX              /* CMSIS-RTOS Keil RTX */
 #define RTE_DEVICE_STDPERIPH_ADC
 #define RTE_DEVICE_STDPERIPH_CAN
 #define RTE_DEVICE_STDPERIPH_DAC

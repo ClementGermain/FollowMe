@@ -480,12 +480,13 @@ ork --depend=.\objects\startup_stm32f10x_md.d -o.\objects\startup_stm32f10x_md.
 o -IO:\Users\Lucas\Desktop\INSA\Barstow\Git\FollowMe\src\stm32\KeilProject\RTE 
 -IO:\Users\Lucas\Desktop\INSA\Barstow\Git\FollowMe\src\stm32\KeilProject\RTE\De
 vice\STM32F103RB -IO:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include -IO:\Keil_
-v5\ARM\PACK\Keil\MDK-Middleware\7.2.0\Board -IO:\Keil_v5\ARM\PACK\Keil\STM32F1x
-x_DFP\2.1.0\Device\Include -IO:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Devic
-e\StdPeriph_Driver\inc -IO:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\RTE_Drive
-r --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 521" --predef
-ine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=.\listings\startup_
-stm32f10x_md.lst RTE\Device\STM32F103RB\startup_stm32f10x_md.s
+v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\RTOS\RTX\INC -IO:\Keil_v5\ARM\PACK\Keil\MDK-M
+iddleware\7.2.0\Board -IO:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Inc
+lude -IO:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc
+ -IO:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\RTE_Driver --predefine="__RTX S
+ETA 1" --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 521" --p
+redefine="_RTE_ SETA 1" --predefine="STM32F10X_MD SETA 1" --list=.\listings\sta
+rtup_stm32f10x_md.lst RTE\Device\STM32F103RB\startup_stm32f10x_md.s
 
 
 
@@ -1211,4 +1212,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-410 symbols in table
+411 symbols in table
