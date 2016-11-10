@@ -93,6 +93,7 @@ int cameraPreview(istream & input, vector<int> i, vector<string> s) {
 	else if(i.back() == 2) {
 		camera.closePreview();
 	}
+	return 0;
 }
 
 string motorTrackbarNames[6] = {
