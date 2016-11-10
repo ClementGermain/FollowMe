@@ -44,7 +44,7 @@ void Camera::openPreview() {
 void Camera::closePreview() {
 	if(threadRunning) {
 		threadRunning = false;
-		threadPreview.join();
+		threadPreview->join();
 		delete threadPreview;
 	}
 

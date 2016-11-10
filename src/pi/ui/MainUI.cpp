@@ -143,7 +143,6 @@ void loopWaitKey() {
 	while(threadWaitKeyRunning) {
 		cv::waitKey(100);
 	}
-	return NULL;
 }
 
 void startWaitKeyLoop_OpenCV() {
@@ -155,7 +154,7 @@ void startWaitKeyLoop_OpenCV() {
 
 void stopWaitKeyLoop_OpenCV() {
 	if(threadWaitKeyRunning) {
-		threadWaitKey = false;
+		threadWaitKeyRunning = false;
 		threadWaitKey->join();
 		delete threadWaitKey;
 	}

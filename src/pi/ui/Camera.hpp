@@ -29,7 +29,7 @@ class Camera {
 		RaspiCamCvCapture * raspiCam;
 		cv::Mat imageCam;
 		RASPIVID_CONFIG configCam;
-		thread * threadPreview;
+		std::thread * threadPreview;
 		bool threadRunning;
 };
 
