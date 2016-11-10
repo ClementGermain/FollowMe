@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+#include <SDL/SDL.h>
 #include <iostream>
 
 
@@ -12,26 +12,19 @@ void commandMotorBack(int direction);
 void runKeyboardControl() {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		return;
-	SDL_Window * window = SDL_CreateWindow("Control with arrow keys", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 200, 200, SDL_WINDOW_SHOWN);
-	if(window == NULL)
+	SDL_Surface * screen;
+	if(!(screen = SDL_SetVideoMode(200, 200, 24, SDL_HWSURFACE)))
 		return;
 
-	SDL_Surface * screen = SDL_GetWindowSurface(window);
-	if(screen == NULL)
-		return;
+	SDL_WM_SetCaption("Use arrow keys to control the car", NULL);
 
-	SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_Surface * background = SDL_LoadBMP("../../../res/img/arrows.bmp");
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, background);
-	if(renderer == NULL || texture == NULL || background == NULL)
-		return;
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
+	SDL_BlitSurface(background, NULL, screen, NULL);
+	SDL_Flip(screen);
 	SDL_FreeSurface(background);
-	SDL_DestroyTexture(texture);
 
 	// Disable key repeat
-//	SDL_EnableKeyRepeat(0, 0);
+	SDL_EnableKeyRepeat(0, 0);
 
 	bool end = false;
 	// [right, left, down, up]
@@ -87,7 +80,6 @@ void runKeyboardControl() {
 			lastDirection[1] = newDirection[1];
 		}
 	}
-	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
