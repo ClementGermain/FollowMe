@@ -8,6 +8,7 @@
 #include "KeyboardInput.hpp"
 
 using namespace std;
+
 int main() {
 	runUI();
 	return 0;
@@ -65,7 +66,7 @@ void runUI() {
 	/// Ending ///
 	// Camera
 	camera.closePreview();
-	usleep(100*1000);
+	sleep(1);
 	stopWaitKeyLoop_OpenCV();
 }
 
@@ -137,17 +138,17 @@ int keyboardControl(istream & input, vector<int> i, vector<string> s) {
 
 
 pthread_t threadWaitKey;
-bool threadWaitKeyRunning;
+bool threadWaitKeyRunning = false;
 void * loopWaitKey(void * data) {
 	while(threadWaitKeyRunning) {
-		cv::waitKey(50);
+		cv::waitKey(100);
 	}
 	return NULL;
 }
 void startWaitKeyLoop_OpenCV() {
 	if(!threadWaitKeyRunning) {
 		threadWaitKeyRunning = true;
-		threadWaitKey = pthread_create(&threadWaitKey, NULL, loopWaitKey, NULL);
+		pthread_create(&threadWaitKey, NULL, loopWaitKey, NULL);
 	}
 }
 void stopWaitKeyLoop_OpenCV() {
