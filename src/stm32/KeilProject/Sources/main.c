@@ -3,6 +3,7 @@
 #include "gpio.h"
 #include "pwm.h"
 #include "motor.h"
+#include "SPI_Interface/SPI_Interface.h"
 
 // Uncomment the line below according to the target STM32 device used
 
@@ -31,7 +32,7 @@ int main(void)
 	Turn_Right(1.0);
 	Go_Back(1.0);
 	
-	Test_SPI();
+	InitializeSPI2();
 
 	
   while (1)
