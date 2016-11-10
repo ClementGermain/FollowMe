@@ -107,8 +107,13 @@ CommandInterpreter::CommandInterpreter() :
 
 int CommandInterpreter::nextCommand() {
 	string line;
-	getline(cin, line);
+
+	cout << "$> ";
+	if(!getline(cin, line))
+		return -1;
+
 	stringstream stream(line);
+	
 	vector<int> i;
 	vector<string> s;
 	return menu->handleInput(stream, i, s);
@@ -117,6 +122,8 @@ int CommandInterpreter::nextCommand() {
 int CommandInterpreter::readCommandLines() {
 	end = false;
 	int result = 0;
+
+	cout << "UI for test v1.0\nType a command:" << endl;
 
 	// Read command in loop until the end/error
 	while(!end && (result = nextCommand()) >= 0);

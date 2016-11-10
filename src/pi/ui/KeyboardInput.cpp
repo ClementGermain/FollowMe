@@ -1,55 +1,81 @@
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <linux/input.h>
-#include <string.h>
-#include <stdio.h>
+#include <SDL/SDL.h>
+#include <iostream>
+
+void commandMotorFront(int direction);
+void commandMotorBack(int direction);
+
 
 // Create keyboard commands
-void openKeyboardWindow() {
-	// TODO go forward, go backward, turn left, turn right
-	
-}
+void runKeyboardControl() {
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+		return;
+	SDL_Surface * screen;
+	if(!(screen = SDL_SetVideoMode(200, 200, 24, SDL_HWSURFACE)))
+		return;
 
-/*
-static const char *const evval[3] = {
-	"RELEASED",
-	"PRESSED ",
-	"REPEATED"
-};
+	// Disable key repeat
+	SDL_EnableKeyRepeat(0, 0);
 
-int main(void)
-{
-	const char *dev = "/dev/input/by-path/platform-i8042-serio-0-event-kbd";
-	struct input_event ev;
-	ssize_t n;
-	int fd;
+	bool end = false;
+	// [right, left, down, up]
+	bool isKeyDown[4] = {false, false, false, false};
+	int lastDirection[2] = {0, 0};
 
-	fd = open(dev, O_RDONLY);
-	if (fd == -1) {
-		fprintf(stderr, "Cannot open %s: %s.\n", dev, strerror(errno));
-		return EXIT_FAILURE;
-	}
-	while (1) {
-		n = read(fd, &ev, sizeof ev);
-		if (n == (ssize_t)-1) {
-			if (errno == EINTR)
-				continue;
-			else
+	while(!end) {
+		SDL_Event event;
+		SDL_WaitEvent(&event);
+
+		bool isUp = false;
+		int keycode = 0;
+
+		switch(event.type) {
+		case SDL_QUIT:
+			end = true;
+			break;
+		case SDL_KEYUP:
+			isUp = true;
+		case SDL_KEYDOWN:
+			switch(event.key.keysym.sym) {
+			case SDLK_ESCAPE:
+				end = true;
 				break;
-		} else
-			if (n != sizeof ev) {
-				errno = EIO;
+			case SDLK_UP:
+				keycode++;
+			case SDLK_DOWN:
+				keycode++;
+			case SDLK_LEFT:
+				keycode++;
+			case SDLK_RIGHT:
+				isKeyDown[keyCode] = !isUp;
 				break;
 			}
-		if (ev.type == EV_KEY && ev.value >= 0 && ev.value <= 2) {
-			printf("%s 0x%04x (%d)\n", evval[ev.value], (int)ev.code, (int)ev.code);
 		}
 
+		int newDirection[2] = {
+			isKeyDown[3] - isKeyDown[2], // forward/backward
+			isKeyDown[1] - isKeyDown[0] // turn left/right
+		};
+	
+		// Update command motors back (go forward/backward)
+		if(newDirection[0] != lastDirection[0]) {
+			commandMotorBack(newDirection[0]);	
+			lastDirection[0] = newDirection[0];
+		}
+		
+		// Update command motor front (turn left/right)
+		if(newDirection[1] != lastDirection[1]) {
+			commandMotorFront(newDirection[1]);	
+			lastDirection[1] = newDirection[1];
+		}
 	}
-	fflush(stdout);
-	fprintf(stderr, "%s.\n", strerror(errno));
-	return EXIT_FAILURE;
+	SDL_Quit();
 }
-*/
+
+void commandMotorFront(int direction) {
+	cout << "TODO motor front : " << (direction == 0 ? "stop" : (direction > 0 ? "turn left" : "turn right")) << endl;
+}
+
+void commandMotorBack(int direction) {
+	cout << "TODO motors back : " << (direction == 0 ? "stop" : (direction > 0 ? "go forward" : "go backward")) << endl;
+}
+

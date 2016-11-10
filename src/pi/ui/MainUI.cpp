@@ -3,6 +3,7 @@
 #include "MainUI.hpp"
 #include "Camera.hpp"
 #include "CommandLine.hpp"
+#include "KeyboardInput.hpp"
 
 using namespace std;
 int main() {
@@ -122,6 +123,6 @@ void updateMotorTrackbar(int motorPos, int type, int value) {
 }
 
 int keyboardControl(istream & input, vector<int> i, vector<string> s) {
-	cout << "TODO keyboard control"<<endl;
+	runKeyboardControl();
 	return 0;
 }
