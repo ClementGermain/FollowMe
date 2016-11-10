@@ -1,6 +1,10 @@
 #include "motor.h"
 
 void Init_All_Motor(void){
+	// Put a hight level on GPIO_Pin_Motor_Enable to enable motor's driver
+	Init_GPIO_Out(GPIO_Motor_Enable, GPIO_Pin_Motor_Enable);
+	GPIO_SetBits(GPIO_Motor_Enable, GPIO_Pin_Motor_Enable);
+	
 	Init_Single_Motor(TIM_Forward, TIM_Channel_Forward);
 	Init_Single_Motor(TIM_Backward, TIM_Channel_Backward);
 	Init_Single_Motor(TIM_Left, TIM_Channel_Left);

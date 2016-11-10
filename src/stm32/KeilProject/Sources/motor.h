@@ -11,9 +11,11 @@
 #define TIM_Channel_Backward						TIM_Channel_2
 #define TIM_Channel_Left								TIM_Channel_3
 #define TIM_Channel_Right								TIM_Channel_4
-#define MaxDutyCycle										0.45	// Value that limit the Motor's voltage to 6V Max
+#define MaxDutyCycle										0.5	// Value that limit the Motor's voltage to 6V Max
 #define MinDutyCycle_Direction					0.1		// Min value that allows a sufficent Motor's voltage to turn
 #define MinDutyCycle_Move								0.1		// Min value that allows a sufficent Motor's voltage to move
+#define GPIO_Motor_Enable								GPIOA
+#define GPIO_Pin_Motor_Enable						GPIO_Pin_6
 
 typedef struct {
 	GPIO_TypeDef * GPIO;
