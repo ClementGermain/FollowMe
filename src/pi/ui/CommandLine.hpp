@@ -13,7 +13,7 @@ class Menu {
 		~Menu();
 		int handleInput(std::istream & input, std::vector<int> & pathId, std::vector<std::string> & pathName);
 		void print(int depth = 0);
-		void printHelp(std::vector<std::string> pathName);
+		void printHelp(std::vector<std::string> & pathName);
 	private:
 		std::vector<Menu*> items;
 		const std::string name;
