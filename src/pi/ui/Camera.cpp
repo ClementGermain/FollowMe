@@ -33,7 +33,6 @@ void Camera::openPreview() {
 	if(!threadRunning) {
 		// Open a window
 		cv::namedWindow(windowName, cv::WINDOW_AUTOSIZE);
-		cv::waitKey(100);
 
 		// Start thread
 		threadRunning = true;
@@ -59,7 +58,7 @@ void * Camera::loopPreview(void * data) {
 	Camera * that = (Camera*) data;
 
 	while(that->threadRunning) {
-		cv::waitKey(500);
+		usleep(250*1000);
 		that->updatePreview();
 	}
 

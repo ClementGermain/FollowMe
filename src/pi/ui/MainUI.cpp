@@ -1,5 +1,7 @@
 #include <string>
 #include <opencv2/opencv.hpp>
+#include <pthread.h>
+#include <unistd.h>
 #include "MainUI.hpp"
 #include "Camera.hpp"
 #include "CommandLine.hpp"
@@ -11,6 +13,8 @@ int main() {
 	return 0;
 }
 
+void startWaitKeyLoop_OpenCV();
+void stopWaitKeyLoop_OpenCV();
 int keyboardControl(istream & input, vector<int> i, vector<string> s);
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
@@ -21,6 +25,7 @@ Camera camera("Camera preview");
 void runUI() {
 	/// Initialize ///
 	CommandInterpreter interpreter;
+	startWaitKeyLoop_OpenCV();
 
 	// Motor trackbars
 	initializeMotorWindow();
@@ -60,6 +65,8 @@ void runUI() {
 	/// Ending ///
 	// Camera
 	camera.closePreview();
+	usleep(100*1000);
+	stopWaitKeyLoop_OpenCV();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
@@ -126,4 +133,26 @@ void updateMotorTrackbar(int motorPos, int type, int value) {
 int keyboardControl(istream & input, vector<int> i, vector<string> s) {
 	runKeyboardControl();
 	return 0;
+}
+
+
+pthread_t threadWaitKey;
+bool threadWaitKeyRunning;
+void * loopWaitKey(void * data) {
+	while(threadWaitKeyRunning) {
+		cv::waitKey(50);
+	}
+	return NULL;
+}
+void startWaitKeyLoop_OpenCV() {
+	if(!threadWaitKeyRunning) {
+		threadWaitKeyRunning = true;
+		threadWaitKey = pthread_create(&threadWaitKey, NULL, loopWaitKey, NULL);
+	}
+}
+void stopWaitKeyLoop_OpenCV() {
+	if(threadWaitKeyRunning) {
+		threadWaitKey = false;
+		pthread_join(threadWaitKey, NULL);
+	}
 }
