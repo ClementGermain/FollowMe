@@ -1,6 +1,6 @@
 #include <string>
 #include <opencv2/opencv.hpp>
-#include <pthread.h>
+#include <thread>
 #include <unistd.h>
 #include "MainUI.hpp"
 #include "Camera.hpp"
@@ -137,23 +137,26 @@ int keyboardControl(istream & input, vector<int> i, vector<string> s) {
 }
 
 
-pthread_t threadWaitKey;
+thread * threadWaitKey;
 bool threadWaitKeyRunning = false;
-void * loopWaitKey(void * data) {
+void loopWaitKey() {
 	while(threadWaitKeyRunning) {
 		cv::waitKey(100);
 	}
 	return NULL;
 }
+
 void startWaitKeyLoop_OpenCV() {
 	if(!threadWaitKeyRunning) {
 		threadWaitKeyRunning = true;
-		pthread_create(&threadWaitKey, NULL, loopWaitKey, NULL);
+		threadWaitKey = new thread(loopWaitKey);
 	}
 }
+
 void stopWaitKeyLoop_OpenCV() {
 	if(threadWaitKeyRunning) {
 		threadWaitKey = false;
-		pthread_join(threadWaitKey, NULL);
+		threadWaitKey->join();
+		delete threadWaitKey;
 	}
 }

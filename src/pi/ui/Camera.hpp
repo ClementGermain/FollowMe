@@ -4,7 +4,7 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include "RaspiCamCV.h"
-#include <pthread.h>
+#include <thread>
 
 #define DEFAULT_FRAME_WIDTH		320
 #define DEFAULT_FRAME_HEIGHT	240
@@ -23,13 +23,13 @@ class Camera {
 
 	private:
 		void updatePreview();
-		static void * loopPreview(void * data);
+		static void loopPreview(Camera * that);
 
 		const std::string windowName;
 		RaspiCamCvCapture * raspiCam;
 		cv::Mat imageCam;
 		RASPIVID_CONFIG configCam;
-		pthread_t thread;
+		thread * threadPreview;
 		bool threadRunning;
 };
 

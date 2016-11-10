@@ -1,6 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include <pthread.h>
+#include <thread>
+#include <chrono>
 #include <unistd.h>
 #include "RaspiCamCV.h"
 #include "Camera.hpp"
@@ -36,14 +37,15 @@ void Camera::openPreview() {
 
 		// Start thread
 		threadRunning = true;
-		pthread_create(&thread, NULL, Camera::loopPreview, this);
+		threadPreview = new thread(Camera::loopPreview, this);
 	}
 }
 
 void Camera::closePreview() {
 	if(threadRunning) {
 		threadRunning = false;
-		pthread_join(thread, NULL);
+		threadPreview.join();
+		delete threadPreview;
 	}
 
 	// Close the window
@@ -54,15 +56,11 @@ void Camera::getImage(cv::Mat & out) {
 	out = raspiCamCvQueryFrame(raspiCam);
 }
 
-void * Camera::loopPreview(void * data) {
-	Camera * that = (Camera*) data;
-
+void Camera::loopPreview(Camera * that) {
 	while(that->threadRunning) {
-		usleep(250*1000);
+		this_thread::sleep_for(chrono::milliseconds(250));
 		that->updatePreview();
 	}
-
-	return NULL;
 }
 
 void Camera::updatePreview() {
