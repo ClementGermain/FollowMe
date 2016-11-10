@@ -84,9 +84,11 @@ int Menu::handleInput(istream & input, vector<int> & pathId, vector<string> & pa
 		if(items.empty() && callback != NULL)
 			// this is a leaf menu, call the callback function
 			return callback(input, pathId, pathName);
-		else
+		else {
 			// leaf or not leaf, that is the problem
+			printHelp(pathName);
 			return 1;
+		}
 	}
 }
 
