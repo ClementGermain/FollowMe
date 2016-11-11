@@ -1,7 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <thread>
-#include <chrono>
 #include <unistd.h>
 #include "RaspiCamCV.h"
 #include "Camera.hpp"
@@ -56,9 +55,21 @@ void Camera::getImage(cv::Mat & out) {
 	out = raspiCamCvQueryFrame(raspiCam);
 }
 
+SDL_Surface * Camera::getBitmap(double scale) {
+	IplImage * img = raspiCamCvQueryFrame(raspiCam);
+	cv::resize(img, img, cv::Size(0,0), scale, scale);
+	return SDL_SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+			img->width,
+			img->height,
+			img->depth * img->nChannels,
+			img->widthStep,
+			0xff0000, 0x00ff00, 0x0000ff, 0
+	);
+}
+
 void Camera::loopPreview(Camera * that) {
 	while(that->threadRunning) {
-		this_thread::sleep_for(chrono::milliseconds(250));
+		cv::waitKey(100);
 		that->updatePreview();
 	}
 }

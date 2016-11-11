@@ -20,6 +20,7 @@ class Camera {
 		void closePreview();
 		// Give image from camera
 		void getImage(cv::Mat & out);
+		SDL_Surface * getBitmp(double scale);
 
 	private:
 		void updatePreview();
