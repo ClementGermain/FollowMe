@@ -23,14 +23,12 @@ int commandMotor(istream & input, vector<int> i, vector<string> s);
 int cameraPreview(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 
-MainView view;
 Camera camera("Camera preview");
+MainView view;
 
 void runUI() {
 	/// Initialize ///
 	CommandInterpreter interpreter;
-
-	startWaitKeyLoop_OpenCV();
 
 	// Command lines
 	Menu options("", 0, 0,
@@ -57,9 +55,8 @@ void runUI() {
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
-	//options.print();
 	interpreter.setMenu(&options);
-		cout << "reading cl"<<endl;
+
 	/// Main loop ///
 	// read & execute commands
 	interpreter.readCommandLines();
@@ -67,8 +64,6 @@ void runUI() {
 	/// Ending ///
 	// Camera
 	camera.closePreview();
-	sleep(1);
-	stopWaitKeyLoop_OpenCV();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
@@ -104,16 +99,6 @@ int cameraPreview(istream & input, vector<int> i, vector<string> s) {
 	}
 	return 0;
 }
-
-string motorTrackbarNames[6] = {
-	"Left PWM",
-	"Left Speed",
-	"Right PWM",
-	"Right Speed",
-	"Front PWM",
-	"Front Speed"
-};
-
 
 int openGUI(istream & input, vector<int> i, vector<string> s) {
 	view.open();
