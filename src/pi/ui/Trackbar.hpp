@@ -6,7 +6,7 @@
 
 class Trackbar {
 	public:
-		Trackbar(float rangeMin, float rangeMax, int x, int y, int width=170, int height=15);
+		Trackbar(float rangeMin, float rangeMax, int x, int y, int width=170, int height=16);
 		~Trackbar();
 		void setPosition(float pos);
 		void draw(SDL_Surface * screen);

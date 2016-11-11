@@ -15,6 +15,8 @@ class MainView {
 		void open();
 	private:
 		void run();
+		void drawStaticViews();
+		void drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos);
 		std::thread * threadView;
 
 		SDL_Surface * screen;
