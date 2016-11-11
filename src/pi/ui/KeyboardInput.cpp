@@ -1,54 +1,40 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_gfxPrimitives.h>
 #include <iostream>
-
+#include <vector>
+#include "KeyboardInput.hpp"
 
 using namespace std;
 
-void commandMotorFront(int direction);
-void commandMotorBack(int direction);
 
+KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h) :
+	enabled(false),
+	isKeyPressed(4, false),
+	lastStates(2, 0), 
+	commandMotorFront(commandMotorFront),
+	commandMotorBack(commandMotorBack),
+	arrowsBMP(SDL_LoadBMP("../../../res/img/arrows.bmp")),
+	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w,h,32, 0,0,0,0)),
+	invalidate(true)
+{
+	screenPos.x = x;
+	screenPos.y = y;
+}
 
-// Create keyboard commands
-void runKeyboardControl() {
-	if(SDL_Init(SDL_INIT_VIDEO) < 0)
-		return;
-	SDL_Surface * screen;
-	if(!(screen = SDL_SetVideoMode(200, 200, 24, SDL_HWSURFACE)))
-		return;
+KeyboardInput::~KeyboardInput() {
+	SDL_FreeSurface(arrowsBMP);
+	SDL_FreeSurface(buffer);
+}
 
-	SDL_WM_SetCaption("Use arrow keys to control the car", NULL);
+bool KeyboardInput::handleEvent(SDL_Event & event) {
+	bool isUp = false;
+	int keycode = 0;
 
-	SDL_Surface * background = SDL_LoadBMP("../../../res/img/arrows.bmp");
-	SDL_BlitSurface(background, NULL, screen, NULL);
-	SDL_Flip(screen);
-	SDL_FreeSurface(background);
-
-	// Disable key repeat
-	SDL_EnableKeyRepeat(0, 0);
-
-	bool end = false;
-	// [right, left, down, up]
-	bool isKeyDown[4] = {false, false, false, false};
-	int lastDirection[2] = {0, 0};
-
-	while(!end) {
-		SDL_Event event;
-		SDL_WaitEvent(&event);
-
-		bool isUp = false;
-		int keycode = 0;
-
-		switch(event.type) {
-		case SDL_QUIT:
-			end = true;
-			break;
+	switch(event.type) {
 		case SDL_KEYUP:
 			isUp = true;
 		case SDL_KEYDOWN:
 			switch(event.key.keysym.sym) {
-			case SDLK_ESCAPE:
-				end = true;
-				break;
 			case SDLK_UP:
 				keycode++;
 			case SDLK_DOWN:
@@ -56,38 +42,97 @@ void runKeyboardControl() {
 			case SDLK_LEFT:
 				keycode++;
 			case SDLK_RIGHT:
-				isKeyDown[keycode] = !isUp;
+				isKeyPressed[keycode] = !isUp;
 				break;
 			default:
+				return false;
+			}
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			if(screenPos.x <= event.button.x && event.button.x < screenPos.x+buffer->w
+					&& screenPos.y <= event.button.y && event.button.y < screenPos.y+buffer->h) {
+				toggleEnabled();
+			} else {
+				return false;
+			}
+			break;
+		default:
+			return false;
+	}
+
+	int newDirection[2] = {
+		enabled * (isKeyPressed[3] - isKeyPressed[2]), // forward/backward
+		enabled * (isKeyPressed[1] - isKeyPressed[0]) // turn left/right
+	};
+	
+	// Update command motors back (go forward/backward)
+	if(newDirection[0] != lastStates[0]) {
+		commandMotorBack(newDirection[0]);	
+		lastStates[0] = newDirection[0];
+		invalidate = true;
+	}
+		
+	// Update command motor front (turn left/right)
+	if(newDirection[1] != lastStates[1]) {
+		commandMotorFront(newDirection[1]);	
+		lastStates[1] = newDirection[1];
+		invalidate = true;
+	}
+
+	return true;
+}
+
+void KeyboardInput::toggleEnabled() {
+	enabled = !enabled;
+	invalidate = true;
+}
+
+void KeyboardInput::draw(SDL_Surface * screen) {
+	if(invalidate) {
+		SDL_Rect pos = {
+			(Sint16) ((buffer->w-arrowsBMP->w) / 2),
+			(Sint16) ((buffer->h-arrowsBMP->h) / 2)
+		};
+		
+		// Clear background
+		SDL_FillRect(buffer, NULL, 0xffffffff);
+
+		// Arrow keys image
+		SDL_BlitSurface(arrowsBMP, NULL, buffer, &pos);
+		
+		if(!enabled) {
+			// Disabled
+			boxRGBA(buffer, 0,0, buffer->w, buffer->h, 0,0,0,200);
+			// Text
+			const char * text = "Click here to enable/disable key control";
+			stringRGBA(buffer, (buffer->w-strlen(text)*8) / 2, (buffer->h-8) / 2, text, 255,255,255,255);
+		}
+		else {
+			// Show valid pressed keys
+			SDL_Rect rectUp =    {67, 15, 65,65};
+			SDL_Rect rectDown =  {67, 80, 65,65};
+			SDL_Rect rectLeft =  {0,  80, 65,65};
+			SDL_Rect rectRight = {133,80, 65,65};
+
+			switch(lastStates[0]) {
+			case KeyboardInput::GoForward:
+				boxRGBA(buffer, pos.x+rectUp.x, pos.y+rectUp.y, pos.x+rectUp.x+rectUp.w, pos.y+rectUp.y+rectUp.h, 255,255,255,128);
+				break;
+			case KeyboardInput::GoBackward:
+				boxRGBA(buffer, pos.x+rectDown.x, pos.y+rectDown.y, pos.x+rectDown.x+rectDown.w, pos.y+rectDown.y+rectDown.h, 255,255,255,128);
+				break;
+			}
+			switch(lastStates[1]) {
+			case KeyboardInput::TurnLeft:
+				boxRGBA(buffer, pos.x+rectLeft.x, pos.y+rectLeft.y, pos.x+rectLeft.x+rectLeft.w, pos.y+rectLeft.y+rectLeft.h, 255,255,255,128);
+				break;
+			case KeyboardInput::TurnRight:
+				boxRGBA(buffer, pos.x+rectRight.x, pos.y+rectRight.y, pos.x+rectRight.x+rectRight.w, pos.y+rectRight.y+rectRight.h, 255,255,255,128);
 				break;
 			}
 		}
-
-		int newDirection[2] = {
-			isKeyDown[3] - isKeyDown[2], // forward/backward
-			isKeyDown[1] - isKeyDown[0] // turn left/right
-		};
-	
-		// Update command motors back (go forward/backward)
-		if(newDirection[0] != lastDirection[0]) {
-			commandMotorBack(newDirection[0]);	
-			lastDirection[0] = newDirection[0];
-		}
-		
-		// Update command motor front (turn left/right)
-		if(newDirection[1] != lastDirection[1]) {
-			commandMotorFront(newDirection[1]);	
-			lastDirection[1] = newDirection[1];
-		}
+		invalidate = false;
 	}
-	SDL_Quit();
-}
 
-void commandMotorFront(int direction) {
-	cout << "TODO motor front : " << (direction == 0 ? "stop" : (direction > 0 ? "turn left" : "turn right")) << endl;
+	SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 }
-
-void commandMotorBack(int direction) {
-	cout << "TODO motors back : " << (direction == 0 ? "stop" : (direction > 0 ? "go forward" : "go backward")) << endl;
-}
-

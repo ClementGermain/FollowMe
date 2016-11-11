@@ -21,14 +21,14 @@ int keyboardControl(istream & input, vector<int> i, vector<string> s);
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
 int cameraPreview(istream & input, vector<int> i, vector<string> s);
+int openGUI(istream & input, vector<int> i, vector<string> s);
 
+MainView view;
 Camera camera("Camera preview");
 
 void runUI() {
 	/// Initialize ///
 	CommandInterpreter interpreter;
-	// Motor trackbars
-	initializeMotorWindow();
 
 	startWaitKeyLoop_OpenCV();
 
@@ -45,7 +45,7 @@ void runUI() {
 			),
 			NULL
 		),
-		new Menu("keyboard", 0, keyboardControl, NULL),
+		new Menu("gui", 0, openGUI, NULL),
 		new Menu("camera", 0, 0, 
 			new Menu("preview", 0, 0,
 				new Menu("open", 1, cameraPreview, NULL),
@@ -114,50 +114,9 @@ string motorTrackbarNames[6] = {
 	"Front Speed"
 };
 
-// Define button and trackbar of the control panel
-// Control panel can be open with <ctrl+p>
-void initializeMotorWindow() {
-	cv::namedWindow("Motors", CV_WINDOW_NORMAL);
-	int initValue = 0;
-	
-	for(int i = 0; i < 6; i++)
-		cv::createTrackbar(motorTrackbarNames[i], "Motors", &initValue, 100);
-}
 
-// Update trackbar position
-// motorPos : MOTOR_LEFT, MOTOR_RIGHT or MOTOR_FRONT
-// type : MOTOR_PWM or MOTOR_SPEED
-// value : 0-100
-void updateMotorTrackbar(int motorPos, int type, int value) {
-	cv::setTrackbarPos(motorTrackbarNames[motorPos*2+type], "Motors", value);
-}
-
-int keyboardControl(istream & input, vector<int> i, vector<string> s) {
-	runKeyboardControl();
+int openGUI(istream & input, vector<int> i, vector<string> s) {
+	view.open();
 	return 0;
 }
 
-
-thread * threadWaitKey;
-bool threadWaitKeyRunning = false;
-void loopWaitKey() {
-	while(threadWaitKeyRunning) {
-		this_thread::sleep_for(chrono::milliseconds(10));
-		cv::waitKey(20);
-	}
-}
-
-void startWaitKeyLoop_OpenCV() {
-	if(!threadWaitKeyRunning) {
-		threadWaitKeyRunning = true;
-		threadWaitKey = new thread(loopWaitKey);
-	}
-}
-
-void stopWaitKeyLoop_OpenCV() {
-	if(threadWaitKeyRunning) {
-		threadWaitKeyRunning = false;
-		threadWaitKey->join();
-		delete threadWaitKey;
-	}
-}
