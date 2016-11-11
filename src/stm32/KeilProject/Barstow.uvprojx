@@ -432,6 +432,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Barstow</GroupName>
+          <Files>
+            <File>
+              <FileName>Barstow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Board Support</GroupName>
         </Group>
         <Group>
@@ -864,6 +874,16 @@
               <FileName>SPI_Interface.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\SPI_Interface\SPI_Interface.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Barstow</GroupName>
+          <Files>
+            <File>
+              <FileName>Barstow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
             </File>
           </Files>
         </Group>
