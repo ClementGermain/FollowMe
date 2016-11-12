@@ -10,14 +10,7 @@
 
 using namespace std;
 
-int main() {
-	runUI();
-	return 0;
-}
 
-void startWaitKeyLoop_OpenCV();
-void stopWaitKeyLoop_OpenCV();
-int keyboardControl(istream & input, vector<int> i, vector<string> s);
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
 int cameraPreview(istream & input, vector<int> i, vector<string> s);
