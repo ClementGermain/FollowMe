@@ -13,7 +13,7 @@ KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotor
 	lastStates(2, 0), 
 	commandMotorFront(commandMotorFront),
 	commandMotorBack(commandMotorBack),
-	arrowsBMP(SDL_LoadBMP("../../../res/img/arrows.bmp")),
+	arrowsBMP(SDL_LoadBMP("../../res/img/arrows.bmp")),
 	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w,h,32, 0,0,0,0)),
 	invalidate(true)
 {

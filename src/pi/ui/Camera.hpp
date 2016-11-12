@@ -1,10 +1,14 @@
 #ifndef __CAMERA_HPP__
 #define __CAMERA_HPP__
 
+#include <thread>
 #include <string>
 #include <opencv2/opencv.hpp>
-#include "RaspiCamCV.h"
-#include <thread>
+#include <SDL/SDL.h>
+
+#ifndef __NO_RASPI__
+	#include "RaspiCamCV.h"
+#endif
 
 #define DEFAULT_FRAME_WIDTH		320
 #define DEFAULT_FRAME_HEIGHT	240
@@ -20,16 +24,18 @@ class Camera {
 		void closePreview();
 		// Give image from camera
 		void getImage(cv::Mat & out);
-		SDL_Surface * getBitmp(double scale);
+		SDL_Surface * getBitmap(double scale);
 
 	private:
 		void updatePreview();
 		static void loopPreview(Camera * that);
 
 		const std::string windowName;
-		RaspiCamCvCapture * raspiCam;
 		cv::Mat imageCam;
+#ifndef __NO_RASPI__
+		RaspiCamCvCapture * raspiCam;
 		RASPIVID_CONFIG configCam;
+#endif
 		std::thread * threadPreview;
 		bool threadRunning;
 };

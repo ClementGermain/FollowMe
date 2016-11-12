@@ -4,6 +4,7 @@
 #include <chrono>
 #include <unistd.h>
 #include "MainUI.hpp"
+#include "MainView.hpp"
 #include "Camera.hpp"
 #include "CommandLine.hpp"
 #include "KeyboardInput.hpp"

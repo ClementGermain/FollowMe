@@ -1,6 +1,11 @@
 #include <mutex>
 #include "Car.hpp"
 
+// static members
+std::mutex Car::controlMutex;
+std::mutex Car::modelMutex;
+BarstowControl_Typedef Car::controlStructure;
+BarstowModel_Typedef Car::modelStructure;
 
 void Car::getControlStructure(BarstowControl_Typedef & out) {
 	controlMutex.lock();

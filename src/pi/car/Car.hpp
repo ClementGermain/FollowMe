@@ -7,6 +7,9 @@ extern "C" {
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 }
 
+// This class is fully static
+// You cannot create an instance of Car
+// You can instead use 'Car::functionName()'
 class Car {
 	public:
 		enum Motor {DirectionMotor, LeftWheelMotor, RightWheelMotor};
@@ -17,6 +20,8 @@ class Car {
 		static void updateModelStructure(BarstowModel_Typedef & model);
 
 	private:
+		// disallow creating an instance of this object
+		Car() {}
 		static std::mutex controlMutex;
 		static std::mutex modelMutex;
 		static BarstowControl_Typedef controlStructure;

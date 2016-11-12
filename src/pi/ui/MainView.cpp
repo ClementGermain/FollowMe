@@ -110,7 +110,7 @@ void MainView::run() {
 	FPSmanager fpsManager;
 	SDL_initFramerate(&fpsManager);
 
-	car = SDL_LoadBMP("../../../res/img/car_top_view.bmp");
+	car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 
 	drawStaticViews();
 
@@ -204,8 +204,3 @@ void MainView::run() {
 	SDL_Quit();
 }
 
-int main() {
-	MainView view;
-	view.open();
-	return 0;
-}
