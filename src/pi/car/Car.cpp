@@ -1,9 +1,12 @@
 #include <mutex>
+#include <algorithm>
 #include "Car.hpp"
 
+using namespace std;
+
 // static members
-std::mutex Car::controlMutex;
-std::mutex Car::modelMutex;
+mutex Car::controlMutex;
+mutex Car::modelMutex;
 BarstowControl_Typedef Car::controlStructure;
 BarstowModel_Typedef Car::modelStructure;
 
@@ -23,6 +26,7 @@ void Car::getModelStructure(BarstowModel_Typedef & out) {
 	modelMutex.unlock();
 }
 
+
 void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 	controlMutex.lock();
 
@@ -36,10 +40,57 @@ void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 		case Car::RightWheelMotor:
 			controlStructure.rightWheelMotor = control;
 			break;
+		case Car::BothWheelMotors:
+			controlStructure.leftWheelMotor = control;
+			controlStructure.rightWheelMotor = control;
+			break;
 	}
 
 	controlMutex.unlock();
 }
+
+// @param speed: value in range [0, 1]
+void Car::writeControlMotor(Car::Moving action, float speed) {
+	MotorControl_Typedef control;
+	
+	control.speed = min(max(0.0f, speed), 1.0f);
+
+	switch(action) {
+		case Car::MoveForward:
+			control.direction = MOTOR_DIRECTION_FORWARD;
+			break;
+		case Car::MoveBackward:
+			control.direction = MOTOR_DIRECTION_BACKWARD;
+			break;
+		case Car::Stop:
+			control.direction = MOTOR_DIRECTION_STOP;
+			break;
+	}
+	
+	writeControlMotor(BothWheelMotors, control);
+}
+// @param speed: value in range [0, 1]
+void Car::writeControlMotor(Car::Turn action, float speed) {
+	MotorControl_Typedef control;
+
+	control.speed = min(max(0.0f, speed), 1.0f);
+
+	switch(action) {
+		case Car::TurnLeft:
+			control.direction = MOTOR_DIRECTION_LEFT;
+			break;
+		case Car::TurnRight:
+			control.direction = MOTOR_DIRECTION_RIGHT;
+			break;
+		case Car::NoTurn:
+			control.direction = MOTOR_DIRECTION_STOP;
+			break;
+	}
+
+	writeControlMotor(DirectionMotor, control);
+}
+
+
 
 void Car::updateModelStructure(BarstowModel_Typedef & model) {
 	modelMutex.lock();

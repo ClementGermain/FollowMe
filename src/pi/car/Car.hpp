@@ -12,11 +12,15 @@ extern "C" {
 // You can instead use 'Car::functionName()'
 class Car {
 	public:
-		enum Motor {DirectionMotor, LeftWheelMotor, RightWheelMotor};
+		enum Motor {DirectionMotor, LeftWheelMotor, RightWheelMotor, BothWheelMotors};
+		enum Moving {MoveForward, MoveBackward, Stop };
+		enum Turn {TurnLeft, TurnRight, NoTurn };
 
 		static void getControlStructure(BarstowControl_Typedef & out);
 		static void getModelStructure(BarstowModel_Typedef & out);
-		static void writeControlMotor(Motor target, MotorControl_Typedef & control);
+		static void writeControlMotor(Car::Motor target, MotorControl_Typedef & control);
+		static void writeControlMotor(Car::Moving action, float speed);
+		static void writeControlMotor(Car::Turn action, float speed);
 		static void updateModelStructure(BarstowModel_Typedef & model);
 
 	private:

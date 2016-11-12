@@ -18,7 +18,7 @@ int cameraPreview(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 
 Camera camera("Camera preview");
-MainView view;
+MainView view(camera);
 
 void runUI() {
 	/// Initialize ///
@@ -56,6 +56,10 @@ void runUI() {
 	interpreter.readCommandLines();
 
 	/// Ending ///
+	if(view.isOpen()) {
+		cout << "Waiting for closure of the GUI..." << endl;
+	}
+
 	// Camera
 	camera.closePreview();
 }

@@ -4,20 +4,25 @@
 #include <vector>
 #include <thread>
 #include <SDL/SDL.h>
+#include "Camera.hpp"
 #include "Digital.hpp"
 #include "Trackbar.hpp"
 #include "CPULoad.hpp"
 
 class MainView {
 	public:
-		MainView();
+		MainView(Camera & camera);
 		~MainView();
 		void open();
+		bool isOpen();
 	private:
 		void run();
 		void drawStaticViews();
+		void initializeViews();
+		void updateViews();
 		void drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos);
 		std::thread * threadView;
+		bool isThreadTerminated;
 
 		SDL_Surface * screen;
 		SDL_Surface * car;
@@ -25,6 +30,7 @@ class MainView {
 		std::vector<Trackbar> trackbarMotors;
 		std::vector<Digital> digitalValues;
 		CPULoad cpuLoad;
+		Camera & camera;
 };
 
 #endif

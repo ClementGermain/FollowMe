@@ -1,10 +1,13 @@
 #include "MainView.hpp"
+#include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_framerate.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <thread>
 #include <iostream>
 #include <vector>
+#include "../car/Car.hpp"
+#include "Camera.hpp"
 #include "KeyboardInput.hpp"
 #include "Trackbar.hpp"
 #include "Digital.hpp"
@@ -12,13 +15,25 @@
 using namespace std;
 
 
-MainView::MainView() : threadView(NULL) {
+MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera) {
 
 }
 
 void MainView::open() {
-	if(threadView == NULL)
-		threadView = new thread([this] { this->run(); });
+	if(isThreadTerminated) {
+		isThreadTerminated = false;
+		threadView = new thread([this] {
+				this->run();
+				isThreadTerminated = true;
+		});
+	}
+	else {
+		cout << "GUI is already running!" << endl;
+	}
+}
+
+bool MainView::isOpen() {
+	return !isThreadTerminated;
 }
 
 MainView::~MainView() {
@@ -29,35 +44,33 @@ MainView::~MainView() {
 }
 
 void commandMotorFront(int direction) {
-	cout << "TODO motor front : ";
+	float speed = 1;
 	switch(direction) {
 		case KeyboardInput::Idle:
-			cout << "stop";
+			Car::writeControlMotor(Car::NoTurn, speed); 
 			break;
 		case KeyboardInput::TurnLeft:
-			cout << "turn left";
+			Car::writeControlMotor(Car::TurnLeft, speed); 
 			break;
 		case KeyboardInput::TurnRight:
-			cout << "turn right";
+			Car::writeControlMotor(Car::TurnRight, speed); 
 			break;
 	}
-	cout << endl;
 }
 
 void commandMotorBack(int direction) {
-	cout << "TODO motor back : ";
+	float speed = 1;
 	switch(direction) {
 		case KeyboardInput::Idle:
-			cout << "stop";
+			Car::writeControlMotor(Car::Stop, speed); 
 			break;
 		case KeyboardInput::GoForward:
-			cout << "go forward";
+			Car::writeControlMotor(Car::MoveForward, speed); 
 			break;
 		case KeyboardInput::GoBackward:
-			cout << "go backward";
+			Car::writeControlMotor(Car::MoveBackward, speed); 
 			break;
 	}
-	cout << endl;
 }
 
 void MainView::drawStaticViews() {
@@ -99,22 +112,7 @@ void MainView::drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos) 
 	filledCircleRGBA(screen, x2+carPos.x,y2+carPos.y, 3, 0,0,230,255);
 }
 
-void MainView::run() {
-	if(SDL_Init(SDL_INIT_VIDEO) < 0)
-		return;
-	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_HWSURFACE)))
-		return;
-	
-	SDL_WM_SetCaption("FollowMe GUI", NULL);
-	
-	FPSmanager fpsManager;
-	SDL_initFramerate(&fpsManager);
-
-	car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
-
-	drawStaticViews();
-
-	// dynamic views
+void MainView::initializeViews() {
 	// motors
 	digitalValues.emplace_back("PWM: %.0f%%", 540, 50, 80, 16, false);
 	trackbarMotors.emplace_back(0, 100, 620, 50);
@@ -137,6 +135,54 @@ void MainView::run() {
 	digitalValues.emplace_back("%.2fm", 470, 380, 70);
 	// raspi
 	digitalValues.emplace_back("CPU: %.0f%%", 540, 170, 80, 16, false);
+}
+
+void MainView::updateViews() {
+	BarstowModel_Typedef model;
+	Car::getModelStructure(model);
+	
+	digitalValues[0].setValue(model.directionMotor.voltage);
+	trackbarMotors[0].setPosition(model.directionMotor.voltage);
+	digitalValues[1].setValue(model.directionMotor.current);
+	trackbarMotors[1].setPosition(model.directionMotor.current);
+
+	digitalValues[2].setValue(model.leftWheelMotor.voltage);
+	trackbarMotors[2].setPosition(model.leftWheelMotor.voltage);
+	digitalValues[3].setValue(model.leftWheelMotor.current);
+	trackbarMotors[3].setPosition(model.leftWheelMotor.current);
+
+	digitalValues[4].setValue(model.rightWheelMotor.voltage);
+	trackbarMotors[4].setPosition(model.rightWheelMotor.voltage);
+	digitalValues[5].setValue(model.rightWheelMotor.current);
+	trackbarMotors[5].setPosition(model.rightWheelMotor.current);
+
+	digitalValues[6].setValue(model.frontLeftUSensor.distance);
+	digitalValues[7].setValue(model.frontCenterUSensor.distance);
+	digitalValues[8].setValue(model.frontRightUSensor.distance);
+	digitalValues[9].setValue(model.rearLeftUSensor.distance);
+	digitalValues[10].setValue(model.rearCenterUSensor.distance);
+	digitalValues[11].setValue(model.rearRightUSensor.distance);
+
+	digitalValues[12].setValue(cpuLoad.get());
+}
+
+void MainView::run() {
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+		return;
+	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_HWSURFACE)))
+		return;
+	
+	SDL_WM_SetCaption("FollowMe GUI", NULL);
+	
+	FPSmanager fpsManager;
+	SDL_initFramerate(&fpsManager);
+
+	car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
+
+	drawStaticViews();
+	
+	// dynamic views
+	initializeViews();
 	// Arrows
 	KeyboardInput arrowKeysControl(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
 	
@@ -174,23 +220,24 @@ void MainView::run() {
 		}
 		
 		/// Refresh display
+		updateViews();
 		
 		// arrows
 		arrowKeysControl.draw(screen);
 		// trackbars
 		for(Trackbar & tb : trackbarMotors) {
-			tb.setPosition(SDL_getFramecount(&fpsManager));
+			//tb.setPosition(SDL_getFramecount(&fpsManager));
 			tb.draw(screen);
 		}
 		// digitals
-		digitalValues.back().setValue(cpuLoad.get());
 		for(Digital & d : digitalValues) {
 			d.draw(screen);
 		}
 		// Camera
-		// SDL_Surface * cam = camera->getBitmap(1);
-		// SDL_BlitSurface(cam, NULL, screen);
-		// SDL_FreeSurface(cam);
+		// TODO efficient CameraView
+		SDL_Surface * cam = camera.getBitmap(1);
+		SDL_BlitSurface(cam, NULL, screen, NULL);
+		SDL_FreeSurface(cam);
 		
 		// commit screen buffer
 		SDL_Flip(screen);
