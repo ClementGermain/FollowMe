@@ -10,6 +10,7 @@ OBJECTS=MainUI.o \
 		KeyboardInput.o \
 		Trackbar.o \
 		Digital.o \
+		LogView.o \
 		CPULoad.o
 
 TARGET=ui.a
