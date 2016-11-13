@@ -10,6 +10,7 @@ class LogLine {
 	public:
 		LogLine(std::string const& s);
 		std::string coloredString(bool includeDate=true) const;
+		int getColor() const;
 
 		std::string str;
 		std::chrono::system_clock::time_point date;
@@ -34,7 +35,6 @@ class LogStream : public std::ostream {
 		LogStream();
 		
 		typedef typename std::list<LogLine>::const_iterator Cursor;
-		typedef typename std::list<LogLine>::const_reverse_iterator RCursor;
 
 		Cursor getCursor(bool fromBegin = false);
 		bool hasNext(Cursor const& cursor);

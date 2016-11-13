@@ -10,9 +10,8 @@ class LogView {
 		void draw(SDL_Surface * screen);
 	private:
 		SDL_Surface * buffer;
-		LogStream::Cursor lasEndtCursor;
+		LogStream::Cursor prevEndCursor;
 		SDL_Rect screenPos;
-
 };
 
 #endif

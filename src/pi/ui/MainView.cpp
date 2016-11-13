@@ -11,6 +11,7 @@
 #include "KeyboardInput.hpp"
 #include "Trackbar.hpp"
 #include "Digital.hpp"
+#include "LogView.hpp"
 
 using namespace std;
 
@@ -185,6 +186,8 @@ void MainView::run() {
 	initializeViews();
 	// Arrows
 	KeyboardInput arrowKeysControl(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
+	// Logs
+	LogView logView(0, 0, 320, 240);
 	
 
 	bool end = false;
@@ -238,6 +241,9 @@ void MainView::run() {
 		SDL_Surface * cam = camera.getBitmap(1);
 		SDL_BlitSurface(cam, NULL, screen, NULL);
 		SDL_FreeSurface(cam);
+
+		// Logs (FIXME this actually erase camera view)
+		logView.draw(screen);
 		
 		// commit screen buffer
 		SDL_Flip(screen);

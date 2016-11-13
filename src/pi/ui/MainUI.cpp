@@ -8,6 +8,7 @@
 #include "Camera.hpp"
 #include "CommandLine.hpp"
 #include "KeyboardInput.hpp"
+#include "../utils/Log.hpp"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
 int cameraPreview(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
+int writeLog(istream & input, vector<int> i, vector<string> s);
 
 Camera camera("Camera preview");
 MainView view(camera);
@@ -42,6 +44,16 @@ void runUI() {
 			new Menu("preview", 0, 0,
 				new Menu("open", 1, cameraPreview, NULL),
 				new Menu("close", 2, cameraPreview, NULL),
+				NULL
+			),
+			NULL
+		),
+		new Menu("log", 0, 0,
+			new Menu("write", 0, 0,
+				new Menu("I", 1, writeLog, NULL),
+				new Menu("D", 2, writeLog, NULL),
+				new Menu("W", 3, writeLog, NULL),
+				new Menu("E", 4, writeLog, NULL),
 				NULL
 			),
 			NULL
@@ -103,3 +115,26 @@ int openGUI(istream & input, vector<int> i, vector<string> s) {
 	return 0;
 }
 
+int writeLog(istream & input, vector<int> i, vector<string> s) {
+	string text;
+	input >> text;
+
+	switch(i.back()) {
+		case 1:
+			LogI << text;
+			break;
+		case 2:
+			LogD << text;
+			break;
+		case 3:
+			LogW << text;
+			break;
+		case 4:
+			LogE << text;
+			break;
+	}
+	while(input >> text)
+		Log << " " << text;
+	Log << endl;
+	return 0;
+}

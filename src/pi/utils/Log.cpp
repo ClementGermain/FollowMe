@@ -75,7 +75,7 @@ int LogLine::getColor() const {
 string LogLine::coloredString(bool includeDate) const {
 	long int t = chrono::duration_cast<chrono::milliseconds>(date.time_since_epoch()).count();
 	char time[13];
-	sprintf(time, "%2d:%02d:%02d.%03d", t/3600000%24, t/60000%60, t/1000%60, t%1000);
+	sprintf(time, "%2d:%02d:%02d.%03d", (int)(t/3600000%24), (int)(t/60000%60), (int)(t/1000%60), (int)(t%1000));
 
 	string res;
 	int offset = 2;

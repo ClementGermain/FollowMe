@@ -16,7 +16,7 @@ LDFLAGS=$(OCV_LDFLAGS) $(SDL_FLAGS) -lpthread # $(RCAM_LDFLAGS) will be added if
 OBJECTS=Main.o \
 		car/Car.o \
 		car/LinkSTM32.o \
-		utils/Log.o
+		utils/Log.o \
 		ui/ui.a
 
 all: LDFLAGS += $(RCAM_LDFLAGS)
