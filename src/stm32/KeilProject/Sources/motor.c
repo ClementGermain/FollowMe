@@ -102,6 +102,24 @@ void Motor_Test(void){
 		Delay();
 		Stop_Turn();
 		Delay();
+		Turn_Left(0.5);
+		Delay();
+    Turn_Right(0.5);
+		Delay();
+		Stop_Turn();
+		Delay();
+		Go_Forward(0.3);
+		Delay();
+    Go_Back(0.3);
+		Delay();
+		Stop_Car();
+		Delay();
+		Go_Forward(0.5);
+		Delay();
+    Go_Back(0.5);
+		Delay();
+		Stop_Car();
+		Delay();
 }
 
 GPIO_Pin_TypeDef Find_GPIO_Pin(TIM_TypeDef * TIM, int Channel){

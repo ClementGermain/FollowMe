@@ -1,11 +1,14 @@
 #include "Model.h"
 #include "Control.h"
+#include "../gpio.h"
 #include "../motor.h"
 #include "../SPI_Interface/SPI_Interface.h"
 
 
 void StartBarstow(void)
 {
+	
+	Init_GPIO_Out(GPIOA, GPIO_Pin_9);
 	/*!< Init motors. */
 	Init_All_Motor();
 	

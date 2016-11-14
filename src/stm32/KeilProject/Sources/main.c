@@ -22,8 +22,20 @@ int main(void)
 {
 	// RCC Configuration
   RCC_Configuration();
-
-  StartBarstow();
+	
+	// A commenter en dehors du test des moteurs
+	Init_All_Motor();
+	Motor_Test();
+	StartBarstow();
+	
+	//Au cas où la fonction de test ne marche pas:
+	/*Turn_Left(0.3);
+    Turn_Right(0.3);
+		Stop_Turn();	
+		Go_Forward(0.3);
+    Go_Back(0.3);
+		Stop_Car();
+		*/
 }
 
 /**

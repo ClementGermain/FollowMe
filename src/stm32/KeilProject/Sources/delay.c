@@ -4,10 +4,11 @@ void Delay() {
 for (int n=0; n < 10000000; n++);
 }
  
-extern uint32_t SystemCoreClock;
 
 //A voir pour mettre en place un vrai Delay
-/*void DWT_Init(void) 
+/*
+extern uint32_t SystemCoreClock;
+void DWT_Init(void) 
 {
   if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) 
   {
