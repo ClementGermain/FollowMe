@@ -8,7 +8,7 @@
 void StartBarstow(void)
 {
 	
-	Init_GPIO_Out(GPIOA, GPIO_Pin_9);
+	Init_GPIO_Out(GPIOA, GPIO_Pin_5);
 	/*!< Init motors. */
 	Init_All_Motor();
 	

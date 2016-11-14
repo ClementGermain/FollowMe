@@ -22,7 +22,8 @@ int main(void)
 {
 	// RCC Configuration
   RCC_Configuration();
-	
+	//Init_GPIO_Out(GPIOA, GPIO_Pin_5);
+	//GPIO_SetBits(GPIOA, GPIO_Pin_5);
 	// A commenter en dehors du test des moteurs
 	Init_All_Motor();
 	Motor_Test();
