@@ -1,6 +1,5 @@
 #include "SPI_Interface.hpp" 
 #include <wiringPiSPI.h>
-#include "../utils/Log.hpp"
 
 using namespace std;
 
@@ -22,8 +21,6 @@ int SPI_Interface::Start()
 
 int SPI_Interface::Send(unsigned char* data, int len)
 {
-	LogI << "Send" << ((int*)data)[0]<<endl;
 	int n = wiringPiSPIDataRW (m_channel, data, len) ;
-	LogI << "Recv" << ((int*)data)[0]<<endl;
 	return n;
 }

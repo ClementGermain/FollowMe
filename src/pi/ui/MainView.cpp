@@ -47,7 +47,7 @@ MainView::~MainView() {
 
 void commandMotorFront(int direction) {
 	LogD << "Dir " << direction <<endl;
-	float speed = 1;
+	float speed = 0.5f;
 	switch(direction) {
 		case KeyboardInput::Idle:
 			Car::writeControlMotor(Car::NoTurn, speed); 
@@ -63,7 +63,7 @@ void commandMotorFront(int direction) {
 
 void commandMotorBack(int direction) {
 	LogD << "Prop " << direction<<endl;
-	float speed = 1;
+	float speed = 0.5f;
 	switch(direction) {
 		case KeyboardInput::Idle:
 			Car::writeControlMotor(Car::Stop, speed); 

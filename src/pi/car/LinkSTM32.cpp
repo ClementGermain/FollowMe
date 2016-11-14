@@ -3,7 +3,6 @@
 #include "Car.hpp"
 #include "LinkSTM32.hpp"
 #include "../SPI_Interface/SPI_Interface.hpp"
-#include "../utils/Log.hpp"
 
 using namespace std;
 
@@ -38,8 +37,6 @@ void LinkSTM32::run() {
 		
 		// Get 'control' from Car
 		Car::getControlStructure(control);
-		LogI << "ctrl prop to send: "<<control.propulsionMotor.speed<<" "<<(int)control.propulsionMotor.direction<<endl;
-		LogD << "sizeof "<<bufferSize<< " "<<sizeof(BarstowControl_Typedef)<<endl;
 		
 		// Exchange data with SPI
 		std::memcpy(spiBuffer, &control, sizeof(BarstowControl_Typedef));
