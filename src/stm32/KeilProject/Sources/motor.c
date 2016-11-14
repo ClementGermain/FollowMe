@@ -1,5 +1,32 @@
 #include "motor.h"
 
+void Update_Motors(BarstowControl_Typedef Control){
+	
+	switch (Control.propulsionMotor.direction){
+		case 0:
+			Stop_Car();
+			break;
+		case -1:
+			Go_Back(Control.directionMotor.speed);
+			break;
+		case 1:
+			Go_Forward(Control.directionMotor.speed);
+			break;
+	}
+			
+		switch(Control.directionMotor.direction){
+			case 0:
+				Stop_Turn();
+				break;
+			case -1:
+				Turn_Right(Control.directionMotor.speed);
+			break;
+			case 1:
+				Turn_Left(Control.directionMotor.speed);
+			break;
+		}
+}
+
 void Init_All_Motor(void){
 	// Put a hight level on GPIO_Pin_Motor_Enable to enable motor's driver
 	Init_GPIO_Out(GPIO_Motor_Enable, GPIO_Pin_Motor_Enable);

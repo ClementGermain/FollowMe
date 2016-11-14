@@ -2,6 +2,7 @@
 #define __MOTOR__
 
 #include "include.h"
+#include "Barstow/Control.h"
 
 #define TIM_Forward 										TIM4
 #define TIM_Backward 										TIM3
@@ -21,6 +22,8 @@ typedef struct {
 	GPIO_TypeDef * GPIO;
 	int Pin;
 } GPIO_Pin_TypeDef;  
+
+void Update_Motors(BarstowControl_Typedef Control);
 
 /**
 	*	@brief Init all the motors's PWM and GPIO
