@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include "../car/Car.hpp"
+#include "../utils/Log.hpp"
 #include "Camera.hpp"
 #include "KeyboardInput.hpp"
 #include "Trackbar.hpp"
@@ -16,7 +17,7 @@
 using namespace std;
 
 
-MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera) {
+MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera), showCamera(false) {
 
 }
 
@@ -45,6 +46,7 @@ MainView::~MainView() {
 }
 
 void commandMotorFront(int direction) {
+	LogD << "Dir " << direction <<endl;
 	float speed = 1;
 	switch(direction) {
 		case KeyboardInput::Idle:
@@ -60,6 +62,7 @@ void commandMotorFront(int direction) {
 }
 
 void commandMotorBack(int direction) {
+	LogD << "Prop " << direction<<endl;
 	float speed = 1;
 	switch(direction) {
 		case KeyboardInput::Idle:
@@ -212,9 +215,13 @@ void MainView::run() {
 							if((SDL_GetModState() & KMOD_LALT) == KMOD_LALT)
 								end = true;
 							break;
-						case SDLK_a:
+						case SDLK_q:
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								end = true;
+							break;
+						case SDLK_TAB:
+							showCamera = !showCamera;
+							break;
 						default:
 							break;
 					}
@@ -238,7 +245,7 @@ void MainView::run() {
 		}
 		// Camera
 		// TODO efficient CameraView
-		if(true) {
+		if(showCamera) {
 			SDL_Surface * cam = camera.getBitmap(1);
 			SDL_BlitSurface(cam, NULL, screen, NULL);
 			SDL_FreeSurface(cam);

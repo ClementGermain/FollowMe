@@ -31,6 +31,7 @@ class MainView {
 		std::vector<Digital> digitalValues;
 		CPULoad cpuLoad;
 		Camera & camera;
+		bool showCamera;
 };
 
 #endif
