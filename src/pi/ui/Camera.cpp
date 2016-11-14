@@ -69,7 +69,7 @@ void Camera::getImage(cv::Mat & out) {
 SDL_Surface * Camera::getBitmap(double scale) {
 #ifndef __NO_RASPI__
 	IplImage * img = raspiCamCvQueryFrame(raspiCam);
-	cv::resize(img, img, cv::Size(0,0), scale, scale);
+	//cv::resize(img, img, cv::Size(0,0), scale, scale);
 	return SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,

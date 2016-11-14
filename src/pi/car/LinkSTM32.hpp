@@ -2,6 +2,7 @@
 #define __COMMUNICATION_STM32_HPP__
 
 #include <thread>
+#include "../SPI_Interface/SPI_Interface.hpp"
 
 #define SPI_SPEED 500000
 #define SPI_CHANNEL 0
