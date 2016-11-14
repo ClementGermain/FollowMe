@@ -1,4 +1,5 @@
-
+#ifndef __SPI_INTERFACE_HPP__
+#define __SPI_INTERFACE_HPP__
 
 class SPI_Interface 
 {
@@ -11,3 +12,6 @@ class SPI_Interface
 		int m_speed;
 		int m_channel;
 };
+
+#endif
+

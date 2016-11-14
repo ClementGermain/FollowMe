@@ -238,13 +238,14 @@ void MainView::run() {
 		}
 		// Camera
 		// TODO efficient CameraView
-		SDL_Surface * cam = camera.getBitmap(1);
-		SDL_BlitSurface(cam, NULL, screen, NULL);
-		SDL_FreeSurface(cam);
-
-		// Logs (FIXME this actually erase camera view)
-		logView.draw(screen);
-		
+		if(true) {
+			SDL_Surface * cam = camera.getBitmap(1);
+			SDL_BlitSurface(cam, NULL, screen, NULL);
+			SDL_FreeSurface(cam);
+		} else {
+			// Logs (FIXME this actually erase camera view)
+			logView.draw(screen);
+		}
 		// commit screen buffer
 		SDL_Flip(screen);
 

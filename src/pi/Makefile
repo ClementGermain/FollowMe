@@ -7,7 +7,8 @@ export RASPICAM_CV_DIR:=/home/pi/raspicam_cv/robidouille/raspicam_cv
 USERLAND_LIB=/home/pi/raspicam_cv/userland/build/lib
 RCAM_LDFLAGS=-L$(USERLAND_LIB) -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host \
 		   -L$(RASPICAM_CV_DIR) -lraspicamcv -lpthread
-
+#SPI lib
+SPI_LDFLAGS=-lwiringPi
 TARGET=barstow
 export CXXFLAGS:=-Wall -std=c++11 -MD
 LDFLAGS=$(OCV_LDFLAGS) $(SDL_FLAGS) -lpthread # $(RCAM_LDFLAGS) will be added if target is not 'noraspi'
@@ -17,9 +18,11 @@ OBJECTS=Main.o \
 		car/Car.o \
 		car/LinkSTM32.o \
 		utils/Log.o \
+		SPI_Interface/SPI_Interface.o \
 		ui/ui.a
 
 all: LDFLAGS += $(RCAM_LDFLAGS)
+all: LDFLAGS += $(SPI_LDFLAGS)
 all: $(TARGET)
 
 noraspi: RASPI=noraspi
