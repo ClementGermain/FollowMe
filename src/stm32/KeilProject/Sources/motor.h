@@ -23,87 +23,74 @@ typedef struct {
 	int Pin;
 } GPIO_Pin_TypeDef;  
 
-/**
-	*	@brief Change all the PWM values of the motors based on the SPI struct
+/**	@brief Change all the PWM values of the motors based on the SPI struct
 	* @param Control: Control struct with PWM informations from the SPI communication
 	*	@retval None
 */
 void Update_Motors(BarstowControl_Typedef * Control);
 
-/**
-	*	@brief Init all the motors's PWM and GPIO
+/**	@brief Init all the motors's PWM and GPIO
 	*	@retval None
 */
 void Init_All_Motor(void);
 
-/**
-	*	@brief Init a single motor's PWM and GPIO
+/**	@brief Init a single motor's PWM and GPIO
 	* @param TIM: Timer of the Motor's PWM
 	*	@param Channel: Channel of the Motor's PWM
 	*	@retval None
 */
 void Init_Single_Motor(TIM_TypeDef * TIM, int Channel);
-/**
-	*	@brief Make the car turn Left
+/**	@brief Make the car turn Left
 	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
 	*	@retval None
 */
 void Turn_Left(float Rot);
 
-/**
-	*	@brief Make the car turn Right
+/**	@brief Make the car turn Right
 	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
 	*	@retval None
 */
 void Turn_Right(float Rot);
 
-/**
-	*	@brief Stop Turn the front wheels
+/**	@brief Stop Turn the front wheels
 	*	@retval None
 */
 void Stop_Turn(void);
 
-/**
-	*	@brief Reset the Direction of the car to 0° to go on straigt line
+/**	@brief Reset the Direction of the car to 0ï¿½ to go on straigt line
 	*	@retval None
 */
 void Reset_Direction(void); // We need to figure it how to do this !!!!
 
-/**
-	*	@brief Make the car go forward
+/**	@brief Make the car go forward
 	*	@parma Speed: Set the speed to roll (value between 0-1)
 	*	@retval None
 */
 void Go_Forward(float Speed);
 
-/**
-	*	@brief Make the car go forward
+/**	@brief Make the car go forward
 	*	@parma Speed: Set the speed to roll (value between 0-1)
 	*	@retval None
 */
 void Go_Back(float Speed);
 
-/**
-	*	@brief Stop the Car
+/**	@brief Stop the Car
 	*	@retval None
 */
 void Stop_Car(void);
 
-/**
-	*	@brief Set the Duty Cycle of the PWM. The point is to adjust the value to the PWM's allowed range (given by MaxDutyCycle)
+/**	@brief Set the Duty Cycle of the PWM. The point is to adjust the value to the PWM's allowed range (given by MaxDutyCycle)
 	*	@parma Value: Speed or Rotation
 	*	@retval Correct duty cycle of the PMW's motors
 */
 float Calcul_DutyCycle(float Value);
 
-/**
-	*	@brief A procedure function to test the above functions
+/**	@brief A procedure function to test the above functions
 	*	@retval None
 */
 void Motor_Test(void); // TODO
 
-/**
-	*	@brief Search the GPIO/Pin linked to the PWM's Channel/Timer in no remap mode
+/**	@brief Search the GPIO/Pin linked to the PWM's Channel/Timer in no remap mode
 	* @param TIM: Timer of the PWM
 	*	@param Channel: Channel of the PWM
 	*	@retval A GPIO_Pin struct with the right GPIO and Pin of the PWM

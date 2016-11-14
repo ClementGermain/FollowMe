@@ -7,8 +7,10 @@
 
 void StartBarstow(void)
 {
-	
+	// Use to toggle a LED during the first review sprint
+	// Can be cancel after that
 	Init_GPIO_Out(GPIOA, GPIO_Pin_5);
+	
 	/*!< Init motors. */
 	Init_All_Motor();
 	

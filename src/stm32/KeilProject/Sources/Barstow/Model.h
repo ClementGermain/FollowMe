@@ -5,13 +5,13 @@
 
 typedef struct
 {
-	uint32_t current;
-	uint32_t voltage;
+	uint32_t current; // mA
+	uint32_t voltage; // mV
 }MotorModel_Typedef;
 
 typedef struct
 {
-	uint32_t distance;
+	uint32_t distance; // cm
 }UltrasonicSensor_Typedef;
 
 typedef struct 

@@ -2,6 +2,10 @@
 #define __DELAY__
 #include "stm32f10x.h" 
 
+
+/** @brief Wait a unprecise moment before going to the next instruction (about 0.5s) 
+    * @retval None
+*/
 void Delay(void);
 
 /*void DWT_Init(void);
