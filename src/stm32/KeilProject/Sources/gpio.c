@@ -36,3 +36,10 @@ void Init_GPIO_PWM(GPIO_TypeDef * GPIO, int Pin)
  
 }
 
+void Toggle_LED(GPIO_TypeDef * GPIO, int Pin){
+	if (GPIO_ReadOutputDataBit(GPIO, Pin) == Bit_RESET)
+		GPIO_SetBits(GPIO, Pin);
+	else
+		GPIO_ResetBits(GPIO, Pin);
+}
+

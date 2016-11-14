@@ -25,4 +25,10 @@ void Init_GPIO_Out(GPIO_TypeDef * GPIO, int Pin);
 */
 void Init_GPIO_PWM(GPIO_TypeDef * GPIO, int Pin);
 
+/** @brief Toggle an Output GPIO
+	*	@param GPIO: GPIOA or GPIOB
+	*	@param Pin: Pin adress (like GPIO_Pin_6)
+	*	@retval None
+*/
+void Toggle_LED(GPIO_TypeDef * GPIO, int Pin);
 #endif

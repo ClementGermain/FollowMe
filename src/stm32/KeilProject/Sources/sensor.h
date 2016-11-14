@@ -2,8 +2,7 @@
 #define __SENSOR__
 
 #include "stdint.h"
-#include "Barstow/Control.h"
-#include "include.h"
+#include "Barstow/Model.h"
 
 #define SENSOR_FRONT_L				1
 #define SENSOR_FRONT_R				2

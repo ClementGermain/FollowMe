@@ -1,10 +1,22 @@
 #include "sensor.h"
 
 void Update_Sensor(BarstowModel_Typedef * Modele){
-	int b;
-	for (int i=SENSOR_FRONT_R; i++; SENSOR_BACK_C){
-		b++;
-	}
+	
+	Modele->frontRightUSensor.distance = (Get_USensor(SENSOR_FRONT_R));
+	Modele->frontLeftUSensor.distance = (Get_USensor(SENSOR_FRONT_L));
+	Modele->frontCenterUSensor.distance = (Get_USensor(SENSOR_FRONT_C));
+	Modele->rearRightUSensor.distance = (Get_USensor(SENSOR_BACK_R));
+	Modele->rearLeftUSensor.distance = (Get_USensor(SENSOR_BACK_L));
+	Modele->rearCenterUSensor.distance = (Get_USensor(SENSOR_BACK_C));
+	
+	Modele->directionMotor.current = Get_Current(MOTOR_DIRECTION);
+	Modele->directionMotor.voltage = Get_Voltage(MOTOR_DIRECTION);
+	
+	Modele->leftWheelMotor.current = Get_Current(MOTOR_LEFT);
+	Modele->leftWheelMotor.voltage = Get_Voltage(MOTOR_LEFT);
+	
+	Modele->rightWheelMotor.current = Get_Current(MOTOR_RIGHT);
+	Modele->rightWheelMotor.voltage = Get_Voltage(MOTOR_RIGHT);
 }
 
 uint32_t Get_USensor(int Sensor){
