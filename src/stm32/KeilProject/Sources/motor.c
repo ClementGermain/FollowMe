@@ -2,30 +2,35 @@
 
 void Update_Motors(BarstowControl_Typedef * Control){
 	
-	
 	switch (Control->propulsionMotor.direction){
 		case MOTOR_DIRECTION_STOP:
 			Stop_Car();
+			GPIO_ResetBits(GPIOA, GPIO_Pin_9);
 			break;
 		case MOTOR_DIRECTION_BACKWARD:
 			Go_Back(Control->propulsionMotor.speed);
+			GPIO_SetBits(GPIOA, GPIO_Pin_9);
 			break;
 		case MOTOR_DIRECTION_FORWARD:
 			Go_Forward(Control->propulsionMotor.speed);
+			GPIO_SetBits(GPIOA, GPIO_Pin_9);
 			break;
 	}
 			
-		switch(Control->directionMotor.direction){
-			case MOTOR_DIRECTION_STOP:
-				Stop_Turn();
-				break;
-			case MOTOR_DIRECTION_RIGHT:
-				Turn_Right(Control->directionMotor.speed);
+	switch(Control->directionMotor.direction){
+		case MOTOR_DIRECTION_STOP:
+			Stop_Turn();
+			GPIO_ResetBits(GPIOA, GPIO_Pin_9);
 			break;
-			case MOTOR_DIRECTION_LEFT:
-				Turn_Left(Control->directionMotor.speed);
-			break;
-		}
+		case MOTOR_DIRECTION_RIGHT:
+			Turn_Right(Control->directionMotor.speed);
+			GPIO_SetBits(GPIOA, GPIO_Pin_9);
+		break;
+		case MOTOR_DIRECTION_LEFT:
+			Turn_Left(Control->directionMotor.speed);
+			GPIO_SetBits(GPIOA, GPIO_Pin_9);
+		break;
+	}
 }
 
 void Init_All_Motor(void){
