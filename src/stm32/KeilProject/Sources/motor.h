@@ -100,7 +100,7 @@ float Calcul_DutyCycle(float Value);
 	*	@brief A procedure function to test the above functions
 	*	@retval None
 */
-int Motor_Test(int Value); // TODO
+void Motor_Test(void); // TODO
 
 /**
 	*	@brief Search the GPIO/Pin linked to the PWM's Channel/Timer in no remap mode

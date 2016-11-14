@@ -1,4 +1,5 @@
 #include "motor.h"
+#include "delay.h"
 
 void Update_Motors(BarstowControl_Typedef * Control){
 	
@@ -94,9 +95,13 @@ float Calcul_DutyCycle(float Value){
 		return 0.0;
 }
 
-void Motor_test(){
-	// TODO
-	// A delay function would be usefull here
+void Motor_Test(void){
+    Turn_Left(0.3);
+		Delay();
+    Turn_Right(0.3);
+		Delay();
+		Stop_Turn();
+		Delay();
 }
 
 GPIO_Pin_TypeDef Find_GPIO_Pin(TIM_TypeDef * TIM, int Channel){
