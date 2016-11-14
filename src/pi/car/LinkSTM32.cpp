@@ -40,7 +40,7 @@ void LinkSTM32::run() {
 		
 		// Exchange data with SPI
 		std::memcpy(spiBuffer, &control, sizeof(BarstowControl_Typedef));
-		SPI.Send(spiBuffer, bufferSize)
+		SPI.Send(spiBuffer, bufferSize);
 		std::memcpy(&model, spiBuffer, sizeof(BarstowModel_Typedef));
 
 		// Update Car

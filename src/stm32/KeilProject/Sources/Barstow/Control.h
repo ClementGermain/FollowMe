@@ -19,8 +19,7 @@ typedef struct
 typedef struct 
 {
 	MotorControl_Typedef directionMotor;
-	MotorControl_Typedef leftWheelMotor;
-	MotorControl_Typedef rightWheelMotor;
+	MotorControl_Typedef propulsionMotor;
 	
 	//int checksum;
 	

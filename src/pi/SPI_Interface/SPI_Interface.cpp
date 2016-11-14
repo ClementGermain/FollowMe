@@ -22,4 +22,3 @@ int SPI_Interface::Send(unsigned char* data, int len)
 {
 	return wiringPiSPIDataRW (m_channel, data, len) ;
 }
-
