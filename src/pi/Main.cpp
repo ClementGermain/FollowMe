@@ -3,7 +3,7 @@
 #include "car/Car.hpp"
 
 int main() {
-	LinkSTM32 link(50);
+	LinkSTM32 link(100);
 
 	// Main loop
 	runUI();

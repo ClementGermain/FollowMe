@@ -35,14 +35,9 @@ void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 			controlStructure.directionMotor = control;
 			break;
 		case Car::LeftWheelMotor:
-			controlStructure.leftWheelMotor = control;
-			break;
-		case Car::RightWheelMotor:
-			controlStructure.rightWheelMotor = control;
-			break;
 		case Car::BothWheelMotors:
-			controlStructure.leftWheelMotor = control;
-			controlStructure.rightWheelMotor = control;
+		case Car::RightWheelMotor:
+			controlStructure.propulsionMotor = control;
 			break;
 	}
 
