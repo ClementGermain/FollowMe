@@ -13,7 +13,7 @@ typedef struct
 	// 'speed' must be in range [0, 1]
 	float speed;
 	// 'direction' is either 1, 0, or -1, see above
-	char direction; 
+	int direction; 
 } MotorControl_Typedef;
 
 typedef struct 

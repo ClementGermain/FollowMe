@@ -1,28 +1,29 @@
 #include "motor.h"
 
-void Update_Motors(BarstowControl_Typedef Control){
+void Update_Motors(BarstowControl_Typedef * Control){
 	
-	switch (Control.propulsionMotor.direction){
-		case 0:
+	
+	switch (Control->propulsionMotor.direction){
+		case MOTOR_DIRECTION_STOP:
 			Stop_Car();
 			break;
-		case -1:
-			Go_Back(Control.directionMotor.speed);
+		case MOTOR_DIRECTION_BACKWARD:
+			Go_Back(Control->propulsionMotor.speed);
 			break;
-		case 1:
-			Go_Forward(Control.directionMotor.speed);
+		case MOTOR_DIRECTION_FORWARD:
+			Go_Forward(Control->propulsionMotor.speed);
 			break;
 	}
 			
-		switch(Control.directionMotor.direction){
-			case 0:
+		switch(Control->directionMotor.direction){
+			case MOTOR_DIRECTION_STOP:
 				Stop_Turn();
 				break;
-			case -1:
-				Turn_Right(Control.directionMotor.speed);
+			case MOTOR_DIRECTION_RIGHT:
+				Turn_Right(Control->directionMotor.speed);
 			break;
-			case 1:
-				Turn_Left(Control.directionMotor.speed);
+			case MOTOR_DIRECTION_LEFT:
+				Turn_Left(Control->directionMotor.speed);
 			break;
 		}
 }

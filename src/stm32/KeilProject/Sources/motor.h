@@ -23,7 +23,7 @@ typedef struct {
 	int Pin;
 } GPIO_Pin_TypeDef;  
 
-void Update_Motors(BarstowControl_Typedef Control);
+void Update_Motors(BarstowControl_Typedef * Control);
 
 /**
 	*	@brief Init all the motors's PWM and GPIO

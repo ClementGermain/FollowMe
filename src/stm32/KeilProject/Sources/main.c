@@ -1,9 +1,9 @@
-
 #include "stm32f10x.h"
 #include "gpio.h"
 #include "pwm.h"
 #include "motor.h"
 #include "SPI_Interface/SPI_Interface.h"
+#include "Barstow/Barstow.h"
 
 // Uncomment the line below according to the target STM32 device used
 
@@ -23,17 +23,7 @@ int main(void)
 	// RCC Configuration
   RCC_Configuration();
 	
-	// Put a hight level on GPIO_PIN_9 to enable motor's driver
-	Init_GPIO_Out(GPIOA, GPIO_Pin_9);
-	GPIO_SetBits(GPIOA, GPIO_Pin_9);
-	
-	Init_All_Motor();
-	
-	Turn_Right(1.0);
-	Go_Back(1.0);
-	
-	InitializeSPI2();
-
+	StartBarstow();
 	
   while (1)
   {}

@@ -1,29 +1,45 @@
 #include "Model.h"
 #include "Control.h"
+#include "../motor.h"
 #include "../SPI_Interface/SPI_Interface.h"
-
-
 
 
 void StartBarstow(void)
 {
+	/*!< Init motors. */
+	Init_All_Motor();
+	
 	/*!< Create model and control structure for SPI. */
-	BarstowControl_Typedef 	BarstowControl;
-	BarstowModel_Typedef 		BarstowModel;
+	int modSize = sizeof(BarstowModel_Typedef);
+	int conSize = sizeof(BarstowControl_Typedef);
+	int bufferSize = modSize > conSize ? modSize : conSize;
+	bufferSize = bufferSize / sizeof(unsigned char) + sizeof(unsigned char);
+	
+	unsigned char sendBuffer[bufferSize];
+	unsigned char receiveBuffer[bufferSize];
+	
+	BarstowControl_Typedef 	* BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
+	BarstowModel_Typedef 		* BarstowModel 		= (BarstowModel_Typedef*) sendBuffer;
+	
+	/*!< Init control structures. */
+	BarstowControl->directionMotor.direction=0;
+	BarstowControl->directionMotor.speed=0;
+	BarstowControl->propulsionMotor.direction=0;
+	BarstowControl->propulsionMotor.speed=0;
+	
+	BarstowModel->directionMotor.current=123;
 	
 	/*!< Init Ultrasonic sensor. */
-	
 	//TODO
-	//Use &(BarstowModel.??USensor)
-	
-	
-	/*< Init PWM and motors. */
-	//TODO
-	//Use &(BarstowModel.?)
 	
 	/*< Init SPI communication. */
-	void InitializeSPI2(void);
+	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
+	while(1)
+	{
+		Update_Motors(BarstowControl);
+		for (int i=0 ; i < 50000 ; i++);
+	}
 	
 	return;
 }
