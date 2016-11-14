@@ -23,7 +23,12 @@ typedef struct {
 	int Pin;
 } GPIO_Pin_TypeDef;  
 
-void Update_Motors(BarstowControl_Typedef Control);
+/**
+	*	@brief Change all the PWM values of the motors based on the SPI struct
+	* @param Control: Control struct with PWM informations from the SPI communication
+	*	@retval None
+*/
+void Update_Motors(BarstowControl_Typedef * Control);
 
 /**
 	*	@brief Init all the motors's PWM and GPIO
