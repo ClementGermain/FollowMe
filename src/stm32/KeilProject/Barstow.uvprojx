@@ -377,112 +377,122 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>library</GroupName>
           <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>motor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\motor.h</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\pwm.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\delay.h</FilePath>
-            </File>
             <File>
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\adc.c</FilePath>
+              <FilePath>.\Sources\library\adc.c</FilePath>
             </File>
             <File>
               <FileName>adc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\adc.h</FilePath>
+              <FilePath>.\Sources\library\adc.h</FilePath>
             </File>
             <File>
-              <FileName>sensor.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\sensor.c</FilePath>
+              <FilePath>.\Sources\library\delay.c</FilePath>
             </File>
             <File>
-              <FileName>sensor.h</FileName>
+              <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\sensor.h</FilePath>
+              <FilePath>.\Sources\library\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\timer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>SPI_Interface</GroupName>
+          <GroupName>interface</GroupName>
           <Files>
             <File>
-              <FileName>SPI_Interface.c</FileName>
+              <FileName>motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\SPI_Interface\SPI_Interface.c</FilePath>
+              <FilePath>.\Sources\interface\motor.c</FilePath>
             </File>
             <File>
-              <FileName>SPI_Interface.h</FileName>
+              <FileName>motor.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\SPI_Interface\SPI_Interface.h</FilePath>
+              <FilePath>.\Sources\interface\motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>us_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\us_sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>us_sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\us_sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\motor_sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor_sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\motor_sensor.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Barstow</GroupName>
+          <GroupName>barstow</GroupName>
           <Files>
             <File>
-              <FileName>Barstow.c</FileName>
+              <FileName>barstow.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
+              <FilePath>.\Sources\barstow\barstow.c</FilePath>
             </File>
             <File>
-              <FileName>Barstow.h</FileName>
+              <FileName>barstow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Barstow.h</FilePath>
+              <FilePath>.\Sources\barstow\barstow.h</FilePath>
             </File>
             <File>
-              <FileName>Control.h</FileName>
+              <FileName>control.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Control.h</FilePath>
+              <FilePath>.\Sources\barstow\control.h</FilePath>
             </File>
             <File>
-              <FileName>Model.h</FileName>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\barstow\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>model.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Model.h</FilePath>
+              <FilePath>.\Sources\barstow\model.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -868,112 +878,122 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>library</GroupName>
           <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\main.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\motor.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>motor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\motor.h</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\pwm.h</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\delay.h</FilePath>
-            </File>
             <File>
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\adc.c</FilePath>
+              <FilePath>.\Sources\library\adc.c</FilePath>
             </File>
             <File>
               <FileName>adc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\adc.h</FilePath>
+              <FilePath>.\Sources\library\adc.h</FilePath>
             </File>
             <File>
-              <FileName>sensor.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\sensor.c</FilePath>
+              <FilePath>.\Sources\library\delay.c</FilePath>
             </File>
             <File>
-              <FileName>sensor.h</FileName>
+              <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\sensor.h</FilePath>
+              <FilePath>.\Sources\library\delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\timer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>SPI_Interface</GroupName>
+          <GroupName>interface</GroupName>
           <Files>
             <File>
-              <FileName>SPI_Interface.c</FileName>
+              <FileName>motor.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\SPI_Interface\SPI_Interface.c</FilePath>
+              <FilePath>.\Sources\interface\motor.c</FilePath>
             </File>
             <File>
-              <FileName>SPI_Interface.h</FileName>
+              <FileName>motor.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\SPI_Interface\SPI_Interface.h</FilePath>
+              <FilePath>.\Sources\interface\motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>us_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\us_sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>us_sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\us_sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor_sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\motor_sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor_sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\motor_sensor.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Barstow</GroupName>
+          <GroupName>barstow</GroupName>
           <Files>
             <File>
-              <FileName>Barstow.c</FileName>
+              <FileName>barstow.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
+              <FilePath>.\Sources\barstow\barstow.c</FilePath>
             </File>
             <File>
-              <FileName>Barstow.h</FileName>
+              <FileName>barstow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Barstow.h</FilePath>
+              <FilePath>.\Sources\barstow\barstow.h</FilePath>
             </File>
             <File>
-              <FileName>Control.h</FileName>
+              <FileName>control.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Control.h</FilePath>
+              <FilePath>.\Sources\barstow\control.h</FilePath>
             </File>
             <File>
-              <FileName>Model.h</FileName>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\barstow\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>model.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Sources\Barstow\Model.h</FilePath>
+              <FilePath>.\Sources\barstow\model.h</FilePath>
             </File>
           </Files>
         </Group>

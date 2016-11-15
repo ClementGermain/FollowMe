@@ -1,4 +1,4 @@
-#include "SPI_Interface.h"
+#include "spi.h"
 
 void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char * sendBuffer, int sendLen)
 {

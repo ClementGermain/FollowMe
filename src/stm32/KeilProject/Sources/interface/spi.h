@@ -1,11 +1,11 @@
-#ifndef __SPI_INTERFACE_H
-#define __SPI_INTERFACE_H
+#ifndef __SPI__
+#define __SPI__
 
 // include stm32 library
 #include "stm32f10x_spi.h"
 
 // include local library
-#include "../gpio.h"
+#include "../library/gpio.h"
 
 /** @brief Initialize the SPI
 	* @param receiveBuffer: Reception buffer

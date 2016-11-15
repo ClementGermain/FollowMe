@@ -1,4 +1,4 @@
-#include "Barstow.h"
+#include "barstow.h"
 
 void StartBarstow(void)
 {	

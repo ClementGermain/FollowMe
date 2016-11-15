@@ -1,9 +1,9 @@
 #include "stm32f10x_rcc.h"
-#include "gpio.h"
-#include "pwm.h"
-#include "motor.h"
-#include "SPI_Interface/SPI_Interface.h"
-#include "Barstow/Barstow.h"
+#include "../library/gpio.h"
+#include "../library/timer.h"
+#include "../interface/motor.h"
+#include "../interface/spi.h"
+#include "barstow.h"
 
 /** @brief  Configures the different system clocks.
   * @param  None
