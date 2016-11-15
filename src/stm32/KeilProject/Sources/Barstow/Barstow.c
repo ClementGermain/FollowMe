@@ -23,17 +23,21 @@ void StartBarstow(void)
 	BarstowControl->propulsionMotor.direction=0;
 	BarstowControl->propulsionMotor.speed=0;
 	
-	BarstowModel->directionMotor.current=123;
-	
 	/*!< Init Ultrasonic sensor. */
 	//TODO
+	BarstowModel->frontCenterUSensor.distance = 0.0f; //Avoid warning, must be removed when sensors are implemented
 	
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
+	/*!< Entering main loop. */
 	while(1)
 	{
+		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
+		
+		/*! < Global temporisation. */
+		//TODO use more precise delay fonction
 		for (int i=0 ; i < 50000 ; i++);
 	}
 }
