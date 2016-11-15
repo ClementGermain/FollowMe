@@ -8,6 +8,10 @@
 #include "../motor.h"
 #include "../SPI_Interface/SPI_Interface.h"
 
+
+/** @brief Start the Barstow car's programm
+	* @retval None
+*/
 void StartBarstow(void);
 
 #endif

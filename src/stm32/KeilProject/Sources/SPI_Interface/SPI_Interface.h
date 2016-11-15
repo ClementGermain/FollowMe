@@ -7,13 +7,11 @@
 // include local library
 #include "../gpio.h"
 
-#define BUFFER_SIZE 10
-
 /** @brief Initialize the SPI
-	* @param receiveBuffer: ??
-	* @param receiveLen: ??
-	* @param sendBuffer: ??
-	* @param sendLen: ??
+	* @param receiveBuffer: Reception buffer
+	* @param receiveLen: 		Reception buffer length
+	* @param sendBuffer: 		Sending buffer
+	* @param sendLen: 			Sending buffer length
 	* @retval None
 */
 void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char * sendBuffer, int sendLen);

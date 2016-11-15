@@ -3,17 +3,32 @@
 
 #include "stdint.h"
 
+
+/** @brief 	Strcuture that contains the feedback
+	*  				variables of a motor
+	* 
+*/
 typedef struct
 {
-	uint32_t current; // mA
-	uint32_t voltage; // mV
+	uint32_t current; // Electric current in mA
+	uint32_t voltage; // Voltage in mV
 }MotorModel_Typedef;
 
+
+/** @brief 	Strcuture that contains the feedback
+	*  				variables of an ultrasonic sensor
+	* 
+*/
 typedef struct
 {
-	uint32_t distance; // cm
+	uint32_t distance; // Distance to the closest object in cm
 }UltrasonicSensor_Typedef;
 
+
+/** @brief 	Strcuture that contains all the feedback
+	*  				variables of the Barstow car
+	* 
+*/
 typedef struct 
 {
 	MotorModel_Typedef directionMotor;
