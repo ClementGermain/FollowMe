@@ -4,14 +4,13 @@
 
 
 LogView::LogView(int x, int y, int w, int h) :
+	View(x, y),
 	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w,h,32, 0,0,0,0)),
 	prevEndCursor(Log.getCursor(true))
 {
-	screenPos.x = x;
-	screenPos.y = y;
 }
 
-void LogView::draw(SDL_Surface * screen) {
+void LogView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	// if new lines have been added: redraw
 	if(Log.hasNext(prevEndCursor)) {
 		// clear background
@@ -40,5 +39,9 @@ void LogView::draw(SDL_Surface * screen) {
 		}
 	}
 
-	SDL_BlitSurface(buffer, NULL, screen, &screenPos);
+	if(needRedraw) {
+		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
+		if(updateScreen)
+			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
+	}
 }

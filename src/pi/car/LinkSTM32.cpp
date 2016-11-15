@@ -2,7 +2,7 @@
 #include <cstring>
 #include "Car.hpp"
 #include "LinkSTM32.hpp"
-#include "../SPI_Interface/SPI_Interface.hpp"
+#include "SPI_Interface/SPI_Interface.hpp"
 
 using namespace std;
 

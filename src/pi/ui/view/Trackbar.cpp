@@ -6,16 +6,13 @@
 using namespace std;
 
 Trackbar::Trackbar(float rangeMin, float rangeMax, int x, int y, int width, int height) :
+	View(x, y),
 	rangeMin(rangeMin), rangeMax(rangeMax),
 	position(rangeMin),
 	drawable(SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);}),
-	transparent(SDL_MapRGB(drawable->format, 255,255,255)),
 	invalidate(true),
 	borderSize(2)
 {
-	screenPos.x = x;
-	screenPos.y = y;
-	//SDL_SetColorKey(drawable.get(), SDL_SRCCOLORKEY, transparent);
 }
 
 Trackbar::~Trackbar() {
@@ -29,15 +26,13 @@ void Trackbar::setPosition(float pos) {
 	}
 }
 
-void Trackbar::draw(SDL_Surface * screen) {
+void Trackbar::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * drawable = this->drawable.get();
 	if(invalidate) {
 		int cursorPos = borderSize + (drawable->w-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin);
 
-		// clear
-		SDL_FillRect(drawable, NULL, transparent);
 		// border
-		boxRGBA(drawable, 0,0, drawable->w, drawable->h, 0,0,0, 255);
+		SDL_FillRect(drawable, NULL, 0x0);
 		// before cursor
 		boxRGBA(drawable, borderSize, borderSize, cursorPos-1, drawable->h-borderSize-1, 30, 200, 30, 255);
 		// after cursor
@@ -48,6 +43,10 @@ void Trackbar::draw(SDL_Surface * screen) {
 		invalidate = false;
 	}
 
-	SDL_BlitSurface(drawable, NULL, screen, &screenPos);
+	if(needRedraw) {
+		SDL_BlitSurface(drawable, NULL, screen, &screenPos);
+		if(updateScreen)
+			SDL_UpdateRect(screen, screenPos.x, screenPos.y, drawable->w, drawable->h);
+	}
 }
 

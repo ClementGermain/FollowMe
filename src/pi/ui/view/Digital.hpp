@@ -4,11 +4,12 @@
 #include <SDL/SDL.h>
 #include <memory>
 #include <string>
+#include "View.hpp"
 
-class Digital {
+class Digital : public View {
 	public:
 		Digital(std::string const& format, int x, int y, int w, int h=15, bool centerTextHoriz=true, bool centerTextVert=true);
-		void draw(SDL_Surface *screen);
+		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
 		void setValue(float value);
 
 	private:
@@ -18,7 +19,6 @@ class Digital {
 		bool invalidate;
 		bool centerHoriz;
 		bool centerVert;
-		SDL_Rect screenPos;
 };
 
 #endif

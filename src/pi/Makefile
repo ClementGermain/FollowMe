@@ -22,10 +22,11 @@ TARGET=barstow
 UI_OBJECTS=ui/MainUI.o \
 		   ui/MainView.o \
 		   ui/CommandLine.o \
-		   ui/KeyboardInput.o \
-		   ui/Trackbar.o \
-		   ui/Digital.o \
-		   ui/LogView.o \
+		   ui/view/View.o \
+		   ui/view/KeyboardInput.o \
+		   ui/view/Trackbar.o \
+		   ui/view/Digital.o \
+		   ui/view/LogView.o \
 		   ui/CPULoad.o
 
 OBJECTS=Main.o \

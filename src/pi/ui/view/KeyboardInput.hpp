@@ -3,15 +3,16 @@
 
 #include <vector>
 #include <SDL/SDL.h>
+#include "View.hpp"
 
-class KeyboardInput {
+class KeyboardInput : public View {
 	public:
 		KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h);
 		~KeyboardInput();
 		bool handleEvent(SDL_Event & event);
 		void toggleEnabled();
 		bool isEnabled() { return enabled; }
-		void draw(SDL_Surface * s);
+		void draw(SDL_Surface * s, bool needRedraw=true, bool updateScreen=false);
 
 		static const int GoForward = 1;
 		static const int GoBackward = -1;
@@ -28,7 +29,6 @@ class KeyboardInput {
 		SDL_Surface * arrowsBMP;
 		SDL_Surface * buffer;
 		bool invalidate;
-		SDL_Rect screenPos;
 };
 
 #endif

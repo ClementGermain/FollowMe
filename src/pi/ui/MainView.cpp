@@ -6,13 +6,13 @@
 #include <thread>
 #include <iostream>
 #include <vector>
-#include "../car/Car.hpp"
-#include "../utils/Log.hpp"
-#include "../car/Camera.hpp"
-#include "KeyboardInput.hpp"
-#include "Trackbar.hpp"
-#include "Digital.hpp"
-#include "LogView.hpp"
+#include "car/Car.hpp"
+#include "utils/Log.hpp"
+#include "car/Camera.hpp"
+#include "view/KeyboardInput.hpp"
+#include "view/Trackbar.hpp"
+#include "view/Digital.hpp"
+#include "view/LogView.hpp"
 
 using namespace std;
 

@@ -5,8 +5,8 @@
 #include <thread>
 #include <SDL/SDL.h>
 #include "../car/Camera.hpp"
-#include "Digital.hpp"
-#include "Trackbar.hpp"
+#include "view/Digital.hpp"
+#include "view/Trackbar.hpp"
 #include "CPULoad.hpp"
 
 class MainView {

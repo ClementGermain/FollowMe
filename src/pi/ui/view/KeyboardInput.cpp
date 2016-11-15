@@ -8,6 +8,7 @@ using namespace std;
 
 
 KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h) :
+	View(x, y),
 	enabled(false),
 	isKeyPressed(4, false),
 	lastStates(2, 0), 
@@ -17,8 +18,6 @@ KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotor
 	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w,h,32, 0,0,0,0)),
 	invalidate(true)
 {
-	screenPos.x = x;
-	screenPos.y = y;
 }
 
 KeyboardInput::~KeyboardInput() {
@@ -87,7 +86,7 @@ void KeyboardInput::toggleEnabled() {
 	invalidate = true;
 }
 
-void KeyboardInput::draw(SDL_Surface * screen) {
+void KeyboardInput::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	if(invalidate) {
 		SDL_Rect pos = {
 			(Sint16) ((buffer->w-arrowsBMP->w) / 2),
@@ -134,5 +133,9 @@ void KeyboardInput::draw(SDL_Surface * screen) {
 		invalidate = false;
 	}
 
-	SDL_BlitSurface(buffer, NULL, screen, &screenPos);
+	if(needRedraw) {
+		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
+		if(updateScreen)
+			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
+	}
 }
