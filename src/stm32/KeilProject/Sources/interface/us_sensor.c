@@ -31,7 +31,12 @@ void Init_US_Sensor(US_Sensor_Typedef * Sensor){
 }
 
 void Init_All_US_Sensor(void){
-	//TODO
+	Init_US_Sensor(SENSOR_FRONT_L);
+	Init_US_Sensor(SENSOR_FRONT_R);
+	Init_US_Sensor(SENSOR_FRONT_C);
+	Init_US_Sensor(SENSOR_BACK_L);
+	Init_US_Sensor(SENSOR_BACK_R);
+	Init_US_Sensor(SENSOR_BACK_C);
 }
 
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){

@@ -38,7 +38,9 @@ void Init_Motor_Sensor(Motor_Sensor_Typedef * Motor_Sensor){
 }
 
 void Init_All_Motor_Sensor(void){
-	//TODO
+	Init_Motor_Sensor(MOTOR_DIRECTION);
+	Init_Motor_Sensor(MOTOR_LEFT);
+	Init_Motor_Sensor(MOTOR_RIGHT);
 }
 
 uint32_t Get_Current(Motor_Sensor_Typedef * Motor_Sensor){
