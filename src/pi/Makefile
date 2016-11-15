@@ -1,33 +1,34 @@
-# OpenCV LD flags
-OCV_LDFLAGS=-lopencv_highgui -lopencv_core -lopencv_legacy -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_imgproc
-# SDL flags
-SDL_FLAGS=-lSDL -lSDLmain -lSDL_gfx
-# Raspicam_cv LD flags
-export RASPICAM_CV_DIR:=/home/pi/raspicam_cv/robidouille/raspicam_cv
-USERLAND_LIB=/home/pi/raspicam_cv/userland/build/lib
-RCAM_LDFLAGS=-L$(USERLAND_LIB) -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host \
-		   -L$(RASPICAM_CV_DIR) -lraspicamcv -lpthread
-# Raspicam_cv C++ flags
-RCAM_CXXFLAGS=-I$(RASPICAM_CV_DIR)
+# OpenCV lib
+LDFLAGS +=-lopencv_highgui -lopencv_core -lopencv_legacy -lopencv_video -lopencv_features2d -lopencv_calib3d -lopencv_imgproc
+# SDL lib
+LDFLAGS +=-lSDL -lSDLmain -lSDL_gfx
+# Raspicam_cv include
+RASPI_CXXFLAGS +=-I/home/pi/raspicam_cv/robidouille/raspicam_cv
+# Raspicam_cv lib
+RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
+		   		-L/home/pi/raspicam_cv/userland/build/lib \
+				-lraspicamcv -lpthread -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host
 
 #SPI lib
-SPI_LDFLAGS=-lwiringPi
+RASPI_LDFLAGS=-lwiringPi
 
+# other flags
+CXXFLAGS +=-Wall -std=c++11 -I. -MD
+LDFLAGS +=-lpthread
+
+# binary name and location
 TARGET=barstow
 
-CXXFLAGS=-Wall -std=c++11 -MD
-LDFLAGS=$(OCV_LDFLAGS) $(SDL_FLAGS) -lpthread # $(RCAM_LDFLAGS) will be added if target is not 'noraspi'
-
-
 UI_OBJECTS=ui/MainUI.o \
-		ui/MainView.o \
-		ui/Camera.o \
-		ui/CommandLine.o \
-		ui/KeyboardInput.o \
-		ui/Trackbar.o \
-		ui/Digital.o \
-		ui/LogView.o \
-		ui/CPULoad.o
+		   ui/MainView.o \
+		   ui/Camera.o \
+		   ui/CommandLine.o \
+		   ui/KeyboardInput.o \
+		   ui/Trackbar.o \
+		   ui/Digital.o \
+		   ui/LogView.o \
+		   ui/CPULoad.o
+
 OBJECTS=Main.o \
 		car/Car.o \
 		car/LinkSTM32.o \
@@ -35,9 +36,8 @@ OBJECTS=Main.o \
 		SPI_Interface/SPI_Interface.o \
 		$(UI_OBJECTS)
 
-all: LDFLAGS += $(RCAM_LDFLAGS)
-all: LDFLAGS += $(SPI_LDFLAGS)
-all: CXXFLAGS += $(RCAM_CXXFLAGS)
+all: LDFLAGS +=$(RASPI_LDFLAGS)
+all: CXXFLAGS +=$(RCAM_CXXFLAGS)
 all: $(TARGET)
 
 noraspi: RASPI=noraspi
