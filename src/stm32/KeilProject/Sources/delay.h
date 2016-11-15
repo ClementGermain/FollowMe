@@ -1,19 +1,19 @@
 #ifndef __DELAY__
 #define __DELAY__
-#include "stm32f10x.h" 
 
+// include stm32 library
+#include "stm32f10x_tim.h"
 
-/** @brief Wait a unprecise moment before going to the next instruction (about 0.5s) 
-    * @retval None
+/** @brief Wait a unprecise moment before going to the next instruction (about 0.5s)
+	* @retval None
 */
 void Delay(void);
 
-/*void DWT_Init(void);
-uint32_t DWT_Get(void);
-uint8_t DWT_Compare(int32_t tp);
-void DWT_Delay(uint32_t us); // microseconds;*/
-
-
+/** @brief Wait a precise moment before going to the next instruction 
+	* @param time to wait in ms
+	* @retval None
+*/
+void Delay_ms(float time); // Not done yet
 
 #endif
 

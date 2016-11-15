@@ -1,11 +1,14 @@
 #include "delay.h"
 
 void Delay() {
-for (int n=0; n < 10000000; n++);
+  for (int n=0; n < 10000000; n++);
 }
  
 
-//A voir pour mettre en place un vrai Delay
+void Delay_ms(float time){ // Not done yet
+	// Empty
+}
+
 /*
 extern uint32_t SystemCoreClock;
 void DWT_Init(void) 
@@ -34,7 +37,6 @@ void DWT_Delay(uint32_t us) // microseconds
   int32_t tp = DWT_Get() + us * (SystemCoreClock/1000000);
   while (DWT_Compare(tp));
 }*/
-
 
 
 

@@ -1,16 +1,7 @@
-#include "Model.h"
-#include "Control.h"
-#include "../gpio.h"
-#include "../motor.h"
-#include "../SPI_Interface/SPI_Interface.h"
-
+#include "Barstow.h"
 
 void StartBarstow(void)
-{
-	// Use to toggle a LED during the first review sprint
-	// Can be cancel after that
-	Init_GPIO_Out(GPIOA, GPIO_Pin_5);
-	
+{	
 	/*!< Init motors. */
 	Init_All_Motor();
 	
@@ -24,7 +15,7 @@ void StartBarstow(void)
 	unsigned char receiveBuffer[bufferSize];
 	
 	BarstowControl_Typedef 	* BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
-	BarstowModel_Typedef 		* BarstowModel 		= (BarstowModel_Typedef*) sendBuffer;
+	BarstowModel_Typedef * BarstowModel 		= (BarstowModel_Typedef*) sendBuffer;
 	
 	/*!< Init control structures. */
 	BarstowControl->directionMotor.direction=0;

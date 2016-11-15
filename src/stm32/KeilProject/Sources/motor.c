@@ -1,5 +1,4 @@
 #include "motor.h"
-#include "delay.h"
 
 void Update_Motors(BarstowControl_Typedef * Control){
 	// the GPIO_SetBits() functions are only use to toogle a LED during the first review demonstration

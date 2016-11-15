@@ -424,6 +424,26 @@
               <FileType>5</FileType>
               <FilePath>.\Sources\delay.h</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\sensor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -448,6 +468,21 @@
               <FileName>Barstow.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
+            </File>
+            <File>
+              <FileName>Barstow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Barstow.h</FilePath>
+            </File>
+            <File>
+              <FileName>Control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Control.h</FilePath>
+            </File>
+            <File>
+              <FileName>Model.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Model.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -880,6 +915,26 @@
               <FileType>5</FileType>
               <FilePath>.\Sources\delay.h</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>adc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\adc.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\sensor.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\sensor.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -904,6 +959,21 @@
               <FileName>Barstow.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Sources\Barstow\Barstow.c</FilePath>
+            </File>
+            <File>
+              <FileName>Barstow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Barstow.h</FilePath>
+            </File>
+            <File>
+              <FileName>Control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Control.h</FilePath>
+            </File>
+            <File>
+              <FileName>Model.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\Barstow\Model.h</FilePath>
             </File>
           </Files>
         </Group>

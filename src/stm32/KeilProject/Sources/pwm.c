@@ -58,10 +58,8 @@ void Init_PWM(TIM_TypeDef* TIM, int Channel)
 }
 
 
-void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle){
-	
+void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle){	
 	int period = 0;
-	
 	if (TIM == TIM1)
 		period = AUTORELOAD_VALUE_TIM1;
 	else if (TIM == TIM2)

@@ -1,7 +1,10 @@
 #ifndef __MOTOR__
 #define __MOTOR__
 
-#include "include.h"
+// include local library
+#include "gpio.h"
+#include "pwm.h"
+#include "delay.h"
 #include "Barstow/Control.h"
 
 #define TIM_Forward 										TIM4
@@ -12,7 +15,7 @@
 #define TIM_Channel_Backward						TIM_Channel_2
 #define TIM_Channel_Left								TIM_Channel_3
 #define TIM_Channel_Right								TIM_Channel_4
-#define MaxDutyCycle										0.5	// Value that limit the Motor's voltage to 6V Max
+#define MaxDutyCycle										0.5		// Value that limit the Motor's voltage to 6V Max
 #define MinDutyCycle_Direction					0.1		// Min value that allows a sufficent Motor's voltage to turn
 #define MinDutyCycle_Move								0.1		// Min value that allows a sufficent Motor's voltage to move
 #define GPIO_Motor_Enable								GPIOA
@@ -23,54 +26,55 @@ typedef struct {
 	int Pin;
 } GPIO_Pin_TypeDef;  
 
-/**	@brief Change all the PWM values of the motors based on the SPI struct
+/** @brief Change all the PWM values of the motors based on the SPI struct
 	* @param Control: Control struct with PWM informations from the SPI communication
-	*	@retval None
+	* @retval None
 */
 void Update_Motors(BarstowControl_Typedef * Control);
 
-/**	@brief Init all the motors's PWM and GPIO
-	*	@retval None
+/** @brief Init all the motors's PWM and GPIO
+	* @retval None
 */
 void Init_All_Motor(void);
 
-/**	@brief Init a single motor's PWM and GPIO
+/** @brief Init a single motor's PWM and GPIO
 	* @param TIM: Timer of the Motor's PWM
-	*	@param Channel: Channel of the Motor's PWM
-	*	@retval None
+	* @param Channel: Channel of the Motor's PWM
+	* @retval None
 */
 void Init_Single_Motor(TIM_TypeDef * TIM, int Channel);
-/**	@brief Make the car turn Left
-	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
-	*	@retval None
+
+/** @brief Make the car turn Left
+	* @parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
+	* @retval None
 */
 void Turn_Left(float Rot);
 
-/**	@brief Make the car turn Right
-	*	@parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
-	*	@retval None
+/** @brief Make the car turn Right
+	* @parma Rot: set the relative rotation to set on the forward wheels. Value between 0-1
+	* @retval None
 */
 void Turn_Right(float Rot);
 
-/**	@brief Stop Turn the front wheels
-	*	@retval None
+/** @brief Stop Turn the front wheels
+	* @retval None
 */
 void Stop_Turn(void);
 
-/**	@brief Reset the Direction of the car to 0� to go on straigt line
-	*	@retval None
+/** @brief Reset the Direction of the car to 0� to go on straigt line
+	* @retval None
 */
 void Reset_Direction(void); // We need to figure it how to do this !!!!
 
-/**	@brief Make the car go forward
-	*	@parma Speed: Set the speed to roll (value between 0-1)
-	*	@retval None
+/** @brief Make the car go forward
+	* @parma Speed: Set the speed to roll (value between 0-1)
+	* @retval None
 */
 void Go_Forward(float Speed);
 
-/**	@brief Make the car go forward
-	*	@parma Speed: Set the speed to roll (value between 0-1)
-	*	@retval None
+/** @brief Make the car go forward
+	* @parma Speed: Set the speed to roll (value between 0-1)
+	* @retval None
 */
 void Go_Back(float Speed);
 
@@ -96,4 +100,5 @@ void Motor_Test(void); // TODO
 	*	@retval A GPIO_Pin struct with the right GPIO and Pin of the PWM
 */
 GPIO_Pin_TypeDef Find_GPIO_Pin(TIM_TypeDef * TIM, int Channel);
+
 #endif
