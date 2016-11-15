@@ -8,6 +8,7 @@
 #define MOTOR_DIRECTION_LEFT		(+1)
 #define MOTOR_DIRECTION_RIGHT		(-1)
 #define MOTOR_DIRECTION_STOP		(0)
+
 typedef struct
 {
 	// 'speed' must be in range [0, 1]

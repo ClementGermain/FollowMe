@@ -1,37 +1,28 @@
 #include "motor.h"
-#include "delay.h"
 
 void Update_Motors(BarstowControl_Typedef * Control){
-	// the GPIO_SetBits() functions are only use to toogle a LED during the first review demonstration
-	// it have to be deleted after that
 	switch (Control->propulsionMotor.direction){
 		case MOTOR_DIRECTION_STOP:
 			Stop_Car();
-			GPIO_ResetBits(GPIOA, GPIO_Pin_5); // to delete after first review
 			break;
 		case MOTOR_DIRECTION_BACKWARD:
 			Go_Back(Control->propulsionMotor.speed);
-			GPIO_SetBits(GPIOA, GPIO_Pin_5); // to delete after first review
 			break;
 		case MOTOR_DIRECTION_FORWARD:
 			Go_Forward(Control->propulsionMotor.speed);
-			GPIO_SetBits(GPIOA, GPIO_Pin_5); // to delete after first review
 			break;
 	}
 			
 	switch(Control->directionMotor.direction){
 		case MOTOR_DIRECTION_STOP:
 			Stop_Turn();
-			GPIO_ResetBits(GPIOA, GPIO_Pin_5); // to delete after first review
 			break;
 		case MOTOR_DIRECTION_RIGHT:
 			Turn_Right(Control->directionMotor.speed);
-			GPIO_SetBits(GPIOA, GPIO_Pin_5); // to delete after first review
-		break;
+			break;
 		case MOTOR_DIRECTION_LEFT:
 			Turn_Left(Control->directionMotor.speed);
-			GPIO_SetBits(GPIOA, GPIO_Pin_5); // to delete after first review
-		break;
+			break;
 	}
 }
 

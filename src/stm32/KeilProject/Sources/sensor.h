@@ -1,8 +1,9 @@
 #ifndef __SENSOR__
 #define __SENSOR__
 
-#include "stdint.h"
+// include local library
 #include "Barstow/Model.h"
+#include "adc.h"
 
 #define SENSOR_FRONT_L				1
 #define SENSOR_FRONT_R				2
@@ -15,26 +16,26 @@
 #define MOTOR_RIGHT						3
 
 /** @brief Update all the sensor in a Modele struct
-    * @parma Modele: Pointeur to the modele struct to be used
-    * @retval None
+	* @parma Modele: Pointeur to the modele struct to be used
+	* @retval None
 */
 void Update_Sensor(BarstowModel_Typedef * Modele);
 
 /** @brief Get the distance value of a specific ultra sound sensor
-    * @parma Sensor: Sensor to use (ex : SENSOR_FRONT_R)
-    * @retval u32: distance of a obstacle to the sensor in centimeters
+	* @parma Sensor: Sensor to use (ex : SENSOR_FRONT_R)
+	* @retval u32: distance of a obstacle to the sensor in centimeters
 */
 uint32_t Get_USensor(int Sensor);
 
 /** @brief Get the current value of a specific motor
-    * @parma Sensor: Sensor to use (ex : MOTOR_LEFT)
-    * @retval u32: current of the motor in mA
+	* @parma Sensor: Sensor to use (ex : MOTOR_LEFT)
+	* @retval u32: current of the motor in mA
 */
 uint32_t Get_Current(int Motor);
 
 /** @brief Get the voltage value of a specific motor
-    * @parma Sensor: Sensor to use (ex : MOTOR_LEFT)
-    * @retval u32: current of the motor in mV
+	* @parma Sensor: Sensor to use (ex : MOTOR_LEFT)
+	* @retval u32: current of the motor in mV
 */
 uint32_t Get_Voltage(int Motor);
 

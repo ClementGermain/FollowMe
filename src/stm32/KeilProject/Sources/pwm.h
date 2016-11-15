@@ -1,7 +1,11 @@
 #ifndef __PWM__
 #define __PWM__
 
-#include "include.h"
+// include stm32 library
+#include "stm32f10x_tim.h"
+
+// include local library
+#include "gpio.h"
 
 // define period timers
 extern int AUTORELOAD_VALUE_TIM1;
@@ -24,10 +28,11 @@ void Init_Timer(TIM_TypeDef* TIM, int Frequency);
 void Init_PWM(TIM_TypeDef* TIM, int Channel);
 
 /** @brief Change the duty cycle of a PWM
-	*	@parma TIM: TIMx to be set
+	*	@parma TIM:	TIMx to be set
 	*	@param Channel: select the right channel (ex. TIM_Channel_3)
 	*	@param DutyCycle: has to be from 0 to 1
   * @retval None
 */
 void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle); // TODO
+
 #endif
