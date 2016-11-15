@@ -26,6 +26,7 @@ all: LDFLAGS += $(SPI_LDFLAGS)
 all: $(TARGET)
 
 noraspi: RASPI=noraspi
+noraspi: CXXFLAGS += -D__NO_RASPI__
 noraspi: $(TARGET)
 
 $(TARGET): $(OBJECTS)
