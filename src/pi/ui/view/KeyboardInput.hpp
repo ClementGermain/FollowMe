@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <SDL/SDL.h>
+#include <memory>
 #include "View.hpp"
 
 class KeyboardInput : public View {
 	public:
 		KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h);
-		~KeyboardInput();
 		bool handleEvent(SDL_Event & event);
 		void toggleEnabled();
 		bool isEnabled() { return enabled; }
@@ -26,8 +26,8 @@ class KeyboardInput : public View {
 		std::vector<int> lastStates;
 		void (*commandMotorFront)(int);
 		void (*commandMotorBack)(int);
-		SDL_Surface * arrowsBMP;
-		SDL_Surface * buffer;
+		std::shared_ptr<SDL_Surface> arrowsBMP;
+		std::shared_ptr<SDL_Surface> buffer;
 		bool invalidate;
 };
 

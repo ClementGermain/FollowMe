@@ -6,3 +6,8 @@ View::View(int x, int y)
 	screenPos.x = x;
 	screenPos.y = y;
 }
+
+View::~View() {
+
+}
+

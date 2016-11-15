@@ -6,7 +6,8 @@
 class View {
 	public:
 		View(int x, int y);
-		virtual void draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) = 0;
+		virtual ~View();
+		virtual void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false) = 0;
 	protected:
 		SDL_Rect screenPos;
 		

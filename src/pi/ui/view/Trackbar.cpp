@@ -15,9 +15,6 @@ Trackbar::Trackbar(float rangeMin, float rangeMax, int x, int y, int width, int 
 {
 }
 
-Trackbar::~Trackbar() {
-}
-
 void Trackbar::setPosition(float pos) {
 	float newPosition = min(max(rangeMin, pos), rangeMax);
 	if(newPosition != position) {

@@ -6,6 +6,8 @@
 #include <thread>
 #include <iostream>
 #include <vector>
+#include <map>
+#include <memory>
 #include "car/Car.hpp"
 #include "utils/Log.hpp"
 #include "car/Camera.hpp"
@@ -19,30 +21,6 @@ using namespace std;
 
 MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera), showCamera(false) {
 
-}
-
-void MainView::open() {
-	if(isThreadTerminated) {
-		isThreadTerminated = false;
-		threadView = new thread([this] {
-				this->run();
-				isThreadTerminated = true;
-		});
-	}
-	else {
-		cout << "GUI is already running!" << endl;
-	}
-}
-
-bool MainView::isOpen() {
-	return !isThreadTerminated;
-}
-
-MainView::~MainView() {
-	if(threadView != NULL) {
-		threadView->join();
-		delete threadView;
-	}
 }
 
 void commandMotorFront(int direction) {
@@ -118,27 +96,27 @@ void MainView::drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos) 
 
 void MainView::initializeViews() {
 	// motors
-	digitalValues.emplace_back("PWM: %.0f%%", 540, 50, 80, 16, false);
+	digitalValues.emplace_back("V: %.0fmV", 540, 50, 80, 16, false);
 	trackbarMotors.emplace_back(0, 100, 620, 50);
 	digitalValues.emplace_back("I: %.0fmA", 540, 70, 80, 16, false);
 	trackbarMotors.emplace_back(0, 2, 620, 70);
-	digitalValues.emplace_back("PWM: %.0f%%", 540, 240, 80, 16, false);
+	digitalValues.emplace_back("V: %.0fmV", 540, 240, 80, 16, false);
 	trackbarMotors.emplace_back(0, 100, 620, 240);
 	digitalValues.emplace_back("I: %.0fmA", 540, 260, 80, 16, false);
 	trackbarMotors.emplace_back(0, 2, 620, 260);
-	digitalValues.emplace_back("PWM: %.0f%%", 540, 330, 80, 16, false);
+	digitalValues.emplace_back("V: %.0fmV", 540, 330, 80, 16, false);
 	trackbarMotors.emplace_back(0, 100, 620, 330);
 	digitalValues.emplace_back("I: %.0fmA", 540, 350, 80, 16, false);
 	trackbarMotors.emplace_back(0, 2, 620, 350);
 	// distance
-	digitalValues.emplace_back("%.2fm", 330, 5, 70);
-	digitalValues.emplace_back("%.2fm", 400, 5, 70);
-	digitalValues.emplace_back("%.2fm", 470, 5, 70);
-	digitalValues.emplace_back("%.2fm", 330, 380, 70);
-	digitalValues.emplace_back("%.2fm", 400, 380, 70);
-	digitalValues.emplace_back("%.2fm", 470, 380, 70);
+	addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
+	addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
+	addView("distFrontRight", new Digital("%.0fcm", 470, 5, 70));
+	addView("distBackLeft", new Digital("%.0fcm", 330, 380, 70));
+	addView("distBackCenter", new Digital("%.0fcm", 400, 380, 70));
+	addView("distBackRight", new Digital("%.0fcm", 470, 380, 70));
 	// raspi
-	digitalValues.emplace_back("CPU: %.0f%%", 540, 170, 80, 16, false);
+	addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
 }
 
 void MainView::updateViews() {
@@ -160,14 +138,14 @@ void MainView::updateViews() {
 	digitalValues[5].setValue(model.rightWheelMotor.current);
 	trackbarMotors[5].setPosition(model.rightWheelMotor.current);
 
-	digitalValues[6].setValue(model.frontLeftUSensor.distance);
-	digitalValues[7].setValue(model.frontCenterUSensor.distance);
-	digitalValues[8].setValue(model.frontRightUSensor.distance);
-	digitalValues[9].setValue(model.rearLeftUSensor.distance);
-	digitalValues[10].setValue(model.rearCenterUSensor.distance);
-	digitalValues[11].setValue(model.rearRightUSensor.distance);
+	getDigitalView("distFrontLeft").setValue(model.frontLeftUSensor.distance);
+	getDigitalView("distFrontCenter").setValue(model.frontCenterUSensor.distance);
+	getDigitalView("distFrontRight").setValue(model.frontRightUSensor.distance);
+	getDigitalView("distBackLeft").setValue(model.rearLeftUSensor.distance);
+	getDigitalView("distBackCenter").setValue(model.rearCenterUSensor.distance);
+	getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
-	digitalValues[12].setValue(cpuLoad.get());
+	getDigitalView("cpu").setValue(cpuLoad.get());
 }
 
 void MainView::run() {
@@ -188,9 +166,10 @@ void MainView::run() {
 	// dynamic views
 	initializeViews();
 	// Arrows
-	KeyboardInput arrowKeysControl(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
+	
+	addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
 	// Logs
-	LogView logView(0, 0, 320, 240);
+	addView("logs", new LogView(0,0,320,240));
 	
 
 	bool end = false;
@@ -199,7 +178,7 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
-			if(arrowKeysControl.handleEvent(event))
+			if(((KeyboardInput*)views["keyboard"].get())->handleEvent(event))
 				continue;
 
 			switch(event.type) {
@@ -233,16 +212,24 @@ void MainView::run() {
 		updateViews();
 		
 		// arrows
-		arrowKeysControl.draw(screen);
+		getView("keyboard").draw(screen);
 		// trackbars
 		for(Trackbar & tb : trackbarMotors) {
-			//tb.setPosition(SDL_getFramecount(&fpsManager));
 			tb.draw(screen);
 		}
 		// digitals
 		for(Digital & d : digitalValues) {
 			d.draw(screen);
 		}
+
+		getView("distFrontLeft").draw(screen);
+		getView("distFrontCenter").draw(screen);
+		getView("distFrontRight").draw(screen);
+		getView("distBackLeft").draw(screen);
+		getView("distBackCenter").draw(screen);
+		getView("distBackRight").draw(screen);
+		getView("cpu").draw(screen);
+
 		// Camera
 		// TODO efficient CameraView
 		if(showCamera) {
@@ -251,7 +238,7 @@ void MainView::run() {
 			SDL_FreeSurface(cam);
 		} else {
 			// Logs (FIXME this actually erase camera view)
-			logView.draw(screen);
+			getView("logs").draw(screen);
 		}
 		// commit screen buffer
 		SDL_Flip(screen);
@@ -261,7 +248,43 @@ void MainView::run() {
 
 	trackbarMotors.clear();
 	digitalValues.clear();
+	views.clear();
 	SDL_FreeSurface(car);
 	SDL_Quit();
+}
+
+View & MainView::getView(const string & name) {
+	return *views[name].get();
+}
+Digital & MainView::getDigitalView(const string & name) {
+	return *((Digital*)views[name].get());
+}
+
+void MainView::addView(const string & name, View * v) {
+	views.emplace(name, shared_ptr<View>(v));
+}
+
+void MainView::open() {
+	if(isThreadTerminated) {
+		isThreadTerminated = false;
+		threadView = new thread([this] {
+				this->run();
+				isThreadTerminated = true;
+		});
+	}
+	else {
+		cout << "GUI is already running!" << endl;
+	}
+}
+
+bool MainView::isOpen() {
+	return !isThreadTerminated;
+}
+
+MainView::~MainView() {
+	if(threadView != NULL) {
+		threadView->join();
+		delete threadView;
+	}
 }
 

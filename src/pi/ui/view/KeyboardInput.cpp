@@ -14,15 +14,10 @@ KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotor
 	lastStates(2, 0), 
 	commandMotorFront(commandMotorFront),
 	commandMotorBack(commandMotorBack),
-	arrowsBMP(SDL_LoadBMP("../../res/img/arrows.bmp")),
-	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w,h,32, 0,0,0,0)),
+	arrowsBMP(SDL_LoadBMP("../../res/img/arrows.bmp"), [](SDL_Surface * s){SDL_FreeSurface(s);}),
+	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);}),
 	invalidate(true)
 {
-}
-
-KeyboardInput::~KeyboardInput() {
-	SDL_FreeSurface(arrowsBMP);
-	SDL_FreeSurface(buffer);
 }
 
 bool KeyboardInput::handleEvent(SDL_Event & event) {
@@ -87,17 +82,18 @@ void KeyboardInput::toggleEnabled() {
 }
 
 void KeyboardInput::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
+	SDL_Surface * buffer = this->buffer.get();
 	if(invalidate) {
 		SDL_Rect pos = {
-			(Sint16) ((buffer->w-arrowsBMP->w) / 2),
-			(Sint16) ((buffer->h-arrowsBMP->h) / 2)
+			(Sint16) ((buffer->w-arrowsBMP.get()->w) / 2),
+			(Sint16) ((buffer->h-arrowsBMP.get()->h) / 2)
 		};
 		
 		// Clear background
 		SDL_FillRect(buffer, NULL, 0xffffffff);
 
 		// Arrow keys image
-		SDL_BlitSurface(arrowsBMP, NULL, buffer, &pos);
+		SDL_BlitSurface(arrowsBMP.get(), NULL, buffer, &pos);
 		
 		if(!enabled) {
 			// Disabled

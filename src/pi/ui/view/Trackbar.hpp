@@ -8,7 +8,6 @@
 class Trackbar : public View {
 	public:
 		Trackbar(float rangeMin, float rangeMax, int x, int y, int width=170, int height=16);
-		~Trackbar();
 		void setPosition(float pos);
 		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
 	private:
