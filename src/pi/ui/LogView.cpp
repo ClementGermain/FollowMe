@@ -13,7 +13,7 @@ LogView::LogView(int x, int y, int w, int h) :
 
 void LogView::draw(SDL_Surface * screen) {
 	// if new lines have been added: redraw
-	/*if(Log.hasNext(prevEndCursor))*/ {
+	if(Log.hasNext(prevEndCursor)) {
 		// clear background
 		SDL_FillRect(buffer, NULL, 0x0);
 

@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "MainUI.hpp"
 #include "MainView.hpp"
-#include "Camera.hpp"
+#include "../car/Camera.hpp"
 #include "CommandLine.hpp"
 #include "KeyboardInput.hpp"
 #include "../utils/Log.hpp"

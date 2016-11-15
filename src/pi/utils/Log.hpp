@@ -1,7 +1,7 @@
 #ifndef __LOG_HPP__
 #define __LOG_HPP__
 
-#include <list>
+#include <deque>
 #include <iostream>
 #include <string>
 #include <chrono>
@@ -24,7 +24,7 @@ class basic_seqbuf : public std::basic_streambuf<Ch, Traits> {
 		typedef typename base_type::traits_type traits_type;
 
 		virtual int_type overflow(int_type ch);
-		std::list<LogLine> lines;
+		std::deque<LogLine> lines;
 
 	private:
 		std::string currentLine;
@@ -34,7 +34,7 @@ class LogStream : public std::ostream {
 	public:
 		LogStream();
 		
-		typedef typename std::list<LogLine>::const_iterator Cursor;
+		typedef typename std::deque<LogLine>::const_iterator Cursor;
 
 		Cursor getCursor(bool fromBegin = false);
 		bool hasNext(Cursor const& cursor);
