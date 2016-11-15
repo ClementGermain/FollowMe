@@ -1,3 +1,5 @@
+#include <fstream>
+#include <chrono>
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <thread>
@@ -10,6 +12,7 @@
 #include "utils/Log.hpp"
 
 using namespace std;
+using namespace std::chrono;
 
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
@@ -17,6 +20,7 @@ int commandMotor(istream & input, vector<int> i, vector<string> s);
 int cameraPreview(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 int writeLog(istream & input, vector<int> i, vector<string> s);
+int saveLog(istream & input, vector<int> i, vector<string> s);
 
 Camera camera("Camera preview");
 MainView view(camera);
@@ -55,6 +59,7 @@ void runUI() {
 				new Menu("E", 4, writeLog, NULL),
 				NULL
 			),
+			new Menu("save", 0, saveLog, NULL),
 			NULL
 		),
 		new Menu("exit", 0, exitInterpreter, NULL),
@@ -135,5 +140,21 @@ int writeLog(istream & input, vector<int> i, vector<string> s) {
 	while(input >> text)
 		Log << " " << text;
 	Log << endl;
+	return 0;
+}
+
+int saveLog(istream & input, vector<int> i, vector<string> s) {
+	system_clock::time_point today = system_clock::now();
+	std::time_t tt = system_clock::to_time_t ( today );
+	
+	string date(ctime(&tt));
+	string dir("../../out/");
+	fstream file((dir+"Log "+date+".txt").c_str(), std::fstream::out);
+
+	LogStream::Cursor cur(Log.getCursor(false));
+	while(Log.hasPrevious(cur))
+		file << Log.readPrevious(cur).formatedString() << endl;
+
+	file.close();
 	return 0;
 }

@@ -10,6 +10,7 @@ class LogLine {
 	public:
 		LogLine(std::string const& s);
 		std::string coloredString(bool includeDate=true) const;
+		std::string formatedString(bool includeDate=true) const;
 		int getColor() const;
 
 		std::string str;

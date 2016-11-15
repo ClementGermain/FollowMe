@@ -100,6 +100,34 @@ string LogLine::coloredString(bool includeDate) const {
 
 	return res;
 }
+string LogLine::formatedString(bool includeDate) const {
+	long int t = chrono::duration_cast<chrono::milliseconds>(date.time_since_epoch()).count();
+	char time[13];
+	sprintf(time, "%2d:%02d:%02d.%03d", (int)(t/3600000%24), (int)(t/60000%60), (int)(t/1000%60), (int)(t%1000));
+
+	string res;
+	int offset = 2;
+	if(str.find(headerError) == 0)
+		res += headerError;
+	else if(str.find(headerWarning) == 0)
+		res += headerWarning;
+	else if(str.find(headerDebug) == 0)
+		res += headerDebug;
+	else if(str.find(headerInfo) == 0)
+		res += headerInfo;
+	else {
+		offset = 0;
+		res += "-/";
+	}
+
+	if(includeDate) {
+		res += time;
+		res += '/';
+	}
+	res += str.substr(offset);
+
+	return res;
+}
 
 template<typename Ch, typename Traits>
 typename basic_seqbuf<Ch, Traits>::int_type
