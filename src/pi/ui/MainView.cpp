@@ -8,7 +8,7 @@
 #include <vector>
 #include "../car/Car.hpp"
 #include "../utils/Log.hpp"
-#include "Camera.hpp"
+#include "../car/Camera.hpp"
 #include "KeyboardInput.hpp"
 #include "Trackbar.hpp"
 #include "Digital.hpp"

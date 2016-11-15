@@ -4,7 +4,7 @@
 #include <vector>
 #include <thread>
 #include <SDL/SDL.h>
-#include "Camera.hpp"
+#include "../car/Camera.hpp"
 #include "Digital.hpp"
 #include "Trackbar.hpp"
 #include "CPULoad.hpp"

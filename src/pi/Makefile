@@ -21,7 +21,6 @@ TARGET=barstow
 
 UI_OBJECTS=ui/MainUI.o \
 		   ui/MainView.o \
-		   ui/Camera.o \
 		   ui/CommandLine.o \
 		   ui/KeyboardInput.o \
 		   ui/Trackbar.o \
@@ -32,6 +31,7 @@ UI_OBJECTS=ui/MainUI.o \
 OBJECTS=Main.o \
 		car/Car.o \
 		car/LinkSTM32.o \
+		car/Camera.o \
 		utils/Log.o \
 		SPI_Interface/SPI_Interface.o \
 		$(UI_OBJECTS)
