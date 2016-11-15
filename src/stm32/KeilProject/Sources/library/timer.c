@@ -1,4 +1,4 @@
-#include "pwm.h"
+#include "timer.h"
 
 int AUTORELOAD_VALUE_TIM1 = 0;
 int AUTORELOAD_VALUE_TIM2 = 0;

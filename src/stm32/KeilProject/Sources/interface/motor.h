@@ -2,10 +2,10 @@
 #define __MOTOR__
 
 // include local library
-#include "gpio.h"
-#include "pwm.h"
-#include "delay.h"
-#include "Barstow/Control.h"
+#include "../library/gpio.h"
+#include "../library/timer.h"
+#include "../library/delay.h"
+#include "../barstow/control.h"
 
 #define TIM_Forward 										TIM4
 #define TIM_Backward 										TIM3

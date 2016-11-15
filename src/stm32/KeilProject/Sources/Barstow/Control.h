@@ -1,5 +1,5 @@
-#ifndef __CONTROL_H
-#define __CONTROL_H
+#ifndef __CONTROL__
+#define __CONTROL__
 
 #include "stdint.h"
 

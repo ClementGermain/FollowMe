@@ -1,12 +1,12 @@
-#ifndef __BARSTOW_H
-#define __BARSTOW_H
+#ifndef __BARSTOW__
+#define __BARSTOW__
 
 // include local library
-#include "Model.h"
-#include "Control.h"
-#include "../gpio.h"
-#include "../motor.h"
-#include "../SPI_Interface/SPI_Interface.h"
+#include "model.h"
+#include "control.h"
+#include "../library/gpio.h"
+#include "../interface/motor.h"
+#include "../interface/spi.h"
 
 
 /** @brief Start the Barstow car's programm

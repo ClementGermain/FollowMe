@@ -1,5 +1,5 @@
-#ifndef __MODEL_H
-#define __MODEL_H
+#ifndef __MODEL__
+#define __MODEL__
 
 #include "stdint.h"
 
