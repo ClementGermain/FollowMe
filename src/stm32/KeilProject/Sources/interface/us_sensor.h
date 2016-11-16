@@ -36,6 +36,9 @@
 #define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
+#define TIM_Trig													TIM3
+#define TIM_Channel_Trig									TIM_Channel_3
+
 // Structure that contain all GPIO informations about each UltraSound sensor
 // Need to be set up above
 typedef struct{
