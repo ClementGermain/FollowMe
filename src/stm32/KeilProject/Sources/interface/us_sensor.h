@@ -6,26 +6,42 @@
 #include "../library/adc.h"
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_SENSOR_FRONT_L					GPIOA
-#define GPIO_SENSOR_FRONT_R					GPIOA
-#define GPIO_SENSOR_FRONT_C					GPIOA
-#define GPIO_SENSOR_BACK_L					GPIOA
-#define GPIO_SENSOR_BACK_R					GPIOA
-#define GPIO_SENSOR_BACK_C					GPIOA
+#define GPIO_SENSOR_TRIG_FRONT_L					GPIOA
+#define GPIO_SENSOR_TRIG_FRONT_R					GPIOA
+#define GPIO_SENSOR_TRIG_FRONT_C					GPIOA
+#define GPIO_SENSOR_TRIG_BACK_L						GPIOB
+#define GPIO_SENSOR_TRIG_BACK_R						GPIOB
+#define GPIO_SENSOR_TRIG_BACK_C						GPIOB
+
+#define GPIO_SENSOR_ECHO_FRONT_L					GPIOA
+#define GPIO_SENSOR_ECHO_FRONT_R					GPIOA
+#define GPIO_SENSOR_ECHO_FRONT_C					GPIOA
+#define GPIO_SENSOR_ECHO_BACK_L						GPIOB
+#define GPIO_SENSOR_ECHO_BACK_R						GPIOB
+#define GPIO_SENSOR_ECHO_BACK_C						GPIOB
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_PIN_SENSOR_FRONT_L			GPIO_Pin_1
-#define GPIO_PIN_SENSOR_FRONT_R			GPIO_Pin_2
-#define GPIO_PIN_SENSOR_FRONT_C			GPIO_Pin_3
-#define GPIO_PIN_SENSOR_BACK_L			GPIO_Pin_4
-#define GPIO_PIN_SENSOR_BACK_R			GPIO_Pin_5
-#define GPIO_PIN_SENSOR_BACK_C			GPIO_Pin_6
+#define GPIO_PIN_SENSOR_TRIG_FRONT_L			GPIO_Pin_1
+#define GPIO_PIN_SENSOR_TRIG_FRONT_R			GPIO_Pin_2
+#define GPIO_PIN_SENSOR_TRIG_FRONT_C			GPIO_Pin_3
+#define GPIO_PIN_SENSOR_TRIG_BACK_L				GPIO_Pin_1
+#define GPIO_PIN_SENSOR_TRIG_BACK_R				GPIO_Pin_2
+#define GPIO_PIN_SENSOR_TRIG_BACK_C				GPIO_Pin_3
+
+#define GPIO_PIN_SENSOR_ECHO_FRONT_L			GPIO_Pin_4
+#define GPIO_PIN_SENSOR_ECHO_FRONT_R			GPIO_Pin_5
+#define GPIO_PIN_SENSOR_ECHO_FRONT_C			GPIO_Pin_6
+#define GPIO_PIN_SENSOR_ECHO_BACK_L				GPIO_Pin_4
+#define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
+#define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
 // Structure that contain all GPIO informations about each UltraSound sensor
 // Need to be set up above
 typedef struct{
-	GPIO_TypeDef * GPIO;
-	int GPIO_Pin;
+	GPIO_TypeDef * GPIO_trig;
+	int GPIO_Pin_trig;
+	GPIO_TypeDef * GPIO_echo;
+	int GPIO_Pin_echo;
 } US_Sensor_Typedef;
 
 extern US_Sensor_Typedef * SENSOR_FRONT_L;
