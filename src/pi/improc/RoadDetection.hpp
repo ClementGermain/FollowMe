@@ -10,11 +10,11 @@ public:
 	RoadDetection();
 	~RoadDetection();
 
-	applyRoadThreshold(cv::Mat image);
-	cv::Mat & RoadDetection::getImage();
+	void applyRoadThreshold(cv::Mat image);
+	cv::Mat & getImage();
 
 private:
-	cv::Mat m_tresholdedImage
+	cv::Mat m_tresholdedImage;
 };
 
 #endif

@@ -12,7 +12,7 @@ RoadDetection::~RoadDetection()
 }
 
 
-RoadDetection::applyRoadThreshold(Mat image)
+void RoadDetection::applyRoadThreshold(Mat image)
 {
 	int iLowH = 200;
 	int iHighH = 250;
