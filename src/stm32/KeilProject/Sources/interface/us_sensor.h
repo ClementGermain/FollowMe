@@ -4,6 +4,7 @@
 // include local library
 #include "../barstow/model.h"
 #include "../library/adc.h"
+#include "../library/gpio.h"
 
 // Not accurate Value, we gonna need to choose them
 #define GPIO_SENSOR_TRIG_FRONT_L					GPIOA

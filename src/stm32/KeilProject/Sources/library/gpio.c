@@ -22,6 +22,19 @@ void Init_GPIO_Out(GPIO_TypeDef * GPIO, int Pin)
   GPIO_Init(GPIO, &GPIO_InitStructure); 
 }
 
+void Init_GPIO_In(GPIO_TypeDef * GPIO, int Pin)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+	
+  GPIO_InitStructure.GPIO_Pin = Pin;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 
+  GPIO_Init(GPIO, &GPIO_InitStructure); 
+}
+
+
+
 void Init_GPIO_PWM(GPIO_TypeDef * GPIO, int Pin)
 {
   GPIO_InitTypeDef GPIO_InitStructure;
