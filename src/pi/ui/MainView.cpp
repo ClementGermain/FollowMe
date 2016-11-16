@@ -5,7 +5,6 @@
 #include <SDL/SDL_gfxPrimitives.h>
 #include <thread>
 #include <iostream>
-#include <vector>
 #include <map>
 #include <memory>
 #include "car/Car.hpp"
@@ -88,26 +87,21 @@ void MainView::drawStaticViews() {
 	drawPointerLine(505, 375, 142, 340, carPos);
 }
 
-// draw line from (x, y) (screen space) to (x2, y2) (car image space)
-void MainView::drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos) {
-	aalineRGBA(screen, x,y,x2+carPos.x,y2+carPos.y,      0,0,200,255);
-	filledCircleRGBA(screen, x2+carPos.x,y2+carPos.y, 3, 0,0,230,255);
-}
-
 void MainView::initializeViews() {
 	// motors
-	digitalValues.emplace_back("V: %.0fmV", 540, 50, 80, 16, false);
-	trackbarMotors.emplace_back(0, 100, 620, 50);
-	digitalValues.emplace_back("I: %.0fmA", 540, 70, 80, 16, false);
-	trackbarMotors.emplace_back(0, 2, 620, 70);
-	digitalValues.emplace_back("V: %.0fmV", 540, 240, 80, 16, false);
-	trackbarMotors.emplace_back(0, 100, 620, 240);
-	digitalValues.emplace_back("I: %.0fmA", 540, 260, 80, 16, false);
-	trackbarMotors.emplace_back(0, 2, 620, 260);
-	digitalValues.emplace_back("V: %.0fmV", 540, 330, 80, 16, false);
-	trackbarMotors.emplace_back(0, 100, 620, 330);
-	digitalValues.emplace_back("I: %.0fmA", 540, 350, 80, 16, false);
-	trackbarMotors.emplace_back(0, 2, 620, 350);
+	addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
+	addView("tbVoltageFront", new Trackbar(0, 100, 620, 50));
+	addView("dCurrentFront", new Digital("I: %.0fmA", 540, 70, 80, 16, false));
+	addView("tbCurrentFront", new Trackbar(0, 2, 620, 70));
+	addView("dVoltageLeft", new Digital("V: %.0fmV", 540, 240, 80, 16, false));
+	addView("tbVoltageLeft", new Trackbar(0, 100, 620, 240));
+	addView("dCurrentLeft", new Digital("I: %.0fmA", 540, 260, 80, 16, false));
+	addView("tbCurrentLeft", new Trackbar(0, 2, 620, 260));
+	addView("dVoltageRight", new Digital("V: %.0fmV", 540, 330, 80, 16, false));
+	addView("tbVoltageRight", new Trackbar(0, 100, 620, 330));
+	addView("dCurrentRight", new Digital("I: %.0fmA", 540, 350, 80, 16, false));
+	addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
+
 	// distance
 	addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
 	addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
@@ -123,20 +117,20 @@ void MainView::updateViews() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	
-	digitalValues[0].setValue(model.directionMotor.voltage);
-	trackbarMotors[0].setPosition(model.directionMotor.voltage);
-	digitalValues[1].setValue(model.directionMotor.current);
-	trackbarMotors[1].setPosition(model.directionMotor.current);
+	getDigitalView("dVoltageFront").setValue(model.directionMotor.voltage);
+	getTrackbarView("tbVoltageFront").setPosition(model.directionMotor.voltage);
+	getDigitalView("dCurrentFront").setValue(model.directionMotor.current);
+	getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
 
-	digitalValues[2].setValue(model.leftWheelMotor.voltage);
-	trackbarMotors[2].setPosition(model.leftWheelMotor.voltage);
-	digitalValues[3].setValue(model.leftWheelMotor.current);
-	trackbarMotors[3].setPosition(model.leftWheelMotor.current);
+	getDigitalView("dVoltageLeft").setValue(model.leftWheelMotor.voltage);
+	getTrackbarView("tbVoltageLeft").setPosition(model.leftWheelMotor.voltage);
+	getDigitalView("dCurrentLeft").setValue(model.leftWheelMotor.current);
+	getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-	digitalValues[4].setValue(model.rightWheelMotor.voltage);
-	trackbarMotors[4].setPosition(model.rightWheelMotor.voltage);
-	digitalValues[5].setValue(model.rightWheelMotor.current);
-	trackbarMotors[5].setPosition(model.rightWheelMotor.current);
+	getDigitalView("dVoltageRight").setValue(model.rightWheelMotor.voltage);
+	getTrackbarView("tbVoltageRight").setPosition(model.rightWheelMotor.voltage);
+	getDigitalView("dCurrentRight").setValue(model.rightWheelMotor.current);
+	getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 
 	getDigitalView("distFrontLeft").setValue(model.frontLeftUSensor.distance);
 	getDigitalView("distFrontCenter").setValue(model.frontCenterUSensor.distance);
@@ -167,9 +161,9 @@ void MainView::run() {
 	initializeViews();
 	// Arrows
 	
-	addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	KeyboardInput keyboard(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
 	// Logs
-	addView("logs", new LogView(0,0,320,240));
+	LogView logs(0,0,320,240);
 	
 
 	bool end = false;
@@ -178,7 +172,7 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
-			if(((KeyboardInput*)views["keyboard"].get())->handleEvent(event))
+			if(keyboard.handleEvent(event))
 				continue;
 
 			switch(event.type) {
@@ -212,23 +206,11 @@ void MainView::run() {
 		updateViews();
 		
 		// arrows
-		getView("keyboard").draw(screen);
-		// trackbars
-		for(Trackbar & tb : trackbarMotors) {
-			tb.draw(screen);
-		}
-		// digitals
-		for(Digital & d : digitalValues) {
-			d.draw(screen);
-		}
+		keyboard.draw(screen);
 
-		getView("distFrontLeft").draw(screen);
-		getView("distFrontCenter").draw(screen);
-		getView("distFrontRight").draw(screen);
-		getView("distBackLeft").draw(screen);
-		getView("distBackCenter").draw(screen);
-		getView("distBackRight").draw(screen);
-		getView("cpu").draw(screen);
+		// Draw all views
+		for(auto & v : views)
+			v.second.get()->draw(screen);
 
 		// Camera
 		// TODO efficient CameraView
@@ -237,8 +219,7 @@ void MainView::run() {
 			SDL_BlitSurface(cam, NULL, screen, NULL);
 			SDL_FreeSurface(cam);
 		} else {
-			// Logs (FIXME this actually erase camera view)
-			getView("logs").draw(screen);
+			logs.draw(screen);
 		}
 		// commit screen buffer
 		SDL_Flip(screen);
@@ -246,8 +227,6 @@ void MainView::run() {
 		SDL_framerateDelay(&fpsManager);
 	}
 
-	trackbarMotors.clear();
-	digitalValues.clear();
 	views.clear();
 	SDL_FreeSurface(car);
 	SDL_Quit();
@@ -258,6 +237,9 @@ View & MainView::getView(const string & name) {
 }
 Digital & MainView::getDigitalView(const string & name) {
 	return *((Digital*)views[name].get());
+}
+Trackbar & MainView::getTrackbarView(const string & name) {
+	return *((Trackbar*)views[name].get());
 }
 
 void MainView::addView(const string & name, View * v) {
@@ -288,3 +270,8 @@ MainView::~MainView() {
 	}
 }
 
+// draw line from (x, y) (screen space) to (x2, y2) (car image space)
+void MainView::drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos) {
+	aalineRGBA(screen, x,y,x2+carPos.x,y2+carPos.y,      0,0,200,255);
+	filledCircleRGBA(screen, x2+carPos.x,y2+carPos.y, 3, 0,0,230,255);
+}

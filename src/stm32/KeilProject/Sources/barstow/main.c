@@ -37,6 +37,6 @@ void RCC_Configuration(void)
 													RCC_APB2Periph_GPIOA |
 													RCC_APB2Periph_AFIO , ENABLE);
   
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+	RCC_AHBPeriphClockCmd(	RCC_AHBPeriph_DMA1, 	ENABLE);
   
 }
