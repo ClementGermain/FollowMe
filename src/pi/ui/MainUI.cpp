@@ -157,5 +157,7 @@ int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
 }
 
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
-	RoadDetectionTest.start();
+	roadDetectionTest.start();
+
+	return 0;
 }

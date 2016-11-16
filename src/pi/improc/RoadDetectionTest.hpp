@@ -1,5 +1,5 @@
-#ifndef __USER_PATTERN_DETECTION_TEST_HPP__
-#define __USER_PATTERN_DETECTION_TEST_HPP__
+#ifndef __ROAD_DETECTION_TEST_HPP__
+#define __ROAD_DETECTION_TEST_HPP__
 
 #include <thread>
 #include "RoadDetection.hpp"
@@ -20,7 +20,7 @@ class RoadDetectionTest {
 		std::thread * threadTest;
 };
 
-extern RoadDetectionTest RoadDetectionTest;
+extern RoadDetectionTest roadDetectionTest;
 
 #endif
 
