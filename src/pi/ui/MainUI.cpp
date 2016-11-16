@@ -10,6 +10,7 @@
 #include "car/Camera.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
+#include "improc/UserPatternDetectionTest.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -17,13 +18,12 @@ using namespace std::chrono;
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
-int cameraPreview(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
+int runTestImProcUser(istream & input, vector<int> i, vector<string> s);
 
-Camera camera("Camera preview");
-MainView view(camera);
+MainView view(RaspiCam);
 
 void runUI() {
 	/// Initialize ///
@@ -42,15 +42,15 @@ void runUI() {
 			),
 			NULL
 		),
-		new Menu("gui", 0, openGUI, NULL),
-		new Menu("camera", 0, 0, 
-			new Menu("preview", 0, 0,
-				new Menu("open", 1, cameraPreview, NULL),
-				new Menu("close", 2, cameraPreview, NULL),
+		new Menu("test", 0, 0,
+			new Menu("improc", 0, 0,
+				new Menu("user", 0, runTestImProcUser, NULL),
 				NULL
 			),
 			NULL
 		),
+		new Menu("gui", 0, openGUI, NULL),
+		new Menu("camera", 0, 0, NULL),
 		new Menu("log", 0, 0,
 			new Menu("write", 0, 0,
 				new Menu("I", 1, writeLog, NULL),
@@ -75,9 +75,6 @@ void runUI() {
 	if(view.isOpen()) {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
-
-	// Camera
-	camera.closePreview();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
@@ -101,16 +98,6 @@ int commandMotor(istream & input, vector<int> i, vector<string> s) {
 		cout << "f";
 	cout <<"} with value "<< pwm <<endl;
 
-	return 0;
-}
-
-int cameraPreview(istream & input, vector<int> i, vector<string> s) {
-	if(i.back() == 1) {
-		camera.openPreview();
-	}
-	else if(i.back() == 2) {
-		camera.closePreview();
-	}
 	return 0;
 }
 
@@ -157,4 +144,8 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 
 	file.close();
 	return 0;
+}
+
+int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.start();
 }

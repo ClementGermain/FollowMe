@@ -36,6 +36,8 @@ OBJECTS=Main.o \
 		car/Camera.o \
 		utils/Log.o \
 		SPI_Interface/SPI_Interface.o \
+		improc/UserPatternDetection.o \
+		improc/UserPatternDetectionTest.o \
 		$(UI_OBJECTS)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)
