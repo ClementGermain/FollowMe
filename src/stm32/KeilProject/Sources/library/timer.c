@@ -5,7 +5,7 @@ int AUTORELOAD_VALUE_TIM2 = 0;
 int AUTORELOAD_VALUE_TIM3 = 0;
 int AUTORELOAD_VALUE_TIM4 = 0;
 
-void Init_Timer(TIM_TypeDef* TIM, int Frequency){
+void Init_Timer(TIM_TypeDef* TIM, uint16_t Frequency){
 
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	
@@ -28,7 +28,7 @@ void Init_Timer(TIM_TypeDef* TIM, int Frequency){
   TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 }
 
-void Init_PWM(TIM_TypeDef* TIM, int Channel)
+void Init_PWM(TIM_TypeDef* TIM, uint16_t Channel)
 {
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 	
@@ -58,7 +58,7 @@ void Init_PWM(TIM_TypeDef* TIM, int Channel)
 }
 
 
-void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle){	
+void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle){	
 	int period = 0;
 	if (TIM == TIM1)
 		period = AUTORELOAD_VALUE_TIM1;
