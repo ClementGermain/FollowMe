@@ -6,7 +6,7 @@
 
 using namespace std;
 
-RoadDetectionTest RoadDetectionTest;
+RoadDetectionTest roadDetectionTest;
 
 RoadDetectionTest::RoadDetectionTest() :
 	endThread(true),
@@ -37,8 +37,14 @@ void RoadDetectionTest::stop() {
 void RoadDetectionTest::run() {
 	while(!endThread) {
 		cv::Mat img;
+
+#ifdef __NO_RASPI__
+		img = cv::imread("../../res/img/route.bmp");
+#else
 		RaspiCam.getImage(img);
-		detector.applyRoadThreshold(img, true);
+#endif
+
+		detector.applyRoadThreshold(img);
 		
 		// sleep 100ms
 		this_thread::sleep_for(chrono::milliseconds(100));

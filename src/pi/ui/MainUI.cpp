@@ -23,6 +23,7 @@ int openGUI(istream & input, vector<int> i, vector<string> s);
 int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
 int runTestImProcUser(istream & input, vector<int> i, vector<string> s);
+int runTestImProcRoad(istream & input, vector<int> i, vector<string> s);
 
 MainView view(RaspiCam);
 
@@ -78,6 +79,7 @@ void runUI() {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
 	UserDetectionTest.stop();
+	roadDetectionTest.stop();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
@@ -156,5 +158,7 @@ int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
 }
 
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
-	RoadDetectionTest.start();
+	roadDetectionTest.start();
+
+	return 0;
 }

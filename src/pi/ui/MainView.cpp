@@ -16,6 +16,7 @@
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
+#include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
 
@@ -219,13 +220,17 @@ void MainView::run() {
 		if(showCamera) {
 			SDL_Surface * cam = camera.getBitmap(1);
 			cameraView.setImage(cam);
+			cameraView.draw(screen);
 			SDL_FreeSurface(cam);
 		} else {
 			//logs.draw(screen);
+			cameraView.setImage(&roadDetectionTest.detector.getImage());
+		/*	
 			if(UserDetectionTest.detector.hasResultImage()) {
 				cameraView.setImage(&UserDetectionTest.detector.getResultImage());
 				cameraView.draw(screen);
-			}
+			}*/
+				cameraView.draw(screen);
 		}
 		// commit screen buffer
 		SDL_Flip(screen);
