@@ -14,7 +14,7 @@ public:
 	cv::Mat & getImage();
 
 private:
-	cv::Mat m_tresholdedImage;
+	cv::Mat m_thresholdedImage;
 };
 
 #endif

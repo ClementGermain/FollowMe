@@ -38,6 +38,8 @@ OBJECTS=Main.o \
 		SPI_Interface/SPI_Interface.o \
 		improc/UserPatternDetection.o \
 		improc/UserPatternDetectionTest.o \
+		improc/RoadDetection.o \
+		improc/RoadDetectionTest.o \
 		$(UI_OBJECTS)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)

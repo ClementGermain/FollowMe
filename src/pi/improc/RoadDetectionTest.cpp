@@ -44,7 +44,7 @@ void RoadDetectionTest::run() {
 		RaspiCam.getImage(img);
 #endif
 
-		detector.applyRoadThreshold(img, true);
+		detector.applyRoadThreshold(img);
 		
 		// sleep 100ms
 		this_thread::sleep_for(chrono::milliseconds(100));

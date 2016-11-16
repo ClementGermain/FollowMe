@@ -79,6 +79,7 @@ void runUI() {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
 	UserDetectionTest.stop();
+	roadDetectionTest.stop();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
