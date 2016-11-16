@@ -47,6 +47,9 @@ Init_GPIO_Out( SENSOR_BACK_C -> GPIO_Trig, SENSOR_BACK_C -> GPIO_Pin_Trig);
 	
 	//Init_Timer(TIM_Trig	, uint16_t Frequency);
 	
+//INIT TIMER A RAJOUTER
+//TIM_ITConfig(TIM_TypeDef* TIMx, uint16_t TIM_IT, FunctionalState NewState) ...
+	
 }
 
 void Init_All_US_Sensor(void){

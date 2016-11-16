@@ -10,7 +10,7 @@
       <TargetName>Real</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060300::V5.06 update 3 (build 300)::ARMCC</pCCUsed>
+      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F103RB</Device>
@@ -1179,8 +1179,13 @@
     <files>
       <file attr="config" category="source" name="CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c" version="4.70.1">
         <instance index="0">RTE\CMSIS\RTX_Conf_CM.c</instance>
+<<<<<<< HEAD
+        <component Capiversion="1.0" Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.81.0" condition="RTOS RTX"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0"/>
+=======
         <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.80.0" condition="Cortex-M Device Startup"/>
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
+>>>>>>> 6536d72ee58838a8858329906aa3296c2aa7898c
         <targetInfos>
           <targetInfo name="Real"/>
           <targetInfo name="Simulation"/>
