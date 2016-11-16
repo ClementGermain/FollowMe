@@ -11,6 +11,7 @@
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
+#include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -45,6 +46,7 @@ void runUI() {
 		new Menu("test", 0, 0,
 			new Menu("improc", 0, 0,
 				new Menu("user", 0, runTestImProcUser, NULL),
+				new Menu("road", 0, runTestImProcRoad, NULL),
 				NULL
 			),
 			NULL
@@ -148,4 +150,8 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 
 int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.start();
+}
+
+int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
+	RoadDetectionTest.start();
 }

@@ -39,6 +39,7 @@ void UserPatternDetectionTest::run() {
 		cv::Mat img;
 		RaspiCam.getImage(img);
 		detector.findPattern(img, true);
+		
 		// sleep 100ms
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}
