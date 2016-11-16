@@ -59,12 +59,13 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 	// TO DO
 	
 	uint32_t distance=0;
-	
-	//Send_impulse(Sensor->GPIO_trig, Sensor->GPIO_Trig_Pin,10);
+
 	//send a 10us impulsion
+	Send_impulse_GPIO((Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 10);
+	
 	//wait for a rising edge
-	//handler : launch a timer + wait for a falling edge + stop timer --> return time_impulsion_echo (us)
-	//distance = time_impulsion_echo/58 //seconds
+	//handler : launch a timer + wait for a falling edge + stop timer --> return time_echo (us)
+	//distance = time_echo/58 //cm
 	
 	return distance;
 }

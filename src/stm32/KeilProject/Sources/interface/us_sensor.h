@@ -39,10 +39,10 @@
 // Structure that contain all GPIO informations about each UltraSound sensor
 // Need to be set up above
 typedef struct{
-	GPIO_TypeDef * GPIO_trig;
-	int GPIO_Pin_trig;
-	GPIO_TypeDef * GPIO_echo;
-	int GPIO_Pin_echo;
+	GPIO_TypeDef * GPIO_Trig;
+	uint16_t GPIO_Pin_Trig;
+	GPIO_TypeDef * GPIO_Echo;
+	uint16_t GPIO_Pin_Echo;
 } US_Sensor_Typedef;
 
 extern US_Sensor_Typedef * SENSOR_FRONT_L;

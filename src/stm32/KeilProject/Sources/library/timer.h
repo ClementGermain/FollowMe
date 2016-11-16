@@ -14,25 +14,33 @@ extern int AUTORELOAD_VALUE_TIM3;
 extern int AUTORELOAD_VALUE_TIM4;
 
 /** @brief Init a a Timer to run at 1kHZ
-	*	@parma TIM: TIMx to be use
-	* @parma Frequency: Frequency to set the Timer
+	*	@param TIM: TIMx to be use
+	* @param Frequency: Frequency to set the Timer
   * @retval None
 */
 void Init_Timer(TIM_TypeDef* TIM, int Frequency);
  
 /** @brief Init a PWM on a TIMER
-	*	@parma TIM: TIMx to be use
+	*	@param TIM: TIMx to be use
 	*	@param Channel: select the right channel (ex. TIM_Channel_3)
   * @retval None
 */
 void Init_PWM(TIM_TypeDef* TIM, int Channel);
 
 /** @brief Change the duty cycle of a PWM
-	*	@parma TIM:	TIMx to be set
+	*	@param TIM:	TIMx to be set
 	*	@param Channel: select the right channel (ex. TIM_Channel_3)
 	*	@param DutyCycle: has to be from 0 to 1
   * @retval None
 */
 void Set_PWM_DutyCycle(TIM_TypeDef* TIM, int Channel, float DutyCycle); // TODO
+
+/** @brief Configure and active interruption on a TIMER
+	*	@param TIM:	TIMx to be set
+	*	@param Priority: Priority of the interruption
+	*	@param IT_function: adress of the handler
+  * @retval None
+*/
+void Config_IT( TIM_TypeDef* TIM, u8 Priority,void (*IT_function) (void));
 
 #endif

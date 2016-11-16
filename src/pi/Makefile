@@ -27,6 +27,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/Trackbar.o \
 		   ui/view/Digital.o \
 		   ui/view/LogView.o \
+		   ui/view/ImageView.o \
 		   ui/CPULoad.o
 
 OBJECTS=Main.o \
