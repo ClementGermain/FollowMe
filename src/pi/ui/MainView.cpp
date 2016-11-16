@@ -217,15 +217,15 @@ void MainView::run() {
 		// Camera
 		// TODO efficient CameraView
 		if(showCamera) {
-			/*SDL_Surface * cam = camera.getBitmap(1);
+			SDL_Surface * cam = camera.getBitmap(1);
 			cameraView.setImage(cam);
-			SDL_FreeSurface(cam);*/
+			SDL_FreeSurface(cam);
+		} else {
+			//logs.draw(screen);
 			if(UserDetectionTest.detector.hasResultImage()) {
 				cameraView.setImage(&UserDetectionTest.detector.getResultImage());
 				cameraView.draw(screen);
 			}
-		} else {
-			logs.draw(screen);
 		}
 		// commit screen buffer
 		SDL_Flip(screen);

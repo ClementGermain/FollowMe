@@ -6,16 +6,17 @@ UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
 }
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
+	cv::Mat median;
 	// Apply median blur to remove noise
-	cv::medianBlur(bgr_image, bgr_image, 3);
+	cv::medianBlur(bgr_image, median, 3);
 
 	// Convert input image to HSV
 	cv::Mat hsv_image;
-	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
+	cv::cvtColor(median, hsv_image, cv::COLOR_BGR2HSV);
 
 	// Threshold the HSV image, keep only the red pixels
 	cv::Mat yellow_hue_image;
-	cv::inRange(hsv_image, cv::Scalar(20, 100, 100), cv::Scalar(30, 255, 255), yellow_hue_image);
+	cv::inRange(hsv_image, cv::Scalar(25, 100, 100), cv::Scalar(50, 255, 255), yellow_hue_image);
 
 	// Apply blur (low pass filter)
 	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
@@ -26,7 +27,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult) {
-		resultImage = yellow_hue_image.clone();
+		resultImage = bgr_image.clone();
 		for(size_t current_circle = 0; current_circle < circles.size(); ++current_circle) {
 			cv::Point center(std::round(circles[current_circle][0]), std::round(circles[current_circle][1]));
 			int radius = std::round(circles[current_circle][2]);
