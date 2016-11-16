@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include "UserPatternDetection.hpp"
 
-UserPatternDetection::UserPatternDetection() {
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
 
 }
 
@@ -26,17 +26,22 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult) {
-		resultImage = bgr_image.clone();
+		resultImage = yellow_hue_image.clone();
 		for(size_t current_circle = 0; current_circle < circles.size(); ++current_circle) {
 			cv::Point center(std::round(circles[current_circle][0]), std::round(circles[current_circle][1]));
 			int radius = std::round(circles[current_circle][2]);
 
 			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 5);
 		}
+		resultImageCreated = true;
 	}
 }
 
-cv::Mat & UserPatternDetection::getImage() {
+cv::Mat & UserPatternDetection::getResultImage() {
 	return resultImage;
+}
+
+bool UserPatternDetection::hasResultImage() {
+	return resultImageCreated;
 }
 
