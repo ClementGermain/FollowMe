@@ -1,12 +1,12 @@
 #include "us_sensor.h"
 
 // Create the US_Sensor Structures
-US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_FRONT_L, GPIO_PIN_SENSOR_FRONT_L};
-US_Sensor_Typedef SENSOR_FRONT_R_	= {GPIO_SENSOR_FRONT_R, GPIO_PIN_SENSOR_FRONT_R};
-US_Sensor_Typedef SENSOR_FRONT_C_	= {GPIO_SENSOR_FRONT_C, GPIO_PIN_SENSOR_FRONT_C};
-US_Sensor_Typedef SENSOR_BACK_L_	= {GPIO_SENSOR_BACK_L, GPIO_PIN_SENSOR_BACK_L};
-US_Sensor_Typedef SENSOR_BACK_R_ 	= {GPIO_SENSOR_BACK_R, GPIO_PIN_SENSOR_BACK_R};
-US_Sensor_Typedef SENSOR_BACK_C_	= {GPIO_SENSOR_BACK_C, GPIO_PIN_SENSOR_BACK_C};
+US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_FRONT_R_	= {GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_FRONT_C_	= {GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_BACK_L_	= {GPIO_SENSOR_TRIG_BACK_L, GPIO_PIN_SENSOR_TRIG_BACK_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_BACK_R_ 	= {GPIO_SENSOR_TRIG_BACK_R, GPIO_PIN_SENSOR_TRIG_BACK_R, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_BACK_C_	= {GPIO_SENSOR_TRIG_BACK_C, GPIO_PIN_SENSOR_TRIG_BACK_C, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
 
 // Create the US_Sensor pointeur's structures
 US_Sensor_Typedef * SENSOR_FRONT_L 	= &SENSOR_FRONT_L_;
@@ -40,5 +40,15 @@ void Init_All_US_Sensor(void){
 }
 
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
-	return 0;
+	// TO DO
+	
+	uint32_t distance=0;
+	
+	//Send_impulse(Sensor->GPIO_trig, Sensor->GPIO_Trig_Pin,10);
+	//send a 10us impulsion
+	//wait for a rising edge
+	//handler : launch a timer + wait for a falling edge + stop timer --> return time_impulsion_echo (us)
+	//distance = time_impulsion_echo/58 //seconds
+	
+	return distance;
 }
