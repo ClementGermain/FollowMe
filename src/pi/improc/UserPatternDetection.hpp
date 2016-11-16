@@ -6,8 +6,10 @@ class UserPatternDetection {
 	public:
 		UserPatternDetection();
 		void findPattern(cv::Mat & bgr_image, bool drawResult=false);
-		cv::Mat & getImage();
+		bool hasResultImage();
+		cv::Mat & getResultImage();
 	private:
+		bool resultImageCreated;
 		cv::Mat resultImage;
 };
 

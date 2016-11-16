@@ -15,6 +15,7 @@
 #include "view/Digital.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
+#include "improc/UserPatternDetectionTest.hpp"
 
 using namespace std;
 
@@ -219,9 +220,12 @@ void MainView::run() {
 			SDL_Surface * cam = camera.getBitmap(1);
 			cameraView.setImage(cam);
 			SDL_FreeSurface(cam);
-			cameraView.draw(screen);
 		} else {
-			logs.draw(screen);
+			//logs.draw(screen);
+			if(UserDetectionTest.detector.hasResultImage()) {
+				cameraView.setImage(&UserDetectionTest.detector.getResultImage());
+				cameraView.draw(screen);
+			}
 		}
 		// commit screen buffer
 		SDL_Flip(screen);

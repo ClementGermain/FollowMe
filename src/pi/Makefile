@@ -10,7 +10,7 @@ RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
 				-lraspicamcv -lpthread -lmmal_core -lmmal -lmmal_util -lvcos -lbcm_host
 
 #SPI lib
-RASPI_LDFLAGS=-lwiringPi
+RASPI_LDFLAGS +=-lwiringPi
 
 # other flags
 CXXFLAGS +=-Wall -std=c++11 -I. -MD
@@ -41,10 +41,9 @@ OBJECTS=Main.o \
 		$(UI_OBJECTS)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)
-all: CXXFLAGS +=$(RCAM_CXXFLAGS)
+all: CXXFLAGS +=$(RASPI_CXXFLAGS)
 all: $(TARGET)
 
-noraspi: RASPI=noraspi
 noraspi: CXXFLAGS += -D__NO_RASPI__
 noraspi: $(TARGET)
 

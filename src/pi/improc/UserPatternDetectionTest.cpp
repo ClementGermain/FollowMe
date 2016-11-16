@@ -28,7 +28,7 @@ void UserPatternDetectionTest::start() {
 
 void UserPatternDetectionTest::stop() {
 	if(threadTest != NULL) {
-		endThread = false;
+		endThread = true;
 		threadTest->join();
 		delete threadTest;
 	}
@@ -37,7 +37,11 @@ void UserPatternDetectionTest::stop() {
 void UserPatternDetectionTest::run() {
 	while(!endThread) {
 		cv::Mat img;
+#ifdef __NO_RASPI__
+		img = cv::imread("../../res/img/cam_output_circles2.bmp");
+#else
 		RaspiCam.getImage(img);
+#endif
 		detector.findPattern(img, true);
 		
 		// sleep 100ms

@@ -77,6 +77,7 @@ void runUI() {
 	if(view.isOpen()) {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
+	UserDetectionTest.stop();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
@@ -150,6 +151,8 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 
 int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.start();
+
+	return 0;
 }
 
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
