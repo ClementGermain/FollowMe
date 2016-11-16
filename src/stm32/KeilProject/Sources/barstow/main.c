@@ -4,6 +4,7 @@
 #include "../interface/motor.h"
 #include "../interface/spi.h"
 #include "barstow.h"
+#include "../library/delay.h"
 
 /** @brief  Configures the different system clocks.
   * @param  None
