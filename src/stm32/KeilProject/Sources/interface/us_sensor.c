@@ -1,5 +1,6 @@
 #include "us_sensor.h"
 
+
 // Create the US_Sensor Structures
 US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
 US_Sensor_Typedef SENSOR_FRONT_R_	= {GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
@@ -25,9 +26,24 @@ void Update_US_Sensor(BarstowModel_Typedef * Modele){
 	Modele->rearLeftUSensor.distance = (Get_USensor(SENSOR_BACK_L));
 	Modele->rearCenterUSensor.distance = (Get_USensor(SENSOR_BACK_C));
 }
-
+// configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
-	//TODO
+Init_GPIO_Out( SENSOR_FRONT_L->GPIO_echo, SENSOR_FRONT_L ->GPIO_Pin_echo);
+Init_GPIO_Out( SENSOR_FRONT_R ->GPIO_echo, SENSOR_FRONT_R ->GPIO_Pin_echo);
+Init_GPIO_Out( SENSOR_FRONT_C ->GPIO_echo, SENSOR_FRONT_C ->GPIO_Pin_echo);
+	
+Init_GPIO_Out( SENSOR_BACK_L -> GPIO_echo, SENSOR_BACK_L -> GPIO_Pin_echo);
+Init_GPIO_Out( SENSOR_BACK_R -> GPIO_echo, SENSOR_BACK_R -> GPIO_Pin_echo);
+Init_GPIO_Out( SENSOR_BACK_C -> GPIO_echo, SENSOR_BACK_C -> GPIO_Pin_echo);
+
+Init_GPIO_In( SENSOR_FRONT_L ->GPIO_trig, SENSOR_FRONT_L ->GPIO_Pin_trig);
+Init_GPIO_In( SENSOR_FRONT_R -> GPIO_trig, SENSOR_FRONT_R -> GPIO_Pin_trig);
+Init_GPIO_In( SENSOR_FRONT_C -> GPIO_trig, SENSOR_FRONT_C -> GPIO_Pin_trig);	
+	
+Init_GPIO_In( SENSOR_BACK_L -> GPIO_trig, SENSOR_BACK_L -> GPIO_Pin_trig);
+Init_GPIO_In( SENSOR_BACK_R ->GPIO_trig, SENSOR_BACK_R -> GPIO_Pin_trig);
+Init_GPIO_In( SENSOR_BACK_C -> GPIO_trig, SENSOR_BACK_C -> GPIO_Pin_trig);	
+	
 }
 
 void Init_All_US_Sensor(void){

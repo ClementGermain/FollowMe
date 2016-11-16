@@ -32,6 +32,13 @@ void Init_GPIO_PWM(GPIO_TypeDef * GPIO, uint16_t Pin);
 	* @retval None
 */
 
+/** @brief Init a GPIO in Analog Input (Pulse use for exemple)
+	* @param GPIO: GPIOA or GPIOB
+	* @param Pin: Pin adress (like GPIO_Pin_6)
+	* @retval None
+*/
+void Init_GPIO_In(GPIO_TypeDef * GPIO, int Pin);
+
 void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin);
 
 /** @brief Send an impulse on GPIO
