@@ -53,5 +53,15 @@ void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin){
 }
 
 void Send_impulse_GPIO(TIM_TypeDef* TIM, uint16_t Channel, GPIO_TypeDef * GPIO, uint16_t Pin, uint16_t impulse_time_us){
-	// TO DO
+
+	GPIO_ResetBits(GPIO, Pin);
+	
+	TIM->CNT = 0; //Reinitialize the timer
+	
+	GPIO_SetBits(GPIO, Pin);
+	
+	// A COMPLETER !!!!!
+	//Attendre impulse_time_us
+	
+	GPIO_ResetBits(GPIO, Pin);
 }
