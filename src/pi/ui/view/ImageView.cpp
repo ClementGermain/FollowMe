@@ -1,0 +1,30 @@
+#include <SDL/SDL.h>
+#include "ImageView.hpp"
+
+
+ImageView::ImageView(int x, int y, int w, int h) :
+	View(x, y),
+	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);})
+{
+
+}
+
+void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
+	switch(mode) {
+		case ImageView::NORMAL:
+			SDL_BlitSurface(image, NULL, buffer.get(), NULL);
+			break;
+			// TODO center and resize image
+	}
+}
+
+void ImageView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
+	SDL_Surface * buffer = this->buffer.get();
+	// the buffer has been updated in setImage
+	//
+	if(needRedraw) {
+		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
+		if(updateScreen)
+			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
+	}
+}

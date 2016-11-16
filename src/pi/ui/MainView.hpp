@@ -9,6 +9,7 @@
 #include "../car/Camera.hpp"
 #include "view/Digital.hpp"
 #include "view/Trackbar.hpp"
+#include "view/ImageView.hpp"
 #include "CPULoad.hpp"
 
 class MainView {
@@ -26,6 +27,7 @@ class MainView {
 		View & getView(const std::string & name);
 		Digital & getDigitalView(const std::string & name);
 		Trackbar & getTrackbarView(const std::string & name);
+		ImageView & getImageView(const std::string & name);
 		void addView(const std::string & name, View * v);
 
 		std::thread * threadView;
