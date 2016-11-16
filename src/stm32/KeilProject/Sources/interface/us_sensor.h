@@ -5,6 +5,7 @@
 #include "../barstow/model.h"
 #include "../library/adc.h"
 #include "../library/gpio.h"
+#include "../library/timer.h"
 
 // Not accurate Value, we gonna need to choose them
 #define GPIO_SENSOR_TRIG_FRONT_L					GPIOA
@@ -37,7 +38,9 @@
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
 #define TIM_Trig													TIM3
-#define TIM_Channel_Trig									TIM_Channel_3
+#define TIM_Channel_Trig									TIM_Channel_3 // for doing the pulse and  count the distance
+#define TIM_Trig_All											TIM3
+#define TIM_Channel_Trig_All							TIM_Channel_4
 
 // Structure that contain all GPIO informations about each UltraSound sensor
 // Need to be set up above

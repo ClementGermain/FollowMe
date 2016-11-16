@@ -28,21 +28,24 @@ void Update_US_Sensor(BarstowModel_Typedef * Modele){
 }
 // configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
-Init_GPIO_Out( SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L ->GPIO_Pin_Echo);
-Init_GPIO_Out( SENSOR_FRONT_R ->GPIO_Echo, SENSOR_FRONT_R ->GPIO_Pin_Echo);
-Init_GPIO_Out( SENSOR_FRONT_C ->GPIO_Echo, SENSOR_FRONT_C ->GPIO_Pin_Echo);
 	
-Init_GPIO_Out( SENSOR_BACK_L -> GPIO_Echo, SENSOR_BACK_L -> GPIO_Pin_Echo);
-Init_GPIO_Out( SENSOR_BACK_R -> GPIO_Echo, SENSOR_BACK_R -> GPIO_Pin_Echo);
-Init_GPIO_Out( SENSOR_BACK_C -> GPIO_Echo, SENSOR_BACK_C -> GPIO_Pin_Echo);
+Init_GPIO_In ( SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L ->GPIO_Pin_Echo);
+Init_GPIO_In ( SENSOR_FRONT_R ->GPIO_Echo, SENSOR_FRONT_R ->GPIO_Pin_Echo);
+Init_GPIO_In ( SENSOR_FRONT_C ->GPIO_Echo, SENSOR_FRONT_C ->GPIO_Pin_Echo);
+	
+Init_GPIO_In( SENSOR_BACK_L -> GPIO_Echo, SENSOR_BACK_L -> GPIO_Pin_Echo);
+Init_GPIO_In( SENSOR_BACK_R -> GPIO_Echo, SENSOR_BACK_R -> GPIO_Pin_Echo);
+Init_GPIO_In ( SENSOR_BACK_C -> GPIO_Echo, SENSOR_BACK_C -> GPIO_Pin_Echo);
 
-Init_GPIO_In( SENSOR_FRONT_L ->GPIO_Trig, SENSOR_FRONT_L ->GPIO_Pin_Trig);
-Init_GPIO_In( SENSOR_FRONT_R -> GPIO_Trig, SENSOR_FRONT_R -> GPIO_Pin_Trig);
-Init_GPIO_In( SENSOR_FRONT_C -> GPIO_Trig, SENSOR_FRONT_C -> GPIO_Pin_Trig);	
+Init_GPIO_Out( SENSOR_FRONT_L ->GPIO_Trig, SENSOR_FRONT_L ->GPIO_Pin_Trig);
+Init_GPIO_Out( SENSOR_FRONT_R -> GPIO_Trig, SENSOR_FRONT_R -> GPIO_Pin_Trig);
+Init_GPIO_Out( SENSOR_FRONT_C -> GPIO_Trig, SENSOR_FRONT_C -> GPIO_Pin_Trig);	
 	
-Init_GPIO_In( SENSOR_BACK_L -> GPIO_Trig, SENSOR_BACK_L -> GPIO_Pin_Trig);
-Init_GPIO_In( SENSOR_BACK_R ->GPIO_Trig, SENSOR_BACK_R -> GPIO_Pin_Trig);
-Init_GPIO_In( SENSOR_BACK_C -> GPIO_Trig, SENSOR_BACK_C -> GPIO_Pin_Trig);	
+Init_GPIO_Out( SENSOR_BACK_L -> GPIO_Trig, SENSOR_BACK_L -> GPIO_Pin_Trig);
+Init_GPIO_Out( SENSOR_BACK_R ->GPIO_Trig, SENSOR_BACK_R -> GPIO_Pin_Trig);
+Init_GPIO_Out( SENSOR_BACK_C -> GPIO_Trig, SENSOR_BACK_C -> GPIO_Pin_Trig);	
+	
+	//Init_Timer(TIM_Trig	, uint16_t Frequency);
 	
 }
 
