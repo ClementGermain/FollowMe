@@ -10,9 +10,10 @@
 
 using namespace std;
 
-Camera::Camera(const char * winName, int width, int height, int framerate) :
-	windowName(winName),
-	threadRunning(false)
+
+Camera RaspiCam;
+
+Camera::Camera(int width, int height, int framerate)
 {
 #ifndef __NO_RASPI__
 	// Init configuration
@@ -28,36 +29,10 @@ Camera::Camera(const char * winName, int width, int height, int framerate) :
 }
 
 Camera::~Camera() {
-	// stop preview if necessary
-	closePreview();
-
 #ifndef __NO_RASPI__
 	// Release camera
 	raspiCamCvReleaseCapture(&raspiCam);
 #endif
-}
-
-void Camera::openPreview() {
-	if(!threadRunning) {
-		// Open a window
-		cv::namedWindow(windowName, cv::WINDOW_AUTOSIZE);
-
-		// Start thread
-		threadRunning = true;
-		threadPreview = new thread(Camera::loopPreview, this);
-	}
-}
-
-void Camera::closePreview() {
-	if(threadRunning) {
-		threadRunning = false;
-		threadPreview->join();
-		delete threadPreview;
-	}
-
-	// Close the window
-	cv::destroyWindow(windowName);
-	cv::waitKey(100);
 }
 
 void Camera::getImage(cv::Mat & out) {
@@ -82,23 +57,3 @@ SDL_Surface * Camera::getBitmap(double scale) {
 #endif
 }
 
-void Camera::loopPreview(Camera * that) {
-	while(that->threadRunning) {
-		cv::waitKey(100);
-		that->updatePreview();
-	}
-}
-
-void Camera::updatePreview() {
-#ifndef __NO_RASPI__
-	if(raspiCam != NULL) {
-		// Get a frame
-		imageCam = raspiCamCvQueryFrame(raspiCam);
-		
-		if(imageCam.data) {
-			// Display frame
-			cv::imshow(windowName, imageCam);
-		}
-	}
-#endif
-}
