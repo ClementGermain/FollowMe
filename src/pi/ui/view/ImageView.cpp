@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include <opencv2/opencv.hpp>
 #include "ImageView.hpp"
 
 
@@ -15,6 +16,23 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 			SDL_BlitSurface(image, NULL, buffer.get(), NULL);
 			break;
 			// TODO center and resize image
+	}
+}
+
+void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
+	if(mat != NULL) {
+		IplImage image(*mat);
+		SDL_Surface * img = SDL_CreateRGBSurfaceFrom((void*)image.imageData,
+				image.width,
+				image.height,
+				image.depth * image.nChannels,
+				image.widthStep,
+				0xff0000, 0x00ff00, 0x0000ff, 0
+				);
+
+		setImage(img, mode);
+
+		SDL_FreeSurface(img);
 	}
 }
 
