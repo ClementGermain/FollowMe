@@ -43,4 +43,6 @@ void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle); // 
 */
 //void Config_IT( TIM_TypeDef* TIM, u8 Priority,void (*IT_function) (void));
 
+void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us);
+
 #endif
