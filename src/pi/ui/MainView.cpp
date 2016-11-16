@@ -14,6 +14,7 @@
 #include "view/Trackbar.hpp"
 #include "view/Digital.hpp"
 #include "view/LogView.hpp"
+#include "view/ImageView.hpp"
 
 using namespace std;
 
@@ -160,11 +161,11 @@ void MainView::run() {
 	// dynamic views
 	initializeViews();
 	// Arrows
-	
 	KeyboardInput keyboard(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
 	// Logs
 	LogView logs(0,0,320,240);
-	
+	// Camera
+	ImageView cameraView(0, 0, 320, 240);
 
 	bool end = false;
 
@@ -216,8 +217,9 @@ void MainView::run() {
 		// TODO efficient CameraView
 		if(showCamera) {
 			SDL_Surface * cam = camera.getBitmap(1);
-			SDL_BlitSurface(cam, NULL, screen, NULL);
+			cameraView.setImage(cam);
 			SDL_FreeSurface(cam);
+			cameraView.draw(screen);
 		} else {
 			logs.draw(screen);
 		}
@@ -240,6 +242,9 @@ Digital & MainView::getDigitalView(const string & name) {
 }
 Trackbar & MainView::getTrackbarView(const string & name) {
 	return *((Trackbar*)views[name].get());
+}
+ImageView & MainView::getImageView(const string & name) {
+	return *((ImageView*)views[name].get());
 }
 
 void MainView::addView(const string & name, View * v) {
