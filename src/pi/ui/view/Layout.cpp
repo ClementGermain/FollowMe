@@ -11,11 +11,14 @@ Layout::Layout() : View(0,0) {
 }
 
 void Layout::addView(const string & name, View * view) {
-	views.emplace(name, shared_ptr<View>(view));
+	if(views.emplace(name, shared_ptr<View>(view)).second) {
+		// the view has been succesfully added, now register its position
+		viewOrder.push_back(name);
+	}
 }
 
 View * Layout::getView(const string & name) {
-	return views[name].get();
+	return views.at(name).get();
 }
 
 Digital & Layout::getDigitalView(const string & name) {
@@ -42,8 +45,8 @@ void Layout::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	if(needRedraw)
 		SDL_FillRect(screen, NULL, 0xffffffff);
 
-	for(auto & it : views)
-		it.second.get()->draw(screen, needRedraw, !needRedraw && updateScreen);
+	for(string & v : viewOrder)
+		getView(v)->draw(screen, needRedraw, !needRedraw && updateScreen);
 
 	if(updateScreen)
 		SDL_Flip(screen);
