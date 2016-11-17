@@ -8,13 +8,11 @@
 //  Validé en simu
 //=======================================================================================
 
-
-
 #ifndef _TIMER_SYSTICK_H__
 #define _TIMER_SYSTICK_H__
 
-
-
+#include "stm32f10x.h" 
+#include "clock.h"
 
 //========================================================================================
 // Gestion du Timer SysTick
@@ -44,9 +42,6 @@ void Systick_Prio_IT(char Prio,void (*Systick_function) (void));
 //=======================================================================================
 
 float Systick_Period(float Duree_us);
-
-
-
 
 // Exemple de code :
 // Gestion du Systick, ici, configuration en IT périodique 

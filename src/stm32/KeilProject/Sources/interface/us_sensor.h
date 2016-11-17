@@ -6,6 +6,7 @@
 #include "../library/adc.h"
 #include "../library/gpio.h"
 #include "../library/timer.h"
+#include "../library/Timer_Systick.h"
 
 // Not accurate Value, we gonna need to choose them
 #define GPIO_SENSOR_TRIG_FRONT_L					GPIOA
@@ -42,6 +43,11 @@
 #define TIM_Trig_All											TIM3
 #define TIM_Channel_Trig_All							TIM_Channel_4
 
+#define SYSTICK_PERIOD_US 1000 //1 ms
+
+//Global Time (ms)
+extern int Time;
+
 // Structure that contain all GPIO informations about each UltraSound sensor
 // Need to be set up above
 typedef struct{
@@ -59,13 +65,13 @@ extern US_Sensor_Typedef * SENSOR_BACK_R;
 extern US_Sensor_Typedef * SENSOR_BACK_C;
 
 /** @brief Update all the UltraSound sensor in a Modele struct
-	* @parma Modele: Pointeur to the modele struct to be used
+	* @param Modele: Pointeur to the modele struct to be used
 	* @retval None
 */
 void Update_US_Sensor(BarstowModel_Typedef * Modele);
 
 /** @brief Init a single UltraSound sensor
-	* @parma Sensor: Sensor to init (ex : SENSOR_FRONT_R)
+	* @param Sensor: Sensor to init (ex : SENSOR_FRONT_R)
 	* @retval None
 */
 void Init_US_Sensor(US_Sensor_Typedef * Sensor);
@@ -75,10 +81,28 @@ void Init_US_Sensor(US_Sensor_Typedef * Sensor);
 */
 void Init_All_US_Sensor(void);
 
+/** @brief Init and launch Systick Timer that calls Periodic_Impulse_3US() every period
+	* @param None
+	* @retval float : actual period of Systick
+*/
+float Init_Systick(void);
+
 /** @brief Get the distance value of a specific ultra sound sensor
-	* @parma Sensor: Sensor to use (ex : SENSOR_FRONT_R)
+	* @param Sensor: Sensor to use (ex : SENSOR_FRONT_R)
 	* @retval u32: distance of a obstacle to the sensor in centimeters
 */
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor);
+
+/** @brief Send 10us impulse on each front motor, on after the other, with 70ms between each.
+	* @param none
+	* @retval None
+*/
+void Periodic_Impulse_3_Front_US(void);
+
+/** @brief Test procedure for Front US Sensors
+	* @param none
+	* @retval None
+*/
+void Test_US_Sensor(void);
 
 #endif

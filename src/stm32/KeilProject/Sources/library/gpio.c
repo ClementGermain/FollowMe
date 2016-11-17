@@ -53,12 +53,8 @@ void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin){
 }
 
 void Send_impulse_GPIO(GPIO_TypeDef * GPIO, uint16_t Pin, uint16_t impulse_time_us){
-
 	GPIO_ResetBits(GPIO, Pin);
-	
 	GPIO_SetBits(GPIO, Pin);
-	
-	//
-	
+	Delay_us(impulse_time_us);
 	GPIO_ResetBits(GPIO, Pin);
 }
