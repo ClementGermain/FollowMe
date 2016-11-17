@@ -28,6 +28,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/Digital.o \
 		   ui/view/LogView.o \
 		   ui/view/ImageView.o \
+		   ui/view/TextView.o \
 		   ui/view/Layout.o \
 		   ui/ViewManager.o \
 		   ui/CPULoad.o
