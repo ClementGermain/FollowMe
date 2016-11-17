@@ -158,7 +158,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
-
+		l.getImageView("camera").setImage(roadDetectionTest.getImage());
 	}
 	
 }
