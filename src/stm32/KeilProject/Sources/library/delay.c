@@ -5,12 +5,10 @@ void Delay() {
 }
  
 
-//FONCTION A TESTER
-void Delay_us(int time_us){
-	// 1 FOR = 4 instructions
-	//Fq Clock = 72MHz
-	for (int n=0; n < (time_us*72/4); n++);
 
+void Delay_us(int time_us){
+	//idéal autour de 10us
+	for (int n=0; n < (time_us*8); n++);
 }
 
 /*

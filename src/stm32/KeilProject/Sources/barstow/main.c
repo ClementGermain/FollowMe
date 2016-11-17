@@ -20,7 +20,7 @@ int main(void)
   RCC_Configuration();
 	
 	/*<! RCC Configuration */
-	void Test_US_Sensor(void);
+	Test_US_Sensor();
 	
 	/*<! Start Barstow car's program. */
 	StartBarstow();

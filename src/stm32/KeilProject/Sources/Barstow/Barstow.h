@@ -5,6 +5,7 @@
 #include "model.h"
 #include "control.h"
 #include "../library/gpio.h"
+#include "../interface/us_sensor.h"
 #include "../interface/motor.h"
 #include "../interface/spi.h"
 
