@@ -1,7 +1,8 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_rotozoom.h>
 #include <opencv2/opencv.hpp>
 #include "ImageView.hpp"
-
+#include <iostream>
 
 ImageView::ImageView(int x, int y, int w, int h) :
 	View(x, y),
@@ -13,6 +14,8 @@ ImageView::ImageView(int x, int y, int w, int h) :
 void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 	switch(mode) {
 		case ImageView::NORMAL:
+			if (image->w !=0 && image->h!=0)
+				rotozoomSurfaceXY(image, 0.0, buffer->w/image->w, buffer->h/image->h, 0); 
 			SDL_BlitSurface(image, NULL, buffer.get(), NULL);
 			break;
 			// TODO center and resize image
@@ -22,6 +25,7 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
 	if(mat != NULL) {
 		IplImage image(*mat);
+		
 		SDL_Surface * img = SDL_CreateRGBSurfaceFrom((void*)image.imageData,
 				image.width,
 				image.height,
@@ -29,7 +33,6 @@ void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
 				image.widthStep,
 				0xff0000, 0x00ff00, 0x0000ff, 0
 				);
-
 		setImage(img, mode);
 
 		SDL_FreeSurface(img);
