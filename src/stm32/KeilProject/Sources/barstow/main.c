@@ -18,12 +18,13 @@ int main(void)
 {
 	/*<! RCC Configuration */
   RCC_Configuration();
-	
+
 	/*<! RCC Configuration */
 	Test_US_Sensor();
 	
 	/*<! Start Barstow car's program. */
 	StartBarstow();
+
 }
 
 

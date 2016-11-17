@@ -38,10 +38,11 @@
 #define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
-#define TIM_Trig													TIM3
-#define TIM_Channel_Trig									TIM_Channel_3 // for doing the pulse and  count the distance
-#define TIM_Trig_All											TIM3
-#define TIM_Channel_Trig_All							TIM_Channel_4
+#define TIM_Echo													TIM2
+#define TIM_Channel_Echo_1								TIM_Channel_1// for counting the distance
+#define TIM_Channel_Echo_2								TIM_Channel_2
+#define TIM_Channel_Echo_3								TIM_Channel_3
+
 
 #define SYSTICK_PERIOD_US 1000 //1 ms
 
