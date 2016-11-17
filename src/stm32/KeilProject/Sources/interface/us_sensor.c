@@ -68,9 +68,7 @@ void Init_All_US_Sensor(void){
 
 
 float Init_Systick(void){
-	int aux3;
 	Time=0;
-	aux3=Time;
 	float period; //period systick us
 	period=Systick_Period(SYSTICK_PERIOD_US);
 	Systick_Prio_IT(2,Periodic_Impulse_3_Front_US);
@@ -96,7 +94,7 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 }
 
 void Periodic_Impulse_3_Front_US(){
-	/*Time++;
+	Time++;
 
 	if (Time%210==10){
 	//impulse 10us on Front Left US
@@ -112,7 +110,6 @@ void Periodic_Impulse_3_Front_US(){
 	//impulse 10us on Front Center US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 10);
 	}
-*/
 }
 
 void Test_US_Sensor(void){
