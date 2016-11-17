@@ -28,6 +28,29 @@ void Init_Timer(TIM_TypeDef* TIM, uint16_t Frequency){
   TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 }
 
+
+void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
+	int ARR_max=65535;
+	int fclk=72; // clock = 72 Mhz
+	int PSC_calc;
+	int ARR_calc;
+	int duree_reelle_us;
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	
+	// DeInit
+	TIM_DeInit(TIM);
+	// clock and Init 
+	 TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
+	PSC_calc = (Duree_us * fclk / ARR_max) +1 ;	// +1 pour arrondi;
+	ARR_calc= (Duree_us * fclk /PSC_calc) +1;
+		// 
+	TIM_TimeBaseStructure.TIM_Period = ARR_calc -1  ;
+  TIM_TimeBaseStructure.TIM_Prescaler = PSC_calc -1;
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	
+}
+
 void Init_PWM(TIM_TypeDef* TIM, uint16_t Channel)
 {
 	TIM_OCInitTypeDef TIM_OCInitStructure;
