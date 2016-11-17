@@ -39,8 +39,7 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
 	
 	// DeInit
 	TIM_DeInit(TIM);
-	// clock and Init 
-	 TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
+	
 	PSC_calc = (Duree_us * fclk / ARR_max) +1 ;	// +1 pour arrondi;
 	ARR_calc= (Duree_us * fclk /PSC_calc) +1;
 		// 
@@ -48,7 +47,8 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
   TIM_TimeBaseStructure.TIM_Prescaler = PSC_calc -1;
   TIM_TimeBaseStructure.TIM_ClockDivision = 0;
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
-	
+	// clock and Init 
+	 TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 }
 
 void Init_PWM(TIM_TypeDef* TIM, uint16_t Channel)
@@ -109,3 +109,19 @@ void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle){
 			break;
 	}
 }
+
+//void Init_timer_Gated_mode(TIM_TypeDef* TIM, uint16_t Channel){
+//}
+
+
+//// configure interruption trigger
+
+//void Configure_Interruption(TIM_TypeDef* TIMx){
+//	TIM_ITConfig(TIM_TypeDef* TIMx, TIM_IT_Trigger, DISABLE);
+//	
+//}
+
+
+
+
+

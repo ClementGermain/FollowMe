@@ -16,8 +16,19 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 	
-	/*<! Start Barstow car's program. */
-	StartBarstow();
+//	/*<! Start Barstow car's program. */
+//	StartBarstow();
+	int Duree_us;
+	int value=0;
+	Duree_us = 500000;
+	Timer_Configure(TIM2, Duree_us);
+	
+	while(1) {
+		if((TIM2->SR & 0x1) == 0x1) 
+{TIM2->SR = TIM2->SR &~ 0x1; }
+		
+				
+		}
 }
 
 
