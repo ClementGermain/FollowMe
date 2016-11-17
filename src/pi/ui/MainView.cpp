@@ -21,7 +21,7 @@
 using namespace std;
 
 
-MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera), showCamera(false) {
+MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera) {
 
 }
 
@@ -74,7 +74,6 @@ void MainView::drawStaticViews() {
 
 	// Car picture
 	SDL_Rect carPos = {330, 25};
-	SDL_BlitSurface(car, NULL,  screen, &carPos);
 
 	// Link image/text
 	drawPointerLine(535, 40, 190, 80,  carPos);
@@ -90,59 +89,78 @@ void MainView::drawStaticViews() {
 	drawPointerLine(505, 375, 142, 340, carPos);
 }
 
-void MainView::initializeViews() {
+void MainView::initializeViews(ViewManager & mgr) {
+	Layout & defaultLayout = mgr.createLayout("default");
+
+	// Car top view
+	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
+	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
+	defaultLayout.getImageView("imgCar").setImage(car);
+	SDL_FreeSurface(car);
+
 	// motors
-	addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
-	addView("tbVoltageFront", new Trackbar(0, 100, 620, 50));
-	addView("dCurrentFront", new Digital("I: %.0fmA", 540, 70, 80, 16, false));
-	addView("tbCurrentFront", new Trackbar(0, 2, 620, 70));
-	addView("dVoltageLeft", new Digital("V: %.0fmV", 540, 240, 80, 16, false));
-	addView("tbVoltageLeft", new Trackbar(0, 100, 620, 240));
-	addView("dCurrentLeft", new Digital("I: %.0fmA", 540, 260, 80, 16, false));
-	addView("tbCurrentLeft", new Trackbar(0, 2, 620, 260));
-	addView("dVoltageRight", new Digital("V: %.0fmV", 540, 330, 80, 16, false));
-	addView("tbVoltageRight", new Trackbar(0, 100, 620, 330));
-	addView("dCurrentRight", new Digital("I: %.0fmA", 540, 350, 80, 16, false));
-	addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
+	defaultLayout.addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
+	defaultLayout.addView("tbVoltageFront", new Trackbar(0, 100, 620, 50));
+	defaultLayout.addView("dCurrentFront", new Digital("I: %.0fmA", 540, 70, 80, 16, false));
+	defaultLayout.addView("tbCurrentFront", new Trackbar(0, 2, 620, 70));
+	defaultLayout.addView("dVoltageLeft", new Digital("V: %.0fmV", 540, 240, 80, 16, false));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar(0, 100, 620, 240));
+	defaultLayout.addView("dCurrentLeft", new Digital("I: %.0fmA", 540, 260, 80, 16, false));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar(0, 2, 620, 260));
+	defaultLayout.addView("dVoltageRight", new Digital("V: %.0fmV", 540, 330, 80, 16, false));
+	defaultLayout.addView("tbVoltageRight", new Trackbar(0, 100, 620, 330));
+	defaultLayout.addView("dCurrentRight", new Digital("I: %.0fmA", 540, 350, 80, 16, false));
+	defaultLayout.addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
 
 	// distance
-	addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
-	addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
-	addView("distFrontRight", new Digital("%.0fcm", 470, 5, 70));
-	addView("distBackLeft", new Digital("%.0fcm", 330, 380, 70));
-	addView("distBackCenter", new Digital("%.0fcm", 400, 380, 70));
-	addView("distBackRight", new Digital("%.0fcm", 470, 380, 70));
+	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
+	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
+	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 470, 5, 70));
+	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 70));
+	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 400, 380, 70));
+	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 470, 380, 70));
 	// raspi
-	addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
+	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
+	// other
+	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
+
+	Layout & logLayout = mgr.createLayout("logs");
+	logLayout.addView("logs", new LogView(0,0,800,400));
 }
 
-void MainView::updateViews() {
+void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	
-	getDigitalView("dVoltageFront").setValue(model.directionMotor.voltage);
-	getTrackbarView("tbVoltageFront").setPosition(model.directionMotor.voltage);
-	getDigitalView("dCurrentFront").setValue(model.directionMotor.current);
-	getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
+	if(mgr.isActive("default")) {
+		Layout & l = mgr.getLayout("default");
+		l.getDigitalView("dVoltageFront").setValue(model.directionMotor.voltage);
+		l.getTrackbarView("tbVoltageFront").setPosition(model.directionMotor.voltage);
+		l.getDigitalView("dCurrentFront").setValue(model.directionMotor.current);
+		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
 
-	getDigitalView("dVoltageLeft").setValue(model.leftWheelMotor.voltage);
-	getTrackbarView("tbVoltageLeft").setPosition(model.leftWheelMotor.voltage);
-	getDigitalView("dCurrentLeft").setValue(model.leftWheelMotor.current);
-	getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
+		l.getDigitalView("dVoltageLeft").setValue(model.leftWheelMotor.voltage);
+		l.getTrackbarView("tbVoltageLeft").setPosition(model.leftWheelMotor.voltage);
+		l.getDigitalView("dCurrentLeft").setValue(model.leftWheelMotor.current);
+		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-	getDigitalView("dVoltageRight").setValue(model.rightWheelMotor.voltage);
-	getTrackbarView("tbVoltageRight").setPosition(model.rightWheelMotor.voltage);
-	getDigitalView("dCurrentRight").setValue(model.rightWheelMotor.current);
-	getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
+		l.getDigitalView("dVoltageRight").setValue(model.rightWheelMotor.voltage);
+		l.getTrackbarView("tbVoltageRight").setPosition(model.rightWheelMotor.voltage);
+		l.getDigitalView("dCurrentRight").setValue(model.rightWheelMotor.current);
+		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 
-	getDigitalView("distFrontLeft").setValue(model.frontLeftUSensor.distance);
-	getDigitalView("distFrontCenter").setValue(model.frontCenterUSensor.distance);
-	getDigitalView("distFrontRight").setValue(model.frontRightUSensor.distance);
-	getDigitalView("distBackLeft").setValue(model.rearLeftUSensor.distance);
-	getDigitalView("distBackCenter").setValue(model.rearCenterUSensor.distance);
-	getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
+		l.getDigitalView("distFrontLeft").setValue(model.frontLeftUSensor.distance);
+		l.getDigitalView("distFrontCenter").setValue(model.frontCenterUSensor.distance);
+		l.getDigitalView("distFrontRight").setValue(model.frontRightUSensor.distance);
+		l.getDigitalView("distBackLeft").setValue(model.rearLeftUSensor.distance);
+		l.getDigitalView("distBackCenter").setValue(model.rearCenterUSensor.distance);
+		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
-	getDigitalView("cpu").setValue(cpuLoad.get());
+		l.getDigitalView("cpu").setValue(cpuLoad.get());
+
+	}
+	
 }
 
 void MainView::run() {
@@ -156,18 +174,12 @@ void MainView::run() {
 	FPSmanager fpsManager;
 	SDL_initFramerate(&fpsManager);
 
-	car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 
+	// TODO remove static views
 	drawStaticViews();
-	
-	// dynamic views
-	initializeViews();
-	// Arrows
-	KeyboardInput keyboard(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
-	// Logs
-	LogView logs(0,0,320,240);
-	// Camera
-	ImageView cameraView(0, 0, 320, 240);
+
+	ViewManager mgr;
+	initializeViews(mgr);
 
 	bool end = false;
 
@@ -175,7 +187,8 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
-			if(keyboard.handleEvent(event))
+			if(mgr.isActive("default"))
+			if(mgr.getActiveLayout().getKeyboardView("keyboard").handleEvent(event))
 				continue;
 
 			switch(event.type) {
@@ -196,7 +209,10 @@ void MainView::run() {
 								end = true;
 							break;
 						case SDLK_TAB:
-							showCamera = !showCamera;
+							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
+								mgr.switchToPrevLayout();
+							else
+								mgr.switchToNextLayout();
 							break;
 						default:
 							break;
@@ -206,58 +222,17 @@ void MainView::run() {
 		}
 		
 		/// Refresh display
-		updateViews();
-		
-		// arrows
-		keyboard.draw(screen);
+		updateViews(mgr);
 
-		// Draw all views
-		for(auto & v : views)
-			v.second.get()->draw(screen);
+		mgr.drawActiveLayout(screen);
 
-		// Camera
-		// TODO efficient CameraView
-		if(showCamera) {
-			SDL_Surface * cam = camera.getBitmap(1);
-			cameraView.setImage(cam);
-			cameraView.draw(screen);
-			SDL_FreeSurface(cam);
-		} else {
-			//logs.draw(screen);
-			cameraView.setImage(&roadDetectionTest.detector.getImage());
-		/*	
-			if(UserDetectionTest.detector.hasResultImage()) {
-				cameraView.setImage(&UserDetectionTest.detector.getResultImage());
-				cameraView.draw(screen);
-			}*/
-				cameraView.draw(screen);
-		}
 		// commit screen buffer
 		SDL_Flip(screen);
 
 		SDL_framerateDelay(&fpsManager);
 	}
 
-	views.clear();
-	SDL_FreeSurface(car);
 	SDL_Quit();
-}
-
-View & MainView::getView(const string & name) {
-	return *views[name].get();
-}
-Digital & MainView::getDigitalView(const string & name) {
-	return *((Digital*)views[name].get());
-}
-Trackbar & MainView::getTrackbarView(const string & name) {
-	return *((Trackbar*)views[name].get());
-}
-ImageView & MainView::getImageView(const string & name) {
-	return *((ImageView*)views[name].get());
-}
-
-void MainView::addView(const string & name, View * v) {
-	views.emplace(name, shared_ptr<View>(v));
 }
 
 void MainView::open() {
