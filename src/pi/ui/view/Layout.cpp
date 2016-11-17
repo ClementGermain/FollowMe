@@ -39,8 +39,14 @@ KeyboardInput & Layout::getKeyboardView(const string & name) {
 }
 
 void Layout::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
+	if(needRedraw)
+		SDL_FillRect(screen, NULL, 0xffffffff);
+
 	for(auto & it : views)
-		it.second.get()->draw(screen, needRedraw, updateScreen);
+		it.second.get()->draw(screen, needRedraw, !needRedraw && updateScreen);
+
+	if(updateScreen)
+		SDL_Flip(screen);
 }
 
 

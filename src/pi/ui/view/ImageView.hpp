@@ -16,6 +16,7 @@ class ImageView : public View {
 		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
 	private:
 		std::shared_ptr<SDL_Surface> buffer;
+		bool invalidate;
 		
 };
 

@@ -6,7 +6,8 @@
 
 ImageView::ImageView(int x, int y, int w, int h) :
 	View(x, y),
-	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);})
+	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);}),
+	invalidate(true)
 {
 
 }
@@ -31,6 +32,7 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 			}
 			break;
 	}
+	invalidate = true;
 }
 
 void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
@@ -54,9 +56,11 @@ void ImageView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * buffer = this->buffer.get();
 	// the buffer has been updated in setImage
 	//
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
 	}
+
+	invalidate = false;
 }

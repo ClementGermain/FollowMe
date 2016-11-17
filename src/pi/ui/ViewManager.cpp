@@ -56,6 +56,6 @@ void ViewManager::drawActiveLayout(SDL_Surface * screen) {
 		invalidate = false;
 	}
 	else {
-		getActiveLayout().draw(screen, true, false);
+		getActiveLayout().draw(screen, false, false);
 	}
 }

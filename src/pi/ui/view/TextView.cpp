@@ -20,6 +20,7 @@ TextView::TextView(const std::string & text, int x, int y, int w, int h, bool ce
 
 void TextView::setText(const string & t) {
 	text = t;
+	invalidate = true;
 }
 
 void TextView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
@@ -35,12 +36,13 @@ void TextView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 		// draw text
 		stringRGBA(buffer, x, y, text.c_str(), 0,0,0,255);
 
-		invalidate = false;
 	}
 
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
 	}
+
+	invalidate = false;
 }

@@ -12,9 +12,9 @@ LogView::LogView(int x, int y, int w, int h) :
 
 void LogView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * buffer = this->buffer.get();
-
+	bool invalidate = Log.hasNext(prevEndCursor);
 	// if new lines have been added: redraw
-	if(Log.hasNext(prevEndCursor)) {
+	if(invalidate) {
 		// clear background
 		SDL_FillRect(buffer, NULL, 0x0);
 
@@ -41,7 +41,7 @@ void LogView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 		}
 	}
 
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
