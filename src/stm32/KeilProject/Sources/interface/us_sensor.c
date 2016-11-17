@@ -31,30 +31,36 @@ void Update_US_Sensor(BarstowModel_Typedef * Modele){
 }
 // configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
-
-Init_GPIO_In ( SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L ->GPIO_Pin_Echo);
-Init_GPIO_In ( SENSOR_FRONT_R ->GPIO_Echo, SENSOR_FRONT_R ->GPIO_Pin_Echo);
-Init_GPIO_In ( SENSOR_FRONT_C ->GPIO_Echo, SENSOR_FRONT_C ->GPIO_Pin_Echo);
-	
-//Init_GPIO_In( SENSOR_BACK_L -> GPIO_Echo, SENSOR_BACK_L -> GPIO_Pin_Echo);
-//Init_GPIO_In( SENSOR_BACK_R -> GPIO_Echo, SENSOR_BACK_R -> GPIO_Pin_Echo);
-//Init_GPIO_In ( SENSOR_BACK_C -> GPIO_Echo, SENSOR_BACK_C -> GPIO_Pin_Echo);
-
-Init_GPIO_Out( SENSOR_FRONT_L ->GPIO_Trig, SENSOR_FRONT_L ->GPIO_Pin_Trig);
-Init_GPIO_Out( SENSOR_FRONT_R -> GPIO_Trig, SENSOR_FRONT_R -> GPIO_Pin_Trig);
-Init_GPIO_Out( SENSOR_FRONT_C -> GPIO_Trig, SENSOR_FRONT_C -> GPIO_Pin_Trig);	
-	
-//Init_GPIO_Out( SENSOR_BACK_L -> GPIO_Trig, SENSOR_BACK_L -> GPIO_Pin_Trig);
-//Init_GPIO_Out( SENSOR_BACK_R ->GPIO_Trig, SENSOR_BACK_R -> GPIO_Pin_Trig);
-//Init_GPIO_Out( SENSOR_BACK_C -> GPIO_Trig, SENSOR_BACK_C -> GPIO_Pin_Trig);	
-
-	
+	if (Sensor == SENSOR_FRONT_L){
+			Init_GPIO_In(SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L->GPIO_Pin_Echo);
+			Init_GPIO_Out(SENSOR_FRONT_L->GPIO_Trig, SENSOR_FRONT_L->GPIO_Pin_Trig);
+	}
+	else if (Sensor ==  SENSOR_FRONT_R){
+		Init_GPIO_In(SENSOR_FRONT_R->GPIO_Echo, SENSOR_FRONT_R->GPIO_Pin_Echo);
+		Init_GPIO_Out(SENSOR_FRONT_R->GPIO_Trig, SENSOR_FRONT_R->GPIO_Pin_Trig);
+	}
+	else if (Sensor == SENSOR_FRONT_C){
+		Init_GPIO_In(SENSOR_FRONT_C->GPIO_Echo, SENSOR_FRONT_C->GPIO_Pin_Echo);
+		Init_GPIO_Out(SENSOR_FRONT_C->GPIO_Trig, SENSOR_FRONT_C->GPIO_Pin_Trig);	
+	}
+	else if (Sensor == SENSOR_BACK_L){
+		Init_GPIO_In(SENSOR_BACK_L->GPIO_Echo, SENSOR_BACK_L->GPIO_Pin_Echo);
+		Init_GPIO_Out(SENSOR_BACK_L->GPIO_Trig, SENSOR_BACK_L->GPIO_Pin_Trig);
+	}
+	else if (Sensor == SENSOR_BACK_R){
+		Init_GPIO_In(SENSOR_BACK_R->GPIO_Echo, SENSOR_BACK_R->GPIO_Pin_Echo);
+		Init_GPIO_Out(SENSOR_BACK_R->GPIO_Trig, SENSOR_BACK_R->GPIO_Pin_Trig);
+	}
+	else if (Sensor == SENSOR_BACK_C){
+		Init_GPIO_In(SENSOR_BACK_C->GPIO_Echo, SENSOR_BACK_C->GPIO_Pin_Echo);
+		Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
+	}
 }
 
 void Init_All_US_Sensor(void){
 	Init_US_Sensor(SENSOR_FRONT_L);
-//	Init_US_Sensor(SENSOR_FRONT_R);
-//	Init_US_Sensor(SENSOR_FRONT_C);
+	Init_US_Sensor(SENSOR_FRONT_R);
+	Init_US_Sensor(SENSOR_FRONT_C);
 //	Init_US_Sensor(SENSOR_BACK_L);
 //	Init_US_Sensor(SENSOR_BACK_R);
 //	Init_US_Sensor(SENSOR_BACK_C);
@@ -62,7 +68,9 @@ void Init_All_US_Sensor(void){
 
 
 float Init_Systick(void){
+	int aux3;
 	Time=0;
+	aux3=Time;
 	float period; //period systick us
 	period=Systick_Period(SYSTICK_PERIOD_US);
 	Systick_Prio_IT(2,Periodic_Impulse_3_Front_US);
@@ -88,7 +96,7 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 }
 
 void Periodic_Impulse_3_Front_US(){
-	Time++;
+	/*Time++;
 
 	if (Time%210==10){
 	//impulse 10us on Front Left US
@@ -104,7 +112,7 @@ void Periodic_Impulse_3_Front_US(){
 	//impulse 10us on Front Center US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 10);
 	}
-
+*/
 }
 
 void Test_US_Sensor(void){
