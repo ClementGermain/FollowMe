@@ -13,7 +13,7 @@ RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
 RASPI_LDFLAGS +=-lwiringPi
 
 # other flags
-CXXFLAGS +=-Wall -std=c++11 -I. -MD
+CXXFLAGS +=-Wall -std=c++11 -I. -MD -O2
 LDFLAGS +=-lpthread
 
 # binary name and location

@@ -23,7 +23,7 @@ float CPULoad::get() {
 	proc_stat.ignore(5, ' '); // skip prefix
 
 	int index = 0;
-	size_t time, total, idle;
+	size_t time = 0, total = 0, idle = 0;
 	while(proc_stat >> time) {
 		if(index == 3)
 			idle = time;
