@@ -12,6 +12,7 @@
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
+#include "sound/sound.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -24,6 +25,7 @@ int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
 int runTestImProcUser(istream & input, vector<int> i, vector<string> s);
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s);
+int runSound(istream & input, vector<int> i, vector<string> s);
 
 MainView view(RaspiCam);
 
@@ -65,6 +67,10 @@ void runUI() {
 			new Menu("save", 0, saveLog, NULL),
 			NULL
 		),
+		new Menu("music", 0, 0, 
+			new Menu ("play", 1, runSound, NULL),
+			new Menu ("stop", 2, runSound, NULL),
+			NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -160,5 +166,19 @@ int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
 	roadDetectionTest.start();
 
+	return 0;
+}
+
+int runSound(istream & input, vector<int> i, vector<string> s) {
+//	Sound Music();
+//	Music.play_test();
+	switch (i.back()){
+		case 1:
+			play_test();
+			break;
+		case 2:
+			stop_sound();
+			break;
+	}
 	return 0;
 }
