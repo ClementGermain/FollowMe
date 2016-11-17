@@ -15,10 +15,21 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 	switch(mode) {
 		case ImageView::NORMAL:
 			if (image->w !=0 && image->h!=0)
-				rotozoomSurfaceXY(image, 0.0, buffer->w/image->w, buffer->h/image->h, 0); 
-			SDL_BlitSurface(image, NULL, buffer.get(), NULL);
+			{
+				SDL_Rect testRect{	(Sint16)((buffer->w-image->w)/2),
+									(Sint16)((buffer->h-image->h)/2),
+									(Uint16)image->w,
+									(Uint16)image->h};
+				SDL_BlitSurface(image, 
+								NULL, 
+								buffer.get(), 
+								&testRect);
+
+				//rotozoomSurfaceXY(buffer.get(), 0.0, buffer->w/image->w, buffer->h/image->h, 0); 
+				//rotozoomSurfaceXY(buffer.get(), 0.0, 2, 2, 0);
+				//rotozoomSurface(buffer.get(), 85.0, 2, 0);
+			}
 			break;
-			// TODO center and resize image
 	}
 }
 
