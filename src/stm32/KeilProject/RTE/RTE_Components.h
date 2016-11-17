@@ -4,7 +4,7 @@
  *      *** Do not modify ! ***
  *
  * Project: 'Barstow' 
- * Target:  'Simulation' 
+ * Target:  'Real' 
  */
 
 #ifndef RTE_COMPONENTS_H

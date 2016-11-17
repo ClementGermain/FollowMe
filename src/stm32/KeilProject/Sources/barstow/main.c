@@ -4,6 +4,9 @@
 #include "../interface/motor.h"
 #include "../interface/spi.h"
 #include "barstow.h"
+#include "../library/delay.h"
+#include "../interface/us_sensor.h"
+
 
 /** @brief  Configures the different system clocks.
   * @param  None
@@ -15,20 +18,13 @@ int main(void)
 {
 	/*<! RCC Configuration */
   RCC_Configuration();
+
+	/*<! RCC Configuration */
+	void Test_US_Sensor(void);
 	
-//	/*<! Start Barstow car's program. */
-//	StartBarstow();
-	int Duree_us;
-	int value=0;
-	Duree_us = 500000;
-	Timer_Configure(TIM2, Duree_us);
-	
-	while(1) {
-		if((TIM2->SR & 0x1) == 0x1) 
-{TIM2->SR = TIM2->SR &~ 0x1; }
-		
-				
-		}
+	/*<! Start Barstow car's program. */
+	StartBarstow();
+
 }
 
 

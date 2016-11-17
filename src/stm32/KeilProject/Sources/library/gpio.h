@@ -3,6 +3,7 @@
 
 // include stm32 library
 #include "stm32f10x_gpio.h"
+#include "delay.h"
 
 /** @brief Init a GPIO Pin in a specific mode 
 	* @param GPIO: GPIOA or GPIOB
@@ -42,12 +43,10 @@ void Init_GPIO_In(GPIO_TypeDef * GPIO, int Pin);
 void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin);
 
 /** @brief Send an impulse on GPIO
-	*	@param TIM:	TIMx to be set
-	*	@param Channel: select the right channel (ex. TIM_Channel_3)
 	*	@param GPIO:	GPIOx to be set
 	*	@param Pin: Pin adress (like GPIO_Pin_6)
 	*	@param impulse_time_us: length of the impulsion (us)
   * @retval None
 */
-void Send_impulse_GPIO(TIM_TypeDef* TIM, uint16_t Channel, GPIO_TypeDef * GPIO, uint16_t Pin, uint16_t impulse_time_us);
+void Send_impulse_GPIO(GPIO_TypeDef * GPIO, uint16_t Pin, uint16_t impulse_time_us);
 #endif

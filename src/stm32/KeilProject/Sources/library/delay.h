@@ -10,10 +10,10 @@
 void Delay(void);
 
 /** @brief Wait a precise moment before going to the next instruction 
-	* @param time to wait in ms
+	* @param time to wait in us
 	* @retval None
 */
-void Delay_ms(float time); // Not done yet
+void Delay_us(int time_us); // FONCTION A TESTER
 
 #endif
 

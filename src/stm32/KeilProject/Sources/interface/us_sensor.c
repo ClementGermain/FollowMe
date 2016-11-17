@@ -17,6 +17,9 @@ US_Sensor_Typedef * SENSOR_BACK_L 	= &SENSOR_BACK_L_;
 US_Sensor_Typedef * SENSOR_BACK_R 	= &SENSOR_BACK_R_;
 US_Sensor_Typedef * SENSOR_BACK_C 	= &SENSOR_BACK_C_;
 
+//Global time (ms)
+int Time;
+
 void Update_US_Sensor(BarstowModel_Typedef * Modele){
 	
 	Modele->frontRightUSensor.distance = (Get_USensor(SENSOR_FRONT_R));
@@ -57,13 +60,24 @@ void Init_All_US_Sensor(void){
 	Init_US_Sensor(SENSOR_BACK_C);
 }
 
+
+float Init_Systick(void){
+	float period; //period systick us
+	period=Systick_Period(SYSTICK_PERIOD_US);
+	Systick_Prio_IT(2,Periodic_Impulse_3_Front_US);
+	SysTick_On;
+	SysTick_Enable_IT;
+	return period;
+}
+
+
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 	// TO DO
 	
 	uint32_t distance=0;
 
 	//send a 10us impulsion
-	Send_impulse_GPIO(TIM_Trig, TIM_Channel_Trig, (Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 10);
+	Send_impulse_GPIO((Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 10);
 	
 	//wait for a rising edge
 	//handler : launch a timer + wait for a falling edge + stop timer --> return time_echo (us)
@@ -71,3 +85,31 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 	
 	return distance;
 }
+
+void Periodic_Impulse_3_Front_US(){
+	Time++;
+
+	if (Time%210==10){
+	//impulse >10us on Front Left US
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 11);
+	}
+
+	else if (Time%210==80){
+	//impulse >10us on Front Right US
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 11);
+	}
+
+	else if (Time%210==150){
+	//impulse >10us on Front Center US
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 11);
+	}
+
+}
+
+void Test_US_Sensor(void){
+	Init_All_US_Sensor();
+	Init_Systick();
+}
+
+
+
