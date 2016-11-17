@@ -3,6 +3,7 @@
 
 // include stm32 library
 #include "stm32f10x_gpio.h"
+#include "delay.h"
 
 /** @brief Init a GPIO Pin in a specific mode 
 	* @param GPIO: GPIOA or GPIOB

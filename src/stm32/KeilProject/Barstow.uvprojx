@@ -419,6 +419,31 @@
               <FileType>5</FileType>
               <FilePath>.\Sources\library\timer.h</FilePath>
             </File>
+            <File>
+              <FileName>Timer_Systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\Timer_Systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer_Systick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\Timer_Systick.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\clock_conf.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -611,12 +636,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP</SimDllArguments>
-          <SimDlgDll>DCM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM3</SimDlgDllArguments>
+          <SimDlgDll>DARMSTM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pSTM32F103RB</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TCM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM3</TargetDlgDllArguments>
+          <TargetDlgDll>TARMSTM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pSTM32F103RB</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -676,7 +701,7 @@
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M3"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
-            <mOS>0</mOS>
+            <mOS>1</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
@@ -919,6 +944,31 @@
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\library\timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>Timer_Systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\Timer_Systick.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer_Systick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\Timer_Systick.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\library\clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\library\clock_conf.h</FilePath>
             </File>
           </Files>
         </Group>
