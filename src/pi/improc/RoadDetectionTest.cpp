@@ -28,9 +28,10 @@ void RoadDetectionTest::start() {
 
 void RoadDetectionTest::stop() {
 	if(threadTest != NULL) {
-		endThread = false;
+		endThread = true;
 		threadTest->join();
 		delete threadTest;
+		threadTest = NULL;
 	}
 }
 

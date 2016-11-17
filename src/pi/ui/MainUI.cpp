@@ -84,6 +84,7 @@ void runUI() {
 	if(view.isOpen()) {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
+
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
 }

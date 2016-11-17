@@ -266,6 +266,7 @@ MainView::~MainView() {
 	if(threadView != NULL) {
 		threadView->join();
 		delete threadView;
+		threadView = NULL;
 	}
 }
 
