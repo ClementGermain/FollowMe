@@ -1,11 +1,11 @@
 #include "stm32f10x_rcc.h"
-#include "../library/gpio.h"
-#include "../library/timer.h"
-#include "../interface/motor.h"
-#include "../interface/spi.h"
-#include "barstow.h"
-#include "../library/delay.h"
-#include "../interface/us_sensor.h"
+#include "library/gpio.h"
+#include "library/timer.h"
+#include "interface/motor.h"
+#include "interface/spi.h"
+#include "barstow/barstow.h"
+#include "library/delay.h"
+#include "interface/us_sensor.h"
 
 
 /** @brief  Configures the different system clocks.

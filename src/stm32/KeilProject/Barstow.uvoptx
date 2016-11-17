@@ -75,57 +75,62 @@
       <OPTFL>
         <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>18</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>Quick Start Guide (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\STM32E_QSG.pdf</Path>
+          <Title>CMSIS RTOS Tutorial (CMSIS_RTOS_Tutorial)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Hitex\CMSIS_RTOS_Tutorial\1.1.0\Documentation\CMSIS_RTOS_Tutorial.pdf</Path>
         </Book>
         <Book>
           <Number>1</Number>
-          <Title>Base Board Schematics (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-base-board-schematics.pdf</Path>
+          <Title>Quick Start Guide (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\STM32E_QSG.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
-          <Title>Display Board Schematics (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-display-board-schematics.pdf</Path>
+          <Title>Base Board Schematics (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-base-board-schematics.pdf</Path>
         </Book>
         <Book>
           <Number>3</Number>
-          <Title>User Manual (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e.chm</Path>
+          <Title>Display Board Schematics (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-display-board-schematics.pdf</Path>
         </Book>
         <Book>
           <Number>4</Number>
-          <Title>User Manual (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105823.pdf</Path>
+          <Title>User Manual (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e.chm</Path>
         </Book>
         <Book>
           <Number>5</Number>
-          <Title>Overview (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105918.pdf</Path>
+          <Title>User Manual (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105823.pdf</Path>
         </Book>
         <Book>
           <Number>6</Number>
-          <Title>Getting started (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105928.pdf</Path>
+          <Title>Overview (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105918.pdf</Path>
         </Book>
         <Book>
           <Number>7</Number>
-          <Title>Schematics (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\MB1136.pdf</Path>
+          <Title>Getting started (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105928.pdf</Path>
         </Book>
         <Book>
           <Number>8</Number>
+          <Title>Schematics (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\MB1136.pdf</Path>
+        </Book>
+        <Book>
+          <Number>9</Number>
           <Title>MCBSTM32E Evaluation Board Web Page (MCBSTM32E)</Title>
           <Path>http://www.keil.com/mcbstm32e/</Path>
         </Book>
         <Book>
-          <Number>9</Number>
+          <Number>10</Number>
           <Title>STM32 Nucleo board (NUCLEO-F103RB)</Title>
           <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875</Path>
         </Book>
@@ -152,7 +157,6 @@
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <bEvRecOn>1</bEvRecOn>
         <nTsel>0</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
@@ -209,8 +213,6 @@
       <Lin2Executable></Lin2Executable>
       <Lin2ConfigFile></Lin2ConfigFile>
       <bLin2Auto>0</bLin2Auto>
-      <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
       <DebugDescription>
         <Enable>1</Enable>
         <EnableLog>0</EnableLog>
@@ -272,59 +274,64 @@
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
-        <tvExp>0</tvExp>
+        <tvExp>1</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>18</CpuCode>
       <Books>
         <Book>
           <Number>0</Number>
-          <Title>Quick Start Guide (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\STM32E_QSG.pdf</Path>
+          <Title>CMSIS RTOS Tutorial (CMSIS_RTOS_Tutorial)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Hitex\CMSIS_RTOS_Tutorial\1.1.0\Documentation\CMSIS_RTOS_Tutorial.pdf</Path>
         </Book>
         <Book>
           <Number>1</Number>
-          <Title>Base Board Schematics (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-base-board-schematics.pdf</Path>
+          <Title>Quick Start Guide (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\STM32E_QSG.pdf</Path>
         </Book>
         <Book>
           <Number>2</Number>
-          <Title>Display Board Schematics (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-display-board-schematics.pdf</Path>
+          <Title>Base Board Schematics (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-base-board-schematics.pdf</Path>
         </Book>
         <Book>
           <Number>3</Number>
-          <Title>User Manual (MCBSTM32E)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e.chm</Path>
+          <Title>Display Board Schematics (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e-display-board-schematics.pdf</Path>
         </Book>
         <Book>
           <Number>4</Number>
-          <Title>User Manual (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105823.pdf</Path>
+          <Title>User Manual (MCBSTM32E)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Documents\mcbstm32e.chm</Path>
         </Book>
         <Book>
           <Number>5</Number>
-          <Title>Overview (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105918.pdf</Path>
+          <Title>User Manual (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105823.pdf</Path>
         </Book>
         <Book>
           <Number>6</Number>
-          <Title>Getting started (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105928.pdf</Path>
+          <Title>Overview (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105918.pdf</Path>
         </Book>
         <Book>
           <Number>7</Number>
-          <Title>Schematics (NUCLEO-F103RB)</Title>
-          <Path>C:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\MB1136.pdf</Path>
+          <Title>Getting started (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\DM00105928.pdf</Path>
         </Book>
         <Book>
           <Number>8</Number>
+          <Title>Schematics (NUCLEO-F103RB)</Title>
+          <Path>O:\Keil_v5\ARM\PACK\Keil\STM32NUCLEO_BSP\1.6.0\Documents\MB1136.pdf</Path>
+        </Book>
+        <Book>
+          <Number>9</Number>
           <Title>MCBSTM32E Evaluation Board Web Page (MCBSTM32E)</Title>
           <Path>http://www.keil.com/mcbstm32e/</Path>
         </Book>
         <Book>
-          <Number>9</Number>
+          <Number>10</Number>
           <Title>STM32 Nucleo board (NUCLEO-F103RB)</Title>
           <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1847/PF259875</Path>
         </Book>
@@ -351,7 +358,6 @@
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <bEvRecOn>1</bEvRecOn>
         <nTsel>0</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
@@ -423,8 +429,6 @@
       <Lin2Executable></Lin2Executable>
       <Lin2ConfigFile></Lin2ConfigFile>
       <bLin2Auto>0</bLin2Auto>
-      <bAutoGenD>0</bAutoGenD>
-      <bAuto2GenD>0</bAuto2GenD>
       <LogicAnalyzers>
         <Wi>
           <IntNumber>0</IntNumber>
@@ -764,24 +768,24 @@
     <File>
       <GroupNumber>3</GroupNumber>
       <FileNumber>25</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Sources\barstow\main.c</PathWithFileName>
-      <FilenameWithoutPath>main.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>26</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>.\Sources\barstow\model.h</PathWithFileName>
       <FilenameWithoutPath>model.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>26</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Sources\main.c</PathWithFileName>
+      <FilenameWithoutPath>main.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
