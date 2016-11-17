@@ -13,7 +13,7 @@ void Delay(void);
 	* @param time to wait in us
 	* @retval None
 */
-void Delay_ms(int time_us); // FONCTION A TESTER
+void Delay_us(int time_us); // FONCTION A TESTER
 
 #endif
 

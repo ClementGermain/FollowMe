@@ -5,6 +5,8 @@
 #include "../interface/spi.h"
 #include "barstow.h"
 #include "../library/delay.h"
+#include "../interface/us_sensor.h"
+
 
 /** @brief  Configures the different system clocks.
   * @param  None
@@ -16,6 +18,9 @@ int main(void)
 {
 	/*<! RCC Configuration */
   RCC_Configuration();
+	
+	/*<! RCC Configuration */
+	void Test_US_Sensor(void);
 	
 	/*<! Start Barstow car's program. */
 	StartBarstow();

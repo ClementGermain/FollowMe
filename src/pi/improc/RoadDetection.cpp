@@ -28,6 +28,14 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	//cvtColor(imageHSV, m_thresholdedImage, COLOR_HSV2RGB);
 	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), m_thresholdedImage); //Threshold the image
 
+	//morphological opening (remove small objects from the foreground)
+	erode(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	dilate(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+	//morphological closing (fill small holes in the foreground)
+	dilate(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	erode(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
 }
 
 Mat & RoadDetection::getImage() {
