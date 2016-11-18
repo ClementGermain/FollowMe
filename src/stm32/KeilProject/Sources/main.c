@@ -12,6 +12,11 @@
   * @param  None
   * @retval None
   */
+	
+	
+
+	
+	
 void RCC_Configuration(void);
 
 int main(void)
@@ -26,6 +31,7 @@ int main(void)
 //	StartBarstow();
 	
 	Init_timer_Gated_mode(TIM2);
+	Timer_Active_IT( TIM2, 2, My_function_TIF);
 	while(1){}
 
 }

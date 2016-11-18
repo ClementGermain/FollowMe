@@ -77,17 +77,23 @@ float Init_Systick(void){
 	return period;
 }
 
+// interrupt function
 
-uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
-	// TO DO
+	void My_function_TIF (void) {
+	TIM_GetCounter( TIM_Echo);
+	
+		
+	}
+	
+
+uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
 	
 	uint32_t distance=0;
-
-	//send a 10us impulsion
-	Send_impulse_GPIO((Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 10);
+	// Init timer 2  in gated mode
+	Init_timer_Gated_mode( TIM_Echo	);
+	// Configure IT with My function in us_sensor.c
+	Timer_Active_IT( TIM_Echo	,5, My_function_TIF);
 	
-	//wait for a rising edge
-	//handler : launch a timer + wait for a falling edge + stop timer --> return time_echo (us)
 	//distance = time_echo/58 //cm
 	
 	return distance;

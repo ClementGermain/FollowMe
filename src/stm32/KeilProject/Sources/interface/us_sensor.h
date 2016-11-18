@@ -106,4 +106,7 @@ void Periodic_Impulse_3_Front_US(void);
 */
 void Test_US_Sensor(void);
 
+
+void My_function_TIF (void);
+
 #endif

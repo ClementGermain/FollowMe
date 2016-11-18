@@ -137,21 +137,70 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
 	
-	TIM_ICInit(TIM,&TIM_ICInitStructure);
-	 //TIM_EncoderInterfaceConfig(TIM, TIM_EncoderMode_TI1,TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);//Counter counts on TI1FP1 edge depending on TI2FP2 level.
-	 /* TIM enable counter */
-  TIM_Cmd(TIM, ENABLE); //CEN
+	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
+	TIM_Cmd(TIM, ENABLE); //CEN
+}
+
+
+
+//function pointers
+void (* pFnc2) (void);
+void (* pFnc3) (void);
+void (* pFnc4) (void);
+
+void TIM2_IRQHandler (void)
+{
+    TIM2->SR = TIM2->SR &~ 0x40; // RaZ du flag d'interruption
+    pFnc2(); // exécution de la fonction lors d'une interruption
+}
+
+void TIM3_IRQHandler (void)
+{
+    TIM3->SR = TIM3->SR &~ 0x40; // RaZ du flag d'interruption
+    pFnc3();
+}
+
+void TIM4_IRQHandler (void)
+{
+    TIM4->SR = TIM4->SR &~ 0x40; // RaZ du flag d'interruption
+    pFnc4();
 }
 
 
 
 
-// configure interruption trigger
 
-void Configure_Interruption(TIM_TypeDef* TIMx){
-/*	TIM_GenerateEvent(TIM_TypeDef* TIMx, uint16_t TIM_EventSource);
-TIM_ITConfig(TIM, TIM_IT_CC1, ENABLE); // we want an IT when we are on the falling edge, to prevent  we meed to take the result
-*/	
+// configure interruption  FLAG TIF to detect an edge on the trigger
+
+void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void)){
+	//TIM_GenerateEvent(TIM, TIM_EventSource_CC1); //cc1if
+  //TIM_ITConfig(TIM, TIM_IT_CC1, ENABLE); // we want an IT when we are on the falling edge, to prevent  we meed to take the result	
+
+	// TIF interupt configuration at the NVIC LEVEL + priority
+	if (TIM == TIM2)
+	{
+		NVIC->IP[28] = Priority << 4; //to reach the modifiable bits
+		pFnc2 = IT_function; // function made by the handler during the interrupt
+		NVIC->ISER[0] = NVIC->ISER[0] | (0x1 << 28);
+	}
+	else if (TIM == TIM3)
+	{
+		NVIC->IP[29] = Priority << 4;
+		pFnc3 = IT_function;
+		NVIC->ISER[0] = NVIC->ISER[0] | (0x1 << 29);
+	}
+	else if (TIM == TIM4)
+	{
+		NVIC->IP[30] = Priority << 4;
+		pFnc4 = IT_function;
+		NVIC->ISER[0] = NVIC->ISER[0] | (0x1 << 30);
+	}
+	
+	// configuration de l'interruption overflow du timer (enable TIF)
+	TIM->DIER = 0x40 | TIM->DIER ;
+	
 	
 }
+	
+
 
