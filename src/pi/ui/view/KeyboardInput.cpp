@@ -126,12 +126,12 @@ void KeyboardInput::draw(SDL_Surface * screen, bool needRedraw, bool updateScree
 				break;
 			}
 		}
-		invalidate = false;
 	}
 
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
 	}
+	invalidate = false;
 }

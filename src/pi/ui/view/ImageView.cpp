@@ -6,7 +6,8 @@
 
 ImageView::ImageView(int x, int y, int w, int h) :
 	View(x, y),
-	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);})
+	buffer(SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);}),
+	invalidate(true)
 {
 
 }
@@ -15,11 +16,23 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 	switch(mode) {
 		case ImageView::NORMAL:
 			if (image->w !=0 && image->h!=0)
-				rotozoomSurfaceXY(image, 0.0, buffer->w/image->w, buffer->h/image->h, 0); 
-			SDL_BlitSurface(image, NULL, buffer.get(), NULL);
+			{
+				SDL_Rect testRect{	(Sint16)((buffer->w-image->w)/2),
+									(Sint16)((buffer->h-image->h)/2),
+									(Uint16)image->w,
+									(Uint16)image->h};
+				SDL_BlitSurface(image, 
+								NULL, 
+								buffer.get(), 
+								&testRect);
+
+				//rotozoomSurfaceXY(buffer.get(), 0.0, buffer->w/image->w, buffer->h/image->h, 0); 
+				//rotozoomSurfaceXY(buffer.get(), 0.0, 2, 2, 0);
+				//rotozoomSurface(buffer.get(), 85.0, 2, 0);
+			}
 			break;
-			// TODO center and resize image
 	}
+	invalidate = true;
 }
 
 void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
@@ -43,9 +56,11 @@ void ImageView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * buffer = this->buffer.get();
 	// the buffer has been updated in setImage
 	//
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
 	}
+
+	invalidate = false;
 }

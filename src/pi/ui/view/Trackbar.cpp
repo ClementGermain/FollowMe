@@ -37,13 +37,13 @@ void Trackbar::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 		// cursor
 		boxRGBA(drawable, cursorPos-(borderSize-1), 0, cursorPos+(borderSize-1)-1, drawable->h, 255, 20, 20, 255);
 		
-		invalidate = false;
 	}
 
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(drawable, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, drawable->w, drawable->h);
 	}
+	invalidate = false;
 }
 

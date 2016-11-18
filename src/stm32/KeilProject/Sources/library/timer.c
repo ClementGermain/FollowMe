@@ -34,7 +34,7 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
 	int fclk=72; // clock = 72 Mhz
 	int PSC_calc;
 	int ARR_calc;
-	int duree_reelle_us;
+	//int duree_reelle_us;
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	
 	// DeInit

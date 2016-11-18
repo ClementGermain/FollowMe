@@ -42,12 +42,13 @@ void Digital::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 		int y = centerVert ? (buffer->h-charSize) / 2 : 0;
 		stringRGBA(buffer, x, y, text, 0,0,0,255);
 
-		invalidate = false;
 	}
 	
-	if(needRedraw) {
+	if(needRedraw || invalidate) {
 		SDL_BlitSurface(buffer, NULL, screen, &screenPos);
 		if(updateScreen)
 			SDL_UpdateRect(screen, screenPos.x, screenPos.y, buffer->w, buffer->h);
 	}
+
+	invalidate = false;
 }

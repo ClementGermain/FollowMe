@@ -31,6 +31,7 @@ void UserPatternDetectionTest::stop() {
 		endThread = true;
 		threadTest->join();
 		delete threadTest;
+		threadTest = NULL;
 	}
 }
 

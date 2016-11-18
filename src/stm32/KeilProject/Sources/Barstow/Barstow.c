@@ -31,13 +31,8 @@ void StartBarstow(void)
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
 	/*!< Entering main loop. */
-	int aux;
-	int aux2=0;
 	while(1)
 	{
-		aux2++;
-		aux=Time;
-
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
 		

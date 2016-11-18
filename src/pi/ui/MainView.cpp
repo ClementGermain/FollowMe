@@ -15,6 +15,7 @@
 #include "view/Digital.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
+#include "view/TextView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
@@ -90,6 +91,7 @@ void MainView::drawStaticViews() {
 }
 
 void MainView::initializeViews(ViewManager & mgr) {
+	//// DEFAULT VIEW ////
 	Layout & defaultLayout = mgr.createLayout("default");
 
 	// Car top view
@@ -97,6 +99,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 	defaultLayout.getImageView("imgCar").setImage(car);
 	SDL_FreeSurface(car);
+
+	// titles
+	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
+	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 150, 250, 16, true));
+	defaultLayout.addView("titleLeft", new TextView("Motor left", 540, 220, 250, 16, true));
+	defaultLayout.addView("titleRight", new TextView("Motor right", 540, 310, 250, 16, true));
 
 	// motors
 	defaultLayout.addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
@@ -125,7 +133,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
 	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
 
+	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
+
 	logLayout.addView("logs", new LogView(0,0,800,400));
 }
 
@@ -158,7 +168,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
-
+		l.getImageView("camera").setImage(&roadDetectionTest.detector.getImage(), ImageView::NORMAL);
 	}
 	
 }
@@ -256,6 +266,7 @@ MainView::~MainView() {
 	if(threadView != NULL) {
 		threadView->join();
 		delete threadView;
+		threadView = NULL;
 	}
 }
 

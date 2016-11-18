@@ -13,7 +13,7 @@ RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
 RASPI_LDFLAGS +=-lwiringPi
 
 # other flags
-CXXFLAGS +=-Wall -std=c++11 -I. -MD
+CXXFLAGS +=-Wall -std=c++11 -I. -MD -O2
 LDFLAGS +=-lpthread
 
 # binary name and location
@@ -28,6 +28,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/Digital.o \
 		   ui/view/LogView.o \
 		   ui/view/ImageView.o \
+		   ui/view/TextView.o \
 		   ui/view/Layout.o \
 		   ui/ViewManager.o \
 		   ui/CPULoad.o
@@ -42,6 +43,7 @@ OBJECTS=Main.o \
 		improc/UserPatternDetectionTest.o \
 		improc/RoadDetection.o \
 		improc/RoadDetectionTest.o \
+		sound/sound.o \
 		$(UI_OBJECTS)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)

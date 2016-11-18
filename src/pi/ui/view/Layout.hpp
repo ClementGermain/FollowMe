@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <memory>
 #include <unordered_map>
+#include <vector>
 #include <string>
 #include "View.hpp"
 #include "Digital.hpp"
@@ -27,6 +28,7 @@ class Layout : public View {
 		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
 	private:
 		std::unordered_map<std::string, std::shared_ptr<View>> views;
+		std::vector<std::string> viewOrder;
 };
 
 
