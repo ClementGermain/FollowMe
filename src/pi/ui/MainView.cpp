@@ -133,10 +133,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
 	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
 
+
 	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
 
 	logLayout.addView("logs", new LogView(0,0,800,400));
+
+
+	//// USER DETECTION ////
+	Layout & userLayout = mgr.createLayout("user");
+
+	userLayout.addView("filter", new ImageView(0,0,400,400));
+	userLayout.addView("result", new ImageView(400,0,400,400));
 }
 
 void MainView::updateViews(ViewManager & mgr) {
@@ -168,9 +176,15 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
-		l.getImageView("camera").setImage(&roadDetectionTest.detector.getImage(), ImageView::NORMAL);
+		SDL_Surface * cam = RaspiCam.getBitmap(1);
+		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
+		SDL_FreeSurface(cam);
 	}
-	
+	else if(mgr.isActive("user")) {
+		Layout & l = mgr.getLayout("user");
+		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
+		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
+	}
 }
 
 void MainView::run() {

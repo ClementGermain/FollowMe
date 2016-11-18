@@ -24,14 +24,16 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 
-//	/*<! RCC Configuration */
-//	Test_US_Sensor();
+	Test_US_Sensor();
 //	
 //	/*<! Start Barstow car's program. */
 //	StartBarstow();
 	
+
 	Init_timer_Gated_mode(TIM2);
 	Timer_Active_IT( TIM2, 2, My_function_TIF);
+
+
 	while(1){}
 
 }
@@ -51,6 +53,8 @@ void RCC_Configuration(void)
 	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_TIM1 |
 													RCC_APB2Periph_GPIOB |
 													RCC_APB2Periph_GPIOA |
+													RCC_APB2Periph_GPIOC |
+													RCC_APB2Periph_GPIOD |
 													RCC_APB2Periph_AFIO , ENABLE);
   
 	RCC_AHBPeriphClockCmd(	RCC_AHBPeriph_DMA1, 	ENABLE);

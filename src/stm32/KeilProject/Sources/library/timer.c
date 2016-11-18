@@ -116,7 +116,7 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
 	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	int ARR_max=65535;
-	int fclk=72; // clock = 72 Mhz
+//	int fclk=72; // clock = 72 Mhz
 	int PSC =72;
 	TIM_ICInitTypeDef TIM_ICInitStructure;
 	
