@@ -16,10 +16,14 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 
 	// Threshold the HSV image, keep only the red pixels
 	cv::Mat yellow_hue_image;
-	cv::inRange(hsv_image, cv::Scalar(25, 100, 100), cv::Scalar(50, 255, 255), yellow_hue_image);
+	cv::inRange(hsv_image, cv::Scalar(25, 45, 85), cv::Scalar(50, 255, 255), yellow_hue_image);
 
 	// Apply blur (low pass filter)
 	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
+
+	if(drawResult) {
+		filterImage = yellow_hue_image.clone();
+	}
 
 	// Use the Hough transform to detect circles in the combined threshold image
 	std::vector<cv::Vec3f> circles;
@@ -42,7 +46,11 @@ cv::Mat & UserPatternDetection::getResultImage() {
 	return resultImage;
 }
 
-bool UserPatternDetection::hasResultImage() {
+cv::Mat & UserPatternDetection::getFilterImage() {
+	return filterImage;
+}
+
+bool UserPatternDetection::hasImage() {
 	return resultImageCreated;
 }
 
