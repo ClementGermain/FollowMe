@@ -51,4 +51,6 @@ void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle); // 
 
 void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us);
 
+void Init_timer_Gated_mode(TIM_TypeDef* TIM);
+
 #endif

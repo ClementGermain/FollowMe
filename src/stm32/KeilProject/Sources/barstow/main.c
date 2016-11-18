@@ -19,11 +19,14 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 
-	/*<! RCC Configuration */
-	Test_US_Sensor();
+//	/*<! RCC Configuration */
+//	Test_US_Sensor();
+//	
+//	/*<! Start Barstow car's program. */
+//	StartBarstow();
 	
-	/*<! Start Barstow car's program. */
-	StartBarstow();
+	Init_timer_Gated_mode(TIM2);
+	while(1){}
 
 }
 

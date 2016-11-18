@@ -49,6 +49,8 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	// clock and Init 
 	 TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
+	 /* TIM enable counter */
+  TIM_Cmd(TIM, ENABLE);
 }
 
 void Init_PWM(TIM_TypeDef* TIM, uint16_t Channel)
@@ -110,15 +112,47 @@ void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle){
 	}
 }
 
-//void Init_timer_Gated_mode(TIM_TypeDef* TIM, uint16_t Channel){
-//}
+void Init_timer_Gated_mode(TIM_TypeDef* TIM){
+	
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	int ARR_max=65535;
+	int fclk=72; // clock = 72 Mhz
+	int PSC =72;
+TIM_ICInitTypeDef* TIM_ICInitStructure;
+	
+	
+  TIM_TimeBaseStructure.TIM_Period = ARR_max - 1;
+  TIM_TimeBaseStructure.TIM_Prescaler = PSC ;
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 
+  TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
+	TIM_SelectSlaveMode(TIM,TIM_SlaveMode_Gated); // SMS
+	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+	
+	 /* Set the default configuration */
+  TIM_ICInitStructure->TIM_Channel = TIM_TS_TI1FP1;
+  TIM_ICInitStructure->TIM_ICPolarity = TIM_ICPolarity_Rising;
+  TIM_ICInitStructure->TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure->TIM_ICPrescaler = TIM_ICPSC_DIV1;
+  TIM_ICInitStructure->TIM_ICFilter = 0x00;
+	
+	TIM_ICInit(TIM,TIM_ICInitStructure);
+	 //TIM_EncoderInterfaceConfig(TIM, TIM_EncoderMode_TI1,TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);//Counter counts on TI1FP1 edge depending on TI2FP2 level.
+	 /* TIM enable counter */
+  TIM_Cmd(TIM, ENABLE); //CEN
+}
 
 
-//// configure interruption trigger
 
-//void Configure_Interruption(TIM_TypeDef* TIMx){
-//	TIM_ITConfig(TIM_TypeDef* TIMx, TIM_IT_Trigger, DISABLE);
+
+// configure interruption trigger
+
+void Configure_Interruption(TIM_TypeDef* TIMx){
+	TIM_GenerateEvent(TIM_TypeDef* TIMx, uint16_t TIM_EventSource);
+TIM_ITConfig(TIM, TIM_IT_CC1, ENABLE); // we want an IT when we are on the falling edge, to prevent  we meed to take the result
 //	
+	
 //}
 
 
