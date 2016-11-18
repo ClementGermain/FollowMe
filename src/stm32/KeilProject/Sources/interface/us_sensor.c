@@ -83,8 +83,8 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 	
 	uint32_t distance=0;
 
-	//send a 10us impulsion
-	Send_impulse_GPIO((Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 10);
+	//send a 10us impulsion ATTENTION A MODIFIER 10US
+	Send_impulse_GPIO((Sensor->GPIO_Trig), (Sensor->GPIO_Pin_Trig), 1000);
 	
 	//wait for a rising edge
 	//handler : launch a timer + wait for a falling edge + stop timer --> return time_echo (us)
