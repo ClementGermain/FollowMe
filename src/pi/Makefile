@@ -23,6 +23,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/MainView.o \
 		   ui/CommandLine.o \
 		   ui/view/View.o \
+		   ui/view/EmptyBoxView.o \
 		   ui/view/KeyboardInput.o \
 		   ui/view/Trackbar.o \
 		   ui/view/Digital.o \

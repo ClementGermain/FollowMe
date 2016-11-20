@@ -16,6 +16,7 @@
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
+#include "view/EmptyBoxView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
@@ -99,6 +100,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 	defaultLayout.getImageView("imgCar").setImage(car);
 	SDL_FreeSurface(car);
+
+	// Boxes
+	defaultLayout.addView("boxFront", new EmptyBoxView(535, 25, 260, 70));
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 145, 260, 50));
+	defaultLayout.addView("boxLeft", new EmptyBoxView(535, 215, 260, 70));
+	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
 
 	// titles
 	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
