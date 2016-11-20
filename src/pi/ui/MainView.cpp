@@ -143,8 +143,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	//// USER DETECTION ////
 	Layout & userLayout = mgr.createLayout("user");
 
-	userLayout.addView("filter", new ImageView(0,0,400,400));
-	userLayout.addView("result", new ImageView(400,0,400,400));
+	userLayout.addView("filter", new ImageView(0,0,400,300));
+	userLayout.addView("result", new ImageView(400,0,400,300));
+	userLayout.addView("logs", new LogView(0,300,800,100));
 }
 
 void MainView::updateViews(ViewManager & mgr) {

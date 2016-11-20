@@ -35,10 +35,8 @@ class Camera {
 		static int getFrameDuration(); // in Milliseconds
 
 		/// Static camera's position and properties
-		// Distance of the cam above ground (meter)
-		static const float height;
-		// Distance from the center of the car (horizontal 'roll' axis) (meter)
-		static const float distanceToCenter;
+		// Camera position in the car (relative to center of car) (meter)
+		static const float PosX,PosY,PosZ;
 		// pitch angle from horizontal (radians)
 		static const float pitch;
 		// horizontal field of view of the camera sensor (radians)

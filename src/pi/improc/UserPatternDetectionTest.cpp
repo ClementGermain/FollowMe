@@ -1,6 +1,8 @@
 #include <opencv2/opencv.hpp>
 #include <thread>
 #include <chrono>
+#include "utils/Timer.hpp"
+#include "utils/Log.hpp"
 #include "UserPatternDetectionTest.hpp"
 #include "car/Camera.hpp"
 
@@ -52,10 +54,14 @@ void UserPatternDetectionTest::run() {
 #else
 		RaspiCam.getImage(img);
 #endif
+
+		Timer t;
 		detector.findPattern(img, true);
-		
+		LogI << "Processed image for user pattern detection in "<<t.elapsed()<<" seconds"<<endl;
+		detector.imageCirclesToPosition();
+
 		// sleep 
-		for(int s = 0; s < 50 && !endThread; s++)
+		for(int s = 0; s < 100 && !endThread; s++)
 			this_thread::sleep_for(chrono::milliseconds(100));
 		i++;
 	}
