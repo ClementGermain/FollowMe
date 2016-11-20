@@ -22,7 +22,7 @@
 using namespace std;
 
 
-MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera) {
+MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
 }
 
@@ -176,7 +176,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
-		SDL_Surface * cam = RaspiCam.getBitmap(1);
+		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
 	}

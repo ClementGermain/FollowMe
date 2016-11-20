@@ -16,14 +16,22 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 
 	// Threshold the HSV image, keep only the red pixels
 	cv::Mat yellow_hue_image;
-	cv::inRange(hsv_image, cv::Scalar(25, 45, 85), cv::Scalar(50, 255, 255), yellow_hue_image);
+	cv::inRange(hsv_image, cv::Scalar(35*360/255/2, 110, 50), cv::Scalar(58*360/255/2, 255, 245), yellow_hue_image);
 
-	// Apply blur (low pass filter)
-	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
+	//morphological opening (remove small objects from the foreground)
+	cv::erode(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+	cv::dilate(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+
+	//morphological closing (fill small holes in the foreground)
+	cv::dilate(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+	cv::erode(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
 
 	if(drawResult) {
 		filterImage = yellow_hue_image.clone();
 	}
+
+	// Apply blur
+	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
 
 	// Use the Hough transform to detect circles in the combined threshold image
 	std::vector<cv::Vec3f> circles;

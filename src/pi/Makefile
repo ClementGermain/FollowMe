@@ -38,6 +38,7 @@ OBJECTS=Main.o \
 		car/LinkSTM32.o \
 		car/Camera.o \
 		utils/Log.o \
+		utils/Timer.o \
 		SPI_Interface/SPI_Interface.o \
 		improc/UserPatternDetection.o \
 		improc/UserPatternDetectionTest.o \
