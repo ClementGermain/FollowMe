@@ -110,15 +110,14 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
 
 	// Pointer to car
-	defaultLayout.addView("ptrFrontR", new PointerView(535, 40, 190, 80, carX, carY));
-	defaultLayout.addView("ptrFrontL", new PointerView(535, 40, 20, 80, carX, carY));
-	defaultLayout.addView("ptrRaspi", new PointerView(535, 160, 127, 198, carX, carY));
-	defaultLayout.addView("ptrLeft", new PointerView(535, 230, 20, 279, carX, carY));
-	defaultLayout.addView("ptrRight", new PointerView(535, 320, 190, 279, carX, carY));
-	defaultLayout.addView("ptrUS_fl", new PointerView(365, 25, 52, 21, carX, carY));
+	defaultLayout.addView("ptrFront", new PointerView(535, 40, 100, 88, carX, carY));
+	defaultLayout.addView("ptrRaspi", new PointerView(535, 160, 100, 198, carX, carY));
+	defaultLayout.addView("ptrLeft", new PointerView(535, 230, 70, 276, carX, carY));
+	defaultLayout.addView("ptrRight", new PointerView(535, 320, 130, 276, carX, carY));
+	defaultLayout.addView("ptrUS_fl", new PointerView(365, 25, 48, 18, carX, carY));
 	defaultLayout.addView("ptrUS_fc", new PointerView(435, 25, 100, 5, carX, carY));
 	defaultLayout.addView("ptrUS_fr", new PointerView(505, 25, 152, 18, carX, carY));
-	defaultLayout.addView("ptrUS_bl", new PointerView(365, 375, 66, 340, carX, carY));
+	defaultLayout.addView("ptrUS_bl", new PointerView(365, 375, 58, 340, carX, carY));
 	defaultLayout.addView("ptrUS_bc", new PointerView(435, 375, 100, 344, carX, carY));
 	defaultLayout.addView("ptrUS_br", new PointerView(505, 375, 142, 340, carX, carY));
 
@@ -143,12 +142,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
 
 	// distance
-	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
-	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
-	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 470, 5, 70));
-	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 70));
-	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 400, 380, 70));
-	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 470, 380, 70));
+	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 65));
+	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 397, 5, 66));
+	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 465, 5, 65));
+	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 65));
+	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 397, 380, 66));
+	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 465, 380, 65));
 	// raspi
 	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
 	// other
