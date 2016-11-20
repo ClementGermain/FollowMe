@@ -23,6 +23,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/MainView.o \
 		   ui/CommandLine.o \
 		   ui/view/View.o \
+		   ui/view/EmptyBoxView.o \
 		   ui/view/KeyboardInput.o \
 		   ui/view/Trackbar.o \
 		   ui/view/Digital.o \
@@ -38,6 +39,7 @@ OBJECTS=Main.o \
 		car/LinkSTM32.o \
 		car/Camera.o \
 		utils/Log.o \
+		utils/Timer.o \
 		SPI_Interface/SPI_Interface.o \
 		improc/UserPatternDetection.o \
 		improc/UserPatternDetectionTest.o \

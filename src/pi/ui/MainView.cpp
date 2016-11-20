@@ -16,13 +16,14 @@
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
+#include "view/EmptyBoxView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
 
 
-MainView::MainView(Camera & camera) : threadView(NULL), isThreadTerminated(true), camera(camera) {
+MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
 }
 
@@ -100,6 +101,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.getImageView("imgCar").setImage(car);
 	SDL_FreeSurface(car);
 
+	// Boxes
+	defaultLayout.addView("boxFront", new EmptyBoxView(535, 25, 260, 70));
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 145, 260, 50));
+	defaultLayout.addView("boxLeft", new EmptyBoxView(535, 215, 260, 70));
+	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
+
 	// titles
 	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
 	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 150, 250, 16, true));
@@ -143,8 +150,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	//// USER DETECTION ////
 	Layout & userLayout = mgr.createLayout("user");
 
-	userLayout.addView("filter", new ImageView(0,0,400,400));
-	userLayout.addView("result", new ImageView(400,0,400,400));
+	userLayout.addView("filter", new ImageView(0,0,400,300));
+	userLayout.addView("result", new ImageView(400,0,400,300));
+	userLayout.addView("logs", new LogView(0,300,800,100));
 }
 
 void MainView::updateViews(ViewManager & mgr) {
@@ -176,7 +184,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance);
 
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
-		SDL_Surface * cam = RaspiCam.getBitmap(1);
+		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
 	}

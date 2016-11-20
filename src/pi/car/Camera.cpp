@@ -1,7 +1,9 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <chrono>
 #include <thread>
 #include <unistd.h>
+#include <cmath>
 #include "Camera.hpp"
 
 #ifndef __NO_RASPI__
@@ -11,49 +13,147 @@
 using namespace std;
 
 
-Camera RaspiCam;
+const float Camera::PosX			= 0.0f;
+const float Camera::PosY			= 0.0f;
+const float Camera::PosZ			= 1.0f;
+const float Camera::pitch			= 0;//-20 * M_PI/180;
+const float Camera::horizontalFOV	= 53.5 * M_PI/180;
+const float Camera::verticalFOV		= Camera::horizontalFOV * 3 / 4;
+std::mutex Camera::camLock;
+IplImage * Camera::imageCam;
+Timer Camera::timerCapture;
+#ifndef __NO_RASPI__
+RaspiCamCvCapture * Camera::raspiCam = NULL;
+RASPIVID_CONFIG Camera::configCam;
+#endif
 
-Camera::Camera(int width, int height, int framerate)
+void Camera::init(int width, int height, int framerate)
 {
 #ifndef __NO_RASPI__
-	// Init configuration
-	configCam.width = width;
-	configCam.height = height;
-	configCam.bitrate = 0; // default
-	configCam.framerate = framerate;
-	configCam.monochrome = 0; // default
-	
-	// Initialize the camera
-	raspiCam = raspiCamCvCreateCameraCapture2(0, &configCam);
+	if(raspiCam == NULL) {
+		// Init configuration
+		configCam.width = width;
+		configCam.height = height;
+		configCam.bitrate = 0; // default
+		configCam.framerate = framerate;
+		configCam.monochrome = 0; // default
+
+		// Initialize the camera
+		raspiCam = raspiCamCvCreateCameraCapture2(0, &configCam);
+	}
 #endif
 }
 
-Camera::~Camera() {
+void Camera::destroy() {
 #ifndef __NO_RASPI__
-	// Release camera
-	raspiCamCvReleaseCapture(&raspiCam);
+	if(raspiCam != NULL) {
+		// Release camera
+		raspiCamCvReleaseCapture(&raspiCam);
+	}
 #endif
+	if(imageCam != NULL) {
+		cvReleaseImage(&imageCam);
+	}
+}
+
+int Camera::getFrameWidth() {
+#ifndef __NO_RASPI__
+	return configCam.width;
+#else
+	return DEFAULT_FRAME_WIDTH;
+#endif
+}
+
+int Camera::getFrameHeight() {
+#ifndef __NO_RASPI__
+	return configCam.height;
+#else
+	return DEFAULT_FRAME_HEIGHT;
+#endif
+}
+
+int Camera::getFrameRate() {
+#ifndef __NO_RASPI__
+	return configCam.framerate;
+#else
+	return DEFAULT_FRAMERATE;
+#endif
+}
+
+int Camera::getFrameDuration() {
+	return 1000 / getFrameRate() + 1;
+}
+
+void Camera::updateImage() {
+	// lock the mutex 
+	// FIXME->it can block the current thread and all the others mutex-locked threads for 30ms
+	camLock.lock();
+
+	// Get elapsed time since last capture in milliseconds
+	int timeSinceLastCapture = timerCapture.elapsed() * 1000;
+
+	// Update the capture if too old
+	if(timeSinceLastCapture > getFrameDuration() || imageCam == NULL) {
+#ifndef __NO_RASPI__
+		// release the previous image
+		if(imageCam != NULL)
+			cvRealeaseImage(&imageCam);
+		
+		// If the pending frame is too old, skip it
+		if(timeSinceLastCapture > 2*getFrameDuration())
+			raspiCamCvQueryFrame(raspiCam);
+		
+		// get the next frame (can wait for 1/framerate second max...)
+		imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
+#endif
+
+		// update the capture date
+		timerCapture.reset();
+	}
+
+	// unlock the mutex
+	camLock.unlock();
 }
 
 void Camera::getImage(cv::Mat & out) {
+	updateImage();
+
 #ifndef __NO_RASPI__
-	out = raspiCamCvQueryFrame(raspiCam);
+	// lock the mutex 
+	camLock.lock();
+
+	// Create a new matrix from the current capture
+	out = imageCam;
+
+	// unlock the mutex
+	camLock.unlock();
 #endif
 }
 
-SDL_Surface * Camera::getBitmap(double scale) {
+SDL_Surface * Camera::getBitmap() {
+	updateImage();
+
+	SDL_Surface * s;
+
 #ifndef __NO_RASPI__
-	IplImage * img = raspiCamCvQueryFrame(raspiCam);
-	//cv::resize(img, img, cv::Size(0,0), scale, scale);
-	return SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+	// lock the mutex 
+	camLock.lock();
+
+	// Create a new SDL_SUrface from the current capture
+	s = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,
 			img->depth * img->nChannels,
 			img->widthStep,
 			0xff0000, 0x00ff00, 0x0000ff, 0
 	);
+
+	// unlock the mutex
+	camLock.unlock();
 #else
-	return SDL_CreateRGBSurface(SDL_SWSURFACE, DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT, 32, 0,0,0,0);
+	s = SDL_CreateRGBSurface(SDL_SWSURFACE, DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT, 32, 0,0,0,0);
 #endif
+
+	 return s;
 }
 

@@ -27,7 +27,7 @@ int runTestImProcUser(istream & input, vector<int> i, vector<string> s);
 int runTestImProcRoad(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 
-MainView view(RaspiCam);
+MainView view;
 
 void runUI() {
 	/// Initialize ///
