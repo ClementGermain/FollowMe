@@ -13,10 +13,12 @@
 using namespace std;
 
 
-const float Camera::height			= 1.0f;
-const float Camera::pitch			= 20 * M_PI/180;
-const float Camera::horizontalFOV	= 53 * M_PI/180;
-const float Camera::verticalFOV		= 41 * M_PI/180;
+const float Camera::PosX			= 0.0f;
+const float Camera::PosY			= 0.0f;
+const float Camera::PosZ			= 1.0f;
+const float Camera::pitch			= 0;//-20 * M_PI/180;
+const float Camera::horizontalFOV	= 53.5 * M_PI/180;
+const float Camera::verticalFOV		= Camera::horizontalFOV * 3 / 4;
 std::mutex Camera::camLock;
 IplImage * Camera::imageCam;
 Timer Camera::timerCapture;

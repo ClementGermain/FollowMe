@@ -16,6 +16,8 @@
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
+#include "view/EmptyBoxView.hpp"
+#include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
@@ -95,10 +97,29 @@ void MainView::initializeViews(ViewManager & mgr) {
 	Layout & defaultLayout = mgr.createLayout("default");
 
 	// Car top view
+	int carX = 330, carY = 25;
 	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
 	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 	defaultLayout.getImageView("imgCar").setImage(car);
 	SDL_FreeSurface(car);
+
+	// Boxes
+	defaultLayout.addView("boxFront", new EmptyBoxView(535, 25, 260, 70));
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 145, 260, 50));
+	defaultLayout.addView("boxLeft", new EmptyBoxView(535, 215, 260, 70));
+	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
+
+	// Pointer to car
+	defaultLayout.addView("ptrFront", new PointerView(535, 40, 100, 88, carX, carY));
+	defaultLayout.addView("ptrRaspi", new PointerView(535, 160, 100, 198, carX, carY));
+	defaultLayout.addView("ptrLeft", new PointerView(535, 230, 70, 276, carX, carY));
+	defaultLayout.addView("ptrRight", new PointerView(535, 320, 130, 276, carX, carY));
+	defaultLayout.addView("ptrUS_fl", new PointerView(365, 25, 48, 18, carX, carY));
+	defaultLayout.addView("ptrUS_fc", new PointerView(435, 25, 100, 5, carX, carY));
+	defaultLayout.addView("ptrUS_fr", new PointerView(505, 25, 152, 18, carX, carY));
+	defaultLayout.addView("ptrUS_bl", new PointerView(365, 375, 58, 340, carX, carY));
+	defaultLayout.addView("ptrUS_bc", new PointerView(435, 375, 100, 344, carX, carY));
+	defaultLayout.addView("ptrUS_br", new PointerView(505, 375, 142, 340, carX, carY));
 
 	// titles
 	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
@@ -121,12 +142,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
 
 	// distance
-	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 70));
-	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 400, 5, 70));
-	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 470, 5, 70));
-	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 70));
-	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 400, 380, 70));
-	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 470, 380, 70));
+	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 65));
+	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 397, 5, 66));
+	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 465, 5, 65));
+	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 65));
+	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 397, 380, 66));
+	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 465, 380, 65));
 	// raspi
 	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
 	// other
@@ -143,8 +164,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	//// USER DETECTION ////
 	Layout & userLayout = mgr.createLayout("user");
 
-	userLayout.addView("filter", new ImageView(0,0,400,400));
-	userLayout.addView("result", new ImageView(400,0,400,400));
+	userLayout.addView("filter", new ImageView(0,0,400,300));
+	userLayout.addView("result", new ImageView(400,0,400,300));
+	userLayout.addView("logs", new LogView(0,300,800,100));
 }
 
 void MainView::updateViews(ViewManager & mgr) {
