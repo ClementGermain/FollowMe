@@ -65,6 +65,9 @@ extern US_Sensor_Typedef * SENSOR_BACK_L;
 extern US_Sensor_Typedef * SENSOR_BACK_R;
 extern US_Sensor_Typedef * SENSOR_BACK_C;
 
+extern int time_echo;
+extern int front_us;
+
 /** @brief Update all the UltraSound sensor in a Modele struct
 	* @param Modele: Pointeur to the modele struct to be used
 	* @retval None

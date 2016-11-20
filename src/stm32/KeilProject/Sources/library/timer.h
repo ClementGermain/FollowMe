@@ -53,7 +53,12 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us);
 
 void Init_timer_Gated_mode(TIM_TypeDef* TIM);
 
+void Init_Gated_mode(TIM_TypeDef* TIM);
+
+void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel);
 
  void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void));
+ 
+ void Reset_counter(TIM_TypeDef *TIM);
 
 #endif

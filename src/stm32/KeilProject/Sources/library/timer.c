@@ -141,6 +141,75 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
 	TIM_Cmd(TIM, ENABLE); //CEN
 }
 
+void Init_Gated_mode(TIM_TypeDef* TIM){
+
+	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+	int ARR_max=65535;
+//	int fclk=72; // clock = 72 Mhz
+	int PSC =72;
+	
+	
+	
+  TIM_TimeBaseStructure.TIM_Period = ARR_max - 1;
+  TIM_TimeBaseStructure.TIM_Prescaler = PSC ;
+  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+ 
+  TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
+	TIM_SelectSlaveMode(TIM,TIM_SlaveMode_Gated); // SMS
+}
+
+
+void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel) {
+TIM_ICInitTypeDef TIM_ICInitStructure;
+	
+	if (num_Channel ==1) {
+	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+	
+	 /* Set the default configuration */
+  TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+  TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
+	
+	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
+	TIM_Cmd(TIM, ENABLE); //CEN
+	}
+	
+	 else if (num_Channel ==2) {
+	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+	
+	 /* Set the default configuration */
+  TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+  TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI2FP2;
+	
+	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
+	TIM_Cmd(TIM, ENABLE); //CEN
+	
+	}
+	 
+	 else if (num_Channel ==3) {
+	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+	
+	 /* Set the default configuration */
+  TIM_ICInitStructure.TIM_Channel = TIM_Channel_3;
+  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
+  TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1F_ED; // to check
+	
+	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
+	TIM_Cmd(TIM, ENABLE); //CEN
+	
+	}
+	
+	
+	
+} 
 
 
 //function pointers
@@ -202,5 +271,7 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 	
 }
 	
-
+void Reset_counter(TIM_TypeDef *TIM){
+	TIM_SetCounter(TIM,0);
+}
 

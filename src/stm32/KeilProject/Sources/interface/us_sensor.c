@@ -80,7 +80,11 @@ float Init_Systick(void){
 // interrupt function
 
 	void My_function_TIF (void) {
-	TIM_GetCounter( TIM_Echo);
+		front_us++;
+		if (front_us==2){
+	time_echo = TIM_GetCounter( TIM_Echo);
+	Reset_counter(TIM_Echo);
+	front_us=0;}
 	
 		
 	}
@@ -88,15 +92,13 @@ float Init_Systick(void){
 
 
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
-	
+	front_us=0;
 	uint32_t distance=0;
 	// Init timer 2  in gated mode
 	Init_timer_Gated_mode( TIM_Echo	);
 	// Configure IT with My function in us_sensor.c
 	Timer_Active_IT( TIM_Echo	,5, My_function_TIF);
-
-	
-	//distance = time_echo/58 //cm
+	distance = time_echo/58; //cm
 	
 	return distance;
 }
