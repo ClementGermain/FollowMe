@@ -17,6 +17,7 @@
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
 #include "view/EmptyBoxView.hpp"
+#include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
@@ -96,6 +97,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	Layout & defaultLayout = mgr.createLayout("default");
 
 	// Car top view
+	int carX = 330, carY = 25;
 	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
 	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 	defaultLayout.getImageView("imgCar").setImage(car);
@@ -106,6 +108,19 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 145, 260, 50));
 	defaultLayout.addView("boxLeft", new EmptyBoxView(535, 215, 260, 70));
 	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
+
+	// Pointer to car
+	defaultLayout.addView("ptrFrontR", new PointerView(535, 40, 190, 80, carX, carY));
+	defaultLayout.addView("ptrFrontL", new PointerView(535, 40, 20, 80, carX, carY));
+	defaultLayout.addView("ptrRaspi", new PointerView(535, 160, 127, 198, carX, carY));
+	defaultLayout.addView("ptrLeft", new PointerView(535, 230, 20, 279, carX, carY));
+	defaultLayout.addView("ptrRight", new PointerView(535, 320, 190, 279, carX, carY));
+	defaultLayout.addView("ptrUS_fl", new PointerView(365, 25, 52, 21, carX, carY));
+	defaultLayout.addView("ptrUS_fc", new PointerView(435, 25, 100, 5, carX, carY));
+	defaultLayout.addView("ptrUS_fr", new PointerView(505, 25, 152, 18, carX, carY));
+	defaultLayout.addView("ptrUS_bl", new PointerView(365, 375, 66, 340, carX, carY));
+	defaultLayout.addView("ptrUS_bc", new PointerView(435, 375, 100, 344, carX, carY));
+	defaultLayout.addView("ptrUS_br", new PointerView(505, 375, 142, 340, carX, carY));
 
 	// titles
 	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
