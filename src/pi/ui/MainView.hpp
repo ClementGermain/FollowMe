@@ -4,13 +4,12 @@
 #include <string>
 #include <thread>
 #include <SDL/SDL.h>
-#include "../car/Camera.hpp"
 #include "CPULoad.hpp"
 #include "ViewManager.hpp"
 
 class MainView {
 	public:
-		MainView(Camera & camera);
+		MainView();
 		~MainView();
 		void open();
 		bool isOpen();
@@ -26,7 +25,6 @@ class MainView {
 
 		SDL_Surface * screen;
 		CPULoad cpuLoad;
-		Camera & camera;
 };
 
 #endif

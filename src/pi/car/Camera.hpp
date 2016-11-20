@@ -6,6 +6,8 @@
 #include <opencv2/opencv.hpp>
 #include <SDL/SDL.h>
 #include <chrono>
+#include <mutex>
+#include "utils/Timer.hpp"
 
 #ifndef __NO_RASPI__
 	#include "RaspiCamCV.h"
@@ -45,10 +47,10 @@ class Camera {
 		static const float verticalFOV;
 		
 	private:
-		
+	
 		static std::mutex camLock;
 		static IplImage * imageCam;
-		static std::chrono::time_point lastCaptureDate;
+		static Timer timerCapture;
 #ifndef __NO_RASPI__
 		static RaspiCamCvCapture * raspiCam;
 		static RASPIVID_CONFIG configCam;

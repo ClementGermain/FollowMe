@@ -19,7 +19,7 @@ const float Camera::horizontalFOV	= 53 * M_PI/180;
 const float Camera::verticalFOV		= 41 * M_PI/180;
 std::mutex Camera::camLock;
 IplImage * Camera::imageCam;
-std::chrono::time_point Camera::lastCaptureDate;
+Timer Camera::timerCapture;
 #ifndef __NO_RASPI__
 RaspiCamCvCapture * Camera::raspiCam = NULL;
 RASPIVID_CONFIG Camera::configCam;
@@ -55,31 +55,44 @@ void Camera::destroy() {
 }
 
 int Camera::getFrameWidth() {
+#ifndef __NO_RASPI__
 	return configCam.width;
+#else
+	return DEFAULT_FRAME_WIDTH;
+#endif
 }
 
 int Camera::getFrameHeight() {
+#ifndef __NO_RASPI__
 	return configCam.height;
+#else
+	return DEFAULT_FRAME_HEIGHT;
+#endif
 }
 
 int Camera::getFrameRate() {
+#ifndef __NO_RASPI__
 	return configCam.framerate;
+#else
+	return DEFAULT_FRAMERATE;
+#endif
 }
 
 int Camera::getFrameDuration() {
-	return 1000 / configCam.framerate + 1;
+	return 1000 / getFrameRate() + 1;
 }
 
 void Camera::updateImage() {
-	// Get elapsed time since last capture
-	chrono::duration<chrono::milliseconds> timeSinceLastCapture = chrono::system_clock::now() - lastCaptureDate;
-	
+	// lock the mutex 
+	// FIXME->it can block the current thread and all the others mutex-locked threads for 30ms
+	camLock.lock();
+
+	// Get elapsed time since last capture in milliseconds
+	int timeSinceLastCapture = timerCapture.elapsed() * 1000;
+
 	// Update the capture if too old
 	if(timeSinceLastCapture > getFrameDuration() || imageCam == NULL) {
-		// lock the mutex 
-		// FIXME->it can block the current thread and all the others waiting threads for 30ms
-		camLock.lock();
-
+#ifndef __NO_RASPI__
 		// release the previous image
 		if(imageCam != NULL)
 			cvRealeaseImage(&imageCam);
@@ -90,12 +103,14 @@ void Camera::updateImage() {
 		
 		// get the next frame (can wait for 1/framerate second max...)
 		imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
+#endif
+
 		// update the capture date
-		lastCaptureDate = chrono::system_clock::now();
-		
-		// unlock the mutex
-		camLock.unlock();
+		timerCapture.reset();
 	}
+
+	// unlock the mutex
+	camLock.unlock();
 }
 
 void Camera::getImage(cv::Mat & out) {
@@ -115,6 +130,8 @@ void Camera::getImage(cv::Mat & out) {
 
 SDL_Surface * Camera::getBitmap() {
 	updateImage();
+
+	SDL_Surface * s;
 
 #ifndef __NO_RASPI__
 	// lock the mutex 

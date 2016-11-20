@@ -10,6 +10,7 @@
 #include "ui/MainUI.hpp"
 #include "car/LinkSTM32.hpp"
 #include "car/Car.hpp"
+#include "car/Camera.hpp"
 #include "utils/Log.hpp"
 
 using namespace std;
@@ -50,12 +51,16 @@ void handler(int sig) {
 }
 
 int main() {
+	// Initializations
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
+	Camera::init();
 
 	// Main loop
 	runUI();
 
+	// Destroying
+	Camera::destroy();
 	return 0;
 }
 
