@@ -104,53 +104,35 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.getImageView("imgCar").setImage(car);
 	SDL_FreeSurface(car);
 
-	// Boxes
-	defaultLayout.addView("boxFront", new EmptyBoxView(535, 25, 260, 70));
-	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 145, 260, 50));
-	defaultLayout.addView("boxLeft", new EmptyBoxView(535, 215, 260, 70));
-	defaultLayout.addView("boxRight", new EmptyBoxView(535, 305, 260, 70));
+	// raspi info
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 15, 260, 50));
+	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 20, 250, 16, true));
+	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 40, 80, 16, false));
 
-	// Pointer to car
-	defaultLayout.addView("ptrFront", new PointerView(535, 40, 100, 88, carX, carY));
-	defaultLayout.addView("ptrRaspi", new PointerView(535, 160, 100, 198, carX, carY));
-	defaultLayout.addView("ptrLeft", new PointerView(535, 230, 70, 276, carX, carY));
-	defaultLayout.addView("ptrRight", new PointerView(535, 320, 130, 276, carX, carY));
-	defaultLayout.addView("ptrUS_fl", new PointerView(365, 25, 48, 18, carX, carY));
-	defaultLayout.addView("ptrUS_fc", new PointerView(435, 25, 100, 5, carX, carY));
-	defaultLayout.addView("ptrUS_fr", new PointerView(505, 25, 152, 18, carX, carY));
-	defaultLayout.addView("ptrUS_bl", new PointerView(365, 375, 58, 340, carX, carY));
-	defaultLayout.addView("ptrUS_bc", new PointerView(435, 375, 100, 344, carX, carY));
-	defaultLayout.addView("ptrUS_br", new PointerView(505, 375, 142, 340, carX, carY));
-
-	// titles
-	defaultLayout.addView("titleFront", new TextView("Motor front", 540, 30, 250, 16, true));
-	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 150, 250, 16, true));
-	defaultLayout.addView("titleLeft", new TextView("Motor left", 540, 220, 250, 16, true));
-	defaultLayout.addView("titleRight", new TextView("Motor right", 540, 310, 250, 16, true));
-
-	// motors
-	defaultLayout.addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
-	defaultLayout.addView("tbVoltageFront", new Trackbar_Horizontal(0, 100, 620, 50));
-	defaultLayout.addView("dCurrentFront", new Digital("I: %.0fmA", 540, 70, 80, 16, false));
-	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 2, 620, 70));
-	defaultLayout.addView("dVoltageLeft", new Digital("V: %.0fmV", 540, 240, 80, 16, false));
-	defaultLayout.addView("tbVoltageLeft", new Trackbar_Horizontal(0, 100, 620, 240));
-	defaultLayout.addView("dCurrentLeft", new Digital("I: %.0fmA", 540, 260, 80, 16, false));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 2, 620, 260));
-	defaultLayout.addView("dVoltageRight", new Digital("V: %.0fmV", 540, 330, 80, 16, false));
-	defaultLayout.addView("tbVoltageRight", new Trackbar_Horizontal(0, 100, 620, 330));
-	defaultLayout.addView("dCurrentRight", new Digital("I: %.0fmA", 540, 350, 80, 16, false));
-	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 2, 620, 350));
+	// motors digital infos
+	defaultLayout.addView("dVoltageFront", new Digital("%1.1fV", 380, 70, 50, 16, false));
+	defaultLayout.addView("dCurrentFront", new Digital("%1.1fmA", 450, 70, 50, 16, false));
+	defaultLayout.addView("dVoltageLeft", new Digital("%1.1fV", 328, 250, 50, 16, false));
+	defaultLayout.addView("dCurrentLeft", new Digital("%1.1fmA", 398, 250, 50, 16, false));
+	defaultLayout.addView("dVoltageRight", new Digital("%1.1fV", 433, 250, 50, 16, false));
+	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 250, 50, 16, false));
+	
+	// motors trackbar
+	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130));
+	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
 
 	// distance
 	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 65));
-	defaultLayout.addView("distFrontCenter", new Digital("%.0fcm", 397, 5, 66));
+	defaultLayout.addView("distFrontCenter", new Digital(".0fcm", 397, 5, 66));
 	defaultLayout.addView("distFrontRight", new Digital("%.0fcm", 465, 5, 65));
 	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 65));
 	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 397, 380, 66));
 	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 465, 380, 65));
-	// raspi
-	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 170, 80, 16, false));
+
 	// other
 	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
 	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
