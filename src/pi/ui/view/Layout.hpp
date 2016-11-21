@@ -8,7 +8,7 @@
 #include <string>
 #include "View.hpp"
 #include "Digital.hpp"
-#include "Trackbar.hpp"
+#include "trackbar/Trackbar.hpp"
 #include "ImageView.hpp"
 #include "KeyboardInput.hpp"
 #include "LogView.hpp"

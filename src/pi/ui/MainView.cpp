@@ -11,7 +11,8 @@
 #include "utils/Log.hpp"
 #include "car/Camera.hpp"
 #include "view/KeyboardInput.hpp"
-#include "view/Trackbar.hpp"
+#include "view/trackbar/Trackbar_Horizontal.hpp"
+#include "view/trackbar/Trackbar_Vertical.hpp"
 #include "view/Digital.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
@@ -129,17 +130,17 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	// motors
 	defaultLayout.addView("dVoltageFront", new Digital("V: %.0fmV", 540, 50, 80, 16, false));
-	defaultLayout.addView("tbVoltageFront", new Trackbar(0, 100, 620, 50));
+	defaultLayout.addView("tbVoltageFront", new Trackbar_Horizontal(0, 100, 620, 50));
 	defaultLayout.addView("dCurrentFront", new Digital("I: %.0fmA", 540, 70, 80, 16, false));
-	defaultLayout.addView("tbCurrentFront", new Trackbar(0, 2, 620, 70));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 2, 620, 70));
 	defaultLayout.addView("dVoltageLeft", new Digital("V: %.0fmV", 540, 240, 80, 16, false));
-	defaultLayout.addView("tbVoltageLeft", new Trackbar(0, 100, 620, 240));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar_Horizontal(0, 100, 620, 240));
 	defaultLayout.addView("dCurrentLeft", new Digital("I: %.0fmA", 540, 260, 80, 16, false));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar(0, 2, 620, 260));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 2, 620, 260));
 	defaultLayout.addView("dVoltageRight", new Digital("V: %.0fmV", 540, 330, 80, 16, false));
-	defaultLayout.addView("tbVoltageRight", new Trackbar(0, 100, 620, 330));
+	defaultLayout.addView("tbVoltageRight", new Trackbar_Horizontal(0, 100, 620, 330));
 	defaultLayout.addView("dCurrentRight", new Digital("I: %.0fmA", 540, 350, 80, 16, false));
-	defaultLayout.addView("tbCurrentRight", new Trackbar(0, 2, 620, 350));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 2, 620, 350));
 
 	// distance
 	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 65));

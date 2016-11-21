@@ -26,7 +26,9 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/EmptyBoxView.o \
 		   ui/view/PointerView.o \
 		   ui/view/KeyboardInput.o \
-		   ui/view/Trackbar.o \
+		   ui/view/trackbar/Trackbar.o \
+		   ui/view/trackbar/Trackbar_Horizontal.o\
+		   ui/view/trackbar/Trackbar_Vertical.o\
 		   ui/view/Digital.o \
 		   ui/view/LogView.o \
 		   ui/view/ImageView.o \
