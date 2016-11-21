@@ -10,7 +10,7 @@ Trackbar_Vertical::Trackbar_Vertical(float rangeMin, float rangeMax, int x, int 
 void Trackbar_Vertical::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * drawable = this->drawable.get();
 	if(invalidate) {
-	  int cursorPos = drawable->h/2 - ( borderSize + (drawable->h-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
+	  int cursorPos = drawable->h - ( borderSize + (drawable->h-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
 
 		// border
 		SDL_FillRect(drawable, NULL, 0x0);
