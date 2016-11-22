@@ -64,6 +64,7 @@ extern US_Sensor_Typedef * SENSOR_FRONT_C;
 extern US_Sensor_Typedef * SENSOR_BACK_L;
 extern US_Sensor_Typedef * SENSOR_BACK_R;
 extern US_Sensor_Typedef * SENSOR_BACK_C;
+extern US_Sensor_Typedef * US_active; //the Ultrasonic sensor on which we sent an impulse
 
 extern int time_echo;
 extern int front_us;
