@@ -8,7 +8,7 @@ class EmptyBoxView : public View {
 	public:
 		EmptyBoxView(int x, int y, int w, int h);
 		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
-	private:
+	protected:
 		int w, h;
 };
 

@@ -14,6 +14,7 @@
 #include "view/trackbar/Trackbar_Horizontal.hpp"
 #include "view/trackbar/Trackbar_Vertical.hpp"
 #include "view/Digital.hpp"
+#include "view/ToggleBox.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
@@ -23,7 +24,6 @@
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
-
 
 MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
@@ -105,17 +105,22 @@ void MainView::initializeViews(ViewManager & mgr) {
 	SDL_FreeSurface(car);
 
 	// raspi info
-	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 15, 260, 50));
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 10, 260, 50));
 	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 20, 250, 16, true));
 	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 40, 80, 16, false));
+	// Toggle Informations
+	defaultLayout.addView("toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
+	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
+	defaultLayout.addView("toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
+	defaultLayout.addView("toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
 
 	// motors digital infos
 	defaultLayout.addView("dVoltageFront", new Digital("%1.1fV", 380, 70, 50, 16, false));
 	defaultLayout.addView("dCurrentFront", new Digital("%1.1fmA", 450, 70, 50, 16, false));
-	defaultLayout.addView("dVoltageLeft", new Digital("%1.1fV", 328, 250, 50, 16, false));
-	defaultLayout.addView("dCurrentLeft", new Digital("%1.1fmA", 398, 250, 50, 16, false));
-	defaultLayout.addView("dVoltageRight", new Digital("%1.1fV", 433, 250, 50, 16, false));
-	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 250, 50, 16, false));
+	defaultLayout.addView("dVoltageLeft", new Digital("%1.1fV", 328, 240, 50, 16, false));
+	defaultLayout.addView("dCurrentLeft", new Digital("%1.1fmA", 398, 240, 50, 16, false));
+	defaultLayout.addView("dVoltageRight", new Digital("%1.1fV", 433, 260, 50, 16, false));
+	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 260, 50, 16, false));
 	
 	// motors trackbar
 	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130));
@@ -184,6 +189,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
+
 	}
 	else if(mgr.isActive("user")) {
 		Layout & l = mgr.getLayout("user");
