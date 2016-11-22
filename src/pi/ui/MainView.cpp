@@ -98,7 +98,6 @@ void MainView::initializeViews(ViewManager & mgr) {
 	Layout & defaultLayout = mgr.createLayout("default");
 
 	// Car top view
-	int carX = 330, carY = 25;
 	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
 	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view.bmp");
 	defaultLayout.getImageView("imgCar").setImage(car);
@@ -108,6 +107,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 10, 260, 50));
 	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 20, 250, 16, true));
 	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 40, 80, 16, false));
+
 	// Toggle Informations
 	defaultLayout.addView("toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
@@ -130,6 +130,31 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130));
 	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
 
+	// other
+	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
+
+	//// SENSOR FULLSCREEN
+	Layout & DetectionLayout = mgr.createLayout("Detection");
+
+	// Car top view
+	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
+	SDL_Surface * car = SDL_LoadBMP("../../res/img/car_top_view_capteurs.bmp");
+	defaultLayout.getImageView("imgCar").setImage(car);
+	SDL_FreeSurface(car);
+
+	// raspi info
+	defaultLayout.addView("boxRaspi", new EmptyBoxView(535, 10, 260, 50));
+	defaultLayout.addView("titleRaspi", new TextView("Raspberry Pi 3", 540, 20, 250, 16, true));
+	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 40, 80, 16, false));
+
+	// Toggle Informations
+	defaultLayout.addView("toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
+	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
+	defaultLayout.addView("toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
+	defaultLayout.addView("toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+
+
 	// distance
 	defaultLayout.addView("distFrontLeft", new Digital("%.0fcm", 330, 5, 65));
 	defaultLayout.addView("distFrontCenter", new Digital(".0fcm", 397, 5, 66));
@@ -137,11 +162,6 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("distBackLeft", new Digital("%.0fcm", 330, 380, 65));
 	defaultLayout.addView("distBackCenter", new Digital("%.0fcm", 397, 380, 66));
 	defaultLayout.addView("distBackRight", new Digital("%.0fcm", 465, 380, 65));
-
-	// other
-	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
-	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
-
 
 	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
