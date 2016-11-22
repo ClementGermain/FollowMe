@@ -52,7 +52,7 @@ void UserPatternDetectionTest::run() {
 #ifdef __NO_RASPI__
 		img = cv::imread(names[i%6]);
 #else
-		RaspiCam.getImage(img);
+		Camera::getImage(img);
 #endif
 
 		Timer t;

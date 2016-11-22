@@ -97,7 +97,7 @@ void Camera::updateImage() {
 #ifndef __NO_RASPI__
 		// release the previous image
 		if(imageCam != NULL)
-			cvRealeaseImage(&imageCam);
+			cvReleaseImage(&imageCam);
 		
 		// If the pending frame is too old, skip it
 		if(timeSinceLastCapture > 2*getFrameDuration())
@@ -140,11 +140,11 @@ SDL_Surface * Camera::getBitmap() {
 	camLock.lock();
 
 	// Create a new SDL_SUrface from the current capture
-	s = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
-			img->width,
-			img->height,
-			img->depth * img->nChannels,
-			img->widthStep,
+	s = SDL_CreateRGBSurfaceFrom((void*)imageCam->imageData,
+			imageCam->width,
+			imageCam->height,
+			imageCam->depth * imageCam->nChannels,
+			imageCam->widthStep,
 			0xff0000, 0x00ff00, 0x0000ff, 0
 	);
 
