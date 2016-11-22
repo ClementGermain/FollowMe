@@ -64,9 +64,12 @@ extern US_Sensor_Typedef * SENSOR_FRONT_C;
 extern US_Sensor_Typedef * SENSOR_BACK_L;
 extern US_Sensor_Typedef * SENSOR_BACK_R;
 extern US_Sensor_Typedef * SENSOR_BACK_C;
+extern US_Sensor_Typedef * US_active; //the Ultrasonic sensor on which we sent an impulse
 
 extern int time_echo;
 extern int front_us;
+extern BarstowModel_Typedef * Modele;
+
 
 /** @brief Update all the UltraSound sensor in a Modele struct
 	* @param Modele: Pointeur to the modele struct to be used
@@ -109,7 +112,7 @@ void Periodic_Impulse_3_Front_US(void);
 */
 void Test_US_Sensor(void);
 
-
-void My_function_TIF (void);
+//fonction d'interruption
+void Capture_echo (void);
 
 #endif
