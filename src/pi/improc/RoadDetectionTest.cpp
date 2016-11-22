@@ -42,7 +42,7 @@ void RoadDetectionTest::run() {
 #ifdef __NO_RASPI__
 		img = cv::imread("../../res/img/route.bmp");
 #else
-		RaspiCam.getImage(img);
+		Camera::getImage(img);
 #endif
 
 		detector.applyRoadThreshold(img);
