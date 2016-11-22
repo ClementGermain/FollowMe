@@ -8,7 +8,7 @@
 
 class ImageView : public View {
 	public:
-		enum ScaleType { NORMAL };
+		enum ScaleType { NORMAL, FITXY };
 		ImageView(int x, int y, int h, int w);
 		// Draw the image in the view, the given image must be free by the caller
 		void setImage(SDL_Surface * image, ScaleType mode = ImageView::NORMAL);
