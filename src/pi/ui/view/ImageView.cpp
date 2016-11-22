@@ -15,7 +15,7 @@ ImageView::ImageView(int x, int y, int w, int h) :
 void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 	switch(mode) {
 		case ImageView::NORMAL:
-			
+			{	
 			SDL_Rect testRect{	(Sint16)((buffer->w - image->w) / 2),
 								(Sint16)((buffer->h - image->h) / 2),
 								(Uint16)image->w,
@@ -26,12 +26,11 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 							buffer.get(),
 							&testRect
 							);
-
+			}
 			break;
 		case ImageView::FITXY:
 			if (image->w != 0 && image->h != 0)
 			{
-				
 				SDL_Surface * zoomed = rotozoomSurfaceXY(image, 0.0, buffer->w / image->w, buffer->h / image->h, 0);
 			
 				SDL_BlitSurface(zoomed,

@@ -2,7 +2,7 @@
 
 using namespace cv;
 
-RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_16SC3}
+RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATCOL, ROADMATROW, 0}
 {
 }
 
