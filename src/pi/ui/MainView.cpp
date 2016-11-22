@@ -225,7 +225,7 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 	else if(mgr.isActive("roadImproc")) {
 		Layout & l = mgr.getLayout("roadImproc");
-		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage());
+		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("roadcamera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
