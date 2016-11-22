@@ -19,6 +19,8 @@ US_Sensor_Typedef * SENSOR_BACK_C 	= &SENSOR_BACK_C_;
 
 //Global time (ms)
 int Time;
+int front_us =0;
+int time_echo =0;
 
 void Update_US_Sensor(BarstowModel_Typedef * Modele){
 	
@@ -33,27 +35,27 @@ void Update_US_Sensor(BarstowModel_Typedef * Modele){
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
 	if (Sensor == SENSOR_FRONT_L){
 			Init_GPIO_In(SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L->GPIO_Pin_Echo);
-			Init_GPIO_Out(SENSOR_FRONT_L->GPIO_Trig, SENSOR_FRONT_L->GPIO_Pin_Trig);
+			//Init_GPIO_Out(SENSOR_FRONT_L->GPIO_Trig, SENSOR_FRONT_L->GPIO_Pin_Trig);
 	}
 	else if (Sensor ==  SENSOR_FRONT_R){
 		Init_GPIO_In(SENSOR_FRONT_R->GPIO_Echo, SENSOR_FRONT_R->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_FRONT_R->GPIO_Trig, SENSOR_FRONT_R->GPIO_Pin_Trig);
+		//Init_GPIO_Out(SENSOR_FRONT_R->GPIO_Trig, SENSOR_FRONT_R->GPIO_Pin_Trig);
 	}
 	else if (Sensor == SENSOR_FRONT_C){
 		Init_GPIO_In(SENSOR_FRONT_C->GPIO_Echo, SENSOR_FRONT_C->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_FRONT_C->GPIO_Trig, SENSOR_FRONT_C->GPIO_Pin_Trig);	
+		//Init_GPIO_Out(SENSOR_FRONT_C->GPIO_Trig, SENSOR_FRONT_C->GPIO_Pin_Trig);	
 	}
 	else if (Sensor == SENSOR_BACK_L){
 		Init_GPIO_In(SENSOR_BACK_L->GPIO_Echo, SENSOR_BACK_L->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_BACK_L->GPIO_Trig, SENSOR_BACK_L->GPIO_Pin_Trig);
+		//Init_GPIO_Out(SENSOR_BACK_L->GPIO_Trig, SENSOR_BACK_L->GPIO_Pin_Trig);
 	}
 	else if (Sensor == SENSOR_BACK_R){
 		Init_GPIO_In(SENSOR_BACK_R->GPIO_Echo, SENSOR_BACK_R->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_BACK_R->GPIO_Trig, SENSOR_BACK_R->GPIO_Pin_Trig);
+		//Init_GPIO_Out(SENSOR_BACK_R->GPIO_Trig, SENSOR_BACK_R->GPIO_Pin_Trig);
 	}
 	else if (Sensor == SENSOR_BACK_C){
 		Init_GPIO_In(SENSOR_BACK_C->GPIO_Echo, SENSOR_BACK_C->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
+		//Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
 	}
 }
 
@@ -90,17 +92,20 @@ float Init_Systick(void){
 	}
 	
 
-
-uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
-	front_us=0;
-	uint32_t distance=0;
+	
+	void Test_Get_USensor(void) {
+			front_us=0;
 	// Init timer 2  in gated mode
-	Init_timer_Gated_mode( TIM_Echo	);
+	Init_Gated_mode(TIM_Echo);
+	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
 	// Configure IT with My function in us_sensor.c
 	Timer_Active_IT( TIM_Echo	,5, My_function_TIF);
-	distance = time_echo/58; //cm
-	
-	return distance;
+	}
+
+uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
+	int distance =0;
+	//distance = time_echo/58; //cm
+		return distance;
 }
 
 void Periodic_Impulse_3_Front_US(){
@@ -125,6 +130,7 @@ void Periodic_Impulse_3_Front_US(){
 void Test_US_Sensor(void){
 	Init_All_US_Sensor();
 	Init_Systick();
+	Test_Get_USensor();
 }
 
 

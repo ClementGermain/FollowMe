@@ -16,9 +16,9 @@
 #define GPIO_SENSOR_TRIG_BACK_R						GPIOB
 #define GPIO_SENSOR_TRIG_BACK_C						GPIOB
 
-#define GPIO_SENSOR_ECHO_FRONT_L					GPIOC //ok
+#define GPIO_SENSOR_ECHO_FRONT_L					GPIOA //ok
 #define GPIO_SENSOR_ECHO_FRONT_R					GPIOA //ok
-#define GPIO_SENSOR_ECHO_FRONT_C					GPIOC //ok
+#define GPIO_SENSOR_ECHO_FRONT_C					GPIOA //ok
 #define GPIO_SENSOR_ECHO_BACK_L						GPIOB
 #define GPIO_SENSOR_ECHO_BACK_R						GPIOB
 #define GPIO_SENSOR_ECHO_BACK_C						GPIOB
@@ -31,17 +31,17 @@
 #define GPIO_PIN_SENSOR_TRIG_BACK_R				GPIO_Pin_2
 #define GPIO_PIN_SENSOR_TRIG_BACK_C				GPIO_Pin_3
 
-#define GPIO_PIN_SENSOR_ECHO_FRONT_L			GPIO_Pin_10 //ok
-#define GPIO_PIN_SENSOR_ECHO_FRONT_R			GPIO_Pin_13 //ok
-#define GPIO_PIN_SENSOR_ECHO_FRONT_C			GPIO_Pin_12 //ok
+#define GPIO_PIN_SENSOR_ECHO_FRONT_L			GPIO_Pin_0 //ok
+#define GPIO_PIN_SENSOR_ECHO_FRONT_R			GPIO_Pin_1 //ok
+#define GPIO_PIN_SENSOR_ECHO_FRONT_C			GPIO_Pin_4 //ok
 #define GPIO_PIN_SENSOR_ECHO_BACK_L				GPIO_Pin_4
 #define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
 #define TIM_Echo													TIM2
-#define TIM_Channel_Echo_1								TIM_Channel_1// for counting the distance
-#define TIM_Channel_Echo_2								TIM_Channel_2
-#define TIM_Channel_Echo_3								TIM_Channel_3
+#define TIM_Channel_Echo_Front_L					TIM_Channel_1// for counting the distance
+#define TIM_Channel_Echo_Front_C					TIM_Channel_2
+#define TIM_Channel_Echo_Front_R					TIM_Channel_3
 
 
 #define SYSTICK_PERIOD_US 1000 //1 ms

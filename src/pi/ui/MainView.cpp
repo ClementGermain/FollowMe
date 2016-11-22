@@ -155,6 +155,13 @@ void MainView::initializeViews(ViewManager & mgr) {
 	userLayout.addView("filter", new ImageView(0,0,400,300));
 	userLayout.addView("result", new ImageView(400,0,400,300));
 	userLayout.addView("logs", new LogView(0,300,800,100));
+
+	//// ROAD IMPROC ////
+	Layout & roadImprocLayout = mgr.createLayout("roadImproc");
+	roadImprocLayout.addView("roadimage", new ImageView(0, 0, 400, 300));
+	roadImprocLayout.addView("roadcamera", new ImageView(400, 0, 400, 300));
+
+
 }
 
 void MainView::updateViews(ViewManager & mgr) {
@@ -195,6 +202,13 @@ void MainView::updateViews(ViewManager & mgr) {
 		Layout & l = mgr.getLayout("user");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
 		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
+	}
+	else if(mgr.isActive("roadImproc")) {
+		Layout & l = mgr.getLayout("roadImproc");
+		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage());
+		SDL_Surface * cam = Camera::getBitmap();
+		l.getImageView("roadcamera").setImage(cam, ImageView::NORMAL);
+		SDL_FreeSurface(cam);
 	}
 }
 

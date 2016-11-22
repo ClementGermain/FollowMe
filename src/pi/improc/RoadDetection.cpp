@@ -2,7 +2,7 @@
 
 using namespace cv;
 
-RoadDetection::RoadDetection()
+RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_16SC3}
 {
 }
 
@@ -38,9 +38,27 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	dilate(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	erode(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 */
-	resize(threshold, m_thresholdedImage, Size(64, 48), 0, 0, INTER_AREA);
+
+	Mat thresholdedImage;
+	resize(threshold, thresholdedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
+
+
+	thresholdedImage = thresholdedImage * OBLIVIOUSNESS;
+	m_thresholdedImage = m_thresholdedImage * (1 - OBLIVIOUSNESS) + thresholdedImage;
+
+	/*for (int i = 0; i < ROADMATCOL ; i++)
+	{
+		for (int j = 0; j < ROADMATROW ; j++)
+		{
+			m_thresholdedImage(i, j) = OBLIVIOUSNESS * thresholdedImage(i, j) + (1 - OBLIVIOUSNESS) * m_thresholdedImage(i, j);
+		}
+	}*/
 }
 
 Mat & RoadDetection::getImage() {
 	return m_thresholdedImage;
 }
+
+/*SDL_Surface & RoadDetection::getImage() {
+
+}*/
