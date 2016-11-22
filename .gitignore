@@ -6,4 +6,6 @@ Listings/
 *.map
 *.TMP
 *.uvguix*
-
+src/pi/barstow
+*#*
+*.db
