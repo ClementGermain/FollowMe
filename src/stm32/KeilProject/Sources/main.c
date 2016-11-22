@@ -28,10 +28,7 @@ int main(void)
 //	
 //	/*<! Start Barstow car's program. */
 //	StartBarstow();
-	
 
-	Init_timer_Gated_mode(TIM2);
-	Timer_Active_IT( TIM2, 2, My_function_TIF);
 
 
 	while(1){}
