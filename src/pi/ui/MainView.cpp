@@ -154,14 +154,19 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
 	sensorLayout.addView("sensor_toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
 
+	// distance Usound trackbar
+	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130));
+	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130));
+	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130));
 
-	// distance
-	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 5, 65));
-	sensorLayout.addView("sensor_distFrontCenter", new Digital(".0fcm", 397, 5, 66));
-	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 5, 65));
-	sensorLayout.addView("sensor_distBackLeft", new Digital("%.0fcm", 330, 380, 65));
-	sensorLayout.addView("sensor_distBackCenter", new Digital("%.0fcm", 397, 380, 66));
-	sensorLayout.addView("sensor_distBackRight", new Digital("%.0fcm", 465, 380, 65));
+	// position user trackbar
+	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130));
+	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(0, 5, 345, 20, 170, 10));
+
+	// distance Usound text
+	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
+	sensorLayout.addView("sensor_distFrontCenter", new Digital(".0fcm", 397, 100, 66));
+	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
 
 	// other
 	sensorLayout.addView("sensor_keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
