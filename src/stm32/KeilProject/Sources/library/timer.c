@@ -163,7 +163,7 @@ void Init_Gated_mode(TIM_TypeDef* TIM){
 void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel) {
 TIM_ICInitTypeDef TIM_ICInitStructure;
 	
-	if (num_Channel ==1) {
+	if (num_Channel ==TIM_Channel_1) {
 	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
 	
 	 /* Set the default configuration */
@@ -177,7 +177,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	TIM_Cmd(TIM, ENABLE); //CEN
 	}
 	
-	 else if (num_Channel ==2) {
+	 else if (num_Channel ==TIM_Channel_2) {
 	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
 	
 	 /* Set the default configuration */
@@ -192,7 +192,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	}
 	 
-	 else if (num_Channel ==3) {
+	 else if (num_Channel ==TIM_Channel_3) {
 	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
 	
 	 /* Set the default configuration */
