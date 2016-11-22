@@ -17,6 +17,7 @@ US_Sensor_Typedef * SENSOR_BACK_L 	= &SENSOR_BACK_L_;
 US_Sensor_Typedef * SENSOR_BACK_R 	= &SENSOR_BACK_R_;
 US_Sensor_Typedef * SENSOR_BACK_C 	= &SENSOR_BACK_C_;
 US_Sensor_Typedef * US_active;
+BarstowModel_Typedef * Modele;
 
 //Global time (ms)
 int Time;
@@ -58,6 +59,8 @@ void Init_US_Sensor(US_Sensor_Typedef * Sensor){
 		Init_GPIO_In(SENSOR_BACK_C->GPIO_Echo, SENSOR_BACK_C->GPIO_Pin_Echo);
 		//Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
 	}
+	// Init timer 2  in gated mode
+	Init_Gated_mode(TIM_Echo);
 }
 
 void Init_All_US_Sensor(void){
@@ -80,24 +83,46 @@ float Init_Systick(void){
 	return period;
 }
 
-// interrupt function
 
-	void My_function_TIF (void) {
-		front_us++;
-		if (front_us==2){
-	time_echo = TIM_GetCounter( TIM_Echo);
-	Reset_counter(TIM_Echo);
-	front_us=0;}
+// interrupt function : tous les 2 fronts, on regarde la valeur du compteur et on MAJ le modèle
+void Capture_echo(void) {
+	front_us++;
+	if (front_us==2){
+		time_echo = TIM_GetCounter(TIM_Echo);
+		Reset_counter(TIM_Echo);
+		front_us=0;
 	}
+	
+	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte
+		if (US_active == SENSOR_FRONT_L){
+			Modele->frontLeftUSensor.distance = (time_echo/58);
+		}
+		else if (US_active == SENSOR_FRONT_C){
+			Modele->frontCenterUSensor.distance = (time_echo/58);
+		}
+		else if (US_active == SENSOR_FRONT_R){
+			Modele->frontRightUSensor.distance = (time_echo/58);
+		}
+	}
+	time_echo=0;
+}
 
 	
 	void Test_Get_USensor(void) {
-			front_us=0;
-	// Init timer 2  in gated mode
-	Init_Gated_mode(TIM_Echo);
-	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
+	front_us=0;
+	
+	if (US_active == SENSOR_FRONT_L){
+		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
+	}
+	else if (US_active == SENSOR_FRONT_C){
+		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_C);
+	}
+	else if (US_active == SENSOR_FRONT_R){
+		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_R);
+	}
+	
 	// Configure IT with My function in us_sensor.c
-	Timer_Active_IT( TIM_Echo	,5, My_function_TIF);
+	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	}
 
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
