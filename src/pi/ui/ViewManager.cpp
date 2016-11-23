@@ -49,13 +49,16 @@ void ViewManager::switchToPrevLayout() {
 	invalidate = true;
 }
 
-void ViewManager::drawActiveLayout(SDL_Surface * screen) {
+void ViewManager::drawActiveLayout(SDL_Surface * screen, bool useLocalScreeUpdate) {
 	if(invalidate) {
 		SDL_FillRect(screen, NULL, 0xffffffff);
 		getActiveLayout().draw(screen, true, false);
+		SDL_Flip(screen);
 		invalidate = false;
 	}
 	else {
-		getActiveLayout().draw(screen, false, false);
+		getActiveLayout().draw(screen, false, useLocalScreeUpdate);
+		if(!useLocalScreeUpdate)
+			SDL_Flip(screen);
 	}
 }
