@@ -5,9 +5,11 @@
 #include <memory>
 #include "../View.hpp"
 
+enum sens_remplissage {NORMAL, INVERSE, CENTREE, ENABLE};
+
 class Trackbar : public View {
 public:
-  Trackbar(float rangeMin, float rangeMax, int x, int y, int width, int height);
+  Trackbar(float rangeMin, float rangeMax, int x, int y, int width, int height, enum sens_remplissage sens_ = NORMAL);
   void setPosition(float pos);
 protected:
   float rangeMin, rangeMax;
@@ -16,6 +18,7 @@ protected:
   Uint32 transparent;
   bool invalidate;
   int borderSize;
+  enum sens_remplissage sens;
 };
 
 #endif

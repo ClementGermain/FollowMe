@@ -29,6 +29,10 @@ Trackbar & Layout::getTrackbarView(const string & name) {
 	return *((Trackbar*) getView(name));
 }
 
+ToggleBox & Layout::getToggleBoxView(const string & name){
+  return *((ToggleBox*) getView(name));
+}
+
 ImageView & Layout::getImageView(const string & name) {
 	return *((ImageView*) getView(name));
 }
