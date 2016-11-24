@@ -137,7 +137,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	
 	// position user trackbar
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, NORMAL));
-	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(0, 5, 345, 20, 170, 10));
+	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10));
 
 	// distance Usound text
 	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
@@ -203,11 +203,11 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
 		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontRightUSensor.distance);
 		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontRightUSensor.distance);
-		//l.getDigitalView("sensor_UserDistance").setValue();
-		//l.getDigitalView("sensor_UserAngle").setValue();
+		l.getDigitalView("sensor_UserDistance").setValue(UserDetectionTest.detector.getDistance());
+		l.getDigitalView("sensor_UserAngle").setValue(UserDetectionTest.detector.getDirection());
 
 		//l.getToogleBoxView("sensor_toggle_motor").toggle();
-		//l.getToogleBoxView("sensor_toggle_user").toggle();
+		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		//l.getToogleBoxView("sensor_toggle_obstacle").toggle();
 		//l.getToogleBoxView("sensor_toggle_road").toggle();
 		
