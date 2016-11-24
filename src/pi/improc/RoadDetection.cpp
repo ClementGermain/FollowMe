@@ -14,30 +14,20 @@ RoadDetection::~RoadDetection()
 
 void RoadDetection::applyRoadThreshold(Mat image)
 {
-	int iLowH = 0;
-	int iHighH = 255;
+	int iLowH = 100;
+	int iHighH = 135;
 
 	int iLowS = 0;
-	int iHighS = 30;
+	int iHighS = 110;
 
-	int iLowV = 5;
-	int iHighV = 180;
+	int iLowV = 0;
+	int iHighV = 175;
 
 	Mat imageHSV;
 	cvtColor(image, imageHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
-	//cvtColor(imageHSV, m_thresholdedImage, COLOR_HSV2RGB);
 	
 	Mat threshold;
-	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold); //Threshold the image
-
-/*	//morphological opening (remove small objects from the foreground)
-	erode(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	dilate(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-
-	//morphological closing (fill small holes in the foreground)
-	dilate(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	erode(m_thresholdedImage, m_thresholdedImage, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-*/
+	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold /*m_thresholdedImage*/); //Threshold the image
 
 	Mat thresholdedImage;
 	resize(threshold, thresholdedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
@@ -46,13 +36,6 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	thresholdedImage = thresholdedImage * OBLIVIOUSNESS;
 	m_thresholdedImage = m_thresholdedImage * (1 - OBLIVIOUSNESS) + thresholdedImage;
 
-	/*for (int i = 0; i < ROADMATCOL ; i++)
-	{
-		for (int j = 0; j < ROADMATROW ; j++)
-		{
-			m_thresholdedImage(i, j) = OBLIVIOUSNESS * thresholdedImage(i, j) + (1 - OBLIVIOUSNESS) * m_thresholdedImage(i, j);
-		}
-	}*/
 }
 
 Mat & RoadDetection::getImage() {
