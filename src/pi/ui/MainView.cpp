@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_framerate.h>
 #include <SDL/SDL_gfxPrimitives.h>
+#include <cmath>
 #include <thread>
 #include <iostream>
 #include <map>
@@ -131,13 +132,13 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, NORMAL));
 
 	// distance Usound text
-	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 220, 65));
-	sensorLayout.addView("sensor_distFrontCenter", new Digital(".0fcm", 397, 200, 66));
-	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 220, 65));
+	sensorLayout.addView("sensor_txt_distFrontLeft", new Digital("%.0fcm", 330, 220, 65));
+	sensorLayout.addView("sensor_txt_distFrontCenter", new Digital(".0fcm", 397, 200, 66));
+	sensorLayout.addView("sensor_txt_distFrontRight", new Digital("%.0fcm", 465, 220, 65));
 	
 	// position user trackbar
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, NORMAL));
-	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10));
+	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10, CENTREE));
 
 	// distance Usound text
 	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
@@ -191,6 +192,11 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 
+		//l.getToogleBoxView("toggle_motor").toggle();
+		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
+		//l.getToogleBoxView("toggle_obstacle").toggle();
+		//l.getToogleBoxView("toggle_road").toggle();
+		
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
@@ -200,11 +206,11 @@ void MainView::updateViews(ViewManager & mgr) {
 	else if(mgr.isActive("sensor")) {
 	 		Layout & l = mgr.getLayout("sensor");
 
-		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
-		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontRightUSensor.distance);
-		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontRightUSensor.distance);
-		l.getDigitalView("sensor_UserDistance").setValue(UserDetectionTest.detector.getDistance());
-		l.getDigitalView("sensor_UserAngle").setValue(UserDetectionTest.detector.getDirection());
+		l.getTrackbarView("sensor_distFrontRight").setPosition(model.frontRightUSensor.distance);
+		l.getTrackbarView("sensor_distFrontCenter").setPosition(model.frontRightUSensor.distance);
+		l.getTrackbarView("sensor_distFrontLeft").setPosition(model.frontRightUSensor.distance);
+		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
+		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
 
 		//l.getToogleBoxView("sensor_toggle_motor").toggle();
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected());
