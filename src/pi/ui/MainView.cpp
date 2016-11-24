@@ -63,9 +63,6 @@ void commandMotorBack(int direction) {
 }
 
 void MainView::initializeViews(ViewManager & mgr) {
-	KeyboardInput * commonKeyboard = new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
-	ImageView * commonCamera = new ImageView(0, 0, 320, 240);
-
 	//// DEFAULT VIEW ////
 	Layout & defaultLayout = mgr.createLayout("default");
 
@@ -84,7 +81,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	defaultLayout.addView("toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	defaultLayout.addView("toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+	defaultLayout.addView("toggle_road", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
 
 	// motors digital infos
 	defaultLayout.addView("dVoltageFront", new Digital("%1.1fV", 380, 70, 50, 16, false));
@@ -95,16 +92,16 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 260, 50, 16, false));
 	
 	// motors trackbar
-	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130, NORMAL));
-	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130, NORMAL));
-	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130, NORMAL));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130, NORMAL));
-	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130, NORMAL));
-	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130, NORMAL));
+	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130));
+	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
 
 	// other
-	defaultLayout.addView("keyboard", commonKeyboard);
-	defaultLayout.addView("camera", commonCamera);
+	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
 
 	//// SENSOR FULLSCREEN
 	Layout & sensorLayout = mgr.createLayout("sensor");
@@ -124,20 +121,15 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	sensorLayout.addView("sensor_toggle grass", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
+	sensorLayout.addView("sensor_toggle_road", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
 
 	// distance Usound trackbar
-	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, NORMAL));
-	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130, NORMAL));
-	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, NORMAL));
-
-	// distance Usound text
-	sensorLayout.addView("sensor_txt_distFrontLeft", new Digital("%.0fcm", 330, 220, 65));
-	sensorLayout.addView("sensor_txt_distFrontCenter", new Digital(".0fcm", 397, 200, 66));
-	sensorLayout.addView("sensor_txt_distFrontRight", new Digital("%.0fcm", 465, 220, 65));
+	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, INVERSE));
 	
 	// position user trackbar
-	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, NORMAL));
+	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, INVERSE));
 	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10, CENTREE));
 
 	// distance Usound text
@@ -146,8 +138,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
 
 	// other
-	sensorLayout.addView("keyboard", commonKeyboard);
-	sensorLayout.addView("camera", commonCamera);
+	sensorLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	sensorLayout.addView("camera", new ImageView(0, 0, 320, 240));
 	
 	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
@@ -192,10 +184,10 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 
-		//l.getToogleBoxView("toggle_motor").toggle();
+		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
-		//l.getToogleBoxView("toggle_obstacle").toggle();
-		//l.getToogleBoxView("toggle_road").toggle();
+		l.getToggleBoxView("toggle_obstacle").toggle(true);
+		l.getToggleBoxView("toggle_road").toggle(true);
 		
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
@@ -204,18 +196,18 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 
 	else if(mgr.isActive("sensor")) {
-	 		Layout & l = mgr.getLayout("sensor");
-
-		l.getTrackbarView("sensor_distFrontRight").setPosition(model.frontRightUSensor.distance);
-		l.getTrackbarView("sensor_distFrontCenter").setPosition(model.frontRightUSensor.distance);
-		l.getTrackbarView("sensor_distFrontLeft").setPosition(model.frontRightUSensor.distance);
+		Layout & l = mgr.getLayout("sensor");
+		l.getTrackbarView("sensor_USLeft").setPosition(model.frontLeftUSensor.distance);
+		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
+		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
+		
 		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
 		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
 
-		//l.getToogleBoxView("sensor_toggle_motor").toggle();
+		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected());
-		//l.getToogleBoxView("sensor_toggle_obstacle").toggle();
-		//l.getToogleBoxView("sensor_toggle_road").toggle();
+		l.getToggleBoxView("sensor_toggle_obstacle").toggle(true);
+		l.getToggleBoxView("sensor_toggle_road").toggle(true);
 		
 		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 
