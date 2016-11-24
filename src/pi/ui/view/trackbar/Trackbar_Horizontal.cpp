@@ -3,7 +3,7 @@
 #include "Trackbar_Horizontal.hpp"
 
 Trackbar_Horizontal::Trackbar_Horizontal(float rangeMin, float rangeMax, int x, int y, int width, int height) :
-  Trackbar(rangeMin, rangeMax, x, y, width, height) 
+  Trackbar(rangeMin, rangeMax, x, y, width, height, NORMAL) 
 {
 }
 
