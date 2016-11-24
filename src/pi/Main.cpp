@@ -12,6 +12,8 @@
 #include "car/Car.hpp"
 #include "car/Camera.hpp"
 #include "utils/Log.hpp"
+#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -55,6 +57,10 @@ int main() {
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
 	Camera::init();
+
+	// start Image Processing threads
+	UserDetectionTest.start();
+	roadDetectionTest.start();
 
 	// Main loop
 	runUI();

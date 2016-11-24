@@ -45,7 +45,7 @@ void Timer_Configure(TIM_TypeDef* TIM, uint16_t Duree_us){
 		// 
 	TIM_TimeBaseStructure.TIM_Period = ARR_calc -1  ;
   TIM_TimeBaseStructure.TIM_Prescaler = PSC_calc -1;
-  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+  TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
   TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
 	// clock and Init 
 	 TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
@@ -139,16 +139,17 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
 	
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
 	TIM_Cmd(TIM, ENABLE); //CEN
+	
 }
 
 void Init_Gated_mode(TIM_TypeDef* TIM){
 
+	//Init_Timer(TIM,1000000);
+	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	int ARR_max=65535;
 //	int fclk=72; // clock = 72 Mhz
 	int PSC =72;
-	
-	
 	
   TIM_TimeBaseStructure.TIM_Period = ARR_max - 1;
   TIM_TimeBaseStructure.TIM_Prescaler = PSC ;
@@ -165,17 +166,18 @@ void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel) {
 TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	if (num_Channel ==TIM_Channel_1) {
-	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
 	
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
-		//TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_TRC ;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
-	
+	//TIM_ICInitStructure.TIM_ICFilter = TIM_TS_ETRF ;
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
+
+	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+
 	TIM_Cmd(TIM, ENABLE); //CEN
 	}
 	
@@ -192,7 +194,6 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
 	TIM_Cmd(TIM, ENABLE); //CEN
-	
 	}
 	 
 	 else if (num_Channel ==TIM_Channel_3) {
@@ -246,9 +247,31 @@ void TIM4_IRQHandler (void)
 // configure interruption  FLAG TIF to detect an edge on the trigger
 
 void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void)){
-	//TIM_GenerateEvent(TIM, TIM_EventSource_CC1); //cc1if
-  //TIM_ITConfig(TIM, TIM_IT_CC1, ENABLE); // we want an IT when we are on the falling edge, to prevent  we meed to take the result	
+	
+	EXTI_InitTypeDef		EXTI_InitStructure;
+	NVIC_InitTypeDef		NVIC_InitStructure;
+	
+	//exti		
+	EXTI_InitStructure.EXTI_Line = EXTI_Line0;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
 
+	//nvic
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+
+		//enable TIM2 interrupt
+  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+	
 	// TIF interupt configuration at the NVIC LEVEL + priority
 	if (TIM == TIM2)
 	{
@@ -272,6 +295,9 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 	// configuration de l'interruption overflow du timer (enable TIF)
 	TIM->DIER = 0x40 | TIM->DIER ;
 	
+//	TIM->DIER = TIM_IT_Trigger;
+	
+	//TIM_ITConfig(TIM, TIM_IT_Trigger, ENABLE);
 	
 }
 	
