@@ -123,7 +123,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	sensorLayout.addView("sensor_toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+	sensorLayout.addView("sensor_toggle grass", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
 
 	// distance Usound trackbar
 	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, NORMAL));
@@ -189,23 +189,30 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbVoltageRight").setPosition(model.rightWheelMotor.voltage);
 		l.getDigitalView("dCurrentRight").setValue(model.rightWheelMotor.current);
 		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
-
-		/*
-		l.getDigitalView("distFrontLeft").setValue(model.frontLeftUSensor.distance);
-		l.getDigitalView("distFrontCenter").setValue(model.frontCenterUSensor.distance);
-		l.getDigitalView("distFrontRight").setValue(model.frontRightUSensor.distance);
-		l.getDigitalView("distBackLeft").setValue(model.rearLeftUSensor.distance);
-		l.getDigitalView("distBackCenter").setValue(model.rearCenterUSensor.distance);
-		l.getDigitalView("distBackRight").setValue(model.rearRightUSensor.distance); */
-
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
+
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
 
 	}
+
 	else if(mgr.isActive("sensor")) {
-		Layout & l = mgr.getLayout("sensor");
+	 		Layout & l = mgr.getLayout("sensor");
+
+		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
+		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontRightUSensor.distance);
+		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontRightUSensor.distance);
+		//l.getDigitalView("sensor_UserDistance").setValue();
+		//l.getDigitalView("sensor_UserAngle").setValue();
+
+		//l.getToogleBoxView("sensor_toggle_motor").toggle();
+		//l.getToogleBoxView("sensor_toggle_user").toggle();
+		//l.getToogleBoxView("sensor_toggle_obstacle").toggle();
+		//l.getToogleBoxView("sensor_toggle_road").toggle();
+		
+		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
+
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
