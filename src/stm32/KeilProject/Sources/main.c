@@ -29,10 +29,10 @@ int main(void)
 //	/*<! Start Barstow car's program. */
 //	StartBarstow();
 
-
-
+//Init_Gated_mode(TIM2);
+//Init_Channel_trigger(TIM2, TIM_Channel_2);
+// Reset_counter(TIM2);
 	while(1){}
-
 }
 
 
