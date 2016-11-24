@@ -17,7 +17,9 @@ US_Sensor_Typedef * SENSOR_BACK_L 	= &SENSOR_BACK_L_;
 US_Sensor_Typedef * SENSOR_BACK_R 	= &SENSOR_BACK_R_;
 US_Sensor_Typedef * SENSOR_BACK_C 	= &SENSOR_BACK_C_;
 US_Sensor_Typedef * US_active;
+
 BarstowModel_Typedef * Modele;
+
 
 //Global time (ms)
 int Time;

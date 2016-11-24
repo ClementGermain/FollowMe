@@ -61,39 +61,10 @@ void commandMotorBack(int direction) {
 	}
 }
 
-void MainView::drawStaticViews() {
-	// White background
-	SDL_FillRect(screen, NULL, 0xffffffff);
-	// Box
-	roundedRectangleRGBA(screen, 535, 25,  795, 25+70,  5, 0, 0, 180, 255);
-	roundedRectangleRGBA(screen, 535, 145, 795, 145+50, 5, 0, 0, 180, 255);
-	roundedRectangleRGBA(screen, 535, 215, 795, 215+70, 5, 0, 0, 180, 255);
-	roundedRectangleRGBA(screen, 535, 305, 795, 305+70, 5, 0, 0, 180, 255);
-	// Title
-	int charSize = 8, hOffset = (16-charSize)/2;
-	stringRGBA(screen, 540, 30+hOffset, "Motor Front",     0,0,180,255);
-	stringRGBA(screen, 540, 150+hOffset, "Raspberry Pi 3", 0,0,180,255);
-	stringRGBA(screen, 540, 220+hOffset, "Motor Left",     0,0,180,255);
-	stringRGBA(screen, 540, 310+hOffset, "Motor Right",    0,0,180,255);
-
-	// Car picture
-	SDL_Rect carPos = {330, 25};
-
-	// Link image/text
-	drawPointerLine(535, 40, 190, 80,  carPos);
-	drawPointerLine(535, 40, 20,  80,  carPos);
-	drawPointerLine(535, 160, 127, 198, carPos);
-	drawPointerLine(535, 230, 20,  279, carPos);
-	drawPointerLine(535, 320, 190, 279, carPos);
-	drawPointerLine(365, 25, 52, 21, carPos);
-	drawPointerLine(435, 25, 100, 5, carPos);
-	drawPointerLine(505, 25, 152, 18, carPos);
-	drawPointerLine(365, 375, 66, 340, carPos);
-	drawPointerLine(435, 375, 100, 344, carPos);
-	drawPointerLine(505, 375, 142, 340, carPos);
-}
-
 void MainView::initializeViews(ViewManager & mgr) {
+	KeyboardInput * commonKeyboard = new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
+	ImageView * commonCamera = new ImageView(0, 0, 320, 240);
+
 	//// DEFAULT VIEW ////
 	Layout & defaultLayout = mgr.createLayout("default");
 
@@ -131,8 +102,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130, NORMAL));
 
 	// other
-	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
-	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
+	defaultLayout.addView("keyboard", commonKeyboard);
+	defaultLayout.addView("camera", commonCamera);
 
 	//// SENSOR FULLSCREEN
 	Layout & sensorLayout = mgr.createLayout("sensor");
@@ -168,9 +139,14 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, NORMAL));
 	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(0, 5, 345, 20, 170, 10));
 
+	// distance Usound text
+	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
+	sensorLayout.addView("sensor_distFrontCenter", new Digital("%.0fcm", 397, 100, 66));
+	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
+
 	// other
-	sensorLayout.addView("sensor_keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
-	sensorLayout.addView("sensor_camera", new ImageView(0, 0, 320, 240));
+	sensorLayout.addView("keyboard", commonKeyboard);
+	sensorLayout.addView("camera", commonCamera);
 	
 	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
@@ -228,6 +204,12 @@ void MainView::updateViews(ViewManager & mgr) {
 		SDL_FreeSurface(cam);
 
 	}
+	else if(mgr.isActive("sensor")) {
+		Layout & l = mgr.getLayout("sensor");
+		SDL_Surface * cam = Camera::getBitmap();
+		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
+		SDL_FreeSurface(cam);
+	}
 	else if(mgr.isActive("user")) {
 		Layout & l = mgr.getLayout("user");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
@@ -254,9 +236,6 @@ void MainView::run() {
 	SDL_initFramerate(&fpsManager);
 
 
-	// TODO remove static views
-	drawStaticViews();
-
 	ViewManager mgr;
 	initializeViews(mgr);
 
@@ -266,7 +245,7 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
-			if(mgr.isActive("default"))
+			if(mgr.isActive("default") || mgr.isActive("sensor"))
 			if(mgr.getActiveLayout().getKeyboardView("keyboard").handleEvent(event))
 				continue;
 
@@ -303,10 +282,7 @@ void MainView::run() {
 		/// Refresh display
 		updateViews(mgr);
 
-		mgr.drawActiveLayout(screen);
-
-		// commit screen buffer
-		SDL_Flip(screen);
+		mgr.drawActiveLayout(screen, false);
 
 		SDL_framerateDelay(&fpsManager);
 	}
