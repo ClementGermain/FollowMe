@@ -34,12 +34,12 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 			cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), yellow_hue_image);
 
 	//morphological opening (remove small objects from the foreground)
-	cv::erode(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-	cv::dilate(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+	cv::erode(yellow_hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+	cv::dilate(hsv_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
 
 	//morphological closing (fill small holes in the foreground)
-	cv::dilate(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-	cv::erode(yellow_hue_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+	cv::dilate(yellow_hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+	cv::erode(hsv_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
 
 	// Apply blur
 	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
@@ -50,14 +50,14 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult)  {
-		filterImage = yellow_hue_image.clone();
-		resultImage = bgr_image.clone();
+		yellow_hue_image.copyTo(filterImage);
+		bgr_image.copyTo(resultImage);
 		if(imageCircles.size() > 0)
 		for(size_t current_circle = 0; current_circle < 1; ++current_circle) {
 			cv::Point center(std::round(imageCircles[current_circle][0]), std::round(imageCircles[current_circle][1]));
 			int radius = std::round(imageCircles[current_circle][2]);
 
-			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), current_circle*2+1);
+			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 2);
 		}
 		resultImageCreated = true;
 	}
