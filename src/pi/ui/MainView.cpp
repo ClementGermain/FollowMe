@@ -63,9 +63,6 @@ void commandMotorBack(int direction) {
 }
 
 void MainView::initializeViews(ViewManager & mgr) {
-	KeyboardInput * commonKeyboard = new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160);
-	ImageView * commonCamera = new ImageView(0, 0, 320, 240);
-
 	//// DEFAULT VIEW ////
 	Layout & defaultLayout = mgr.createLayout("default");
 
@@ -103,8 +100,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
 
 	// other
-	defaultLayout.addView("keyboard", commonKeyboard);
-	defaultLayout.addView("camera", commonCamera);
+	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
 
 	//// SENSOR FULLSCREEN
 	Layout & sensorLayout = mgr.createLayout("sensor");
@@ -127,14 +124,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_road", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
 
 	// distance Usound trackbar
-	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, INVERSE));
 	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130, INVERSE));
 	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, INVERSE));
-
-	// distance Usound text
-	sensorLayout.addView("sensor_txt_distFrontLeft", new Digital("%.0fcm", 330, 220, 65));
-	sensorLayout.addView("sensor_txt_distFrontCenter", new Digital(".0fcm", 397, 200, 66));
-	sensorLayout.addView("sensor_txt_distFrontRight", new Digital("%.0fcm", 465, 220, 65));
 	
 	// position user trackbar
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, INVERSE));
@@ -146,8 +138,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
 
 	// other
-	sensorLayout.addView("keyboard", commonKeyboard);
-	sensorLayout.addView("camera", commonCamera);
+	sensorLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
+	sensorLayout.addView("camera", new ImageView(0, 0, 320, 240));
 	
 	//// LOG FULLSCREEN ////
 	Layout & logLayout = mgr.createLayout("logs");
@@ -204,11 +196,11 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 
 	else if(mgr.isActive("sensor")) {
-	 		Layout & l = mgr.getLayout("sensor");
-
-		l.getTrackbarView("sensor_distFrontRight").setPosition(model.frontRightUSensor.distance);
-		l.getTrackbarView("sensor_distFrontCenter").setPosition(model.frontRightUSensor.distance);
-		l.getTrackbarView("sensor_distFrontLeft").setPosition(model.frontRightUSensor.distance);
+		Layout & l = mgr.getLayout("sensor");
+		l.getTrackbarView("sensor_USLeft").setPosition(model.frontLeftUSensor.distance);
+		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
+		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
+		
 		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
 		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
 
