@@ -157,6 +157,7 @@ void Init_Gated_mode(TIM_TypeDef* TIM){
  
   TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 	TIM_SelectSlaveMode(TIM,TIM_SlaveMode_Gated); // SMS
+	
 }
 
 
@@ -169,7 +170,8 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		//TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
 	
@@ -183,7 +185,8 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI2FP2;
 	
@@ -198,13 +201,14 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_3;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-  TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+  TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1F_ED; // to check
 	
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
 	TIM_Cmd(TIM, ENABLE); //CEN
-	
+ 
 	}
 	
 	

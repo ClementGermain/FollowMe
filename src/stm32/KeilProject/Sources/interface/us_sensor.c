@@ -23,8 +23,8 @@ BarstowModel_Typedef * Modele;
 
 //Global time (ms)
 int Time;
-int front_us =0;
-int time_echo =0;
+int front_us;
+int time_echo;
 
 void Update_US_Sensor(BarstowModel_Typedef * Modele){
 	
@@ -61,8 +61,7 @@ void Init_US_Sensor(US_Sensor_Typedef * Sensor){
 		Init_GPIO_In(SENSOR_BACK_C->GPIO_Echo, SENSOR_BACK_C->GPIO_Pin_Echo);
 		//Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
 	}
-	// Init timer 2  in gated mode
-	Init_Gated_mode(TIM_Echo);
+	
 }
 
 void Init_All_US_Sensor(void){
@@ -72,6 +71,10 @@ void Init_All_US_Sensor(void){
 //	Init_US_Sensor(SENSOR_BACK_L);
 //	Init_US_Sensor(SENSOR_BACK_R);
 //	Init_US_Sensor(SENSOR_BACK_C);
+	
+	// Init timer 2  in gated mode
+	Init_Gated_mode(TIM_Echo);
+	front_us=0;
 }
 
 
@@ -79,7 +82,7 @@ float Init_Systick(void){
 	Time=0;
 	float period; //period systick us
 	period=Systick_Period(SYSTICK_PERIOD_US);
-	Systick_Prio_IT(2,Periodic_Impulse_3_Front_US);
+	Systick_Prio_IT(6,Periodic_Impulse_3_Front_US);
 	SysTick_On;
 	SysTick_Enable_IT;
 	return period;
@@ -111,7 +114,7 @@ void Capture_echo(void) {
 
 	
 	void Test_Get_USensor(void) {
-	front_us=0;
+	/*front_us=0;
 	
 	if (US_active == SENSOR_FRONT_L){
 		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
@@ -125,7 +128,7 @@ void Capture_echo(void) {
 	
 	// Configure IT with My function in us_sensor.c
 	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	}
+	*/}
 
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
 	int distance =0;
@@ -139,26 +142,33 @@ void Periodic_Impulse_3_Front_US(){
 	if (Time%210==10){
 	//impulse 10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
-	US_active = SENSOR_FRONT_L;
-	}
+	//US_active = SENSOR_FRONT_L;
+		Timer_Active_IT( TIM_Echo	,5, Capture_echo);
+	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
 
+	}
+/*
 	else if (Time%210==80){
 	//impulse 10us on Front Right US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
-	US_active = SENSOR_FRONT_R;
+	//US_active = SENSOR_FRONT_R;
+	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_R);
+	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	}
 
 	else if (Time%210==150){
 	//impulse 10us on Front Center US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 10);
-	US_active = SENSOR_FRONT_C;
+	//US_active = SENSOR_FRONT_C;
+	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_C);
+	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	}
+	*/
 }
 
 void Test_US_Sensor(void){
 	Init_All_US_Sensor();
 	Init_Systick();
-	Test_Get_USensor();
 }
 
 

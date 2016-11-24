@@ -49,9 +49,10 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	cv::HoughCircles(yellow_hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, yellow_hue_image.rows/8, 100, 20, 0, 0);
 
 	// Loop over all detected circles and outline them on the original image
-	if(drawResult) {
+	if(drawResult)  {
 		filterImage = yellow_hue_image.clone();
 		resultImage = bgr_image.clone();
+		if(imageCircles.size() > 0)
 		for(size_t current_circle = 0; current_circle < 1; ++current_circle) {
 			cv::Point center(std::round(imageCircles[current_circle][0]), std::round(imageCircles[current_circle][1]));
 			int radius = std::round(imageCircles[current_circle][2]);
@@ -72,6 +73,7 @@ void UserPatternDetection::imageCirclesToPosition() {
 	// focal length of the camera in pixels (yes, in pixels)
 	float focalLength = Camera::getFrameWidth()*0.5f / tan(Camera::horizontalFOV/2);
 
+	if(imageCircles.size() > 0)
 	for(int i = 0; i < 1; i++) {
 		// Center x and y coordinate with center of image as origin
 		float x = imageCircles[i][0] - halfWidth;
