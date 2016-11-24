@@ -61,7 +61,7 @@ void UserPatternDetectionTest::run() {
 		detector.imageCirclesToPosition();
 
 		// sleep 
-		for(int s = 0; s < 100 && !endThread; s++)
+		for(int s = 0; s < 0 && !endThread; s++)
 			this_thread::sleep_for(chrono::milliseconds(100));
 		i++;
 	}
