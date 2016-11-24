@@ -22,11 +22,17 @@ class UserPatternDetection {
 		cv::Mat & getResultImage();
 		cv::Mat & getFilterImage();
 	
+		bool isDetected();
+		float getDirection();
+		float getDistance();
+
 	private:
 		bool resultImageCreated;
 		cv::Mat resultImage;
 		cv::Mat filterImage;
 		std::vector<cv::Vec3f> imageCircles;
+		bool isUserDetected;
+		float detectedDirection, detectedDistance;
 };
 
 #endif

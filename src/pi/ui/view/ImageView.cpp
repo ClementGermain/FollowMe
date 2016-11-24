@@ -48,13 +48,13 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 void ImageView::setImage(cv::Mat * mat, ScaleType mode) {
 	if(mat != NULL) {
 		IplImage image(*mat);
-		
+		int nCh = image.nChannels;
 		SDL_Surface * img = SDL_CreateRGBSurfaceFrom((void*)image.imageData,
 				image.width,
 				image.height,
-				image.depth * image.nChannels,
+				image.depth * nCh,
 				image.widthStep,
-				0xff0000, 0x00ff00, 0x0000ff, 0
+				nCh==1?0xff:0xff0000, nCh==1?0xff:0x00ff00, nCh==1?0xff:0x0000ff, 0
 				);
 		setImage(img, mode);
 
