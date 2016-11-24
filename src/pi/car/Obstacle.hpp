@@ -3,7 +3,7 @@
 
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 #include "car/Car.hpp"
-
+#include <thread>
 
 class ObstacleDetection {
 	public:
@@ -16,11 +16,22 @@ class ObstacleDetection {
 		static bool IsCenterDetected();
 		static bool IsRightDetected();
 		static bool IsGlobalDetected();
+
+		ObstacleDetection();
+		~ObstacleDetection();
+
+		void start();
+		void stop();
+
 	private:
 		static bool Left;
 		static bool Center;
 		static bool Right;
 		static bool Global;
-};
 
+		void run();
+
+		bool endThread;
+		std::thread * threadTest;
+};
 #endif

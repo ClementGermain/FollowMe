@@ -1,4 +1,9 @@
 #include "Obstacle.hpp"
+#include <chrono>
+#include <thread>
+
+using namespace std;
+
 bool ObstacleDetection::Left = false;
 bool ObstacleDetection::Center = false;
 bool ObstacleDetection::Right = false;
@@ -66,6 +71,41 @@ bool ObstacleDetection::IsGlobalDetected(){
 }
 // --------------------------------------- //
 
+// ------------ Thread management -------- //
+ObstacleDetection::ObstacleDetection() :
+	endThread(true),
+	threadTest(NULL)
+{
 
+}
 
+ObstacleDetection::~ObstacleDetection() {
+	stop();
+}
 
+void ObstacleDetection::start() {
+	if(threadTest == NULL) {
+		endThread = false;
+		threadTest = new thread([this] { this->run(); });
+	}
+}
+
+void ObstacleDetection::stop() {
+	if(threadTest != NULL) {
+		endThread = true;
+		threadTest->join();
+		delete threadTest;
+		threadTest = NULL;
+	}
+}
+
+void ObstacleDetection::run() {
+	while(!endThread) {
+ObstacleDetection::ObstacleDetectionLeft();
+ObstacleDetection::ObstacleDetectionCenter();
+ObstacleDetection::ObstacleDetectionRigth(); 
+ObstacleDetection::ObstacleDetectionGlobal();
+		// sleep 
+			this_thread::sleep_for(chrono::milliseconds(100));
+	}
+}

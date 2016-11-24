@@ -123,7 +123,7 @@ void Camera::getImage(cv::Mat & out) {
 	camLock.lock();
 
 	// Create a new matrix from the current capture
-	out = imageCam;
+	out = cv::Mat(imageCam, true);
 
 	// unlock the mutex
 	camLock.unlock();
