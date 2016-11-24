@@ -123,12 +123,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 260, 50, 16, false));
 	
 	// motors trackbar
-	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130));
-	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130));
-	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130));
-	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130));
-	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
+	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130, NORMAL));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130, NORMAL));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130, NORMAL));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130, NORMAL));
+	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130, NORMAL));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130, NORMAL));
 
 	// other
 	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
@@ -155,18 +155,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle grass", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
 
 	// distance Usound trackbar
-	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130));
-	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130));
-	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130));
-
-	// position user trackbar
-	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130));
-	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(0, 5, 345, 20, 170, 10));
+	sensorLayout.addView("sensor_USFront", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, NORMAL));
+	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130, NORMAL));
+	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, NORMAL));
 
 	// distance Usound text
-	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
-	sensorLayout.addView("sensor_distFrontCenter", new Digital(".0fcm", 397, 100, 66));
-	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
+	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 220, 65));
+	sensorLayout.addView("sensor_distFrontCenter", new Digital(".0fcm", 397, 200, 66));
+	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 220, 65));
+	
+	// position user trackbar
+	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, NORMAL));
+	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(0, 5, 345, 20, 170, 10));
 
 	// other
 	sensorLayout.addView("sensor_keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
