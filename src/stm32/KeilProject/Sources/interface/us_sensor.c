@@ -177,6 +177,8 @@ void Periodic_Impulse_3_Front_US(){
 
 void Test_US_Sensor(void){
 	Init_All_US_Sensor();
+				GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
+
 	Init_Systick();
 }
 

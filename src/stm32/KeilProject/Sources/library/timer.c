@@ -166,7 +166,10 @@ void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel) {
 TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	if (num_Channel ==TIM_Channel_1) {
-	
+			
+		 //clear UIF bit (?)
+		 TIM->SR = TIM->SR & ~ TIM_SR_UIF;
+
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
@@ -265,12 +268,13 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 
-		//enable TIM2 interrupt
+/*		//enable TIM2 interrupt
   NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
+	*/
 	
 	// TIF interupt configuration at the NVIC LEVEL + priority
 	if (TIM == TIM2)
