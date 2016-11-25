@@ -1,7 +1,12 @@
 #include "us_sensor.h"
 #include "stm32f10x_tim.h"
+#include "stm32f10x.h"
 
 //promis je clean le code des qu'il fonctionnera 0:) (LEA)
+
+// variable globale qui change à chaque passage dans le handler
+enum TRIG_STATE {FALLING,RISING};
+enum TRIG_STATE Trigger_State;
 
 
 // Create the US_Sensor Structures
@@ -53,7 +58,7 @@ void Init_All_US_Sensor(void){
 	/*** Init timer in count mode ***/
 	TIM_TimeBaseInitTypeDef timerInit;
 		timerInit.TIM_Period = 0xFFFF;
-		timerInit.TIM_Prescaler = 0x0000;
+		timerInit.TIM_Prescaler = 0x0072;
 		timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
 		timerInit.TIM_CounterMode = TIM_CounterMode_Up;
 		timerInit.TIM_RepetitionCounter = 0x0000;
@@ -113,8 +118,8 @@ void Capture_echo(void) {
 	
 		//capturer le compteur, reset et l'arrêter
 		time_echo = TIM_GetCounter(TIM_Echo);
+		TIM_Cmd(TIM2, DISABLE);	
 		Reset_counter(TIM_Echo);
-		TIM_Cmd(TIM2, DISABLE);
 
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
 		if (US_active == SENSOR_FRONT_L){
@@ -171,7 +176,7 @@ void Periodic_Impulse_3_Front_US(){
 	//rajouter les autres cas
 	
 	//impulse 10us on Front Left US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
 	//US_active = SENSOR_FRONT_L;
 
 		
@@ -201,7 +206,36 @@ void Periodic_Impulse_3_Front_US(){
 }
 
 void Test_US_Sensor(void){
+	Init_Systick();
 	Init_All_US_Sensor();
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
-	Init_Systick();
+	
+}
+
+
+void EXTI0_IRQHandler(void) {
+    /* Make sure that interrupt flag is set */
+   // if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
+			
+			if ((GPIOA->IDR & 0x0001) == 0x0001) {
+			//if (Trigger_State == RISING){
+				//passer en Falling
+				//Config_EXTI_Falling(EXTI_Line0);
+				//Trigger_State = FALLING;
+				
+				//relance le compteur
+				Relance_Compteur_Echo();
+			}
+			else {
+			//else if (Trigger_State == FALLING){
+				//passer en Rising
+				//Config_EXTI_Rising(EXTI_Line0);
+				//Trigger_State = RISING;
+				
+				Capture_echo();
+			
+        /* Clear interrupt flag */
+			}
+        EXTI_ClearITPendingBit(EXTI_Line0);
+    //}
 }

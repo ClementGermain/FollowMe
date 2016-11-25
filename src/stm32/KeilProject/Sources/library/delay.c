@@ -8,7 +8,7 @@ void Delay() {
 
 void Delay_us(int time_us){
 	//idéal autour de 10us
-	for (int n=0; n < (time_us*8); n++);
+	for (int n=0; n < (time_us*9); n++);
 }
 
 /*

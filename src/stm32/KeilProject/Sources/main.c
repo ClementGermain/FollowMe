@@ -21,7 +21,8 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 
-	
+Init_GPIO_Out(GPIOC, 10);	
+GPIO_SetBits(GPIOC, 10);
 Test_US_Sensor();
 
 //	/*<! Start Barstow car's program. */

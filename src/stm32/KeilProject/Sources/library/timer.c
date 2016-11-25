@@ -5,9 +5,6 @@ int AUTORELOAD_VALUE_TIM2 = 0;
 int AUTORELOAD_VALUE_TIM3 = 0;
 int AUTORELOAD_VALUE_TIM4 = 0;
 
-// variable globale qui change à chaque passage dans le handler
-enum TRIG_STATE {FALLING,RISING};
-enum TRIG_STATE Trigger_State;
 
 void Init_Timer(TIM_TypeDef* TIM, uint16_t Frequency){
 
@@ -251,32 +248,6 @@ void TIM4_IRQHandler (void)
     pFnc4();
 }
 
-
-void EXTI0_IRQHandler(void) {
-    /* Make sure that interrupt flag is set */
-   // if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
-			
-			if (Trigger_State == RISING){
-				//passer en Falling
-				//Config_EXTI_Falling(EXTI_Line0);
-				Trigger_State = FALLING;
-				
-				//relance le compteur
-				Relance_Compteur_Echo();
-			}
-			
-			else if (Trigger_State == FALLING){
-				//passer en Rising
-				//Config_EXTI_Rising(EXTI_Line0);
-				Trigger_State = RISING;
-				
-				Capture_echo();
-			
-        /* Clear interrupt flag */
-        EXTI_ClearITPendingBit(EXTI_Line0);
-			}
-    //}
-}
 
 
 // configure interruption  FLAG TIF to detect an edge on the trigger
