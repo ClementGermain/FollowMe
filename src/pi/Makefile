@@ -42,6 +42,7 @@ OBJECTS=Main.o \
 		car/Car.o \
 		car/LinkSTM32.o \
 		car/Camera.o \
+		car/Obstacle.o \
 		utils/Log.o \
 		utils/Timer.o \
 		SPI_Interface/SPI_Interface.o \

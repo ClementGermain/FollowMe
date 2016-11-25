@@ -3,6 +3,7 @@
 #include "Log.hpp"
 
 using namespace std;
+using namespace std::chrono;
 
 
 // Global
@@ -73,9 +74,11 @@ int LogLine::getColor() const {
 }
 
 string LogLine::coloredString(bool includeDate) const {
-	long int t = chrono::duration_cast<chrono::milliseconds>(date.time_since_epoch()).count();
 	char time[13];
-	sprintf(time, "%2d:%02d:%02d.%03d", (int)(t/3600000%24), (int)(t/60000%60), (int)(t/1000%60), (int)(t%1000));
+	int ms = duration_cast<milliseconds>(date.time_since_epoch()).count() % 1000;
+	time_t rawtime = system_clock::to_time_t(date);
+	size_t len = strftime(time, 9, "%T", localtime(&rawtime));
+	sprintf(time+len, ".%03d", ms);
 
 	string res;
 	int offset = 2;
@@ -101,9 +104,11 @@ string LogLine::coloredString(bool includeDate) const {
 	return res;
 }
 string LogLine::formatedString(bool includeDate) const {
-	long int t = chrono::duration_cast<chrono::milliseconds>(date.time_since_epoch()).count();
 	char time[13];
-	sprintf(time, "%2d:%02d:%02d.%03d", (int)(t/3600000%24), (int)(t/60000%60), (int)(t/1000%60), (int)(t%1000));
+	int ms = duration_cast<milliseconds>(date.time_since_epoch()).count() % 1000;
+	time_t rawtime = system_clock::to_time_t(date);
+	size_t len = strftime(time, 9, "%T", localtime(&rawtime));
+	sprintf(time+len, ".%03d", ms);
 
 	string res;
 	int offset = 2;

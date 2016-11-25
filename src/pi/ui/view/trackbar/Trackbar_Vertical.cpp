@@ -10,15 +10,29 @@ Trackbar_Vertical::Trackbar_Vertical(float rangeMin, float rangeMax, int x, int 
 void Trackbar_Vertical::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * drawable = this->drawable.get();
 	if(invalidate) {
-	  int cursorPos = drawable->h/2 - ( borderSize + (drawable->h-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
+	  int cursorPos = drawable->h - ( borderSize + (drawable->h-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
 
 		// border
 		SDL_FillRect(drawable, NULL, 0x0);
+
 		// after cursor
 		boxRGBA(drawable, borderSize, borderSize, drawable->w-borderSize-1, drawable->h-borderSize-1, 220, 255, 220, 255); // Back color of the trackbar
+		
+		// before cursor // Flash Green zone thought the cursor
+		switch (sens){
+		case NORMAL:
+		  boxRGBA(drawable, borderSize, drawable->h-borderSize-1 ,drawable->w-borderSize-1, cursorPos-1, 30, 200, 30, 255);
+		  break;
+		case INVERSE:
+		  boxRGBA(drawable, borderSize, borderSize ,drawable->w-borderSize-1, cursorPos-1, 30, 200, 30, 255);
+		  break;
+		case CENTREE:
+		  boxRGBA(drawable, borderSize, (drawable->h-borderSize-1)/2 ,drawable->w-borderSize-1, cursorPos-1, 30, 200, 30, 255);
+		  break;
+		case ENABLE:
+		  break;
+		}
 
-		// before cursor
-		boxRGBA(drawable, borderSize, drawable->h-borderSize-1 ,drawable->w-borderSize-1, cursorPos-1, 30, 200, 30, 255); // Flash Green zone thought the cursor
 		// cursor
 		boxRGBA(drawable, 0,cursorPos-(borderSize-1), drawable->h, cursorPos+(borderSize-1)-1, 255, 20, 20, 255);
 	}
