@@ -8,32 +8,33 @@
 #include "MainUI.hpp"
 #include "MainView.hpp"
 #include "car/Camera.hpp"
+#include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
-#include "sound/sound.hpp"
+#include "sound/Sound.hpp"
 
 using namespace std;
 using namespace std::chrono;
 
-
+/** Menu function prototypes **/
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
 int commandMotor(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
-int runTestImProcUser(istream & input, vector<int> i, vector<string> s);
-int runTestImProcRoad(istream & input, vector<int> i, vector<string> s);
+int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 
+// Local global variable
 MainView view;
 
 void runUI() {
 	/// Initialize ///
 	CommandInterpreter interpreter;
 
-	// Command lines
+	// Define the commands
 	Menu options("", 0, 0,
 		new Menu("motor", 0, 0, 
 			new Menu("pwm", 0, commandMotor,
@@ -42,14 +43,6 @@ void runUI() {
 				new Menu("back", 3, commandMotor, NULL),
 				new Menu("front", 4, commandMotor, NULL),
 				new Menu("all", 7, commandMotor, NULL),
-				NULL
-			),
-			NULL
-		),
-		new Menu("test", 0, 0,
-			new Menu("improc", 0, 0,
-				new Menu("user", 0, runTestImProcUser, NULL),
-				new Menu("road", 0, runTestImProcRoad, NULL),
 				NULL
 			),
 			NULL
@@ -65,12 +58,14 @@ void runUI() {
 				NULL
 			),
 			new Menu("save", 0, saveLog, NULL),
+			new Menu("tail", 0, tailLog, NULL),
 			NULL
 		),
 		new Menu("music", 0, 0, 
 			new Menu ("play", 1, runSound, NULL),
 			new Menu ("stop", 2, runSound, NULL),
-			NULL),
+			NULL
+		),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -84,16 +79,15 @@ void runUI() {
 	if(view.isOpen()) {
 		cout << "Waiting for closure of the GUI..." << endl;
 	}
-
-	UserDetectionTest.stop();
-	roadDetectionTest.stop();
 }
 
 int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
+	// Return -1 to close the program
 	return -1;
 }
 
 int commandMotor(istream & input, vector<int> i, vector<string> s) {
+	// Read pwm value
 	int pwm;
 	input >> pwm;
 	if(input.fail()) {
@@ -101,6 +95,7 @@ int commandMotor(istream & input, vector<int> i, vector<string> s) {
 		return 1;
 	}
 	
+	// Read motor target
 	cout << "TODO send pwm to motor {";
 	if(i.back() & 1)
 		cout << "l";
@@ -114,11 +109,13 @@ int commandMotor(istream & input, vector<int> i, vector<string> s) {
 }
 
 int openGUI(istream & input, vector<int> i, vector<string> s) {
+	// Open the graphic window
 	view.open();
 	return 0;
 }
 
 int writeLog(istream & input, vector<int> i, vector<string> s) {
+	// Write text to log
 	string text;
 	input >> text;
 
@@ -143,6 +140,9 @@ int writeLog(istream & input, vector<int> i, vector<string> s) {
 }
 
 int saveLog(istream & input, vector<int> i, vector<string> s) {
+	// Save log in a file
+	
+	// Create a filename with current date and time
 	system_clock::time_point today = system_clock::now();
 	std::time_t tt = system_clock::to_time_t ( today );
 	
@@ -150,6 +150,7 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 	string dir("../../out/");
 	fstream file((dir+"Log "+date+".txt").c_str(), std::fstream::out);
 
+	// Write log content
 	LogStream::Cursor cur(Log.getCursor(false));
 	while(Log.hasPrevious(cur))
 		file << Log.readPrevious(cur).formatedString() << endl;
@@ -158,27 +159,42 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 	return 0;
 }
 
-int runTestImProcUser(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.start();
+int tailLog(istream & input, vector<int> i, vector<string> s) {
+	// Print the last lines of the log
 
-	return 0;
-}
+	// read the parameter: number of line to print, default value is 10
+	int lineCount;
+	if(!(input >> lineCount))
+		lineCount = 10;
 
-int runTestImProcRoad(istream & input, vector<int> i, vector<string> s) {
-	roadDetectionTest.start();
+	// Move a cursor to 'end-lineCount'
+	LogStream::Cursor cur(Log.getCursor(false));
+	int realLineCount = 0;
+	while(--lineCount >= 0 && Log.hasPrevious(cur)) {
+		Log.readPrevious(cur);
+		realLineCount++;
+	}
 
-	return 0;
+	// Write colored lines in standard output
+	while(realLineCount--) {
+		cout << Log.readNext(cur).coloredString(true) << endl;
+	}
 }
 
 int runSound(istream & input, vector<int> i, vector<string> s) {
-//	Sound Music();
-//	Music.play_test();
+	// Read a music, a file name can be given in parameter
+	// filename of the music
+	string musicName;
+	
 	switch (i.back()){
 		case 1:
-			play_test();
+			if(input >> musicName)
+				Sound::play(musicName);
+			else
+				Sound::play();
 			break;
 		case 2:
-			stop_sound();
+			Sound::stop();
 			break;
 	}
 	return 0;

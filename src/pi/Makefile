@@ -50,7 +50,7 @@ OBJECTS=Main.o \
 		improc/UserPatternDetectionTest.o \
 		improc/RoadDetection.o \
 		improc/RoadDetectionTest.o \
-		sound/sound.o \
+		sound/Sound.o \
 		$(UI_OBJECTS)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)

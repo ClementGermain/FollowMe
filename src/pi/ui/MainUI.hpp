@@ -1,14 +1,7 @@
 #ifndef __MAIN_UI_HPP__
 #define __MAIN_UI_HPP__
 
-enum {ACTION_GO_FORWARD, ACTION_GO_BACKWARD, ACTION_TURN_LEFT, ACTION_TURN_RIGHT};
-enum {BEGIN_ACTION, END_ACTION};
-
-enum {MOTOR_LEFT, MOTOR_RIGHT, MOTOR_FRONT};
-enum {MOTOR_PWM, MOTOR_SPEED};
-
 void runUI();
-void initializeMotorWindow();
 
 #endif
 

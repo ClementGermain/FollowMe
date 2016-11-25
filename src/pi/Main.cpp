@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <unistd.h>
 #include <csignal>
-#include <execinfo.h>
 #include <chrono>
 #include <string>
 #include <sys/types.h>
@@ -11,6 +10,7 @@
 #include "car/LinkSTM32.hpp"
 #include "car/Car.hpp"
 #include "car/Camera.hpp"
+#include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
@@ -19,21 +19,14 @@ using namespace std;
 using namespace std::chrono;
 
 void handler(int sig) {
-	void *array[10];
-	size_t size;
-
-	// get void*'s for all entries on the stack
-	size = backtrace(array, 10);
-
 	// lolilol
-	fprintf(stderr, "\nAh bah c'est bien Nils, super le segfault ! Génial, ");
-	fprintf(stderr, "j'te remercie. Tout est foutu, c'est pas grave hein ! ");
-	fprintf(stderr, "Oh, t'es vraiment qu'un sale petit con hein ! ");
-	fprintf(stderr, "Putain mais c'est dingue !\n");
-	// print out all the frames to stderr
-	backtrace_symbols_fd(array, size, STDERR_FILENO);
+	fprintf(stderr, "\nAh bah c'est bien Nils, super le segfault ! Génial, j'te remercie.\n");
+	fprintf(stderr, "Tout est foutu, c'est pas grave hein ! Oh, t'es vraiment qu'un sale\n");
+	fprintf(stderr, "petit con hein ! Putain mais c'est dingue !\n");
 
+	// Print fatal error in logs
 	LogE << "SEGFAULT" << endl;
+
 	// Save logs
 	system_clock::time_point today = system_clock::now();
 	std::time_t tt = system_clock::to_time_t ( today );
@@ -49,6 +42,11 @@ void handler(int sig) {
 
 	file.close();
 
+	// Release camera and sound
+	Sound::stop();
+	Camera::destroy();
+
+	// Exit program
 	exit(1);
 }
 
@@ -67,6 +65,9 @@ int main() {
 
 	// Destroying
 	Camera::destroy();
+	Sound::stop();
+	UserDetectionTest.stop();
+	roadDetectionTest.stop();
 	return 0;
 }
 
