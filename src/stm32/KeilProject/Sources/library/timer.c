@@ -169,7 +169,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
     TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
 		//TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
@@ -185,7 +185,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		 		 TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
 		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI2FP2;
@@ -200,7 +200,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_3;
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+ TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
   TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
 		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
@@ -261,6 +261,7 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 		NVIC->IP[29] = Priority << 4;
 		pFnc3 = IT_function;
 		NVIC->ISER[0] = NVIC->ISER[0] | (0x1 << 29);
+	  //AFIO->EXTICR1 =  AFIO_EXTICR1_EXTI0 ;
 	}
 	else if (TIM == TIM4)
 	{

@@ -9,7 +9,7 @@
 #include "../library/Timer_Systick.h"
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_SENSOR_TRIG_FRONT_L					GPIOC //ok
+#define GPIO_SENSOR_TRIG_FRONT_L					GPIOA //GPIO C !!
 #define GPIO_SENSOR_TRIG_FRONT_R					GPIOA //ok
 #define GPIO_SENSOR_TRIG_FRONT_C					GPIOD //ok
 #define GPIO_SENSOR_TRIG_BACK_L						GPIOB
@@ -24,7 +24,7 @@
 #define GPIO_SENSOR_ECHO_BACK_C						GPIOB
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_PIN_SENSOR_TRIG_FRONT_L			GPIO_Pin_11 //ok
+#define GPIO_PIN_SENSOR_TRIG_FRONT_L			GPIO_Pin_0 //11 !!
 #define GPIO_PIN_SENSOR_TRIG_FRONT_R			GPIO_Pin_14 //ok
 #define GPIO_PIN_SENSOR_TRIG_FRONT_C			GPIO_Pin_2 //ok
 #define GPIO_PIN_SENSOR_TRIG_BACK_L				GPIO_Pin_1

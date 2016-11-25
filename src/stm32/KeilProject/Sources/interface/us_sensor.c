@@ -143,7 +143,7 @@ void Periodic_Impulse_3_Front_US(){
 	//impulse 10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
 	//US_active = SENSOR_FRONT_L;
-		Timer_Active_IT( TIM_Echo	,5, Capture_echo);
+	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
 
 	}
