@@ -8,6 +8,7 @@
 enum TRIG_STATE {FALLING,RISING};
 enum TRIG_STATE Trigger_State;
 
+BarstowModel_Typedef * Model;
 
 // Create the US_Sensor Structures
 US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
@@ -55,7 +56,9 @@ void Init_All_US_Sensor(void){
 //	Init_US_Sensor(SENSOR_BACK_R);
 //	Init_US_Sensor(SENSOR_BACK_C);
 	
+
 	/*** Init timer in count mode ***/
+
 	TIM_TimeBaseInitTypeDef timerInit;
 		timerInit.TIM_Period = 0xFFFF;
 		timerInit.TIM_Prescaler = 0x0072;
@@ -63,11 +66,26 @@ void Init_All_US_Sensor(void){
 		timerInit.TIM_CounterMode = TIM_CounterMode_Up;
 		timerInit.TIM_RepetitionCounter = 0x0000;
 	TIM_TimeBaseInit(TIM_Echo, &timerInit);
+//init interrupt
+	Config_NVIC_TIM2(); //config NVIC pour TIM2
 
-	/*** Init Exti and NVIC ***/
+
+	//Configuration de l'external trigger
+	//A EFFACER QUAND POUR UN MARCHE
 	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
-	Config_NVIC_EXTI(EXTI_Line0); 					//config NVIC pour EXTI
-	Config_NVIC_TIM2(); 										//config NVIC pour TIM2
+	Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
+		
+	// A DECOMMENTER QUAND POUR UN MARCHE	
+	/* Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
+		Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
+		
+		 Config_EXTI_Rising_Falling(EXTI_Line1);	//config EXTI
+		Config_NVIC_EXTI(EXTI_Line1); //config NVIC pour EXTI
+		
+		 Config_EXTI_Rising_Falling(EXTI_Line2);	//config EXTI
+		Config_NVIC_EXTI(EXTI_Line2); //config NVIC pour EXTI
+	*/
+								
 }
 
 
@@ -80,32 +98,6 @@ float Init_Systick(void){
 	SysTick_Enable_IT;
 	return period;
 }
-
-
-// interrupt function : tous les 2 fronts, on regarde la valeur du compteur et on MAJ le modèle
-
-
-/*void Capture_echo(void) {
-	//front_us++;
-	//if (front_us==2){
-		time_echo = TIM_GetCounter(TIM_Echo);
-		Reset_counter(TIM_Echo);
-	//front_us=0;
-	//}
-	
-	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte
-		if (US_active == SENSOR_FRONT_L){
-			Modele->frontLeftUSensor.distance = (time_echo/58);
-		}
-		else if (US_active == SENSOR_FRONT_C){
-			Modele->frontCenterUSensor.distance = (time_echo/58);
-		}
-		else if (US_active == SENSOR_FRONT_R){
-			Modele->frontRightUSensor.distance = (time_echo/58);
-		}
-	}
-	time_echo=0;
-}*/
 
 
 //réinitialise le compteur et le lance
@@ -136,22 +128,7 @@ void Capture_echo(void) {
 }
 
 	
-	void Test_Get_USensor(void) {
-	/*front_us=0;
-	
-	if (US_active == SENSOR_FRONT_L){
-		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
-	}
-	else if (US_active == SENSOR_FRONT_C){
-		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_C);
-	}
-	else if (US_active == SENSOR_FRONT_R){
-		Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_R);
-	}
-	
-	// Configure IT with My function in us_sensor.c
-	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	*/}
+
 
 	//on s'en sert pas
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
@@ -164,18 +141,8 @@ void Periodic_Impulse_3_Front_US(){
 	Time++;
 
 	if (Time%210==10){
-	
-		/*
-	if (GPIO_SENSOR_ECHO_FRONT_L==GPIOA){
-		if (GPIO_PIN_SENSOR_ECHO_FRONT_L == GPIO_Pin_0){
-			GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
-		}
-	}
-		*/
-		
-	//rajouter les autres cas
-	
-	//impulse 10us on Front Left US
+
+	//impulse >10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
 	//US_active = SENSOR_FRONT_L;
 
@@ -184,28 +151,29 @@ void Periodic_Impulse_3_Front_US(){
 	//Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
 
 	
+	//Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
+	US_active = SENSOR_FRONT_L;
+	//GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
 	}
-/* Quand le premier US marchera il faudra décommenter ici pour les 2 autres
 	
-	else if (Time%210==80){
+	/*else if (Time%210==80){
 	//impulse 10us on Front Right US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
-	//US_active = SENSOR_FRONT_R;
-	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_R);
-	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	}
+	US_active = SENSOR_FRONT_R;
+	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
+	}*/
 
-	else if (Time%210==150){
+	/*else if (Time%210==150){
 	//impulse 10us on Front Center US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 10);
-	//US_active = SENSOR_FRONT_C;
-	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_C);
-	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	}
-	*/
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
+	US_active = SENSOR_FRONT_R;
+	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_R);
+
+	}*/
 }
 
-void Test_US_Sensor(void){
+void Start_US_Sensor(BarstowModel_Typedef * mod){
+	Model = mod;
 	Init_Systick();
 	Init_All_US_Sensor();
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
@@ -214,28 +182,15 @@ void Test_US_Sensor(void){
 
 
 void EXTI0_IRQHandler(void) {
-    /* Make sure that interrupt flag is set */
-   // if (EXTI_GetITStatus(EXTI_Line0) != RESET) {
-			
 			if ((GPIOA->IDR & 0x0001) == 0x0001) {
-			//if (Trigger_State == RISING){
-				//passer en Falling
-				//Config_EXTI_Falling(EXTI_Line0);
-				//Trigger_State = FALLING;
 				
 				//relance le compteur
 				Relance_Compteur_Echo();
 			}
 			else {
-			//else if (Trigger_State == FALLING){
-				//passer en Rising
-				//Config_EXTI_Rising(EXTI_Line0);
-				//Trigger_State = RISING;
 				
 				Capture_echo();
-			
-        /* Clear interrupt flag */
 			}
-        EXTI_ClearITPendingBit(EXTI_Line0);
-    //}
+			
+			EXTI_ClearITPendingBit(EXTI_Line0);
 }
