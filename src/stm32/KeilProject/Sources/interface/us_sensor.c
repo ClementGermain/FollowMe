@@ -6,11 +6,11 @@
 
 // Create the US_Sensor Structures
 US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
-US_Sensor_Typedef SENSOR_FRONT_R_	= {GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
-US_Sensor_Typedef SENSOR_FRONT_C_	= {GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_FRONT_R_	= {GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, GPIO_SENSOR_ECHO_FRONT_R, GPIO_PIN_SENSOR_ECHO_FRONT_R};
+US_Sensor_Typedef SENSOR_FRONT_C_	= {GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, GPIO_SENSOR_ECHO_FRONT_C, GPIO_PIN_SENSOR_ECHO_FRONT_C};
 US_Sensor_Typedef SENSOR_BACK_L_	= {GPIO_SENSOR_TRIG_BACK_L, GPIO_PIN_SENSOR_TRIG_BACK_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
-US_Sensor_Typedef SENSOR_BACK_R_ 	= {GPIO_SENSOR_TRIG_BACK_R, GPIO_PIN_SENSOR_TRIG_BACK_R, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
-US_Sensor_Typedef SENSOR_BACK_C_	= {GPIO_SENSOR_TRIG_BACK_C, GPIO_PIN_SENSOR_TRIG_BACK_C, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
+US_Sensor_Typedef SENSOR_BACK_R_ 	= {GPIO_SENSOR_TRIG_BACK_R, GPIO_PIN_SENSOR_TRIG_BACK_R, GPIO_SENSOR_ECHO_FRONT_R, GPIO_PIN_SENSOR_ECHO_FRONT_R};
+US_Sensor_Typedef SENSOR_BACK_C_	= {GPIO_SENSOR_TRIG_BACK_C, GPIO_PIN_SENSOR_TRIG_BACK_C, GPIO_SENSOR_ECHO_FRONT_C, GPIO_PIN_SENSOR_ECHO_FRONT_C};
 
 // Create the US_Sensor pointeur's structures
 US_Sensor_Typedef * SENSOR_FRONT_L 	= &SENSOR_FRONT_L_;
@@ -21,8 +21,6 @@ US_Sensor_Typedef * SENSOR_BACK_R 	= &SENSOR_BACK_R_;
 US_Sensor_Typedef * SENSOR_BACK_C 	= &SENSOR_BACK_C_;
 US_Sensor_Typedef * US_active;
 
-BarstowModel_Typedef * Modele;
-
 
 //Global time (ms)
 int Time;
@@ -31,40 +29,17 @@ int time_echo;
 
 void Update_US_Sensor(BarstowModel_Typedef * Modele){
 	
-	Modele->frontRightUSensor.distance = (Get_USensor(SENSOR_FRONT_R));
-	Modele->frontLeftUSensor.distance = (Get_USensor(SENSOR_FRONT_L));
+	Modele->frontRightUSensor.distance 	= (Get_USensor(SENSOR_FRONT_R));
+	Modele->frontLeftUSensor.distance 	= (Get_USensor(SENSOR_FRONT_L));
 	Modele->frontCenterUSensor.distance = (Get_USensor(SENSOR_FRONT_C));
-	Modele->rearRightUSensor.distance = (Get_USensor(SENSOR_BACK_R));
-	Modele->rearLeftUSensor.distance = (Get_USensor(SENSOR_BACK_L));
-	Modele->rearCenterUSensor.distance = (Get_USensor(SENSOR_BACK_C));
+	Modele->rearRightUSensor.distance 	= (Get_USensor(SENSOR_BACK_R));
+	Modele->rearLeftUSensor.distance 		= (Get_USensor(SENSOR_BACK_L));
+	Modele->rearCenterUSensor.distance 	= (Get_USensor(SENSOR_BACK_C));
 }
 // configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
-	if (Sensor == SENSOR_FRONT_L){
-		Init_GPIO_IPU(SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_FRONT_L->GPIO_Trig, SENSOR_FRONT_L->GPIO_Pin_Trig);
-	}
-	else if (Sensor ==  SENSOR_FRONT_R){
-		Init_GPIO_IPU(SENSOR_FRONT_R->GPIO_Echo, SENSOR_FRONT_R->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_FRONT_R->GPIO_Trig, SENSOR_FRONT_R->GPIO_Pin_Trig);
-	}
-	else if (Sensor == SENSOR_FRONT_C){
-		Init_GPIO_IPU(SENSOR_FRONT_C->GPIO_Echo, SENSOR_FRONT_C->GPIO_Pin_Echo);
-		Init_GPIO_Out(SENSOR_FRONT_C->GPIO_Trig, SENSOR_FRONT_C->GPIO_Pin_Trig);	
-	}
-	else if (Sensor == SENSOR_BACK_L){
-		Init_GPIO_In(SENSOR_BACK_L->GPIO_Echo, SENSOR_BACK_L->GPIO_Pin_Echo);
-		//Init_GPIO_Out(SENSOR_BACK_L->GPIO_Trig, SENSOR_BACK_L->GPIO_Pin_Trig);
-	}
-	else if (Sensor == SENSOR_BACK_R){
-		Init_GPIO_In(SENSOR_BACK_R->GPIO_Echo, SENSOR_BACK_R->GPIO_Pin_Echo);
-		//Init_GPIO_Out(SENSOR_BACK_R->GPIO_Trig, SENSOR_BACK_R->GPIO_Pin_Trig);
-	}
-	else if (Sensor == SENSOR_BACK_C){
-		Init_GPIO_In(SENSOR_BACK_C->GPIO_Echo, SENSOR_BACK_C->GPIO_Pin_Echo);
-		//Init_GPIO_Out(SENSOR_BACK_C->GPIO_Trig, SENSOR_BACK_C->GPIO_Pin_Trig);
-	}
-	
+		Init_GPIO_IPU(Sensor->GPIO_Echo, Sensor->GPIO_Pin_Echo);
+		Init_GPIO_Out(Sensor->GPIO_Trig, Sensor->GPIO_Pin_Trig);
 }
 
 void Init_All_US_Sensor(void){
@@ -75,24 +50,19 @@ void Init_All_US_Sensor(void){
 //	Init_US_Sensor(SENSOR_BACK_R);
 //	Init_US_Sensor(SENSOR_BACK_C);
 	
-	// Init timer 2  in gated mode
-	/*Init_Gated_mode(TIM_Echo);
-	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	front_us=0;
-	
-	*/
+	/*** Init timer in count mode ***/
 	TIM_TimeBaseInitTypeDef timerInit;
-	timerInit.TIM_Period = 0xFFFF;
-	timerInit.TIM_Prescaler = 0x0000;
-	timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
-	timerInit.TIM_CounterMode = TIM_CounterMode_Up;
-  timerInit.TIM_RepetitionCounter = 0x0000;
-	
+		timerInit.TIM_Period = 0xFFFF;
+		timerInit.TIM_Prescaler = 0x0000;
+		timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
+		timerInit.TIM_CounterMode = TIM_CounterMode_Up;
+		timerInit.TIM_RepetitionCounter = 0x0000;
 	TIM_TimeBaseInit(TIM_Echo, &timerInit);
 
+	/*** Init Exti and NVIC ***/
 	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
-	Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
-	Config_NVIC_TIM2(); //config NVIC pour TIM2
+	Config_NVIC_EXTI(EXTI_Line0); 					//config NVIC pour EXTI
+	Config_NVIC_TIM2(); 										//config NVIC pour TIM2
 }
 
 
@@ -148,13 +118,13 @@ void Capture_echo(void) {
 
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
 		if (US_active == SENSOR_FRONT_L){
-			Modele->frontLeftUSensor.distance = (time_echo/58);
+			//Modele->frontLeftUSensor.distance = (time_echo/58);
 		}
 		else if (US_active == SENSOR_FRONT_C){
-			Modele->frontCenterUSensor.distance = (time_echo/58);
+			//Modele->frontCenterUSensor.distance = (time_echo/58);
 		}
 		else if (US_active == SENSOR_FRONT_R){
-			Modele->frontRightUSensor.distance = (time_echo/58);
+			//Modele->frontRightUSensor.distance = (time_echo/58);
 		}
 	}
 	time_echo=0;
@@ -235,6 +205,3 @@ void Test_US_Sensor(void){
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
 	Init_Systick();
 }
-
-
-
