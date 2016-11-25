@@ -1,4 +1,7 @@
 #include "us_sensor.h"
+#include "stm32f10x_tim.h"
+
+//promis je clean le code des qu'il fonctionnera 0:) (LEA)
 
 
 // Create the US_Sensor Structures
@@ -38,15 +41,15 @@ void Update_US_Sensor(BarstowModel_Typedef * Modele){
 // configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
 	if (Sensor == SENSOR_FRONT_L){
-		Init_GPIO_In(SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L->GPIO_Pin_Echo);
+		Init_GPIO_IPU(SENSOR_FRONT_L->GPIO_Echo, SENSOR_FRONT_L->GPIO_Pin_Echo);
 		Init_GPIO_Out(SENSOR_FRONT_L->GPIO_Trig, SENSOR_FRONT_L->GPIO_Pin_Trig);
 	}
 	else if (Sensor ==  SENSOR_FRONT_R){
-		Init_GPIO_In(SENSOR_FRONT_R->GPIO_Echo, SENSOR_FRONT_R->GPIO_Pin_Echo);
+		Init_GPIO_IPU(SENSOR_FRONT_R->GPIO_Echo, SENSOR_FRONT_R->GPIO_Pin_Echo);
 		Init_GPIO_Out(SENSOR_FRONT_R->GPIO_Trig, SENSOR_FRONT_R->GPIO_Pin_Trig);
 	}
 	else if (Sensor == SENSOR_FRONT_C){
-		Init_GPIO_In(SENSOR_FRONT_C->GPIO_Echo, SENSOR_FRONT_C->GPIO_Pin_Echo);
+		Init_GPIO_IPU(SENSOR_FRONT_C->GPIO_Echo, SENSOR_FRONT_C->GPIO_Pin_Echo);
 		Init_GPIO_Out(SENSOR_FRONT_C->GPIO_Trig, SENSOR_FRONT_C->GPIO_Pin_Trig);	
 	}
 	else if (Sensor == SENSOR_BACK_L){
@@ -73,9 +76,23 @@ void Init_All_US_Sensor(void){
 //	Init_US_Sensor(SENSOR_BACK_C);
 	
 	// Init timer 2  in gated mode
-	Init_Gated_mode(TIM_Echo);
+	/*Init_Gated_mode(TIM_Echo);
 	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	front_us=0;
+	
+	*/
+	TIM_TimeBaseInitTypeDef timerInit;
+	timerInit.TIM_Period = 0xFFFF;
+	timerInit.TIM_Prescaler = 0x0000;
+	timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
+	timerInit.TIM_CounterMode = TIM_CounterMode_Up;
+  timerInit.TIM_RepetitionCounter = 0x0000;
+	
+	TIM_TimeBaseInit(TIM_Echo, &timerInit);
+
+	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
+	Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
+	Config_NVIC_TIM2(); //config NVIC pour TIM2
 }
 
 
@@ -91,15 +108,45 @@ float Init_Systick(void){
 
 
 // interrupt function : tous les 2 fronts, on regarde la valeur du compteur et on MAJ le modèle
-void Capture_echo(void) {
-	front_us++;
-	if (front_us==2){
+
+
+/*void Capture_echo(void) {
+	//front_us++;
+	//if (front_us==2){
 		time_echo = TIM_GetCounter(TIM_Echo);
 		Reset_counter(TIM_Echo);
-		front_us=0;
-	}
+	//front_us=0;
+	//}
 	
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte
+		if (US_active == SENSOR_FRONT_L){
+			Modele->frontLeftUSensor.distance = (time_echo/58);
+		}
+		else if (US_active == SENSOR_FRONT_C){
+			Modele->frontCenterUSensor.distance = (time_echo/58);
+		}
+		else if (US_active == SENSOR_FRONT_R){
+			Modele->frontRightUSensor.distance = (time_echo/58);
+		}
+	}
+	time_echo=0;
+}*/
+
+
+//réinitialise le compteur et le lance
+void Relance_Compteur_Echo(void){
+	TIM_Cmd(TIM_Echo, ENABLE);
+}
+
+
+void Capture_echo(void) {
+	
+		//capturer le compteur, reset et l'arrêter
+		time_echo = TIM_GetCounter(TIM_Echo);
+		Reset_counter(TIM_Echo);
+		TIM_Cmd(TIM2, DISABLE);
+
+	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
 		if (US_active == SENSOR_FRONT_L){
 			Modele->frontLeftUSensor.distance = (time_echo/58);
 		}
@@ -131,6 +178,7 @@ void Capture_echo(void) {
 	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
 	*/}
 
+	//on s'en sert pas
 uint32_t Get_USensor(US_Sensor_Typedef * Sensor){	
 	int distance =0;
 	//distance = time_echo/58; //cm
@@ -142,23 +190,28 @@ void Periodic_Impulse_3_Front_US(){
 
 	if (Time%210==10){
 	
+		/*
 	if (GPIO_SENSOR_ECHO_FRONT_L==GPIOA){
 		if (GPIO_PIN_SENSOR_ECHO_FRONT_L == GPIO_Pin_0){
 			GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
 		}
 	}
+		*/
+		
 	//rajouter les autres cas
 	
 	//impulse 10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
 	//US_active = SENSOR_FRONT_L;
 
-	Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
+		
+	//Timer_Active_IT( TIM_Echo	,5, Capture_echo);
+	//Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
 
 	
 	}
-/*
+/* Quand le premier US marchera il faudra décommenter ici pour les 2 autres
+	
 	else if (Time%210==80){
 	//impulse 10us on Front Right US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
@@ -179,8 +232,7 @@ void Periodic_Impulse_3_Front_US(){
 
 void Test_US_Sensor(void){
 	Init_All_US_Sensor();
-				GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
-
+	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
 	Init_Systick();
 }
 

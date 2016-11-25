@@ -32,6 +32,7 @@ void Init_GPIO_PWM(GPIO_TypeDef * GPIO, uint16_t Pin);
 	* @param Pin: Pin adress (like GPIO_Pin_6)
 	* @retval None
 */
+void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin);
 
 /** @brief Init a GPIO in Analog Input (Pulse use for exemple)
 	* @param GPIO: GPIOA or GPIOB
@@ -40,7 +41,12 @@ void Init_GPIO_PWM(GPIO_TypeDef * GPIO, uint16_t Pin);
 */
 void Init_GPIO_In(GPIO_TypeDef * GPIO, int Pin);
 
-void Toggle_LED(GPIO_TypeDef * GPIO, uint16_t Pin);
+/** @brief Init a GPIO in Input Pull-up Pull-down
+	* @param GPIO: GPIOA or GPIOB
+	* @param Pin: Pin adress (like GPIO_Pin_6)
+	* @retval None
+*/
+void Init_GPIO_IPU(GPIO_TypeDef * GPIO, int Pin);
 
 /** @brief Send an impulse on GPIO
 	*	@param GPIO:	GPIOx to be set
