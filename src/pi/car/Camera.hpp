@@ -13,8 +13,8 @@
 	#include "RaspiCamCV.h"
 #endif
 
-#define DEFAULT_FRAME_WIDTH		320
-#define DEFAULT_FRAME_HEIGHT	240
+#define DEFAULT_FRAME_WIDTH		400
+#define DEFAULT_FRAME_HEIGHT	300
 #define DEFAULT_FRAMERATE		30
 
 class Camera {

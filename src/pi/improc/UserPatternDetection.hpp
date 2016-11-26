@@ -8,9 +8,9 @@ class UserPattern {
 		// Radius in meter
 		static const float CircleRadius;
 		// HSV thresholds
-		static const int hLo, hHi; // in range 0-180
-		static const int sLo, sHi; // in range 0-255
-		static const int vLo, vHi; // in range 0-255
+		static int hLo, hHi; // in range 0-180
+		static int sLo, sHi; // in range 0-255
+		static int vLo, vHi; // in range 0-255
 };
 
 class UserPatternDetection {

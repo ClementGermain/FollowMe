@@ -6,13 +6,13 @@
 
 using namespace std;
 
-const  float UserPattern::CircleRadius = 0.07f; // diameter = 14 cm
-const int UserPattern::hLo = 160;//35*180/255;
-const int UserPattern::sLo = 70;
-const int UserPattern::vLo = 50;
-const int UserPattern::hHi = 5;//58*180/255;
-const int UserPattern::sHi = 255;
-const int UserPattern::vHi = 255;
+const float UserPattern::CircleRadius = 0.07f; // diameter = 14 cm
+int UserPattern::hLo = 160;//35*180/255;
+int UserPattern::sLo = 70;
+int UserPattern::vLo = 50;
+int UserPattern::hHi = 5;//58*180/255;
+int UserPattern::sHi = 255;
+int UserPattern::vHi = 255;
 
 
 UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
