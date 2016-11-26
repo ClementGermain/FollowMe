@@ -57,12 +57,12 @@ void UserPatternDetectionTest::run() {
 
 		Timer t;
 		detector.findPattern(img, true);
-		LogI << "Processed image for user pattern detection in "<<t.elapsed()<<" seconds"<<endl;
 		detector.imageCirclesToPosition();
-
+		
+		int sleep_ms = max(0, 100 - (int) (t.elapsed() * 1000));
 		// sleep 
-		for(int s = 0; s < 0 && !endThread; s++)
-			this_thread::sleep_for(chrono::milliseconds(100));
+		for(int s = 0; s < sleep_ms && !endThread; s++)
+			this_thread::sleep_for(chrono::milliseconds(1));
 		i++;
 	}
 }

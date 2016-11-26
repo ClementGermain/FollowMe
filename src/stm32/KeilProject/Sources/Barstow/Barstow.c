@@ -30,6 +30,8 @@ void StartBarstow(void)
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
+	Start_US_Sensor(BarstowModel);
+	
 	/*!< Entering main loop. */
 	while(1)
 	{

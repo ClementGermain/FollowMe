@@ -47,6 +47,3 @@ Mat & RoadDetection::getImage() {
 	return m_thresholdedImage;
 }
 
-/*SDL_Surface & RoadDetection::getImage() {
-
-}*/

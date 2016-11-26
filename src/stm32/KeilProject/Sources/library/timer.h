@@ -3,6 +3,9 @@
 
 // include stm32 library
 #include "stm32f10x_tim.h"
+#include "stm32f10x_exti.h"
+#include "../interface/us_sensor.h"
+
 
 // include local library
 #include "gpio.h"
@@ -60,5 +63,20 @@ void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel);
  void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void));
  
  void Reset_counter(TIM_TypeDef *TIM);
+
+//Configure le EXTI en param en Rising
+ void Config_EXTI_Rising(uint32_t EXTI_Line);
+ 
+//Configure le EXTI en param en Falling
+ void Config_EXTI_Falling(uint32_t EXTI_Line);
+ 
+ //Configure le EXTI en param en Rising/Falling
+ void Config_EXTI_Rising_Falling(uint32_t EXTI_Line);
+ 
+//Configure le NVIC pour le EXTI en param
+ void Config_NVIC_EXTI(uint32_t EXTI_Line);
+ 
+//Configure le NVIC pour le TIM2 (peut se généraliser en mettant TIM en param)
+void Config_NVIC_TIM2(void);
 
 #endif

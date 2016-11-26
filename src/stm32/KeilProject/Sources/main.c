@@ -14,9 +14,6 @@
   */
 	
 	
-
-	
-	
 void RCC_Configuration(void);
 
 int main(void)
@@ -24,10 +21,9 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 
-	Test_US_Sensor();
-//	
+
 //	/*<! Start Barstow car's program. */
-//	StartBarstow();
+	StartBarstow();
 
 //Init_Gated_mode(TIM2);
 //Init_Channel_trigger(TIM2, TIM_Channel_2);

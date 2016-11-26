@@ -5,6 +5,7 @@ int AUTORELOAD_VALUE_TIM2 = 0;
 int AUTORELOAD_VALUE_TIM3 = 0;
 int AUTORELOAD_VALUE_TIM4 = 0;
 
+
 void Init_Timer(TIM_TypeDef* TIM, uint16_t Frequency){
 
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
@@ -112,8 +113,9 @@ void Set_PWM_DutyCycle(TIM_TypeDef* TIM, uint16_t Channel, float DutyCycle){
 	}
 }
 
+
 void Init_timer_Gated_mode(TIM_TypeDef* TIM){
-	
+/*	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	int ARR_max=65535;
 //	int fclk=72; // clock = 72 Mhz
@@ -130,7 +132,7 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
 	TIM_SelectSlaveMode(TIM,TIM_SlaveMode_Gated); // SMS
 	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
 	
-	 /* Set the default configuration */
+	 // Set the default configuration
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
   TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
@@ -139,11 +141,11 @@ void Init_timer_Gated_mode(TIM_TypeDef* TIM){
 	
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
 	TIM_Cmd(TIM, ENABLE); //CEN
-	
+	*/
 }
 
 void Init_Gated_mode(TIM_TypeDef* TIM){
-
+/*
 	//Init_Timer(TIM,1000000);
 	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
@@ -158,7 +160,7 @@ void Init_Gated_mode(TIM_TypeDef* TIM){
  
   TIM_TimeBaseInit(TIM, &TIM_TimeBaseStructure);
 	TIM_SelectSlaveMode(TIM,TIM_SlaveMode_Gated); // SMS
-	
+	*/
 }
 
 
@@ -166,17 +168,23 @@ void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel) {
 TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	if (num_Channel ==TIM_Channel_1) {
-	
+			
+		 //clear UIF bit (?)
+		 TIM->SR = TIM->SR & ~ TIM_SR_UIF;
+
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_TRC ;
+
+TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		//TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
+
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
-  TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
-	//TIM_ICInitStructure.TIM_ICFilter = TIM_TS_ETRF ;
+  //TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI1FP1;
+	TIM_ICInitStructure.TIM_ICFilter = TIM_TS_ETRF ;
 	TIM_ICInit(TIM,&TIM_ICInitStructure); //CC1P=0; CC1S = input capture source = 001 
 
-	TIM_SelectInputTrigger(TIM, TIM_TS_TI1FP1); // TS -> internal trigger 1
+	TIM_SelectInputTrigger(TIM, TIM_TS_ETRF ); // TS -> external trigger
 
 	TIM_Cmd(TIM, ENABLE); //CEN
 	}
@@ -187,7 +195,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_2;
   TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
-    TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
+		 		 TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
 		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
   TIM_ICInitStructure.TIM_ICFilter = TIM_TS_TI2FP2;
@@ -201,7 +209,7 @@ TIM_ICInitTypeDef TIM_ICInitStructure;
 	
 	 /* Set the default configuration */
   TIM_ICInitStructure.TIM_Channel = TIM_Channel_3;
-  TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
+ TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Rising;
   TIM_ICInitStructure.TIM_ICSelection = 	TIM_ICSelection_TRC ;
 		 //TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
   TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
@@ -242,35 +250,11 @@ void TIM4_IRQHandler (void)
 
 
 
-
-
 // configure interruption  FLAG TIF to detect an edge on the trigger
 
 void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void)){
-	
-	EXTI_InitTypeDef		EXTI_InitStructure;
+	/*
 	NVIC_InitTypeDef		NVIC_InitStructure;
-	
-	//exti		
-	EXTI_InitStructure.EXTI_Line = EXTI_Line0;
-  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
-  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-  EXTI_Init(&EXTI_InitStructure);
-
-	//nvic
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
-
-		//enable TIM2 interrupt
-  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);
 	
 	// TIF interupt configuration at the NVIC LEVEL + priority
 	if (TIM == TIM2)
@@ -284,6 +268,7 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 		NVIC->IP[29] = Priority << 4;
 		pFnc3 = IT_function;
 		NVIC->ISER[0] = NVIC->ISER[0] | (0x1 << 29);
+	  //AFIO->EXTICR1 =  AFIO_EXTICR1_EXTI0 ;
 	}
 	else if (TIM == TIM4)
 	{
@@ -299,8 +284,73 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 	
 	//TIM_ITConfig(TIM, TIM_IT_Trigger, ENABLE);
 	
+
+		//enable TIM2 interrupt
+  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+*/
+
+	
 }
 	
+void Config_EXTI_Rising(uint32_t EXTI_Line){
+	EXTI_InitTypeDef		EXTI_InitStructure;
+	
+	EXTI_InitStructure.EXTI_Line = EXTI_Line;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+}
+
+ void Config_EXTI_Falling(uint32_t EXTI_Line){
+	EXTI_InitTypeDef		EXTI_InitStructure;
+
+	EXTI_InitStructure.EXTI_Line = EXTI_Line;
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
+}
+ void Config_EXTI_Rising_Falling(uint32_t EXTI_Line){
+	EXTI_InitTypeDef		EXTI_InitStructure;
+	
+	EXTI_InitStructure.EXTI_Line = EXTI_Line;
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);
+}
+
+void Config_NVIC_EXTI(uint32_t EXTI_Line){
+	NVIC_InitTypeDef		NVIC_InitStructure;
+	
+	//nvic : external Trigger
+	if (EXTI_Line == EXTI_Line0){
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+	}
+	//FAIRE LES AUTRES CAS
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+}
+
+void Config_NVIC_TIM2(){
+	
+	NVIC_InitTypeDef		NVIC_InitStructure;
+
+	//NVIC : TIM interrupt
+  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+}
+
 void Reset_counter(TIM_TypeDef *TIM){
 	TIM_SetCounter(TIM,0);
 }

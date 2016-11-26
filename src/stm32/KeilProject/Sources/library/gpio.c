@@ -34,6 +34,17 @@ void Init_GPIO_In(GPIO_TypeDef * GPIO, int Pin)
 }
 
 
+void Init_GPIO_IPU(GPIO_TypeDef * GPIO, int Pin)
+{
+  GPIO_InitTypeDef GPIO_InitStructure;
+	
+  GPIO_InitStructure.GPIO_Pin = Pin;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 
+  GPIO_Init(GPIO, &GPIO_InitStructure); 
+}
+
 void Init_GPIO_PWM(GPIO_TypeDef * GPIO, uint16_t Pin)
 {
   GPIO_InitTypeDef GPIO_InitStructure;

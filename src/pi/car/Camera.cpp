@@ -16,7 +16,7 @@ using namespace std;
 const float Camera::PosX			= 0.0f;
 const float Camera::PosY			= 0.0f;
 const float Camera::PosZ			= 1.0f;
-const float Camera::pitch			= -40 * M_PI/180;
+const float Camera::pitch			= -20 * M_PI/180;
 const float Camera::horizontalFOV	= 60 * M_PI/180;
 const float Camera::verticalFOV		= Camera::horizontalFOV * 3 / 4;
 std::mutex Camera::camLock;

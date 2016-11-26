@@ -23,6 +23,15 @@
 #define GPIO_SENSOR_ECHO_BACK_R						GPIOB
 #define GPIO_SENSOR_ECHO_BACK_C						GPIOB
 
+
+
+#define GPIO_Port_Source_Echo_Front_L 	GPIO_PortSourceGPIOA
+#define GPIO_Port_Source_Echo_Front_R		GPIO_PortSourceGPIOA
+#define GPIO_Port_Source_Echo_Front_C		GPIO_PortSourceGPIOA
+
+
+
+
 // Not accurate Value, we gonna need to choose them
 #define GPIO_PIN_SENSOR_TRIG_FRONT_L			GPIO_Pin_11 //ok
 #define GPIO_PIN_SENSOR_TRIG_FRONT_R			GPIO_Pin_14 //ok
@@ -38,10 +47,22 @@
 #define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
+
+#define GPIO_Num_Port_Echo_Front_L 			0
+#define GPIO_Num_Port_Source_Echo_Front_R		1
+#define GPIO_Num_Port_Source_Echo_Front_C		4
+
+
 #define TIM_Echo													TIM2
 #define TIM_Channel_Echo_Front_L					TIM_Channel_1// for counting the distance
 #define TIM_Channel_Echo_Front_C					TIM_Channel_2
 #define TIM_Channel_Echo_Front_R					TIM_Channel_3
+
+#define INTERRUPT_LINE_SENSOR_ECHO_FRONT_L			EXTI_Line0 //ok
+#define INTERRUPT_LINE_SENSOR_ECHO_FRONT_R			EXTI_Line1 //ok
+#define INTERRUPT_LINE_SENSOR_ECHO_FRONT_C			EXTI_Line2 //ok
+
+
 
 
 #define SYSTICK_PERIOD_US 1000 //1 ms
@@ -68,7 +89,7 @@ extern US_Sensor_Typedef * US_active; //the Ultrasonic sensor on which we sent a
 
 extern int time_echo;
 extern int front_us;
-extern BarstowModel_Typedef * Modele;
+extern BarstowModel_Typedef * Model;
 
 
 /** @brief Update all the UltraSound sensor in a Modele struct
@@ -106,13 +127,16 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor);
 */
 void Periodic_Impulse_3_Front_US(void);
 
-/** @brief Test procedure for Front US Sensors
-	* @param none
+/** @brief Init bartstow US Sensors
+	* @param Model to update
 	* @retval None
 */
-void Test_US_Sensor(void);
+void Start_US_Sensor(BarstowModel_Typedef * mod);
 
 //fonction d'interruption
 void Capture_echo (void);
+
+//
+void Relance_Compteur_Echo(void);
 
 #endif

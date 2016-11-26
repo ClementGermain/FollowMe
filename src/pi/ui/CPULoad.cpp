@@ -2,20 +2,21 @@
 #include <numeric>
 #include <unistd.h>
 #include <vector>
-#include <SDL/SDL.h>
 #include "CPULoad.hpp"
+#include "utils/Timer.hpp"
 
 CPULoad::CPULoad() :
-	prevIdleTime(0), prevTotalTime(0),
-	prevDate(0), prevLoad(0)
+	prevIdleTime(0),
+	prevTotalTime(0),
+	prevLoad(0)
 {
 
 }
 
+/** Return the cpu load in percentage, updated no more than once per second **/
 float CPULoad::get() {
-	Uint32 date = SDL_GetTicks();
-
-	if(date - prevDate < 1000)
+	// Update value only once per second
+	if(timer.elapsed() < 1.0)
 		return prevLoad;
 
 	// read current cpu times
@@ -31,14 +32,19 @@ float CPULoad::get() {
 		index++;
 	}
 
+	// compute the cpu load in percentage
 	float idleDelta = idle - prevIdleTime;
 	float totalDelta = total - prevTotalTime;
 	float load = 100 * (1.0f - idleDelta/totalDelta);
 
+	// Get the average load over the last 2 measures
+	float smoothLoad = (load + prevLoad) / 2;
+
+	// save values for the next measure
 	prevIdleTime = idle;
 	prevTotalTime = total;
-	prevDate = date;
 	prevLoad = load;
+	timer.reset();
 
-	return load;
+	return smoothLoad;
 }
