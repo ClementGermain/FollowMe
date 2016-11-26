@@ -82,7 +82,7 @@ void runUI() {
 
 	/// Ending ///
 	if(view.isOpen()) {
-		cout << "Waiting for closure of the GUI..." << endl;
+		view.close();
 	}
 }
 

@@ -12,6 +12,7 @@ class MainView {
 		MainView();
 		~MainView();
 		void open();
+		void close();
 		bool isOpen();
 	private:
 		void run();

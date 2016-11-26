@@ -244,7 +244,7 @@ void MainView::run() {
 
 	bool end = false;
 
-	while(!end) {
+	while(!end && !isThreadTerminated)  {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
@@ -319,10 +319,15 @@ bool MainView::isOpen() {
 	return !isThreadTerminated;
 }
 
-MainView::~MainView() {
+void MainView::close() {
 	if(threadView != NULL) {
+		isThreadTerminated = true;
 		threadView->join();
 		delete threadView;
 		threadView = NULL;
 	}
+}
+
+MainView::~MainView() {
+	close();
 }
