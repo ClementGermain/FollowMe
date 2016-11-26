@@ -233,21 +233,18 @@ void (* pFnc4) (void);
 void TIM2_IRQHandler (void)
 {
 	TIM2->SR = TIM2->SR &~ 0x40; // RaZ du flag d'interruption
-	// ERROR : THIS CALL WILL MAKE THE PROGRAM CRASH
 	pFnc2(); // exécution de la fonction lors d'une interruption
 }
 
 void TIM3_IRQHandler (void)
 {
 	TIM3->SR = TIM3->SR &~ 0x40; // RaZ du flag d'interruption
-	// ERROR : THIS CALL WILL MAKE THE PROGRAM CRASH
 	pFnc3();
 }
 
 void TIM4_IRQHandler (void)
 {
 	TIM4->SR = TIM4->SR &~ 0x40; // RaZ du flag d'interruption
-	// ERROR : THIS CALL WILL MAKE THE PROGRAM CRASH
 	pFnc4();
 }
 
