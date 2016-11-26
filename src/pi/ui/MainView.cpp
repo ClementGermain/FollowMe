@@ -158,10 +158,6 @@ void MainView::initializeViews(ViewManager & mgr) {
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
 	roadImprocLayout.addView("roadimage", new ImageView(0, 0, 400, 300));
 	roadImprocLayout.addView("roadcamera", new ImageView(400, 0, 400, 300));
-
-
-	/// Finally, update the title of the window
-	mgr.updateWindowTitle();
 }
 
 void MainView::updateViews(ViewManager & mgr) {
