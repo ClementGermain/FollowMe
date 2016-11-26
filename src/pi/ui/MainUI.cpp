@@ -179,6 +179,8 @@ int tailLog(istream & input, vector<int> i, vector<string> s) {
 	while(realLineCount--) {
 		cout << Log.readNext(cur).coloredString(true) << endl;
 	}
+
+	return 0;
 }
 
 int runSound(istream & input, vector<int> i, vector<string> s) {

@@ -10,6 +10,7 @@
 #include "car/LinkSTM32.hpp"
 #include "car/Car.hpp"
 #include "car/Camera.hpp"
+#include "car/Obstacle.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
@@ -20,9 +21,9 @@ using namespace std::chrono;
 
 void handler(int sig) {
 	// lolilol
-	fprintf(stderr, "\nAh bah c'est bien Nils, super le segfault ! Génial, j'te remercie.\n");
+	fprintf(stderr, "\n\"Ah bah c'est bien Nils, super le segfault ! Génial, j'te remercie.\n");
 	fprintf(stderr, "Tout est foutu, c'est pas grave hein ! Oh, t'es vraiment qu'un sale\n");
-	fprintf(stderr, "petit con hein ! Putain mais c'est dingue !\n");
+	fprintf(stderr, "petit con hein ! Putain mais c'est dingue !\"\n");
 
 	// Print fatal error in logs
 	LogE << "SEGFAULT" << endl;
@@ -55,6 +56,7 @@ int main() {
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
 	Camera::init();
+	ObstacleDetection::start();
 
 	// start Image Processing threads
 	UserDetectionTest.start();
@@ -68,6 +70,7 @@ int main() {
 	Sound::stop();
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
+	ObstacleDetection::stop();
 	return 0;
 }
 
