@@ -39,18 +39,16 @@ void UserPatternDetectionTest::stop() {
 
 void UserPatternDetectionTest::run() {
 	int i = 0;
-	const char * names[6] = {
-		"../../res/img/u1.png",
-		"../../res/img/u2.png",
-		"../../res/img/u3a.png",
-		"../../res/img/u4.png",
-		"../../res/img/u5.png",
-		"../../res/img/u6.png"
+	const char * names[4] = {
+		"../../res/img/red_circle1.jpg",
+		"../../res/img/red_circle2.jpg",
+		"../../res/img/red_circle3.jpg",
+		"../../res/img/red_circle4.jpg",
 	};
 	while(!endThread) {
 		cv::Mat img;
 #ifdef __NO_RASPI__
-		img = cv::imread(names[i%6]);
+		img = cv::imread(names[i%4]);
 #else
 		Camera::getImage(img);
 #endif
