@@ -1,5 +1,6 @@
 #include "Layout.hpp"
 #include <SDL/SDL.h>
+#include <cassert>
 #include <memory>
 #include <unordered_map>
 #include <string>
@@ -11,13 +12,15 @@ Layout::Layout() : View(0,0) {
 }
 
 void Layout::addView(const string & name, View * view) {
-	if(views.emplace(name, shared_ptr<View>(view)).second) {
-		// the view has been succesfully added, now register its position
-		viewOrder.push_back(name);
-	}
+	assert(views.count(name) == 0);
+	// Add view
+	views.emplace(name, shared_ptr<View>(view)).second;
+	// Save name position
+	viewOrder.push_back(name);
 }
 
 View * Layout::getView(const string & name) {
+	assert(views.count(name) > 0);
 	return views.at(name).get();
 }
 
