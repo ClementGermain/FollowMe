@@ -187,10 +187,9 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_obstacle").toggle(true);
 		l.getToggleBoxView("toggle_road").toggle(true);
 		
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
-
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
 	}
 
 	else if(mgr.isActive("Sensor")) {
@@ -209,9 +208,9 @@ void MainView::updateViews(ViewManager & mgr) {
 		
 		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
 	}
 	else if(mgr.isActive("User Detection")) {
 		Layout & l = mgr.getLayout("User Detection");
@@ -221,9 +220,9 @@ void MainView::updateViews(ViewManager & mgr) {
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");
 		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("roadcamera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
 	}
 }
 
@@ -232,7 +231,7 @@ void MainView::run() {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		return;
 	// Open a window
-	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_HWSURFACE)))
+	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE)))
 		return;
 	
 	// Manage sleep duration between two updates
