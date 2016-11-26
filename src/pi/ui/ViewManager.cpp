@@ -1,4 +1,5 @@
 #include "ViewManager.hpp"
+#include <SDL/SDL.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -41,12 +42,20 @@ void ViewManager::switchToNextLayout() {
 	if(++activeLayoutIndex == (int) names.size())
 		activeLayoutIndex = 0;
 	invalidate = true;
+	updateWindowTitle();
 }
 
 void ViewManager::switchToPrevLayout() {
 	if(--activeLayoutIndex < 0)
 		activeLayoutIndex = (int) names.size()-1;
 	invalidate = true;
+	updateWindowTitle();
+}
+
+void ViewManager::updateWindowTitle() {
+	char title[256];
+	sprintf(title, "FollowMe - %s (%d/%lu)", getActiveLayoutName().c_str(), activeLayoutIndex+1, names.size());	
+	SDL_WM_SetCaption(title, NULL);
 }
 
 void ViewManager::drawActiveLayout(SDL_Surface * screen, bool useLocalScreeUpdate) {

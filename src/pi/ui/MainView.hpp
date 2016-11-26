@@ -17,7 +17,6 @@ class MainView {
 		void run();
 		void initializeViews(ViewManager & mgr);
 		void updateViews(ViewManager & mgr);
-		void drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos);
 
 		std::thread * threadView;
 		bool isThreadTerminated;

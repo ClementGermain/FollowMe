@@ -16,6 +16,7 @@ class ViewManager {
 		Layout & getLayout(const std::string & name);
 		void switchToNextLayout();
 		void switchToPrevLayout();
+		void updateWindowTitle();
 		void drawActiveLayout(SDL_Surface * screen, bool useLocalScreeUpdate);
 	private:
 		std::unordered_map<std::string, Layout> layouts;
