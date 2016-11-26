@@ -110,12 +110,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP</SimDllArguments>
-          <SimDlgDll>DARMSTM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pSTM32F103RB</SimDlgDllArguments>
+          <SimDlgDll>DCM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM3</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMSTM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pSTM32F103RB</TargetDlgDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM3</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -369,7 +369,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--debug</Misc>
+            <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -418,31 +418,6 @@
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\library\timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>Timer_Systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\library\Timer_Systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer_Systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\Timer_Systick.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\library\clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\clock_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -510,14 +485,14 @@
               <FilePath>.\Sources\barstow\control.h</FilePath>
             </File>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\barstow\main.c</FilePath>
+            </File>
+            <File>
               <FileName>model.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\barstow\model.h</FilePath>
-            </File>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -636,12 +611,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP</SimDllArguments>
-          <SimDlgDll>DARMSTM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pSTM32F103RB</SimDlgDllArguments>
+          <SimDlgDll>DCM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM3</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TARMSTM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pSTM32F103RB</TargetDlgDllArguments>
+          <TargetDlgDll>TCM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pCM3</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -701,7 +676,7 @@
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M3"</AdsCpuType>
             <RvctDeviceName></RvctDeviceName>
-            <mOS>1</mOS>
+            <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
             <hadIROM>1</hadIROM>
@@ -895,7 +870,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--debug</Misc>
+            <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -944,31 +919,6 @@
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\library\timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>Timer_Systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\library\Timer_Systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer_Systick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\Timer_Systick.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\library\clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Sources\library\clock_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1036,14 +986,14 @@
               <FilePath>.\Sources\barstow\control.h</FilePath>
             </File>
             <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\barstow\main.c</FilePath>
+            </File>
+            <File>
               <FileName>model.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\barstow\model.h</FilePath>
-            </File>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1169,13 +1119,6 @@
           <targetInfo name="Simulation"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="StdPeriph Drivers" Csub="EXTI" Cvendor="Keil" Cversion="3.5.0" condition="STM32F1xx STDPERIPH">
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
-        <targetInfos>
-          <targetInfo name="Real"/>
-          <targetInfo name="Simulation"/>
-        </targetInfos>
-      </component>
       <component Cclass="Device" Cgroup="StdPeriph Drivers" Csub="Framework" Cvendor="Keil" Cversion="3.5.1" condition="STM32F1xx STDPERIPH">
         <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
         <targetInfos>
@@ -1236,8 +1179,8 @@
     <files>
       <file attr="config" category="source" name="CMSIS\RTOS\RTX\Templates\RTX_Conf_CM.c" version="4.70.1">
         <instance index="0">RTE\CMSIS\RTX_Conf_CM.c</instance>
-        <component Capiversion="1.0" Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.81.0" condition="RTOS RTX"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.0.0-Beta12"/>
+        <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX" Cvendor="ARM" Cversion="4.80.0" condition="Cortex-M Device Startup"/>
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
         <targetInfos>
           <targetInfo name="Real"/>
           <targetInfo name="Simulation"/>
