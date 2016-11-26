@@ -1,8 +1,14 @@
 #include "us_sensor.h"
 #include "stm32f10x_tim.h"
+#include "stm32f10x.h"
 
 //promis je clean le code des qu'il fonctionnera 0:) (LEA)
 
+// variable globale qui change à chaque passage dans le handler
+enum TRIG_STATE {FALLING,RISING};
+enum TRIG_STATE Trigger_State;
+
+BarstowModel_Typedef * Model;
 
 // Create the US_Sensor Structures
 US_Sensor_Typedef SENSOR_FRONT_L_	= {GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, GPIO_SENSOR_ECHO_FRONT_L, GPIO_PIN_SENSOR_ECHO_FRONT_L};
@@ -55,7 +61,7 @@ void Init_All_US_Sensor(void){
 
 	TIM_TimeBaseInitTypeDef timerInit;
 		timerInit.TIM_Period = 0xFFFF;
-		timerInit.TIM_Prescaler = 0x0000;
+		timerInit.TIM_Prescaler = 0x0072;
 		timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
 		timerInit.TIM_CounterMode = TIM_CounterMode_Up;
 		timerInit.TIM_RepetitionCounter = 0x0000;
@@ -104,8 +110,8 @@ void Capture_echo(void) {
 	
 		//capturer le compteur, reset et l'arrêter
 		time_echo = TIM_GetCounter(TIM_Echo);
+		TIM_Cmd(TIM2, DISABLE);	
 		Reset_counter(TIM_Echo);
-		TIM_Cmd(TIM2, DISABLE);
 
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
 		if (US_active == SENSOR_FRONT_L){
@@ -136,32 +142,55 @@ void Periodic_Impulse_3_Front_US(){
 
 	if (Time%210==10){
 
-	//impulse 10us on Front Left US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
-	US_active = SENSOR_FRONT_L;
-	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
-	}
-/* Quand le premier US marchera il faudra décommenter ici pour les 2 autres
+	//impulse >10us on Front Left US
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
+	//US_active = SENSOR_FRONT_L;
+
+		
+	//Timer_Active_IT( TIM_Echo	,5, Capture_echo);
+	//Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
+
 	
-	else if (Time%210==80){
+	//Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
+	US_active = SENSOR_FRONT_L;
+	//GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
+	}
+	
+	/*else if (Time%210==80){
 	//impulse 10us on Front Right US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
 	US_active = SENSOR_FRONT_R;
 	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
-	}
+	}*/
 
-	else if (Time%210==150){
+	/*else if (Time%210==150){
 	//impulse 10us on Front Center US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
 	US_active = SENSOR_FRONT_R;
 	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_R);
 
-	}
-	*/
+	}*/
 }
 
-void Test_US_Sensor(void){
+void Start_US_Sensor(BarstowModel_Typedef * mod){
+	Model = mod;
+	Init_Systick();
 	Init_All_US_Sensor();
 	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
-	Init_Systick();
+	
+}
+
+
+void EXTI0_IRQHandler(void) {
+			if ((GPIOA->IDR & 0x0001) == 0x0001) {
+				
+				//relance le compteur
+				Relance_Compteur_Echo();
+			}
+			else {
+				
+				Capture_echo();
+			}
+			
+			EXTI_ClearITPendingBit(EXTI_Line0);
 }

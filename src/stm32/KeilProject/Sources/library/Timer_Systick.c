@@ -27,12 +27,12 @@ void Systick_Prio_IT(char Prio,void (*Systick_function) (void))
 
 float Systick_Period(float Duree_us)
 
-// Retourne la duree calculée, 0 si impossible
+	// Retourne la duree calculée, 0 si impossible
 {
-vu32 Nb_Reload;
-float Nb_Reload_Float; 
-float Duree_reelle_us;
-float Freq_In;
+	vu32 Nb_Reload;
+	float Nb_Reload_Float; 
+	float Duree_reelle_us;
+	float Freq_In;
 
 	Freq_In = (float) CLOCK_GetHCLK();
 
@@ -45,16 +45,16 @@ float Freq_In;
 	SysTick->CTRL=(SysTick->CTRL)|1<<2;
 	if (Nb_Reload_Float	>=16777215.0) // 2^24-1 maxi
 	{
-		 // fixer le prescaler spécifique au systick à 8
-		 SysTick->CTRL=(SysTick->CTRL)& ~(1<<2);
-		 Nb_Reload_Float= Duree_us*Freq_In/8000000.0;
-		 Nb_Reload=(float)Nb_Reload_Float;
-		 Duree_reelle_us=((float)Nb_Reload) / Freq_In*8000000.0; 
+		// fixer le prescaler spécifique au systick à 8
+		SysTick->CTRL=(SysTick->CTRL)& ~(1<<2);
+		Nb_Reload_Float= Duree_us*Freq_In/8000000.0;
+		Nb_Reload=(float)Nb_Reload_Float;
+		Duree_reelle_us=((float)Nb_Reload) / Freq_In*8000000.0; 
 	}
 
 	if (Nb_Reload_Float	>=16777215.0) // 2^24-1 maxi
 	{
-		 Duree_reelle_us=0.0;
+		Duree_reelle_us=0.0;
 	}
 
 	SysTick->LOAD = Nb_Reload;

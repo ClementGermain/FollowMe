@@ -89,7 +89,7 @@ extern US_Sensor_Typedef * US_active; //the Ultrasonic sensor on which we sent a
 
 extern int time_echo;
 extern int front_us;
-extern BarstowModel_Typedef * Modele;
+extern BarstowModel_Typedef * Model;
 
 
 /** @brief Update all the UltraSound sensor in a Modele struct
@@ -127,11 +127,11 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor);
 */
 void Periodic_Impulse_3_Front_US(void);
 
-/** @brief Test procedure for Front US Sensors
-	* @param none
+/** @brief Init bartstow US Sensors
+	* @param Model to update
 	* @retval None
 */
-void Test_US_Sensor(void);
+void Start_US_Sensor(BarstowModel_Typedef * mod);
 
 //fonction d'interruption
 void Capture_echo (void);

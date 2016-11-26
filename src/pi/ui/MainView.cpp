@@ -64,7 +64,7 @@ void commandMotorBack(int direction) {
 
 void MainView::initializeViews(ViewManager & mgr) {
 	//// DEFAULT VIEW ////
-	Layout & defaultLayout = mgr.createLayout("default");
+	Layout & defaultLayout = mgr.createLayout("Motor");
 
 	// Car top view
 	defaultLayout.addView("imgCar", new ImageView(330, 25, 200, 350));
@@ -104,7 +104,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("camera", new ImageView(0, 0, 320, 240));
 
 	//// SENSOR FULLSCREEN
-	Layout & sensorLayout = mgr.createLayout("sensor");
+	Layout & sensorLayout = mgr.createLayout("Sensor");
 
 	// Car top view
 	sensorLayout.addView("sensor_imgCar", new ImageView(330, 25, 200, 350));
@@ -142,32 +142,30 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("camera", new ImageView(0, 0, 320, 240));
 	
 	//// LOG FULLSCREEN ////
-	Layout & logLayout = mgr.createLayout("logs");
+	Layout & logLayout = mgr.createLayout("Logs");
 
 	logLayout.addView("logs", new LogView(0,0,800,400));
 
 
 	//// USER DETECTION ////
-	Layout & userLayout = mgr.createLayout("user");
+	Layout & userLayout = mgr.createLayout("User Detection");
 
 	userLayout.addView("filter", new ImageView(0,0,400,300));
 	userLayout.addView("result", new ImageView(400,0,400,300));
 	userLayout.addView("logs", new LogView(0,300,800,100));
 
 	//// ROAD IMPROC ////
-	Layout & roadImprocLayout = mgr.createLayout("roadImproc");
+	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
 	roadImprocLayout.addView("roadimage", new ImageView(0, 0, 400, 300));
 	roadImprocLayout.addView("roadcamera", new ImageView(400, 0, 400, 300));
-
-
 }
 
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	
-	if(mgr.isActive("default")) {
-		Layout & l = mgr.getLayout("default");
+	if(mgr.isActive("Motor")) {
+		Layout & l = mgr.getLayout("Motor");
 		l.getDigitalView("dVoltageFront").setValue(model.directionMotor.voltage);
 		l.getTrackbarView("tbVoltageFront").setPosition(model.directionMotor.voltage);
 		l.getDigitalView("dCurrentFront").setValue(model.directionMotor.current);
@@ -195,8 +193,8 @@ void MainView::updateViews(ViewManager & mgr) {
 
 	}
 
-	else if(mgr.isActive("sensor")) {
-		Layout & l = mgr.getLayout("sensor");
+	else if(mgr.isActive("Sensor")) {
+		Layout & l = mgr.getLayout("Sensor");
 		l.getTrackbarView("sensor_USLeft").setPosition(model.frontLeftUSensor.distance);
 		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
 		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
@@ -215,13 +213,13 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
 		SDL_FreeSurface(cam);
 	}
-	else if(mgr.isActive("user")) {
-		Layout & l = mgr.getLayout("user");
+	else if(mgr.isActive("User Detection")) {
+		Layout & l = mgr.getLayout("User Detection");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
 		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
 	}
-	else if(mgr.isActive("roadImproc")) {
-		Layout & l = mgr.getLayout("roadImproc");
+	else if(mgr.isActive("Road Detection")) {
+		Layout & l = mgr.getLayout("Road Detection");
 		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
 		SDL_Surface * cam = Camera::getBitmap();
 		l.getImageView("roadcamera").setImage(cam, ImageView::NORMAL);
@@ -230,17 +228,18 @@ void MainView::updateViews(ViewManager & mgr) {
 }
 
 void MainView::run() {
+	// Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		return;
+	// Open a window
 	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_HWSURFACE)))
 		return;
 	
-	SDL_WM_SetCaption("FollowMe GUI", NULL);
-	
+	// Manage sleep duration between two updates
 	FPSmanager fpsManager;
 	SDL_initFramerate(&fpsManager);
 
-
+	// Create the views
 	ViewManager mgr;
 	initializeViews(mgr);
 
@@ -250,28 +249,34 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
-			if(mgr.isActive("default") || mgr.isActive("sensor"))
+			// Trasmit event to keyboard if necessary
+			if(mgr.isActive("Motor") || mgr.isActive("Sensor"))
 			if(mgr.getActiveLayout().getKeyboardView("keyboard").handleEvent(event))
 				continue;
 
 			switch(event.type) {
 				case SDL_QUIT:
+					// Close window with cross in title bar
 					end = true;
 					break;
 				case SDL_KEYDOWN:
 					switch(event.key.keysym.sym) {
 						case SDLK_ESCAPE:
+							// Close window with 'ESCAPE'
 							end = true;
 							break;
 						case SDLK_F4:
+							// Close window with 'ALT+F4'
 							if((SDL_GetModState() & KMOD_LALT) == KMOD_LALT)
 								end = true;
 							break;
 						case SDLK_q:
+							// Close window with 'CTRL+Q'
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								end = true;
 							break;
 						case SDLK_TAB:
+							// Switch view with 'TABULATION' or 'CTRL-TABULATION'
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								mgr.switchToPrevLayout();
 							else
@@ -284,14 +289,17 @@ void MainView::run() {
 			}
 		}
 		
-		/// Refresh display
+		// Update views content
 		updateViews(mgr);
 
+		// Draw the active views on the screen
 		mgr.drawActiveLayout(screen, false);
 
+		// Sleep for a while
 		SDL_framerateDelay(&fpsManager);
 	}
 
+	// Close SDL
 	SDL_Quit();
 }
 
@@ -318,10 +326,4 @@ MainView::~MainView() {
 		delete threadView;
 		threadView = NULL;
 	}
-}
-
-// draw line from (x, y) (screen space) to (x2, y2) (car image space)
-void MainView::drawPointerLine(int x, int y, int x2, int y2, SDL_Rect & carPos) {
-	aalineRGBA(screen, x,y,x2+carPos.x,y2+carPos.y,      0,0,200,255);
-	filledCircleRGBA(screen, x2+carPos.x,y2+carPos.y, 3, 0,0,230,255);
 }

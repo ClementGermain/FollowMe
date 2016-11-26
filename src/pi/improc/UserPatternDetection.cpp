@@ -8,11 +8,11 @@ using namespace std;
 
 const  float UserPattern::CircleRadius = 0.07f; // diameter = 14 cm
 const int UserPattern::hLo = 35*180/255;
-const int UserPattern::sLo = 110;
+const int UserPattern::sLo = 70;
 const int UserPattern::vLo = 50;
 const int UserPattern::hHi = 58*180/255;
 const int UserPattern::sHi = 255;
-const int UserPattern::vHi = 245;
+const int UserPattern::vHi = 255;
 
 
 UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
@@ -52,10 +52,9 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	if(drawResult)  {
 		yellow_hue_image.copyTo(filterImage);
 		bgr_image.copyTo(resultImage);
-		if(imageCircles.size() > 0)
-		for(size_t current_circle = 0; current_circle < 1; ++current_circle) {
-			cv::Point center(std::round(imageCircles[current_circle][0]), std::round(imageCircles[current_circle][1]));
-			int radius = std::round(imageCircles[current_circle][2]);
+		if(imageCircles.size() > 0) {
+			cv::Point center(std::round(imageCircles[0][0]), std::round(imageCircles[0][1]));
+			int radius = std::round(imageCircles[0][2]);
 
 			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 2);
 		}
@@ -64,22 +63,20 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 }
 
 void UserPatternDetection::imageCirclesToPosition() {
-	LogI<<"Found "<<imageCircles.size()<<" circles"<<endl;
 	isUserDetected = false;
 
 	// Half width/height of the image in pixels
 	float halfWidth = Camera::getFrameWidth() * 0.5f;
 	float halfHeight = Camera::getFrameHeight() * 0.5f;
 	// focal length of the camera in pixels (yes, in pixels)
-	float focalLength = Camera::getFrameWidth()*0.5f / tan(Camera::horizontalFOV/2);
+	float focalLength = halfWidth / tan(Camera::horizontalFOV/2);
 
-	if(imageCircles.size() > 0)
-	for(int i = 0; i < 1; i++) {
+	if(imageCircles.size() > 0) {
 		// Center x and y coordinate with center of image as origin
-		float x = imageCircles[i][0] - halfWidth;
-		float y = imageCircles[i][1] - halfHeight;
+		float x = imageCircles[0][0] - halfWidth;
+		float y = imageCircles[0][1] - halfHeight;
 		// Radius
-		float r = imageCircles[i][2];
+		float r = imageCircles[0][2];
 
 		// position and radius -> perceived visual angle (PVA) of the circle
 		// left and right bounds of the horizontal PVA (transform circle's horizontal bounds image position to an angle from camera direction)
@@ -98,19 +95,15 @@ void UserPatternDetection::imageCirclesToPosition() {
 		// pitch+yaw+distance -> cartesian coordinate relative to car origin
 		float px = Camera::PosX + distance * -sin(yaw); // back->front axis
 		float py = Camera::PosY + distance * cos(yaw) * cos(pitch); // right->left axis
-		float pz = Camera::PosZ + distance * cos(yaw) * sin(pitch); // down->up axis
+		//float pz = Camera::PosZ + distance * cos(yaw) * sin(pitch); // down->up axis
 
 		// pitch/yaw -> horizontal direction: 0 radian is toward, positive is left, negative is right
 		float direction = atan2(px, py);
-		//LogI << "   Circle "<<i<<": PAV.x="<<((angleXmax - angleXmin)*180/M_PI)<<"* PAV.y="<< ((angleYmax - angleYmin)*180/M_PI)<<"*"<<endl;
-		LogI << "   Circle "<<i<<": DISTANCE="<<distance<<"m DIRECTION="<<(direction*180/M_PI)<<"*"<<endl;
-		LogI << "	       x="<<px<<"m y="<<py<<"m z="<<pz<<"m pitch="<<(pitch*180/M_PI)<<"* yaw="<<(yaw*180/M_PI)<<"*"<<endl;
 
-		if(i == 0) {
-			isUserDetected = true;
-			detectedDirection = direction;
-			detectedDistance = distance;
-		}
+		// export result
+		isUserDetected = true;
+		detectedDirection = direction;
+		detectedDistance = distance;
 	}
 }
 

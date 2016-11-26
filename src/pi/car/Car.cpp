@@ -26,7 +26,6 @@ void Car::getModelStructure(BarstowModel_Typedef & out) {
 	modelMutex.unlock();
 }
 
-
 void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 	controlMutex.lock();
 
@@ -64,6 +63,7 @@ void Car::writeControlMotor(Car::Moving action, float speed) {
 	
 	writeControlMotor(BothWheelMotors, control);
 }
+
 // @param speed: value in range [0, 1]
 void Car::writeControlMotor(Car::Turn action, float speed) {
 	MotorControl_Typedef control;
@@ -85,8 +85,6 @@ void Car::writeControlMotor(Car::Turn action, float speed) {
 	writeControlMotor(DirectionMotor, control);
 }
 
-
-
 void Car::updateModelStructure(BarstowModel_Typedef & model) {
 	modelMutex.lock();
 
@@ -94,3 +92,4 @@ void Car::updateModelStructure(BarstowModel_Typedef & model) {
 
 	modelMutex.unlock();
 }
+

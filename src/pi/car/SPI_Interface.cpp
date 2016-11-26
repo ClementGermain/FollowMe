@@ -1,4 +1,6 @@
 #include "SPI_Interface.hpp" 
+#include <errno.h>
+#include <cstring>
 #ifndef __NO_RASPI__
 #include <wiringPiSPI.h>
 #endif
@@ -19,7 +21,11 @@ SPI_Interface::~SPI_Interface()
 int SPI_Interface::Start()
 {
 #ifndef __NO_RASPI__
-	return  wiringPiSPISetup (m_channel, m_speed);
+	int res = wiringPiSPISetup (m_channel, m_speed);
+	if(res == -1) {
+		LogE << "WiringPi SPI Setup failed: " << strerror(errno) << endl;
+	}
+	return res;
 #else
 	return 0;
 #endif

@@ -8,9 +8,11 @@ bool ObstacleDetection::Left = false;
 bool ObstacleDetection::Center = false;
 bool ObstacleDetection::Right = false;
 bool ObstacleDetection::Global = false;
+thread * ObstacleDetection::threadTest = NULL;
+bool ObstacleDetection::endThread = true;
 
 // ------------- US Left ----------------- //
-void ObstacleDetection::ObstacleDetectionLeft() {
+void ObstacleDetection::obstacleDetectionLeft() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	if (model.frontLeftUSensor.distance < 100) {
@@ -20,13 +22,13 @@ void ObstacleDetection::ObstacleDetectionLeft() {
 		Left = false;
 	}
 };
-bool ObstacleDetection::IsLeftDetected() {
+bool ObstacleDetection::isLeftDetected() {
 	return Left;
 };
 // --------------------------------------- //
 
 // ------------- US Center --------------- //			
-void ObstacleDetection::ObstacleDetectionCenter() {
+void ObstacleDetection::obstacleDetectionCenter() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	if (model.frontCenterUSensor.distance < 100) {
@@ -36,13 +38,13 @@ void ObstacleDetection::ObstacleDetectionCenter() {
 		Center = false;
 	}
 };
-bool ObstacleDetection::IsCenterDetected() {
+bool ObstacleDetection::isCenterDetected() {
 	return Center;
 };
 // --------------------------------------- //
 
 // ------------- US Right ---------------- //			
-void ObstacleDetection::ObstacleDetectionRigth() {
+void ObstacleDetection::obstacleDetectionRight() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
 	if (model.frontRightUSensor.distance < 100) {
@@ -52,13 +54,13 @@ void ObstacleDetection::ObstacleDetectionRigth() {
 		Right = false;
 	}
 };
-bool ObstacleDetection::IsRightDetected() {
+bool ObstacleDetection::isRightDetected() {
 	return Right;
 };
 // --------------------------------------- //
 
 // ------------- US Global --------------- //			
-void ObstacleDetection::ObstacleDetectionGlobal() {
+void ObstacleDetection::obstacleDetectionGlobal() {
 	if (Left or Center or Right){
 		Global = true;
 	}
@@ -66,27 +68,16 @@ void ObstacleDetection::ObstacleDetectionGlobal() {
 		Global = false;
 	}
 };
-bool ObstacleDetection::IsGlobalDetected(){
+bool ObstacleDetection::isGlobalDetected(){
 	return Global;
 }
 // --------------------------------------- //
 
 // ------------ Thread management -------- //
-ObstacleDetection::ObstacleDetection() :
-	endThread(true),
-	threadTest(NULL)
-{
-
-}
-
-ObstacleDetection::~ObstacleDetection() {
-	stop();
-}
-
 void ObstacleDetection::start() {
 	if(threadTest == NULL) {
 		endThread = false;
-		threadTest = new thread([this] { this->run(); });
+		threadTest = new thread(ObstacleDetection::run);
 	}
 }
 
@@ -100,12 +91,12 @@ void ObstacleDetection::stop() {
 }
 
 void ObstacleDetection::run() {
-	while(!endThread) {
-ObstacleDetection::ObstacleDetectionLeft();
-ObstacleDetection::ObstacleDetectionCenter();
-ObstacleDetection::ObstacleDetectionRigth(); 
-ObstacleDetection::ObstacleDetectionGlobal();
+	while(!ObstacleDetection::endThread) {
+		ObstacleDetection::obstacleDetectionLeft();
+		ObstacleDetection::obstacleDetectionCenter();
+		ObstacleDetection::obstacleDetectionRight(); 
+		ObstacleDetection::obstacleDetectionGlobal();
 		// sleep 
-			this_thread::sleep_for(chrono::milliseconds(100));
+		this_thread::sleep_for(chrono::milliseconds(100));
 	}
 }

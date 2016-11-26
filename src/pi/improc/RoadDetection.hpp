@@ -4,8 +4,8 @@
 #include "../car/Camera.hpp"
 #include <opencv2/opencv.hpp>
 
-#define ROADMATCOL 16
-#define ROADMATROW 12
+#define ROADMATCOL 32
+#define ROADMATROW 24
 
 #define OBLIVIOUSNESS 0.8
 
