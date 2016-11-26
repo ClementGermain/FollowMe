@@ -7,10 +7,10 @@
 using namespace std;
 
 const  float UserPattern::CircleRadius = 0.07f; // diameter = 14 cm
-const int UserPattern::hLo = 35*180/255;
+const int UserPattern::hLo = 160;//35*180/255;
 const int UserPattern::sLo = 70;
 const int UserPattern::vLo = 50;
-const int UserPattern::hHi = 58*180/255;
+const int UserPattern::hHi = 10;//58*180/255;
 const int UserPattern::sHi = 255;
 const int UserPattern::vHi = 255;
 
@@ -20,37 +20,48 @@ UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
 }
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
-	cv::Mat median;
-	// Apply median blur to remove noise
-	cv::medianBlur(bgr_image, median, 3);
-
 	// Convert input image to HSV
 	cv::Mat hsv_image;
-	cv::cvtColor(median, hsv_image, cv::COLOR_BGR2HSV);
+	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
 
 	// Threshold the HSV image, keep only the red pixels
-	cv::Mat yellow_hue_image;
-	cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
-			cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), yellow_hue_image);
+	cv::Mat hue_image;
+	// Case of low hue > high hue (use cyclic propertie of hue)
+	if(UserPattern::hLo > UserPattern::hHi) {
+		// upper hue
+		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+				cv::Scalar(180, UserPattern::sHi, UserPattern::vHi), hue_image);
+		// lower hue
+		cv::Mat lowerHue;
+		cv::inRange(hsv_image, cv::Scalar(0, UserPattern::sLo, UserPattern::vLo),
+				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), lowerHue);
+		// Combine lower and upper hue
+		cv::addWeighted(hue_image, 1.0, lowerHue, 1.0, 0.0, hue_image);
+	}
+	// Case : low hue < high hue
+	else {
+		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), hue_image);
+	}
 
 	//morphological opening (remove small objects from the foreground)
-	cv::erode(yellow_hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-	cv::dilate(hsv_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+	cv::erode(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+	cv::dilate(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
 
 	//morphological closing (fill small holes in the foreground)
-	cv::dilate(yellow_hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-	cv::erode(hsv_image, yellow_hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+	cv::dilate(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+	cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
 
 	// Apply blur
-	cv::GaussianBlur(yellow_hue_image, yellow_hue_image, cv::Size(9, 9), 2, 2);
+	cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
 
 	// Use the Hough transform to detect circles in the combined threshold image
 	imageCircles.clear();
-	cv::HoughCircles(yellow_hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, yellow_hue_image.rows/8, 100, 20, 0, 0);
+	cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
 
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult)  {
-		yellow_hue_image.copyTo(filterImage);
+		hue_image.copyTo(filterImage);
 		bgr_image.copyTo(resultImage);
 		if(imageCircles.size() > 0) {
 			cv::Point center(std::round(imageCircles[0][0]), std::round(imageCircles[0][1]));
