@@ -26,6 +26,7 @@ int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
 int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
+int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -47,8 +48,12 @@ void runUI() {
 			),
 			NULL
 		),
+		new Menu("user", 0, 0,
+			new Menu("red", 1, userDetectionSettings, NULL),
+			new Menu("yellow", 2, userDetectionSettings, NULL),
+			NULL
+		),
 		new Menu("gui", 0, openGUI, NULL),
-		new Menu("camera", 0, 0, NULL),
 		new Menu("log", 0, 0,
 			new Menu("write", 0, 0,
 				new Menu("I", 1, writeLog, NULL),
@@ -77,7 +82,7 @@ void runUI() {
 
 	/// Ending ///
 	if(view.isOpen()) {
-		cout << "Waiting for closure of the GUI..." << endl;
+		view.close();
 	}
 }
 
@@ -197,6 +202,28 @@ int runSound(istream & input, vector<int> i, vector<string> s) {
 			break;
 		case 2:
 			Sound::stop();
+			break;
+	}
+	return 0;
+}
+
+int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
+	switch(i.back()) {
+		case 1: // red
+			UserPattern::hLo = 160;//35*180/255;
+			UserPattern::sLo = 70;
+			UserPattern::vLo = 50;
+			UserPattern::hHi = 5;//58*180/255;
+			UserPattern::sHi = 255;
+			UserPattern::vHi = 255;
+			break;
+		case 2: // yellow
+			UserPattern::hLo = 35*180/255;
+			UserPattern::sLo = 70;
+			UserPattern::vLo = 50;
+			UserPattern::hHi = 58*180/255;
+			UserPattern::sHi = 255;
+			UserPattern::vHi = 255;
 			break;
 	}
 	return 0;

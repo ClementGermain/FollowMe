@@ -38,32 +38,23 @@ void UserPatternDetectionTest::stop() {
 }
 
 void UserPatternDetectionTest::run() {
-	int i = 0;
-	const char * names[6] = {
-		"../../res/img/u1.png",
-		"../../res/img/u2.png",
-		"../../res/img/u3a.png",
-		"../../res/img/u4.png",
-		"../../res/img/u5.png",
-		"../../res/img/u6.png"
-	};
 	while(!endThread) {
 		cv::Mat img;
 #ifdef __NO_RASPI__
-		img = cv::imread(names[i%6]);
+		img = cv::imread("../../res/img/red_circle3.png");
 #else
 		Camera::getImage(img);
 #endif
 
 		Timer t;
-		detector.findPattern(img, true);
+		if(img.data)
+			detector.findPattern(img, true);
 		detector.imageCirclesToPosition();
 		
 		int sleep_ms = max(0, 100 - (int) (t.elapsed() * 1000));
 		// sleep 
 		for(int s = 0; s < sleep_ms && !endThread; s++)
 			this_thread::sleep_for(chrono::milliseconds(1));
-		i++;
 	}
 }
 

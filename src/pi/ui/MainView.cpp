@@ -11,6 +11,7 @@
 #include "car/Car.hpp"
 #include "utils/Log.hpp"
 #include "car/Camera.hpp"
+#include "car/Obstacle.hpp"
 #include "view/KeyboardInput.hpp"
 #include "view/trackbar/Trackbar_Horizontal.hpp"
 #include "view/trackbar/Trackbar_Vertical.hpp"
@@ -124,12 +125,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_road", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
 
 	// distance Usound trackbar
-	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 5, 426, 220, 10, 130, INVERSE));
-	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 5, 369, 240, 10, 130, INVERSE));
-	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 5, 483, 240, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 220, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 500, 369, 240, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 500, 483, 240, 10, 130, INVERSE));
 	
 	// position user trackbar
-	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 5, 426, 50, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 426, 50, 10, 130, INVERSE));
 	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10, CENTREE));
 
 	// distance Usound text
@@ -184,13 +185,12 @@ void MainView::updateViews(ViewManager & mgr) {
 
 		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
-		l.getToggleBoxView("toggle_obstacle").toggle(true);
+		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getToggleBoxView("toggle_road").toggle(true);
 		
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
-
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
 	}
 
 	else if(mgr.isActive("Sensor")) {
@@ -204,14 +204,14 @@ void MainView::updateViews(ViewManager & mgr) {
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected());
-		l.getToggleBoxView("sensor_toggle_obstacle").toggle(true);
+		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getToggleBoxView("sensor_toggle_road").toggle(true);
 		
 		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("camera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
 	}
 	else if(mgr.isActive("User Detection")) {
 		Layout & l = mgr.getLayout("User Detection");
@@ -221,9 +221,9 @@ void MainView::updateViews(ViewManager & mgr) {
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");
 		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
-		SDL_Surface * cam = Camera::getBitmap();
-		l.getImageView("roadcamera").setImage(cam, ImageView::NORMAL);
-		SDL_FreeSurface(cam);
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
 	}
 }
 
@@ -232,7 +232,7 @@ void MainView::run() {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		return;
 	// Open a window
-	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_HWSURFACE)))
+	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE)))
 		return;
 	
 	// Manage sleep duration between two updates
@@ -245,7 +245,7 @@ void MainView::run() {
 
 	bool end = false;
 
-	while(!end) {
+	while(!end && !isThreadTerminated)  {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
@@ -320,10 +320,15 @@ bool MainView::isOpen() {
 	return !isThreadTerminated;
 }
 
-MainView::~MainView() {
+void MainView::close() {
 	if(threadView != NULL) {
+		isThreadTerminated = true;
 		threadView->join();
 		delete threadView;
 		threadView = NULL;
 	}
+}
+
+MainView::~MainView() {
+	close();
 }

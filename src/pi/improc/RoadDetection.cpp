@@ -37,10 +37,8 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	Mat thresholdedImage;
 	resize(threshold, thresholdedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
 
-
-	thresholdedImage = thresholdedImage * OBLIVIOUSNESS;
-	m_thresholdedImage = m_thresholdedImage * (1 - OBLIVIOUSNESS) + thresholdedImage;
-
+	// Interpolate new image with previous result
+	addWeighted(m_thresholdedImage, (1-OBLIVIOUSNESS), thresholdedImage, OBLIVIOUSNESS, 0, m_thresholdedImage);
 }
 
 Mat & RoadDetection::getImage() {
