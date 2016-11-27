@@ -15,13 +15,16 @@ class KeyboardInput : public View {
 		void draw(SDL_Surface * s, bool needRedraw=true, bool updateScreen=false);
 
 		static const int GoForward = 1;
+		static const int GoFastForward = 2;
 		static const int GoBackward = -1;
+		static const int GoFastBackward = -2;
 		static const int TurnLeft = 1;
 		static const int TurnRight = -1;
 		static const int Idle = 0;
 
 	private:
 		bool enabled;
+		bool boostEnabled;
 		std::vector<bool> isKeyPressed;
 		std::vector<int> lastStates;
 		void (*commandMotorFront)(int);

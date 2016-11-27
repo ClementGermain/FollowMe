@@ -50,13 +50,18 @@ void commandMotorFront(int direction) {
 void commandMotorBack(int direction) {
 	LogD << "Prop " << direction<<endl;
 	float speed = 0.5f;
+	float fastspeed = 1.0f;
 	switch(direction) {
 		case KeyboardInput::Idle:
 			Car::writeControlMotor(Car::Stop, speed); 
 			break;
+		case KeyboardInput::GoFastForward:
+			speed = fastspeed;
 		case KeyboardInput::GoForward:
 			Car::writeControlMotor(Car::MoveForward, speed); 
 			break;
+		case KeyboardInput::GoFastBackward:
+			speed = fastspeed;
 		case KeyboardInput::GoBackward:
 			Car::writeControlMotor(Car::MoveBackward, speed); 
 			break;
@@ -108,7 +113,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	Layout & sensorLayout = mgr.createLayout("Sensor");
 
 	// Car top view
-	sensorLayout.addView("sensor_imgCar", new ImageView(330, 25, 200, 350));
+	sensorLayout.addView("sensor_imgCar", new ImageView(330, 25, 200, 375));
 	SDL_Surface * car_view_sensor = SDL_LoadBMP("../../res/img/car_top_view_capteurs.bmp");
 	sensorLayout.getImageView("sensor_imgCar").setImage(car_view_sensor);
 	SDL_FreeSurface(car_view_sensor);
@@ -125,18 +130,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_road", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
 
 	// distance Usound trackbar
-	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 220, 10, 130, INVERSE));
-	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 500, 369, 240, 10, 130, INVERSE));
-	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 500, 483, 240, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 240, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USLeft", new Trackbar_Vertical(0, 500, 369, 255, 10, 130, INVERSE));
+	sensorLayout.addView("sensor_USRight", new Trackbar_Vertical(0, 500, 483, 255, 10, 130, INVERSE));
 	
 	// position user trackbar
-	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 426, 50, 10, 130, INVERSE));
-	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 20, 170, 10, CENTREE));
+	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 425, 85, 10, 100, INVERSE));
+	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 7, 170, 11, CENTREE));
 
 	// distance Usound text
-	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 105, 65));
-	sensorLayout.addView("sensor_distFrontCenter", new Digital("%.0fcm", 397, 100, 66));
-	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 100, 65));
+	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 210, 65));
+	sensorLayout.addView("sensor_distFrontCenter", new Digital("%.0fcm", 397, 195, 66));
+	sensorLayout.addView("sensor_distFrontRight", new Digital("%.0fcm", 465, 210, 65));
 
 	// other
 	sensorLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));

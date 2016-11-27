@@ -10,6 +10,7 @@ using namespace std;
 KeyboardInput::KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h) :
 	View(x, y),
 	enabled(false),
+	boostEnabled(false),
 	isKeyPressed(4, false),
 	lastStates(2, 0), 
 	commandMotorFront(commandMotorFront),
@@ -38,6 +39,13 @@ bool KeyboardInput::handleEvent(SDL_Event & event) {
 			case SDLK_RIGHT:
 				isKeyPressed[keycode] = !isUp;
 				break;
+			case SDLK_SPACE:
+				if(isUp)
+					toggleEnabled();
+				break;
+			case SDLK_RALT:
+			case SDLK_LALT:
+				break;
 			default:
 				return false;
 			}
@@ -54,8 +62,10 @@ bool KeyboardInput::handleEvent(SDL_Event & event) {
 			return false;
 	}
 
+	boostEnabled = ((SDL_GetModState() & KMOD_LALT) == KMOD_LALT);
+
 	int newDirection[2] = {
-		enabled * (isKeyPressed[3] - isKeyPressed[2]), // forward/backward
+		enabled * (1+boostEnabled) * (isKeyPressed[3] - isKeyPressed[2]), // forward/backward
 		enabled * (isKeyPressed[1] - isKeyPressed[0]) // turn left/right
 	};
 	
@@ -99,7 +109,7 @@ void KeyboardInput::draw(SDL_Surface * screen, bool needRedraw, bool updateScree
 			// Disabled
 			boxRGBA(buffer, 0,0, buffer->w, buffer->h, 0,0,0,200);
 			// Text
-			const char * text = "Click here to enable/disable key control";
+			const char * text = "Click to enable/disable key control";
 			stringRGBA(buffer, (buffer->w-strlen(text)*8) / 2, (buffer->h-8) / 2, text, 255,255,255,255);
 		}
 		else {
@@ -109,20 +119,26 @@ void KeyboardInput::draw(SDL_Surface * screen, bool needRedraw, bool updateScree
 			SDL_Rect rectLeft =  {0,  80, 65,65};
 			SDL_Rect rectRight = {133,80, 65,65};
 
+			int alpha = 128;
+
 			switch(lastStates[0]) {
+			case KeyboardInput::GoFastForward:
+				alpha += 64;
 			case KeyboardInput::GoForward:
-				boxRGBA(buffer, pos.x+rectUp.x, pos.y+rectUp.y, pos.x+rectUp.x+rectUp.w, pos.y+rectUp.y+rectUp.h, 255,255,255,128);
+				boxRGBA(buffer, pos.x+rectUp.x, pos.y+rectUp.y, pos.x+rectUp.x+rectUp.w, pos.y+rectUp.y+rectUp.h, 255,255,255,alpha);
 				break;
+			case KeyboardInput::GoFastBackward:
+				alpha += 64;
 			case KeyboardInput::GoBackward:
-				boxRGBA(buffer, pos.x+rectDown.x, pos.y+rectDown.y, pos.x+rectDown.x+rectDown.w, pos.y+rectDown.y+rectDown.h, 255,255,255,128);
+				boxRGBA(buffer, pos.x+rectDown.x, pos.y+rectDown.y, pos.x+rectDown.x+rectDown.w, pos.y+rectDown.y+rectDown.h, 255,255,255,alpha);
 				break;
 			}
 			switch(lastStates[1]) {
 			case KeyboardInput::TurnLeft:
-				boxRGBA(buffer, pos.x+rectLeft.x, pos.y+rectLeft.y, pos.x+rectLeft.x+rectLeft.w, pos.y+rectLeft.y+rectLeft.h, 255,255,255,128);
+				boxRGBA(buffer, pos.x+rectLeft.x, pos.y+rectLeft.y, pos.x+rectLeft.x+rectLeft.w, pos.y+rectLeft.y+rectLeft.h, 255,255,255,alpha);
 				break;
 			case KeyboardInput::TurnRight:
-				boxRGBA(buffer, pos.x+rectRight.x, pos.y+rectRight.y, pos.x+rectRight.x+rectRight.w, pos.y+rectRight.y+rectRight.h, 255,255,255,128);
+				boxRGBA(buffer, pos.x+rectRight.x, pos.y+rectRight.y, pos.x+rectRight.x+rectRight.w, pos.y+rectRight.y+rectRight.h, 255,255,255,alpha);
 				break;
 			}
 		}
