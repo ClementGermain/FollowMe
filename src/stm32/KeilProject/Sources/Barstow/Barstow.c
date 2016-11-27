@@ -30,8 +30,10 @@ void StartBarstow(void)
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
-	Start_US_Sensor(BarstowModel);
-	
+	//Start_US_Sensor(BarstowModel);
+	BarstowModel->frontCenterUSensor.distance = 400;
+	BarstowModel->frontRightUSensor.distance = 200;
+	BarstowModel->frontLeftUSensor.distance = 150;
 	/*!< Entering main loop. */
 	while(1)
 	{
