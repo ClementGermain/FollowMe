@@ -38,7 +38,7 @@ void StartBarstow(void)
 	while(1)
 	{
 		/*!< Updating motors. */
-		Update_Motors(BarstowControl);
+		//Update_Motors(BarstowControl);
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction

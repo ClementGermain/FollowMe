@@ -131,7 +131,7 @@ void Periodic_Impulse_3_Front_US(void);
 	* @param Model to update
 	* @retval None
 */
-void Start_US_Sensor(BarstowModel_Typedef * mod);
+void Start_US_Sensor(void);
 
 //fonction d'interruption
 void Capture_echo (void);

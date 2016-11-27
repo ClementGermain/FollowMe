@@ -332,7 +332,13 @@ void Config_NVIC_EXTI(uint32_t EXTI_Line){
 	if (EXTI_Line == EXTI_Line0){
 		NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
 	}
-	//FAIRE LES AUTRES CAS
+	else if (EXTI_Line == EXTI_Line1){
+		NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
+	}
+	else if (EXTI_Line == EXTI_Line2){
+		NVIC_InitStructure.NVIC_IRQChannel = EXTI2_IRQn;
+	}
+	
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;

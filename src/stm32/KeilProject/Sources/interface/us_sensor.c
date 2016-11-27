@@ -70,7 +70,7 @@ void Init_All_US_Sensor(void){
 	//Configuration de l'external trigger
 	
 		
-	// A DECOMMENTER QUAND POUR UN MARCHE	
+	
 	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
 		Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
 		
@@ -79,6 +79,10 @@ void Init_All_US_Sensor(void){
 		
 		 Config_EXTI_Rising_Falling(EXTI_Line2);	//config EXTI
 		Config_NVIC_EXTI(EXTI_Line2); //config NVIC pour EXTI
+		
+			GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
+			GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
+			GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_C, GPIO_Num_Port_Echo_Front_C);
 	
 								
 }
@@ -95,7 +99,7 @@ float Init_Systick(void){
 }
 
 
-//réinitialise le compteur et le lance
+//relance le compteur
 void Relance_Compteur_Echo(void){
 	TIM_Cmd(TIM_Echo, ENABLE);
 }
@@ -105,7 +109,7 @@ void Capture_echo(void) {
 	
 		//capturer le compteur, reset et l'arrêter
 		time_echo = TIM_GetCounter(TIM_Echo);
-		TIM_Cmd(TIM2, DISABLE);	
+		TIM_Cmd(TIM_Echo, DISABLE);	
 		Reset_counter(TIM_Echo);
 
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
@@ -140,31 +144,29 @@ void Periodic_Impulse_3_Front_US(){
 	//impulse >10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
 	US_active = SENSOR_FRONT_L;
-	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
+
 	}
 	
 	else if (Time%210==80){
 	//impulse 10us on Front Right US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 12);
 	US_active = SENSOR_FRONT_R;
-	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
+	
 	}
 
 	else if (Time%210==150){
 	//impulse 10us on Front Center US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
-	US_active = SENSOR_FRONT_R;
-	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_C, GPIO_Num_Port_Echo_Front_C);
+	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 12);
+	US_active = SENSOR_FRONT_C;
+
 
 	}
 }
 
-void Start_US_Sensor(BarstowModel_Typedef * mod){
+void Start_US_Sensor(){
 	//Model = mod;
 	Init_Systick();
-	Init_All_US_Sensor();
-
-	
+	Init_All_US_Sensor();	
 }
 
 
