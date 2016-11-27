@@ -52,10 +52,7 @@ void Init_All_US_Sensor(void){
 	Init_US_Sensor(SENSOR_FRONT_L);
 	Init_US_Sensor(SENSOR_FRONT_R);
 	Init_US_Sensor(SENSOR_FRONT_C);
-//	Init_US_Sensor(SENSOR_BACK_L);
-//	Init_US_Sensor(SENSOR_BACK_R);
-//	Init_US_Sensor(SENSOR_BACK_C);
-	
+
 
 	/*** Init timer in count mode ***/
 
@@ -67,16 +64,14 @@ void Init_All_US_Sensor(void){
 		timerInit.TIM_RepetitionCounter = 0x0000;
 	TIM_TimeBaseInit(TIM_Echo, &timerInit);
 //init interrupt
-	Config_NVIC_TIM2(); //config NVIC pour TIM2
+	//Config_NVIC_TIM2(); //config NVIC pour TIM2
 
 
 	//Configuration de l'external trigger
-	//A EFFACER QUAND POUR UN MARCHE
-	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
-	Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
+	
 		
 	// A DECOMMENTER QUAND POUR UN MARCHE	
-	/* Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
+	Config_EXTI_Rising_Falling(EXTI_Line0);	//config EXTI
 		Config_NVIC_EXTI(EXTI_Line0); //config NVIC pour EXTI
 		
 		 Config_EXTI_Rising_Falling(EXTI_Line1);	//config EXTI
@@ -84,7 +79,7 @@ void Init_All_US_Sensor(void){
 		
 		 Config_EXTI_Rising_Falling(EXTI_Line2);	//config EXTI
 		Config_NVIC_EXTI(EXTI_Line2); //config NVIC pour EXTI
-	*/
+	
 								
 }
 
@@ -144,46 +139,59 @@ void Periodic_Impulse_3_Front_US(){
 
 	//impulse >10us on Front Left US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
-	//US_active = SENSOR_FRONT_L;
-
-		
-	//Timer_Active_IT( TIM_Echo	,5, Capture_echo);
-	//Init_Channel_trigger(TIM_Echo, TIM_Channel_Echo_Front_L);
-
-	
-	//Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 10);
 	US_active = SENSOR_FRONT_L;
-	//GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
+	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
 	}
 	
-	/*else if (Time%210==80){
+	else if (Time%210==80){
 	//impulse 10us on Front Right US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
 	US_active = SENSOR_FRONT_R;
 	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
-	}*/
+	}
 
-	/*else if (Time%210==150){
+	else if (Time%210==150){
 	//impulse 10us on Front Center US
 	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 10);
 	US_active = SENSOR_FRONT_R;
-	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_R);
+	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_C, GPIO_Num_Port_Echo_Front_C);
 
-	}*/
+	}
 }
 
 void Start_US_Sensor(BarstowModel_Typedef * mod){
-	Model = mod;
+	//Model = mod;
 	Init_Systick();
 	Init_All_US_Sensor();
-	GPIO_EXTILineConfig(GPIO_PortSourceGPIOA, 0);
+
 	
 }
 
 
 void EXTI0_IRQHandler(void) {
-			if ((GPIOA->IDR & 0x0001) == 0x0001) {
-				
+			//if ((GPIOA->IDR & 0x0001) == 0x0001) {
+	GPIO_TypeDef* GPIO;
+	uint16_t Pin;
+	uint32_t line;
+		
+	if (US_active == SENSOR_FRONT_L){
+			GPIO = GPIO_SENSOR_ECHO_FRONT_L;
+			Pin = GPIO_Num_Port_Echo_Front_L ;
+		line=EXTI_Line0;
+		}
+		else if (US_active == SENSOR_FRONT_C){
+			GPIO = GPIO_SENSOR_ECHO_FRONT_C;
+			Pin= GPIO_Num_Port_Echo_Front_C;
+			line =EXTI_Line1;
+			
+		}
+		else if (US_active == SENSOR_FRONT_R){
+			GPIO=GPIO_SENSOR_ECHO_FRONT_R;
+			Pin= GPIO_Num_Port_Echo_Front_R;
+			line= EXTI_Line2;
+			}
+			
+				if (GPIO_ReadInputDataBit(GPIO, Pin)) {
 				//relance le compteur
 				Relance_Compteur_Echo();
 			}
@@ -192,5 +200,5 @@ void EXTI0_IRQHandler(void) {
 				Capture_echo();
 			}
 			
-			EXTI_ClearITPendingBit(EXTI_Line0);
+			EXTI_ClearITPendingBit(line);
 }

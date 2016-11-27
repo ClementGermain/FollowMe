@@ -48,9 +48,9 @@
 #define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
 
 
-#define GPIO_Num_Port_Echo_Front_L 			0
-#define GPIO_Num_Port_Source_Echo_Front_R		1
-#define GPIO_Num_Port_Source_Echo_Front_C		4
+#define GPIO_Num_Port_Echo_Front_L 		0
+#define GPIO_Num_Port_Echo_Front_R		1
+#define GPIO_Num_Port_Echo_Front_C		4
 
 
 #define TIM_Echo													TIM2
