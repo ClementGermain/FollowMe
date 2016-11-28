@@ -78,6 +78,7 @@ float Init_Systick(void){
 	float period; //period systick us
 	period=Systick_Period(SYSTICK_PERIOD_US);
 	Systick_Prio_IT(6,&Periodic_Impulse_3_Front_US);
+	//NVIC_SetPriority (SysTick_IRQn, 7);	
 	SysTick_On;
 	SysTick_Enable_IT;
 	return period;
