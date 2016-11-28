@@ -18,6 +18,7 @@ public:
 	void applyRoadThreshold(cv::Mat image);
 	cv::Mat & getImage();
 
+	bool grassDetected;
 private:
 	cv::Mat m_thresholdedImage;
 };
