@@ -80,7 +80,7 @@ float Init_Systick(void){
 	Time=0;
 	float period; //period systick us
 	period=Systick_Period(SYSTICK_PERIOD_US);
-	Systick_Prio_IT(6,Periodic_Impulse_3_Front_US);
+	Systick_Prio_IT(6,&Periodic_Impulse_3_Front_US);
 	SysTick_On;
 	SysTick_Enable_IT;
 	

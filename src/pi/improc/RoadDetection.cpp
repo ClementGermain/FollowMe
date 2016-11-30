@@ -39,6 +39,11 @@ void RoadDetection::applyRoadThreshold(Mat image)
 
 	// Interpolate new image with previous result
 	addWeighted(m_thresholdedImage, (1-OBLIVIOUSNESS), thresholdedImage, OBLIVIOUSNESS, 0, m_thresholdedImage);
+
+	Mat front = m_thresholdedImage(Range(ROADMATCOL/4, ROADMATCOL*3/4), Range(ROADMATROW/2, ROADMATROW-1));// yolo
+	int sumOfFront = sum(front)[0];
+	grassDetected = sumOfFront >= (ROADMATROW/2 * ROADMATCOL/2) * 255 * 50/100; // detected if at least 50% of the middle down area of image is grass
+	
 }
 
 Mat & RoadDetection::getImage() {
