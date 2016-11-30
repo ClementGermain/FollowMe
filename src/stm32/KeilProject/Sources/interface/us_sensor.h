@@ -77,6 +77,8 @@ typedef struct{
 	uint16_t GPIO_Pin_Trig;
 	GPIO_TypeDef * GPIO_Echo;
 	uint16_t GPIO_Pin_Echo;
+	uint32_t * ModelPointer;
+	int state;
 } US_Sensor_Typedef;
 
 extern US_Sensor_Typedef * SENSOR_FRONT_L;
@@ -131,7 +133,7 @@ void Periodic_Impulse_3_Front_US(void);
 	* @param Model to update
 	* @retval None
 */
-void Start_US_Sensor(void);
+void Start_US_Sensor(BarstowModel_Typedef * mod);
 
 //fonction d'interruption
 void Capture_echo (void);

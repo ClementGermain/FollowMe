@@ -25,9 +25,7 @@ void Systick_Prio_IT(char Prio,void (*Systick_function) (void))
 // Fixer la periode du Systick et renvoie de la valeur effective
 //=======================================================================================
 
-float Systick_Period(float Duree_us)
-
-	// Retourne la duree calculée, 0 si impossible
+float Systick_Period(float Duree_us) // Retourne la duree calculée, 0 si impossible
 {
 	vu32 Nb_Reload;
 	float Nb_Reload_Float; 
@@ -62,7 +60,10 @@ float Systick_Period(float Duree_us)
 	return Duree_reelle_us;
 }
 
-void My_SysTick_Handler (void) 
-{
-	Ptr_Systick();	
+//Systick interrupt handler, interrupts at “interrupt rate” per second
+//Currently set to interrupt at millisecond intervals
+void SysTick_Handler (void){
+     Ptr_Systick();
 }
+
+

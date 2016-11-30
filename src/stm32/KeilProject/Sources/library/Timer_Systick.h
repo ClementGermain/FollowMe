@@ -22,7 +22,8 @@
 #define  SysTick_Off ((SysTick->CTRL)=(SysTick->CTRL)& ~(1<<0))
 #define  SysTick_Enable_IT ((SysTick->CTRL)=(SysTick->CTRL)|1<<1)
 #define  SysTick_Disable_IT ((SysTick->CTRL)=(SysTick->CTRL)& ~(1<<1))
-#define My_Systick_Handler Systick_Handler;
+
+//void SysTick_Handler(void);
 //========================================================================================
 // Fixer la priorité de l'IT coeur Systick, plus elle est basse, plus la prio est importante
 // Le second paramètre est le nom de la fonction à lancer lors de l'interruption
