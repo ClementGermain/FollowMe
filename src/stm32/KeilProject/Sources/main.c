@@ -12,30 +12,19 @@
   * @param  None
   * @retval None
   */
-	
-	
 void RCC_Configuration(void);
 
 int main(void)
 { 
-	
 	/*<! RCC Configuration */
   RCC_Configuration();
 
-Start_US_Sensor();
+	Start_US_Sensor();
 	
-	
-//	/*<! Start Barstow car's program. */
+	/*<! Start Barstow car's program. */
 	StartBarstow();
-
-
-	
-	
-	
 	while(1){}
 }
-
-
 
 void RCC_Configuration(void)
 {
@@ -49,6 +38,9 @@ void RCC_Configuration(void)
 													RCC_APB1Periph_SPI2 , ENABLE);
 
 	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_TIM1 |
+													RCC_APB2Periph_ADC1 |
+													RCC_APB2Periph_ADC2 |
+													RCC_APB2Periph_ADC3 |
 													RCC_APB2Periph_GPIOB |
 													RCC_APB2Periph_GPIOA |
 													RCC_APB2Periph_GPIOC |
