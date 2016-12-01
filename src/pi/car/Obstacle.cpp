@@ -65,10 +65,10 @@ bool ObstacleDetection::isRightDetected() {
 // ------------- US Global --------------- //			
 void ObstacleDetection::obstacleDetectionGlobal() {
 	if (Left or Center or Right){
-		ObstacleDetection::obstacleDetectionGlobalTimed();
+		Global = true;
 	}
 	else {
-		Global = false;
+		ObstacleDetection::obstacleDetectionGlobalTimed();
 	}
 };
 bool ObstacleDetection::isGlobalDetected(){
@@ -80,11 +80,11 @@ bool ObstacleDetection::isGlobalDetected(){
 void ObstacleDetection::obstacleDetectionGlobalTimed() {
 	ObstacleDetection::Timer = time(0);	
 	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
-		Global = false;
+		Global = true;
 	}
 	else {
 		ObstacleDetection::Delta = ObstacleDetection::Timer;
-		Global = true;
+		Global = false;
 	} 
 }
 // --------------------------------------- //
