@@ -9,33 +9,34 @@
 using namespace std;
 
 float IA::Dist = 0.0;
+float IA::Speed = 0.0;
 bool IA::UserDetected = false;
 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
 
+// ---Linar function for speed control---- //
+void IA::SpeedControl (float distance){
+	if (distance <= 3) {
+	IA::Speed = distance*(1/3);
+	}
+	else {
+	IA::Speed = 1.0;
+	}
+}
+// --------------------------------------- //
+
 // ---------Back motors management-------- //
 void IA::IAMotorBack(float distance) {
 	LogD << "IAMotorBack distance "<<distance<<endl;
-	float speed = 0.5f;
-	float fastspeed = 1.0f;
 	IA::UserDetected = UserDetectionTest.detector.isDetected();
+	IA::SpeedControl(distance);
 	if (UserDetected) {
-		if (distance >= 0.0 and distance <0.5) {
-				Car::writeControlMotor(Car::Stop, speed);	
-				LogD << "IAMotorBack Stop "<<endl; 
-		}
-		else if (distance >= 0.5 and distance <1.5) {
-				Car::writeControlMotor(Car::MoveForward, speed);	
-				LogD << "IAMotorBack MediumSpeed "<<endl; 
-		}
-		else if (distance >= 1.5) {
-				Car::writeControlMotor(Car::MoveForward, fastspeed);	
-				LogD << "IAMotorBack FullSpeed "<<endl; 
-		}
+		Car::writeControlMotor(Car::MoveForward, IA::Speed);
+		LogD << "IAMotorBack speed"<<IA::Speed<<endl; 
 	}
 	else {
-		Car::writeControlMotor(Car::Stop, speed);	
+		Car::writeControlMotor(Car::Stop, IA::Speed);	
 		LogD << "IAMotorBack No user detected "<<endl; 
 	}
 }

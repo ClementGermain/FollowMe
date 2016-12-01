@@ -7,10 +7,12 @@ class IA {
 	public:
 		static void start();
 		static void stop();
-
+	
+		static void SpeedControl(float);
 		static void IAMotorBack(float);
 
-	private:				
+	private:		
+		static float Speed;		
 		static float Dist;
 		static bool UserDetected;
 
