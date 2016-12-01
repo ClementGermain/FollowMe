@@ -14,6 +14,7 @@ class IA {
 	private:		
 		static float Speed;		
 		static float Dist;
+		static bool ObstacleDetected;
 		static bool UserDetected;
 
 		static void run();
