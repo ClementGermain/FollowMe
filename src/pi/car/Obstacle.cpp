@@ -79,7 +79,7 @@ bool ObstacleDetection::isGlobalDetected(){
 // ---------US Global time related-------- //	
 void ObstacleDetection::obstacleDetectionGlobalTimed() {
 	ObstacleDetection::Timer = time(0);	
-	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 500){ 
+	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
 		Global = false;
 	}
 	else {
