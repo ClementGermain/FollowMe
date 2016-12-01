@@ -18,7 +18,7 @@ bool IA::endThread = true;
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distance){
 	if (distance <= 3) {
-	IA::Speed = distance*(1/3);
+	IA::Speed = distance*(1.0/3.0);
 	}
 	else {
 	IA::Speed = 1.0;
@@ -33,7 +33,7 @@ void IA::IAMotorBack(float distance) {
 	IA::SpeedControl(distance);
 	if (UserDetected) {
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-		LogD << "IAMotorBack speed"<<IA::Speed<<endl; 
+		LogD << "IAMotorBack speed "<<IA::Speed<<endl; 
 	}
 	else {
 		Car::writeControlMotor(Car::Stop, IA::Speed);	

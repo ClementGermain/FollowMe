@@ -73,7 +73,7 @@ void runUI() {
 			new Menu ("stop", 2, runSound, NULL),
 			NULL
 		),
-		new Menu("ia", 0, 0, 
+		new Menu("ai", 0, 0, 
 			new Menu ("start", 1, runIA, NULL),
 			new Menu ("stop", 2, runIA, NULL),
 			NULL
