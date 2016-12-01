@@ -3,6 +3,7 @@
 
 #include "car/Car.hpp"
 #include <thread>
+#include <ctime>
 
 class ObstacleDetection {
 	public:
@@ -10,6 +11,7 @@ class ObstacleDetection {
 		static void obstacleDetectionCenter();
 		static void obstacleDetectionRight();
 		static void obstacleDetectionGlobal();
+		static void obstacleDetectionGlobalTimed();
 
 		static bool isLeftDetected();
 		static bool isCenterDetected();
@@ -24,6 +26,8 @@ class ObstacleDetection {
 		static bool Center;
 		static bool Right;
 		static bool Global;
+		static time_t Timer;
+		static time_t Delta;
 
 		static void run();
 

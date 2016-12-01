@@ -1,4 +1,5 @@
 #include "Obstacle.hpp"
+#include <ctime>
 #include <chrono>
 #include <thread>
 
@@ -8,6 +9,8 @@ bool ObstacleDetection::Left = false;
 bool ObstacleDetection::Center = false;
 bool ObstacleDetection::Right = false;
 bool ObstacleDetection::Global = false;
+time_t ObstacleDetection::Timer = time(0);
+time_t ObstacleDetection::Delta = time(0);  
 thread * ObstacleDetection::threadTest = NULL;
 bool ObstacleDetection::endThread = true;
 
@@ -62,7 +65,7 @@ bool ObstacleDetection::isRightDetected() {
 // ------------- US Global --------------- //			
 void ObstacleDetection::obstacleDetectionGlobal() {
 	if (Left or Center or Right){
-		Global = true;
+		ObstacleDetection::obstacleDetectionGlobalTimed();
 	}
 	else {
 		Global = false;
@@ -70,6 +73,19 @@ void ObstacleDetection::obstacleDetectionGlobal() {
 };
 bool ObstacleDetection::isGlobalDetected(){
 	return Global;
+}
+// --------------------------------------- //
+
+// ---------US Global time related-------- //	
+void ObstacleDetection::obstacleDetectionGlobalTimed() {
+	ObstacleDetection::Timer = time(0);	
+	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 500){ 
+		Global = false;
+	}
+	else {
+		ObstacleDetection::Delta = ObstacleDetection::Timer;
+		Global = true;
+	} 
 }
 // --------------------------------------- //
 
