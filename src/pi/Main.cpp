@@ -58,7 +58,6 @@ int main() {
 	LinkSTM32 link(100);
 	Camera::init();
 	ObstacleDetection::start();
-	IA::start();
 
 	// start Image Processing threads
 	UserDetectionTest.start();
@@ -73,7 +72,6 @@ int main() {
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
 	ObstacleDetection::stop();
-	IA::stop();
 	return 0;
 }
 
