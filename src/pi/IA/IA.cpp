@@ -18,11 +18,11 @@ void IA::IAMotorBack(float distance) {
 	LogD << "IAMotorBack distance "<<distance<<endl;
 	float speed = 0.5f;
 	float fastspeed = 1.0f;
-	if (distance >= 0.0 or distance <0.5) {
+	if (distance >= 0.0 and distance <0.5) {
 			Car::writeControlMotor(Car::Stop, speed);	
 			LogD << "IAMotorBack Stop "<<endl; 
 	}
-	else if (distance >= 0.5 or distance <1.5) {
+	else if (distance >= 0.5 and distance <1.5) {
 			Car::writeControlMotor(Car::MoveForward, speed);	
 			LogD << "IAMotorBack MediumSpeed "<<endl; 
 	}
