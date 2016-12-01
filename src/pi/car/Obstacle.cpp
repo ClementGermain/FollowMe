@@ -67,6 +67,7 @@ bool ObstacleDetection::isRightDetected() {
 // ------------- US Global --------------- //			
 void ObstacleDetection::obstacleDetectionGlobal() {
 	BarstowControl_Typedef control;
+	Car::getControlStructure(control);
 	if (Left or Center or Right){
 		Global = true;
 		control.gyro = 1;
@@ -84,6 +85,7 @@ bool ObstacleDetection::isGlobalDetected(){
 // ---------US Global time related-------- //	
 void ObstacleDetection::obstacleDetectionGlobalTimed() {
 	BarstowControl_Typedef control;
+	Car::getControlStructure(control);
 	ObstacleDetection::Timer = time(0);	
 	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
 		Global = true;

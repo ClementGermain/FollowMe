@@ -29,6 +29,10 @@ void Car::getModelStructure(BarstowModel_Typedef & out) {
 void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 	controlMutex.lock();
 
+	//added update on controlStructure
+	Car::getControlStructure(controlStructure);
+	//
+
 	switch(target) {
 		case Car::DirectionMotor:
 			controlStructure.directionMotor = control;
@@ -46,7 +50,7 @@ void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 // @param speed: value in range [0, 1]
 void Car::writeControlMotor(Car::Moving action, float speed) {
 	MotorControl_Typedef control;
-	
+
 	control.speed = min(max(0.0f, speed), 1.0f);
 
 	switch(action) {
@@ -93,6 +97,7 @@ void Car::updateModelStructure(BarstowModel_Typedef & model) {
 	modelMutex.unlock();
 }
 
+//added update control structure function
 void Car::updateControlStructure(BarstowControl_Typedef & control) {
 	controlMutex.lock();
 
@@ -100,4 +105,5 @@ void Car::updateControlStructure(BarstowControl_Typedef & control) {
 
 	controlMutex.unlock();
 }
+//
 
