@@ -1,4 +1,7 @@
 #include "Obstacle.hpp"
+#include "car/Car.hpp"
+#include "../../stm32/KeilProject/Sources/Barstow/Control.h"
+#include <ctime>
 #include <chrono>
 #include <thread>
 
@@ -8,6 +11,8 @@ bool ObstacleDetection::Left = false;
 bool ObstacleDetection::Center = false;
 bool ObstacleDetection::Right = false;
 bool ObstacleDetection::Global = false;
+time_t ObstacleDetection::Timer = time(0);
+time_t ObstacleDetection::Delta = time(0);  
 thread * ObstacleDetection::threadTest = NULL;
 bool ObstacleDetection::endThread = true;
 
@@ -15,7 +20,7 @@ bool ObstacleDetection::endThread = true;
 void ObstacleDetection::obstacleDetectionLeft() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontLeftUSensor.distance < 100) {
+	if (model.frontLeftUSensor.distance < 20) {
 		Left = true;
 	}
 	else {
@@ -31,7 +36,7 @@ bool ObstacleDetection::isLeftDetected() {
 void ObstacleDetection::obstacleDetectionCenter() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontCenterUSensor.distance < 100) {
+	if (model.frontCenterUSensor.distance < 20) {
 		Center = true;
 	}
 	else {
@@ -47,7 +52,7 @@ bool ObstacleDetection::isCenterDetected() {
 void ObstacleDetection::obstacleDetectionRight() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontRightUSensor.distance < 100) {
+	if (model.frontRightUSensor.distance < 20) {
 		Right = true;
 	}
 	else {
@@ -61,15 +66,35 @@ bool ObstacleDetection::isRightDetected() {
 
 // ------------- US Global --------------- //			
 void ObstacleDetection::obstacleDetectionGlobal() {
+	BarstowControl_Typedef control;
 	if (Left or Center or Right){
 		Global = true;
+		control.gyro = 1;
 	}
 	else {
-		Global = false;
+		ObstacleDetection::obstacleDetectionGlobalTimed();
 	}
+	Car::updateControlStructure(control);
 };
 bool ObstacleDetection::isGlobalDetected(){
 	return Global;
+}
+// --------------------------------------- //
+
+// ---------US Global time related-------- //	
+void ObstacleDetection::obstacleDetectionGlobalTimed() {
+	BarstowControl_Typedef control;
+	ObstacleDetection::Timer = time(0);	
+	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
+		Global = true;
+		control.gyro = 1;
+	}
+	else {
+		ObstacleDetection::Delta = ObstacleDetection::Timer;
+		Global = false;
+		control.gyro = 0;
+	}	
+	Car::updateControlStructure(control);
 }
 // --------------------------------------- //
 

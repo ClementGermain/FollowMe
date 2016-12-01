@@ -1,6 +1,7 @@
 #include "IA.hpp"
 #include "improc/UserPatternDetection.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
+#include "car/Obstacle.hpp"
 #include "utils/Log.hpp"
 #include "car/Car.hpp"
 #include <chrono>
@@ -10,6 +11,7 @@ using namespace std;
 
 float IA::Dist = 0.0;
 float IA::Speed = 0.0;
+bool IA::ObstacleDetected = false;
 bool IA::UserDetected = false;
 
 thread * IA::threadTest = NULL;
@@ -28,16 +30,14 @@ void IA::SpeedControl (float distance){
 
 // ---------Back motors management-------- //
 void IA::IAMotorBack(float distance) {
-	LogD << "IAMotorBack distance "<<distance<<endl;
 	IA::UserDetected = UserDetectionTest.detector.isDetected();
 	IA::SpeedControl(distance);
-	if (UserDetected) {
+	IA::ObstacleDetected = ObstacleDetection::isGlobalDetected();
+	if (UserDetected and !ObstacleDetected) {
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-		LogD << "IAMotorBack speed "<<IA::Speed<<endl; 
 	}
 	else {
 		Car::writeControlMotor(Car::Stop, IA::Speed);	
-		LogD << "IAMotorBack No user detected "<<endl; 
 	}
 }
 // --------------------------------------- //

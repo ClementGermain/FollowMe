@@ -157,6 +157,10 @@ void Periodic_Impulse_3_Front_US(void){
 }
 
 void Start_US_Sensor(BarstowModel_Typedef  * mod){
+	
+	mod->frontCenterUSensor.distance = 0;
+	mod->frontRightUSensor.distance = 0;
+	mod->frontLeftUSensor.distance = 0;
 	Model = mod;
 	Init_Systick();
 	Init_All_US_Sensor();

@@ -34,19 +34,65 @@ void Update_Sensor(BarstowModel_Typedef * Modele){
 }
 
 void Init_Motor_Sensor(Motor_Sensor_Typedef * Motor_Sensor){
-	//TODO
+	Init_GPIO_In(Motor_Sensor->GPIO_Current, Motor_Sensor->GPIO_Pin_Current);
+	Init_GPIO_In(Motor_Sensor->GPIO_Voltage, Motor_Sensor->GPIO_Pin_Voltage);
 }
 
 void Init_All_Motor_Sensor(void){
+	ADC_Configuration(ADC1);
 	Init_Motor_Sensor(MOTOR_DIRECTION);
 	Init_Motor_Sensor(MOTOR_LEFT);
 	Init_Motor_Sensor(MOTOR_RIGHT);
 }
 
 uint32_t Get_Current(Motor_Sensor_Typedef * Motor_Sensor){
-	return 0;
+	return ADC_Read(ADC1, Find_Channel(Motor_Sensor->GPIO_Current, Motor_Sensor->GPIO_Pin_Current)) / DIVIDE_BRIDGE_CURRENT;
 }
 
 uint32_t Get_Voltage(Motor_Sensor_Typedef * Motor_Sensor){
-	return 0;
+	return ADC_Read(ADC1, Find_Channel(Motor_Sensor->GPIO_Voltage, Motor_Sensor->GPIO_Pin_Voltage)) / DIVIDE_BRIDGE_VOLTAGE;
+}
+
+uint32_t Find_Channel(GPIO_TypeDef * GPIO, uint16_t Pin){
+	uint8_t channel;
+	if (GPIO == GPIOA){
+		switch (Pin){
+			case GPIO_Pin_0:
+				channel = ADC_Channel_0;
+				break;
+			case GPIO_Pin_1:
+				channel = ADC_Channel_1;
+				break;
+			case GPIO_Pin_2:
+				channel = ADC_Channel_2;
+				break;
+			case GPIO_Pin_3:
+				channel = ADC_Channel_3;
+				break;
+			case GPIO_Pin_4:
+				channel = ADC_Channel_4;
+				break;
+			}
+		}
+		else if (GPIO == GPIOB){
+		switch (Pin){
+			case GPIO_Pin_0:
+				channel = ADC_Channel_8;
+				break;
+			case GPIO_Pin_1:
+				channel = ADC_Channel_9;
+				break;
+			}
+		}
+		else if (GPIO == GPIOC){
+		switch (Pin){
+			case GPIO_Pin_4:
+				channel = ADC_Channel_14;
+				break;
+			case GPIO_Pin_5:
+				channel = ADC_Channel_15;
+				break;
+			}
+		}
+		return channel;
 }
