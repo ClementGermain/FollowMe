@@ -44,6 +44,7 @@ OBJECTS=Main.o \
 		car/Camera.o \
 		car/Obstacle.o \
 		car/SPI_Interface.o \
+		IA/IA.o\
 		utils/Log.o \
 		utils/Timer.o \
 		improc/UserPatternDetection.o \
