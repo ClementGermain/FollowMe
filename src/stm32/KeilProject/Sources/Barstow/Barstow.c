@@ -35,6 +35,8 @@ void StartBarstow(void)
 	BarstowModel->frontCenterUSensor.distance = 400;
 	BarstowModel->frontRightUSensor.distance = 200;
 	BarstowModel->frontLeftUSensor.distance = 150;
+	
+	
 	/*!< Entering main loop. */
 	while(1)
 	{

@@ -27,12 +27,6 @@ int Time;
 int front_us;
 int time_echo;
 
-void Update_US_Sensor(BarstowModel_Typedef * Modele){
-	
-	Modele->frontRightUSensor.distance 	= (Get_USensor(SENSOR_FRONT_R));
-	Modele->frontLeftUSensor.distance 	= (Get_USensor(SENSOR_FRONT_L));
-	Modele->frontCenterUSensor.distance = (Get_USensor(SENSOR_FRONT_C));
-}
 
 // configure the pins TRIGG and ECHO in output and input  
 void Init_US_Sensor(US_Sensor_Typedef * Sensor){
@@ -52,7 +46,7 @@ void Init_All_US_Sensor(void){
 
 	TIM_TimeBaseInitTypeDef timerInit;
 		timerInit.TIM_Period = 0xFFFF;
-		timerInit.TIM_Prescaler = 0x0072;
+		timerInit.TIM_Prescaler = 0x0071;
 		timerInit.TIM_ClockDivision = TIM_CKD_DIV1;
 		timerInit.TIM_CounterMode = TIM_CounterMode_Up;
 		timerInit.TIM_RepetitionCounter = 0x0000;
@@ -70,9 +64,10 @@ void Init_All_US_Sensor(void){
 		
 	Config_EXTI_Rising_Falling(EXTI_Line2);	//config EXTI
 	Config_NVIC_EXTI(EXTI_Line2); //config NVIC pour EXTI
+	
 		
 	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_L, GPIO_Num_Port_Echo_Front_L);	
-	//GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
+	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_R, GPIO_Num_Port_Echo_Front_R);
 	GPIO_EXTILineConfig(GPIO_Port_Source_Echo_Front_C, GPIO_Num_Port_Echo_Front_C);
 }
 
@@ -99,7 +94,7 @@ void Capture_echo(void) {
 		Reset_counter(TIM_Echo);
 
 	if (time_echo!=0){ //on ne met à jour le modèle que si time_echo a une valeur correcte --> voir si il faut mettre time_echo>=58 (éq à 1cm) environ
-		*US_active->ModelPointer = (time_echo / 58*20);
+		*US_active->ModelPointer = (time_echo / 58);
 	}
 	time_echo=0;
 }
@@ -115,24 +110,27 @@ void Periodic_Impulse_3_Front_US(void){
 	Time++;
 
 	if (Time%210==10){
-
-	//impulse >10us on Front Left US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
-	US_active = SENSOR_FRONT_L;
-	US_active->state = 0;
+		//impulse >10us on Front Left US
+		
+		Config_EXTI_Rising(EXTI_Line0);
+		Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_L, GPIO_PIN_SENSOR_TRIG_FRONT_L, 12);
+		US_active = SENSOR_FRONT_L;
+		US_active->state = 0;
 	}
 	
-	/*else if (Time%210==80){
-	//impulse 10us on Front Right US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 12);
-	US_active = SENSOR_FRONT_R;
+	else if (Time%210==80){
+		//impulse 10us on Front Right US
+		Config_EXTI_Rising(EXTI_Line1);
+		Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 12);
+		US_active = SENSOR_FRONT_R;
 		US_active->state = 0;
-	}*/
+	}
 
 	else if (Time%210==150){
-	//impulse 10us on Front Center US
-	Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 12);
-	US_active = SENSOR_FRONT_C;
+		//impulse 10us on Front Center US
+		Config_EXTI_Rising(EXTI_Line2);
+		Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 12);
+		US_active = SENSOR_FRONT_C;
 		US_active->state = 0;
 	}
 }
@@ -143,12 +141,13 @@ void Start_US_Sensor(BarstowModel_Typedef  * mod){
 	Init_All_US_Sensor();
 }
 
-
 void EXTI0_IRQHandler(void) {
 	uint32_t line = EXTI_Line0;
-			
+	
+	
 		if (SENSOR_FRONT_L->state == 0)
 		{
+			Config_EXTI_Falling(EXTI_Line0);
 			(SENSOR_FRONT_L->state)++;
 			Relance_Compteur_Echo();
 		}
@@ -160,7 +159,24 @@ void EXTI0_IRQHandler(void) {
 		EXTI_ClearITPendingBit(line);
 }
 
-void EXTI2_IRQHandler(void) {
+void EXTI1_IRQHandler(void) {
+	uint32_t line = EXTI_Line1;
+			
+		if (SENSOR_FRONT_R->state == 0)
+		{
+			Config_EXTI_Falling(EXTI_Line1);
+			(SENSOR_FRONT_R->state)++;
+			Relance_Compteur_Echo();
+		}
+		else if(US_active->state==1)
+		{
+			(SENSOR_FRONT_R->state)++;
+			Capture_echo();
+		}
+		EXTI_ClearITPendingBit(line);
+}
+
+/*void EXTI2_IRQHandler(void) {
 	uint32_t line = EXTI_Line2;
 			
 		if (SENSOR_FRONT_C->state == 0)
@@ -174,23 +190,20 @@ void EXTI2_IRQHandler(void) {
 			Capture_echo();
 		}
 		EXTI_ClearITPendingBit(line);
-}
+}*/
 
-/*
-void EXTI1_IRQHandler(void) {
-	uint32_t line = EXTI_Line1;
-			
-		if (SENSOR_FRONT_R->state == 0)
-		{
-			(SENSOR_FRONT_R->state)++;
-			Relance_Compteur_Echo();
+void EXTI2_IRQHandler(void) {
+	uint32_t line = EXTI_Line2;	
+	if (SENSOR_FRONT_C->state == 0)
+	{
+		Config_EXTI_Falling(EXTI_Line2);
+		(SENSOR_FRONT_C->state)++;
+		Relance_Compteur_Echo();
+	}
+	else if(SENSOR_FRONT_C->state==1)
+	{	
+		(SENSOR_FRONT_C->state)++;
+		Capture_echo();
 		}
-		else if(US_active->state==1)
-		{
-			(SENSOR_FRONT_R->state)++;
-			Capture_echo();
-		}
-		EXTI_ClearITPendingBit(line);
+	EXTI_ClearITPendingBit(line);
 }
-*/
-

@@ -204,6 +204,10 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
 		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
 		
+		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontLeftUSensor.distance);
+		l.getDigitalView("sensor_distFrontRigt").setValue(model.frontRigtUSensor.distance);
+		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
+		
 		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
 		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
 

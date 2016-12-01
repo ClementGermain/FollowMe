@@ -22,13 +22,8 @@ int main(void)
 	/*<! RCC Configuration */
   RCC_Configuration();
 	
-	
-//	/*<! Start Barstow car's program. */
+	/*<! Start Barstow car's program. */
 	StartBarstow();
-
-
-	
-	
 	
 	while(1){}
 }

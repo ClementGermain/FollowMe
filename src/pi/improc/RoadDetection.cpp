@@ -28,6 +28,7 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	
 	Mat threshold, threshold1, threshold2;
 	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold1 /*m_thresholdedImage*/); //Threshold the image
+	
 	iLowH = 85;
 	iHighH = 180;
 	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold2);
