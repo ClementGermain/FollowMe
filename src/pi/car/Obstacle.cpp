@@ -70,6 +70,7 @@ void ObstacleDetection::obstacleDetectionGlobal() {
 	Car::getControlStructure(control);*/
 	if (Left or Center or Right){
 		Global = true;
+		ObstacleDetection::Delta = time(0);
 		//control.gyro = 1;
 	}
 	else {
@@ -92,7 +93,6 @@ void ObstacleDetection::obstacleDetectionGlobalTimed() {
 		//control.gyro = 1;
 	}
 	else {
-		ObstacleDetection::Delta = ObstacleDetection::Timer;
 		Global = false;
 		//control.gyro = 0;
 	}	
