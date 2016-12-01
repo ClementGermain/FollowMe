@@ -302,7 +302,7 @@ void MainView::run() {
 		updateViews(mgr);
 
 		// Draw the active views on the screen
-		mgr.drawActiveLayout(screen, false);
+		mgr.drawActiveLayout(screen, true);
 
 		// Sleep for a while
 		SDL_framerateDelay(&fpsManager);
