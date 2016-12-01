@@ -69,11 +69,11 @@ void ObstacleDetection::obstacleDetectionGlobal() {
 	/*BarstowControl_Typedef control;
 	Car::getControlStructure(control);*/
 	if (Left or Center or Right){
-		ObstacleDetection::obstacleDetectionGlobalTimed();
+		Global = true;
 		//control.gyro = 1;
 	}
 	else {
-		Global = false;
+		ObstacleDetection::obstacleDetectionGlobalTimed();
 	}
 	/*Car::updateControlStructure(control);*/
 };
@@ -88,12 +88,12 @@ void ObstacleDetection::obstacleDetectionGlobalTimed() {
 	Car::getControlStructure(control);*/
 	ObstacleDetection::Timer = time(0);	
 	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
-		Global = false;
+		Global = true;
 		//control.gyro = 1;
 	}
 	else {
 		ObstacleDetection::Delta = ObstacleDetection::Timer;
-		Global = true;
+		Global = false;
 		//control.gyro = 0;
 	}	
 	/*Car::updateControlStructure(control);*/
