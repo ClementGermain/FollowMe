@@ -33,7 +33,7 @@ void IA::IAMotorBack(float distance) {
 	IA::UserDetected = UserDetectionTest.detector.isDetected();
 	IA::SpeedControl(distance);
 	IA::ObstacleDetected = ObstacleDetection::isGlobalDetected();
-	if (UserDetected and !ObstacleDetected) {
+	if (UserDetected and ObstacleDetected) {
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
 	}
 	else {
