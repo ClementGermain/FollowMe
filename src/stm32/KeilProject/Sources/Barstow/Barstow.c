@@ -24,24 +24,21 @@ void StartBarstow(void)
 	BarstowControl->propulsionMotor.speed=0;
 	
 	/*!< Init Ultrasonic sensor. */
-	//TODO
+	BarstowModel->frontCenterUSensor.distance = 0;
+	BarstowModel->frontRightUSensor.distance = 0;
+	BarstowModel->frontLeftUSensor.distance = 0;
+	
 	Start_US_Sensor(BarstowModel);
-	BarstowModel->frontCenterUSensor.distance = 0.0f; //Avoid warning, must be removed when sensors are implemented
 	
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
-	
-	//Start_US_Sensor(BarstowModel);
-	BarstowModel->frontCenterUSensor.distance = 400;
-	BarstowModel->frontRightUSensor.distance = 200;
-	BarstowModel->frontLeftUSensor.distance = 150;
-	
-	
+		
 	/*!< Entering main loop. */
+	int i;
 	while(1)
 	{
-		int i;
 		i++;
+		
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
 		

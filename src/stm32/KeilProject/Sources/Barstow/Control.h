@@ -32,6 +32,7 @@ typedef struct
 {
 	MotorControl_Typedef directionMotor;
 	MotorControl_Typedef propulsionMotor;
+	bool gyro;
 	
 	//int checksum;
 	

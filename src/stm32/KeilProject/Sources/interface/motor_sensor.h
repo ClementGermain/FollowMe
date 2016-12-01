@@ -5,6 +5,10 @@
 #include "../barstow/model.h"
 #include "../library/adc.h"
 
+#define DIVIDE_BRIDGE_CURRENT									1.0
+#define DIVIDE_BRIDGE_VOLTAGE									(1.0/4.3)
+
+
 // Not accurate Value, we gonna need to choose them
 #define GPIO_MOTOR_CURRENT_DIRECTION					GPIOB
 #define GPIO_MOTOR_CURRENT_LEFT								GPIOB
@@ -63,4 +67,10 @@ uint32_t Get_Current(Motor_Sensor_Typedef * Motor_Sensor);
 */
 uint32_t Get_Voltage(Motor_Sensor_Typedef * Motor_Sensor);
 
+/** @brief Find the ADC Channel corresponding to the GPIO_PIN
+	* @parma GPIO: do i realy have to say it ???
+	* @param Pin: guess ...
+	* @retval uint8_t: ADC_Channel
+*/
+uint32_t Find_Channel(GPIO_TypeDef * GPIO, uint16_t Pin);
 #endif
