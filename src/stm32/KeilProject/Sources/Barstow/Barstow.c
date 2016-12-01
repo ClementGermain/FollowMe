@@ -25,6 +25,7 @@ void StartBarstow(void)
 	
 	/*!< Init Ultrasonic sensor. */
 	//TODO
+	Start_US_Sensor(BarstowModel);
 	BarstowModel->frontCenterUSensor.distance = 0.0f; //Avoid warning, must be removed when sensors are implemented
 	
 	/*< Init SPI communication. */
@@ -37,11 +38,13 @@ void StartBarstow(void)
 	/*!< Entering main loop. */
 	while(1)
 	{
+		int i;
+		i++;
 		/*!< Updating motors. */
-		//Update_Motors(BarstowControl);
+		Update_Motors(BarstowControl);
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction
-		// for (int i=0 ; i < 50000 ; i++);
+		 for (int i=0 ; i < 50000 ; i++);
 	}
 }
