@@ -28,6 +28,8 @@ class Car {
 		static void writeControlMotor(Car::Turn action, float speed);
 		/** Write model (could be used to simulate sensor output, if SPI communication is disabled) **/
 		static void updateModelStructure(BarstowModel_Typedef & model);
+		/** Write control (used to write GPIO for gyro) **/
+		static void updateControlStructure(BarstowControl_Typedef & control);
 
 	private:
 		// disallow creating an instance of this object

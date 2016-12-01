@@ -93,3 +93,11 @@ void Car::updateModelStructure(BarstowModel_Typedef & model) {
 	modelMutex.unlock();
 }
 
+void Car::updateControlStructure(BarstowControl_Typedef & control) {
+	controlMutex.lock();
+
+	controlStructure = control;
+
+	controlMutex.unlock();
+}
+
