@@ -14,6 +14,7 @@
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 #include "sound/Sound.hpp"
+#include "IA/IA.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -27,6 +28,7 @@ int saveLog(istream & input, vector<int> i, vector<string> s);
 int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
+int runIA (istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -69,6 +71,11 @@ void runUI() {
 		new Menu("music", 0, 0, 
 			new Menu ("play", 1, runSound, NULL),
 			new Menu ("stop", 2, runSound, NULL),
+			NULL
+		),
+		new Menu("IA", 0, 0, 
+			new Menu ("start", 1, runIA, NULL),
+			new Menu ("stop", 2, runIA, NULL),
 			NULL
 		),
 		new Menu("exit", 0, exitInterpreter, NULL),
@@ -202,6 +209,20 @@ int runSound(istream & input, vector<int> i, vector<string> s) {
 			break;
 		case 2:
 			Sound::stop();
+			break;
+	}
+	return 0;
+}
+
+int runIA(istream & input, vector<int> i, vector<string> s) {
+	// Start the IA for following an user
+
+	switch (i.back()){
+		case 1:
+			IA::start();
+			break;
+		case 2:
+			IA::stop();
 			break;
 	}
 	return 0;

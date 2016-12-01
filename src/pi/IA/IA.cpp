@@ -9,6 +9,7 @@
 using namespace std;
 
 float IA::Dist = 0.0;
+bool IA::UserDetected = false;
 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
@@ -18,17 +19,24 @@ void IA::IAMotorBack(float distance) {
 	LogD << "IAMotorBack distance "<<distance<<endl;
 	float speed = 0.5f;
 	float fastspeed = 1.0f;
-	if (distance >= 0.0 and distance <0.5) {
-			Car::writeControlMotor(Car::Stop, speed);	
-			LogD << "IAMotorBack Stop "<<endl; 
+	IA::UserDetected = UserDetectionTest.detector.isDetected();
+	if (UserDetected) {
+		if (distance >= 0.0 and distance <0.5) {
+				Car::writeControlMotor(Car::Stop, speed);	
+				LogD << "IAMotorBack Stop "<<endl; 
+		}
+		else if (distance >= 0.5 and distance <1.5) {
+				Car::writeControlMotor(Car::MoveForward, speed);	
+				LogD << "IAMotorBack MediumSpeed "<<endl; 
+		}
+		else if (distance >= 1.5) {
+				Car::writeControlMotor(Car::MoveForward, fastspeed);	
+				LogD << "IAMotorBack FullSpeed "<<endl; 
+		}
 	}
-	else if (distance >= 0.5 and distance <1.5) {
-			Car::writeControlMotor(Car::MoveForward, speed);	
-			LogD << "IAMotorBack MediumSpeed "<<endl; 
-	}
-	else if (distance >= 1.5) {
-			Car::writeControlMotor(Car::MoveForward, fastspeed);	
-			LogD << "IAMotorBack FullSpeed "<<endl; 
+	else {
+		Car::writeControlMotor(Car::Stop, speed);	
+		LogD << "IAMotorBack No user detected "<<endl; 
 	}
 }
 // --------------------------------------- //

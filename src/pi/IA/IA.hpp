@@ -12,6 +12,7 @@ class IA {
 
 	private:				
 		static float Dist;
+		static bool UserDetected;
 
 		static void run();
 
