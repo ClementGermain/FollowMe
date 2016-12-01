@@ -17,7 +17,7 @@ void RCC_Configuration(void);
 int main(void)
 { 
 	/*<! RCC Configuration */
-  RCC_Configuration();
+  	RCC_Configuration();
 
 	Start_US_Sensor();
 	

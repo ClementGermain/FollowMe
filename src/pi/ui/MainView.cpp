@@ -127,7 +127,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	sensorLayout.addView("sensor_toggle_road", new ToggleBox("ROAD DETECTED", "NO ROAD", 535, 190));
+	sensorLayout.addView("sensor_toggle_road", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
 
 	// distance Usound trackbar
 	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 240, 10, 130, INVERSE));
@@ -191,7 +191,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("toggle_road").toggle(true);
+		l.getToggleBoxView("toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -204,13 +204,17 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
 		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
 		
+		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontLeftUSensor.distance);
+		l.getDigitalView("sensor_distFrontRigt").setValue(model.frontRigtUSensor.distance);
+		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
+		
 		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
-		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
+		l.getTrackbarView("sensor_UserAngle").setPosition(-UserDetectionTest.detector.getDirection()*180/M_PI);
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
-		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected());
+		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("sensor_toggle_road").toggle(true);
+		l.getToggleBoxView("sensor_toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
 		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 

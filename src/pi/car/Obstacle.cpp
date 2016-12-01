@@ -15,7 +15,7 @@ bool ObstacleDetection::endThread = true;
 void ObstacleDetection::obstacleDetectionLeft() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontLeftUSensor.distance < 100) {
+	if (model.frontLeftUSensor.distance < 20) {
 		Left = true;
 	}
 	else {
@@ -31,7 +31,7 @@ bool ObstacleDetection::isLeftDetected() {
 void ObstacleDetection::obstacleDetectionCenter() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontCenterUSensor.distance < 100) {
+	if (model.frontCenterUSensor.distance < 20) {
 		Center = true;
 	}
 	else {
@@ -47,7 +47,7 @@ bool ObstacleDetection::isCenterDetected() {
 void ObstacleDetection::obstacleDetectionRight() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontRightUSensor.distance < 100) {
+	if (model.frontRightUSensor.distance < 20) {
 		Right = true;
 	}
 	else {
