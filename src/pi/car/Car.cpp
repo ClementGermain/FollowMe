@@ -30,7 +30,7 @@ void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 	controlMutex.lock();
 
 	//added update on controlStructure
-	Car::getControlStructure(controlStructure);
+	/*Car::getControlStructure(controlStructure);*/
 	//
 
 	switch(target) {
@@ -98,12 +98,12 @@ void Car::updateModelStructure(BarstowModel_Typedef & model) {
 }
 
 //added update control structure function
-void Car::updateControlStructure(BarstowControl_Typedef & control) {
+/*void Car::updateControlStructure(BarstowControl_Typedef & control) {
 	controlMutex.lock();
 
 	controlStructure = control;
 
 	controlMutex.unlock();
-}
+}*/
 //
 
