@@ -296,6 +296,16 @@ void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void))
 
 }
 
+void Disable_EXTI(uint32_t EXTI_Line){
+	EXTI_InitTypeDef		EXTI_InitStructure;
+
+	EXTI_InitStructure.EXTI_Line = EXTI_Line;
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;  
+	EXTI_InitStructure.EXTI_LineCmd = DISABLE;
+	EXTI_Init(&EXTI_InitStructure);
+}
+
 void Config_EXTI_Rising(uint32_t EXTI_Line){
 	EXTI_InitTypeDef		EXTI_InitStructure;
 

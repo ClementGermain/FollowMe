@@ -191,7 +191,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("toggle_road").toggle(!roadDetectionTest.detector.grassDetected);
+		l.getToggleBoxView("toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -204,13 +204,17 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("sensor_USRight").setPosition(model.frontRightUSensor.distance);
 		l.getTrackbarView("sensor_USCenter").setPosition(model.frontCenterUSensor.distance);
 		
+		l.getDigitalView("sensor_distFrontLeft").setValue(model.frontLeftUSensor.distance);
+		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
+		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
+		
 		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
-		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
+		l.getTrackbarView("sensor_UserAngle").setPosition(-UserDetectionTest.detector.getDirection()*180/M_PI);
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("sensor_toggle_road").toggle(!roadDetectionTest.detector.grassDetected);
+		l.getToggleBoxView("sensor_toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
 		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 
@@ -298,7 +302,7 @@ void MainView::run() {
 		updateViews(mgr);
 
 		// Draw the active views on the screen
-		mgr.drawActiveLayout(screen, false);
+		mgr.drawActiveLayout(screen, true);
 
 		// Sleep for a while
 		SDL_framerateDelay(&fpsManager);

@@ -18,7 +18,7 @@ void ADC_Configuration(ADC_TypeDef * ADC);
 	* @param Channel: Channel of the ADC to read (ex ADC_Channel_6);
 	* @retval u16: integer value of the ADC value. Value goes 0 to 4096
 */
-u16 Read_ADC(ADC_TypeDef * ADC, int Channel);
+u16 ADC_Read(ADC_TypeDef * ADC, int Channel);
 
 #endif
 

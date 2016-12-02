@@ -11,6 +11,7 @@
 #include "car/Car.hpp"
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
+#include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserPatternDetectionTest.hpp"

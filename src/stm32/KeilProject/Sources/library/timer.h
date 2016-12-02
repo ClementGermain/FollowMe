@@ -63,6 +63,9 @@ void Init_Channel_trigger(TIM_TypeDef* TIM, u8 num_Channel);
  void Timer_Active_IT( TIM_TypeDef *TIM, u8 Priority, void (*IT_function) (void));
  
  void Reset_counter(TIM_TypeDef *TIM);
+ 
+ //Disable EXTI for the line passed in param
+ void Disable_EXTI(uint32_t EXTI_Line);
 
 //Configure le EXTI en param en Rising
  void Config_EXTI_Rising(uint32_t EXTI_Line);
