@@ -10,19 +10,19 @@
 
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_MOTOR_CURRENT_DIRECTION					GPIOB
-#define GPIO_MOTOR_CURRENT_LEFT								GPIOB
+#define GPIO_MOTOR_CURRENT_DIRECTION					GPIOA
+#define GPIO_MOTOR_CURRENT_LEFT								GPIOC
 #define GPIO_MOTOR_CURRENT_RIGHT							GPIOB
-#define GPIO_MOTOR_VOLTAGE_DIRECTION					GPIOB
-#define GPIO_MOTOR_VOLTAGE_LEFT								GPIOB
-#define GPIO_MOTOR_VOLTAGE_RIGHT							GPIOB
+#define GPIO_MOTOR_VOLTAGE_DIRECTION					GPIOC
+#define GPIO_MOTOR_VOLTAGE_LEFT								GPIOA
+#define GPIO_MOTOR_VOLTAGE_RIGHT							GPIOA
 
 // Not accurate Value, we gonna need to choose them
-#define GPIO_PIN_MOTOR_CURRENT_DIRECTION			GPIO_Pin_1
-#define GPIO_PIN_MOTOR_CURRENT_LEFT						GPIO_Pin_2
-#define GPIO_PIN_MOTOR_CURRENT_RIGHT					GPIO_Pin_3
-#define GPIO_PIN_MOTOR_VOLTAGE_DIRECTION			GPIO_Pin_1
-#define GPIO_PIN_MOTOR_VOLTAGE_LEFT						GPIO_Pin_2
+#define GPIO_PIN_MOTOR_CURRENT_DIRECTION			GPIO_Pin_4
+#define GPIO_PIN_MOTOR_CURRENT_LEFT						GPIO_Pin_5
+#define GPIO_PIN_MOTOR_CURRENT_RIGHT					GPIO_Pin_1
+#define GPIO_PIN_MOTOR_VOLTAGE_DIRECTION			GPIO_Pin_4
+#define GPIO_PIN_MOTOR_VOLTAGE_LEFT						GPIO_Pin_5
 #define GPIO_PIN_MOTOR_VOLTAGE_RIGHT					GPIO_Pin_3
 
 // Structure that contain all GPIO informations about each motor's sensor
@@ -42,35 +42,35 @@ extern Motor_Sensor_Typedef * MOTOR_RIGHT;
 	* @parma Modele: Pointeur to the modele struct to be used
 	* @retval None
 */
-void Update_Motor_Sensor(BarstowModel_Typedef * Modele);
+void MotorSensor_Update(BarstowModel_Typedef * Modele);
 
 /** @brief Init the sensor of a single Motor
 	* @parma Motor_Sensor: Motor to init (ex : SENSOR_FRONT_R)
 	* @retval None
 */
-void Init_Motor_Sensor(Motor_Sensor_Typedef * Motor_Sensor);
+void MotorSensor_InitSingle(Motor_Sensor_Typedef * Motor_Sensor);
 
 /** @brief Init all UltraSound sensors
 	* @retval None
 */
-void Init_All_Motor_Sensor(void);
+void MotorSensor_Init(void);
 
 /** @brief Get the current value of a specific motor
 	* @parma Motor_Sensor: Motor to use (ex : MOTOR_LEFT)
 	* @retval u32: current of the motor in mA
 */
-uint32_t Get_Current(Motor_Sensor_Typedef * Motor_Sensor);
+uint32_t MotorSensor_GetCurrent(Motor_Sensor_Typedef * Motor_Sensor);
 
 /** @brief Get the voltage value of a specific motor
 	* @parma Motor_Sensor: Motor to use (ex : MOTOR_LEFT)
 	* @retval u32: current of the motor in mV
 */
-uint32_t Get_Voltage(Motor_Sensor_Typedef * Motor_Sensor);
+uint32_t MotorSensor_GetVoltage(Motor_Sensor_Typedef * Motor_Sensor);
 
 /** @brief Find the ADC Channel corresponding to the GPIO_PIN
 	* @parma GPIO: do i realy have to say it ???
 	* @param Pin: guess ...
 	* @retval uint8_t: ADC_Channel
 */
-uint32_t Find_Channel(GPIO_TypeDef * GPIO, uint16_t Pin);
+uint32_t MotorSensor_FindChannel(GPIO_TypeDef * GPIO, uint16_t Pin);
 #endif

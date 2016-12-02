@@ -2,9 +2,6 @@
 
 void StartBarstow(void)
 {	
-	/*!< Init motors. */
-	Init_All_Motor();
-	
 	/*!< Create model and control structure for SPI. */
 	int modSize = sizeof(BarstowModel_Typedef);
 	int conSize = sizeof(BarstowControl_Typedef);
@@ -23,11 +20,17 @@ void StartBarstow(void)
 	BarstowControl->propulsionMotor.direction=0;
 	BarstowControl->propulsionMotor.speed=0;
 	
+	/*!< Init motors. */
+	Init_All_Motor();
+	
 	/*!< Init Ultrasonic sensor. */
 	Start_US_Sensor(BarstowModel);
 	
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
+	
+	/*< Init Motor Sensors. */
+	MotorSensor_Init();
 	
 	/*< Init Gyrophare. */
 	Gyro_Init();
@@ -40,6 +43,9 @@ void StartBarstow(void)
 		
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
+		
+		/*!< Updating motors Sensor. */
+		MotorSensor_Update(BarstowModel);
 		
 		/*!< Updating Gyro. */
 		Gyro_Toggle(BarstowControl);
