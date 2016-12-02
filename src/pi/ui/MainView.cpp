@@ -98,12 +98,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("dCurrentRight", new Digital("%1.1fmA", 503, 260, 50, 16, false));
 	
 	// motors trackbar
-	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 100, 415, 50, 10, 130));
-	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2, 435, 50, 10, 130));
-	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 100, 363, 230, 10, 130));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2, 383, 230, 10, 130));
-	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 100, 468, 230, 10, 130));
-	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2, 488, 230, 10, 130));
+	defaultLayout.addView("tbVoltageFront", new Trackbar_Vertical(0, 12000, 415, 50, 10, 130));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Vertical(0, 2000, 435, 50, 10, 130));
+	defaultLayout.addView("tbVoltageLeft", new Trackbar_Vertical(0, 12000, 363, 230, 10, 130));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Vertical(0, 2000, 383, 230, 10, 130));
+	defaultLayout.addView("tbVoltageRight", new Trackbar_Vertical(0, 12000, 468, 230, 10, 130));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Vertical(0, 2000, 488, 230, 10, 130));
 
 	// other
 	defaultLayout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 320, 160));
@@ -172,19 +172,19 @@ void MainView::updateViews(ViewManager & mgr) {
 	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
-		l.getDigitalView("dVoltageFront").setValue(model.directionMotor.voltage);
+		l.getDigitalView("dVoltageFront").setValue(((float) model.directionMotor.voltage)/1000.0);
 		l.getTrackbarView("tbVoltageFront").setPosition(model.directionMotor.voltage);
-		l.getDigitalView("dCurrentFront").setValue(model.directionMotor.current);
+		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current)/1000.0);
 		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
 
-		l.getDigitalView("dVoltageLeft").setValue(model.leftWheelMotor.voltage);
+		l.getDigitalView("dVoltageLeft").setValue(((float) model.leftWheelMotor.voltage)/1000.0);
 		l.getTrackbarView("tbVoltageLeft").setPosition(model.leftWheelMotor.voltage);
-		l.getDigitalView("dCurrentLeft").setValue(model.leftWheelMotor.current);
+		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current)/1000.0);
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getDigitalView("dVoltageRight").setValue(model.rightWheelMotor.voltage);
+		l.getDigitalView("dVoltageRight").setValue(((float) model.rightWheelMotor.voltage)/1000.0);
 		l.getTrackbarView("tbVoltageRight").setPosition(model.rightWheelMotor.voltage);
-		l.getDigitalView("dCurrentRight").setValue(model.rightWheelMotor.current);
+		l.getDigitalView("dCurrentRight").setValue(((float) model.rightWheelMotor.current)/1000.0);
 		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 
