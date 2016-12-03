@@ -19,6 +19,7 @@ void StartBarstow(void)
 	BarstowControl->directionMotor.speed=0;
 	BarstowControl->propulsionMotor.direction=0;
 	BarstowControl->propulsionMotor.speed=0;
+	BarstowControl->gyro=0;
 	
 	/*!< Init motors. */
 	Init_All_Motor();
@@ -26,11 +27,12 @@ void StartBarstow(void)
 	/*!< Init Ultrasonic sensor. */
 	Start_US_Sensor(BarstowModel);
 	
+	/*< Init Motor Sensors. */
+	MotorSensor_Init(BarstowModel);
+	
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
-	/*< Init Motor Sensors. */
-	MotorSensor_Init();
 	
 	/*< Init Gyrophare. */
 	Gyro_Init();

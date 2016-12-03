@@ -3,8 +3,8 @@
 
 #include "../Barstow/control.h"
 
-#define GYRO_GPIO					GPIOA
-#define GYRO_GPIO_PIN			GPIO_Pin_5
+#define GYRO_GPIO					GPIOC
+#define GYRO_GPIO_PIN			GPIO_Pin_9
 
 /** @brief Init the GPIO Pin of the Gyro
 	* @retval None
