@@ -115,8 +115,16 @@ uint32_t Get_USensor(US_Sensor_Typedef * Sensor){
 
 void Periodic_Impulse_3_Front_US(void){
 	Time++;
-
-	if (Time==1){
+	if (Time == 200) {
+		//Config_EXTI_Rising(EXTI_Line2);
+		US_active = SENSOR_FRONT_C;
+		US_active->state = 0;
+		Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_C, GPIO_PIN_SENSOR_TRIG_FRONT_C, 14);
+		Time=0;
+	}
+	
+	
+	/*if (Time==1){
 		Disable_EXTI(EXTI_Line1);
 		Config_EXTI_Rising(EXTI_Line0);
 	}
@@ -143,7 +151,7 @@ void Periodic_Impulse_3_Front_US(void){
 		Send_impulse_GPIO(GPIO_SENSOR_TRIG_FRONT_R, GPIO_PIN_SENSOR_TRIG_FRONT_R, 12);
 		
 		Time = 0;
-	}
+	}*/
 /*
 	else if (Time==300){
 		//impulse 10us on Front Center US
@@ -158,15 +166,15 @@ void Periodic_Impulse_3_Front_US(void){
 
 void Start_US_Sensor(BarstowModel_Typedef  * mod){
 	
-	mod->frontCenterUSensor.distance = 0;
-	mod->frontRightUSensor.distance = 0;
-	mod->frontLeftUSensor.distance = 0;
+	mod->frontCenterUSensor.distance = 300;
+	mod->frontRightUSensor.distance = 300;
+	mod->frontLeftUSensor.distance = 300;
 	Model = mod;
 	Init_Systick();
 	Init_All_US_Sensor();
 }
 
-void EXTI0_IRQHandler(void) {
+/*void EXTI0_IRQHandler(void) {
 	uint32_t line = EXTI_Line0;
 	
 	if (SENSOR_FRONT_L->state == 0)
@@ -198,13 +206,13 @@ void EXTI1_IRQHandler(void) {
 			Capture_echo();
 		}
 		EXTI_ClearITPendingBit(line);
-}
+}*/
 
 void EXTI2_IRQHandler(void) {
 	uint32_t line = EXTI_Line2;	
 	if (SENSOR_FRONT_C->state == 0)
 	{
-		Config_EXTI_Falling(EXTI_Line2);
+		//Config_EXTI_Falling(EXTI_Line2);
 		(SENSOR_FRONT_C->state)++;
 		Relance_Compteur_Echo();
 	}

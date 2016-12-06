@@ -26,12 +26,22 @@ void Car::getModelStructure(BarstowModel_Typedef & out) {
 	modelMutex.unlock();
 }
 
-void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
+void Car::writeControlGyro(bool isGyrophareOn) {
 	controlMutex.lock();
 
-	//added update on controlStructure
-	/*Car::getControlStructure(controlStructure);*/
-	//
+	if (isGyrophareOn){
+		controlStructure.gyro = 1;
+	}	
+	else {
+		controlStructure.gyro = 0;
+	}
+
+	controlMutex.unlock();
+}
+
+
+void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
+	controlMutex.lock();
 
 	switch(target) {
 		case Car::DirectionMotor:
@@ -96,14 +106,4 @@ void Car::updateModelStructure(BarstowModel_Typedef & model) {
 
 	modelMutex.unlock();
 }
-
-//added update control structure function
-/*void Car::updateControlStructure(BarstowControl_Typedef & control) {
-	controlMutex.lock();
-
-	controlStructure = control;
-
-	controlMutex.unlock();
-}*/
-//
 
