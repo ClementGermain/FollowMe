@@ -489,6 +489,16 @@
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\motor_sensor.h</FilePath>
             </File>
+            <File>
+              <FileName>gyrophare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\gyrophare.c</FilePath>
+            </File>
+            <File>
+              <FileName>gyrophare.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\gyrophare.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1014,6 +1024,16 @@
               <FileName>motor_sensor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\motor_sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>gyrophare.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\gyrophare.c</FilePath>
+            </File>
+            <File>
+              <FileName>gyrophare.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Sources\interface\gyrophare.h</FilePath>
             </File>
           </Files>
         </Group>

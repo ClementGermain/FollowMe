@@ -10,7 +10,7 @@
 
 // Not accurate Value, we gonna need to choose them
 #define GPIO_SENSOR_TRIG_FRONT_L					GPIOC //ok
-#define GPIO_SENSOR_TRIG_FRONT_R					GPIOA //ok
+#define GPIO_SENSOR_TRIG_FRONT_R					GPIOC //ok
 #define GPIO_SENSOR_TRIG_FRONT_C					GPIOD //ok
 //#define GPIO_SENSOR_TRIG_BACK_L						GPIOB
 //#define GPIO_SENSOR_TRIG_BACK_R						GPIOB
@@ -29,22 +29,16 @@
 
 // Not accurate Value, we gonna need to choose them
 #define GPIO_PIN_SENSOR_TRIG_FRONT_L			GPIO_Pin_11 //ok
-#define GPIO_PIN_SENSOR_TRIG_FRONT_R			GPIO_Pin_14 //ok
+#define GPIO_PIN_SENSOR_TRIG_FRONT_R			GPIO_Pin_12 //ok
 #define GPIO_PIN_SENSOR_TRIG_FRONT_C			GPIO_Pin_2 //ok
-//#define GPIO_PIN_SENSOR_TRIG_BACK_L				GPIO_Pin_1
-//#define GPIO_PIN_SENSOR_TRIG_BACK_R				GPIO_Pin_2
-//#define GPIO_PIN_SENSOR_TRIG_BACK_C				GPIO_Pin_3
 
 #define GPIO_PIN_SENSOR_ECHO_FRONT_L			GPIO_Pin_0 //ok
 #define GPIO_PIN_SENSOR_ECHO_FRONT_R			GPIO_Pin_1 //ok
-#define GPIO_PIN_SENSOR_ECHO_FRONT_C			GPIO_Pin_4 //ok
-//#define GPIO_PIN_SENSOR_ECHO_BACK_L				GPIO_Pin_4
-//#define GPIO_PIN_SENSOR_ECHO_BACK_R				GPIO_Pin_5
-//#define GPIO_PIN_SENSOR_ECHO_BACK_C				GPIO_Pin_6
+#define GPIO_PIN_SENSOR_ECHO_FRONT_C			GPIO_Pin_2 //ok
 
 #define GPIO_Num_Port_Echo_Front_L 		0
 #define GPIO_Num_Port_Echo_Front_R		1
-#define GPIO_Num_Port_Echo_Front_C		4
+#define GPIO_Num_Port_Echo_Front_C		2
 
 #define TIM_Echo													TIM2
 #define TIM_Channel_Echo_Front_L					TIM_Channel_1// for counting the distance
@@ -85,12 +79,6 @@ extern int time_echo;
 extern int front_us;
 extern BarstowModel_Typedef * Model;
 
-
-/** @brief Update all the UltraSound sensor in a Modele struct
-	* @param Modele: Pointeur to the modele struct to be used
-	* @retval None
-*/
-void Update_US_Sensor(BarstowModel_Typedef * Modele);
 
 /** @brief Init a single UltraSound sensor
 	* @param Sensor: Sensor to init (ex : SENSOR_FRONT_R)

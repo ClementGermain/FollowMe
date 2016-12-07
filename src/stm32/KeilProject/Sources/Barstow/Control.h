@@ -3,7 +3,6 @@
 
 #include "stdint.h"
 
-
 /** Motor direction defines
 */
 #define MOTOR_DIRECTION_FORWARD		(+1)
@@ -32,6 +31,7 @@ typedef struct
 {
 	MotorControl_Typedef directionMotor;
 	MotorControl_Typedef propulsionMotor;
+	int gyro;
 	
 	//int checksum;
 	

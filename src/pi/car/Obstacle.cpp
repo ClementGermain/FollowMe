@@ -1,4 +1,7 @@
 #include "Obstacle.hpp"
+#include "car/Car.hpp"
+#include "../../stm32/KeilProject/Sources/Barstow/Control.h"
+#include <ctime>
 #include <chrono>
 #include <thread>
 
@@ -8,6 +11,8 @@ bool ObstacleDetection::Left = false;
 bool ObstacleDetection::Center = false;
 bool ObstacleDetection::Right = false;
 bool ObstacleDetection::Global = false;
+time_t ObstacleDetection::Timer = time(0);
+time_t ObstacleDetection::Delta = time(0);  
 thread * ObstacleDetection::threadTest = NULL;
 bool ObstacleDetection::endThread = true;
 
@@ -15,7 +20,7 @@ bool ObstacleDetection::endThread = true;
 void ObstacleDetection::obstacleDetectionLeft() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontLeftUSensor.distance < 100) {
+	if (model.frontLeftUSensor.distance < 40) {
 		Left = true;
 	}
 	else {
@@ -31,7 +36,7 @@ bool ObstacleDetection::isLeftDetected() {
 void ObstacleDetection::obstacleDetectionCenter() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontCenterUSensor.distance < 100) {
+	if (model.frontCenterUSensor.distance < 40) {
 		Center = true;
 	}
 	else {
@@ -47,7 +52,7 @@ bool ObstacleDetection::isCenterDetected() {
 void ObstacleDetection::obstacleDetectionRight() {
 	BarstowModel_Typedef model;
 	Car::getModelStructure(model);
-	if (model.frontRightUSensor.distance < 100) {
+	if (model.frontRightUSensor.distance < 40) {
 		Right = true;
 	}
 	else {
@@ -63,13 +68,30 @@ bool ObstacleDetection::isRightDetected() {
 void ObstacleDetection::obstacleDetectionGlobal() {
 	if (Left or Center or Right){
 		Global = true;
+		ObstacleDetection::Delta = time(0);
+		Car::writeControlGyro(true);
 	}
 	else {
-		Global = false;
+		ObstacleDetection::obstacleDetectionGlobalTimed();
 	}
+
 };
 bool ObstacleDetection::isGlobalDetected(){
 	return Global;
+}
+// --------------------------------------- //
+
+// ---------US Global time related-------- //	
+void ObstacleDetection::obstacleDetectionGlobalTimed() {
+	ObstacleDetection::Timer = time(0);	
+	if (difftime(ObstacleDetection::Timer,ObstacleDetection::Delta) < 1){ 
+		Global = true;
+		Car::writeControlGyro(true);
+	}
+	else {
+		Global = false;
+		Car::writeControlGyro(false);
+	}	
 }
 // --------------------------------------- //
 

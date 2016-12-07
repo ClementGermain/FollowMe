@@ -2,6 +2,7 @@
 #define __USER_PATTERN_DETECTION_HPP__
 
 #include <vector>
+#include <opencv2/opencv.hpp>
 
 class UserPattern {
 	public:

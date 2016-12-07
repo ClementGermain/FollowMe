@@ -11,7 +11,9 @@
 typedef struct
 {
 	uint32_t current; // Electric current in mA
-	uint32_t voltage; // Voltage in mV
+	uint32_t voltage1; // Voltage of first Driver in mV
+	uint32_t voltage2; // Voltage of second Driver in mV
+	uint32_t speed; // Speed in Tours/min
 }MotorModel_Typedef;
 
 

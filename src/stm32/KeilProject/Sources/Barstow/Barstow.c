@@ -2,9 +2,6 @@
 
 void StartBarstow(void)
 {	
-	/*!< Init motors. */
-	Init_All_Motor();
-	
 	/*!< Create model and control structure for SPI. */
 	int modSize = sizeof(BarstowModel_Typedef);
 	int conSize = sizeof(BarstowControl_Typedef);
@@ -15,33 +12,45 @@ void StartBarstow(void)
 	unsigned char receiveBuffer[bufferSize];
 	
 	BarstowControl_Typedef 	* BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
-	BarstowModel_Typedef * BarstowModel 		= (BarstowModel_Typedef*) sendBuffer;
+	BarstowModel_Typedef * BarstowModel 			= (BarstowModel_Typedef*) sendBuffer;
 	
 	/*!< Init control structures. */
 	BarstowControl->directionMotor.direction=0;
 	BarstowControl->directionMotor.speed=0;
 	BarstowControl->propulsionMotor.direction=0;
 	BarstowControl->propulsionMotor.speed=0;
+	BarstowControl->gyro=0;
+	
+	/*!< Init motors. */
+	Init_All_Motor();
 	
 	/*!< Init Ultrasonic sensor. */
-	//TODO
 	Start_US_Sensor(BarstowModel);
-	BarstowModel->frontCenterUSensor.distance = 0.0f; //Avoid warning, must be removed when sensors are implemented
+	
+	/*< Init Motor Sensors. */
+	MotorSensor_Init(BarstowModel);
 	
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
-	//Start_US_Sensor(BarstowModel);
-	BarstowModel->frontCenterUSensor.distance = 400;
-	BarstowModel->frontRightUSensor.distance = 200;
-	BarstowModel->frontLeftUSensor.distance = 150;
+	
+	/*< Init Gyrophare. */
+	Gyro_Init();
+		
 	/*!< Entering main loop. */
+	int i;
 	while(1)
 	{
-		int i;
 		i++;
+		
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
+		
+		/*!< Updating motors Sensor. */
+		MotorSensor_Update(BarstowModel);
+		
+		/*!< Updating Gyro. */
+		Gyro_Toggle(BarstowControl);
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction

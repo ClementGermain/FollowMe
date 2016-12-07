@@ -26,6 +26,20 @@ void Car::getModelStructure(BarstowModel_Typedef & out) {
 	modelMutex.unlock();
 }
 
+void Car::writeControlGyro(bool isGyrophareOn) {
+	controlMutex.lock();
+
+	if (isGyrophareOn){
+		controlStructure.gyro = 1;
+	}	
+	else {
+		controlStructure.gyro = 0;
+	}
+
+	controlMutex.unlock();
+}
+
+
 void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 	controlMutex.lock();
 
@@ -46,7 +60,7 @@ void Car::writeControlMotor(Car::Motor target, MotorControl_Typedef & control) {
 // @param speed: value in range [0, 1]
 void Car::writeControlMotor(Car::Moving action, float speed) {
 	MotorControl_Typedef control;
-	
+
 	control.speed = min(max(0.0f, speed), 1.0f);
 
 	switch(action) {

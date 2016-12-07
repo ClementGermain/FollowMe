@@ -38,7 +38,7 @@ void ADC_Configuration(ADC_TypeDef * ADC)
   while(ADC_GetCalibrationStatus(ADC));
 }
 
-u16 Read_ADC(ADC_TypeDef * ADC, int Channel)
+u16 ADC_Read(ADC_TypeDef * ADC, int Channel)
 {
   ADC_RegularChannelConfig(ADC, Channel, 1, ADC_SampleTime_28Cycles5);
   // Start the conversion
