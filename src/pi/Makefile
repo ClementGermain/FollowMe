@@ -48,6 +48,7 @@ OBJECTS=Main.o \
 		utils/Log.o \
 		utils/Timer.o \
 		improc/UserPatternDetection.o \
+		improc/KalmanFilterForUserDetection.o \
 		improc/UserPatternDetectionTest.o \
 		improc/RoadDetection.o \
 		improc/RoadDetectionTest.o \
