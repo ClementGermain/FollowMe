@@ -89,6 +89,11 @@ void UserPatternDetection::imageCirclesToPosition() {
 		// Radius
 		float r = imageCircles[0][2];
 
+		cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
+		x = corrected.at<float>(0);
+		y = corrected.at<float>(1);
+		r = corrected.at<float>(2);
+
 		// position and radius -> perceived visual angle (PVA) of the circle
 		// left and right bounds of the horizontal PVA (transform circle's horizontal bounds image position to an angle from camera direction)
 		float angleXmin = atan2(x - r, focalLength), angleXmax = atan2(x + r, focalLength);

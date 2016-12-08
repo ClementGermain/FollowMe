@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <opencv2/opencv.hpp>
+#include "KalmanFilterForUserDetection.hpp"
 
 class UserPattern {
 	public:
@@ -34,6 +35,7 @@ class UserPatternDetection {
 		std::vector<cv::Vec3f> imageCircles;
 		bool isUserDetected;
 		float detectedDirection, detectedDistance;
+		Kalman_Filter_User kalmanFilter;
 };
 
 #endif
