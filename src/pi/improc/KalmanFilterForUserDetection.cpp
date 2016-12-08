@@ -17,8 +17,10 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0){
 	K_Filter.statePre.at<float>(2) = 0;
 	K_Filter.transitionMatrix = *(Mat_<float>(3, 3) << 1,0,0,   0,1,0,  0,0,1);
 	setIdentity(K_Filter.measurementMatrix);
-	setIdentity(K_Filter.processNoiseCov, Scalar::all(1e-5));
+	setIdentity(K_Filter.processNoiseCov, Scalar::all(5.0));
+	K_Filter.processNoiseCov.at<float>(2,2) = 1.0;
 	setIdentity(K_Filter.measurementNoiseCov, Scalar::all(1.0));
+	K_Filter.measurementNoiseCov.at<float>(2,2) = 5.0;
 	setIdentity(K_Filter.errorCovPost, Scalar::all(1));
 }
 

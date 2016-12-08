@@ -2,6 +2,7 @@
 #include "UserPatternDetection.hpp"
 #include <vector>
 #include "utils/Log.hpp"
+#include <iostream>
 #include "car/Camera.hpp"
 
 using namespace std;
@@ -68,6 +69,27 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 			int radius = std::round(imageCircles[0][2]);
 
 			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 2);
+
+			// Half width/height of the image in pixels
+			float halfWidth = Camera::getFrameWidth() * 0.5f;
+			float halfHeight = Camera::getFrameHeight() * 0.5f;
+			float x = imageCircles[0][0] - halfWidth;
+			float y = imageCircles[0][1] - halfHeight;
+			// Radius
+			float r = imageCircles[0][2];
+
+			cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
+			LogD << "KF x:"<< (x - corrected.at<float>(0)) << std::endl;
+			LogD << "KF y:"<< (y - corrected.at<float>(1)) << std::endl;
+			LogD << "KF r:"<< (r - corrected.at<float>(2)) << std::endl;
+			imageCircles[0][0] = corrected.at<float>(0);
+			imageCircles[0][1] = corrected.at<float>(1);
+			imageCircles[0][2] = corrected.at<float>(2);
+
+			center = cv::Point(std::round(imageCircles[0][0]+halfWidth), std::round(imageCircles[0][1]+halfHeight));
+			radius = std::round(imageCircles[0][2]);
+
+			cv::circle(resultImage, center, radius, cv::Scalar(255, 128, 0), 2);
 		}
 		resultImageCreated = true;
 	}
@@ -84,15 +106,10 @@ void UserPatternDetection::imageCirclesToPosition() {
 
 	if(imageCircles.size() > 0) {
 		// Center x and y coordinate with center of image as origin
-		float x = imageCircles[0][0] - halfWidth;
-		float y = imageCircles[0][1] - halfHeight;
+		float x = imageCircles[0][0];
+		float y = imageCircles[0][1];
 		// Radius
 		float r = imageCircles[0][2];
-
-		cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
-		x = corrected.at<float>(0);
-		y = corrected.at<float>(1);
-		r = corrected.at<float>(2);
 
 		// position and radius -> perceived visual angle (PVA) of the circle
 		// left and right bounds of the horizontal PVA (transform circle's horizontal bounds image position to an angle from camera direction)
