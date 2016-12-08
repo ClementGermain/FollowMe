@@ -207,8 +207,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCmdLeft").setValue( 0.0 * 100.0);
 		l.getTrackbarView("tbCmdLeft").setPosition( 0.0 );
 		l.getDigitalView("dVoltage1Left").setValue(((float) model.leftWheelMotor.voltage1)/1000.0);
-		l.getTrackbarView("tbVoltage2Left").setPosition(model.leftWheelMotor.voltage1);
-		l.getDigitalView("dVoltage1Left").setValue(((float) model.leftWheelMotor.voltage2)/1000.0);
+		l.getTrackbarView("tbVoltage1Left").setPosition(model.leftWheelMotor.voltage1);
+		l.getDigitalView("dVoltage2Left").setValue(((float) model.leftWheelMotor.voltage2)/1000.0);
 		l.getTrackbarView("tbVoltage2Left").setPosition(model.leftWheelMotor.voltage2);
 		l.getDigitalView("dSpeedLeft").setValue(((float) model.leftWheelMotor.speed)/60);
 		l.getTrackbarView("tbSpeedLeft").setPosition(model.leftWheelMotor.speed/60);
