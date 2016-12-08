@@ -178,9 +178,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 	//// USER DETECTION ////
 	Layout & userLayout = mgr.createLayout("User Detection");
 
-	userLayout.addView("filter", new ImageView(0,0,400,300));
-	userLayout.addView("result", new ImageView(400,0,400,300));
-	userLayout.addView("logs", new LogView(0,300,800,100));
+	userLayout.addView("filter", new ImageView(0,0,400,240));
+	userLayout.addView("result", new ImageView(400,0,400,240));
+	userLayout.addView("logs", new LogView(0,240,800,160));
 
 	//// ROAD IMPROC ////
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
