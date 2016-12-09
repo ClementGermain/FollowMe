@@ -30,7 +30,8 @@ class Car {
 		static void updateModelStructure(BarstowModel_Typedef & model);
 		/** Write control to the gyro**/
 		static void writeControlGyro(bool isGyrophareOn);
-
+		/**Size of the car**/
+		static const float CarSize;
 
 	private:
 		// disallow creating an instance of this object

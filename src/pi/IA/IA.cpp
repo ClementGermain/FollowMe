@@ -16,11 +16,22 @@ bool IA::UserDetected = false;
 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
+float IA::RealDistance = 0.0;
+float IA::ActualSpeed = 0.0;
+float IA::TargetSpeed = 0.0;
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distance){
-	if (distance <= 3) {
-	IA::Speed = distance*(1.0/3.0);
+	IA::RealDistance = distance-Car::CarSize;
+	if (IA::RealDistance <= 3) {
+		TargetSpeed=(IA::RealDistance)*(1.0/3.0);
+		if (TargetSpeed - ActualSpeed > 0){
+			ActualSpeed = ActualSpeed + 0.1;
+		}
+		else if (TargetSpeed - ActualSpeed > 0){
+			ActualSpeed = ActualSpeed - 0.1;
+		}
+	IA::Speed = IA::ActualSpeed;
 	}
 	else {
 	IA::Speed = 1.0;
