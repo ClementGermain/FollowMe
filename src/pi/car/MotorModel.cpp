@@ -5,12 +5,18 @@
 #include <fstream>
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 
+using namespace std;
+
 MotorModel::MotorModel(void){
   MotorModel(600);
 }
 
-MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_) {
-  StateMotor_TypeDef model [sizeModel];
+MotorModel::~MotorModel() {
+	delete[] model;
+}
+
+MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_),
+	model(new StateMotor_TypeDef[sizeModel]){
 
   // init the state model
   for (int i=0 ; i<sizeModel ; i++){
@@ -44,17 +50,18 @@ void MotorModel::create(int CmdStart, int CmdStop, float waitTime){
 }
 
 void MotorModel::save(const std::string & fileName){
+	/*
   ofstream file(fileName, ios::out | ios::trunc);
 if (file){
   fwrite(&model, sizeof(StateMotor_TypeDef), sizeModel, file);
   file.close();
-  }
+  }*/
 }
 
-void MotorModel::load(const std::string & fileName){
+void MotorModel::load(const std::string & fileName){ /*
   ifstream file(fileName); 
   if (file){
     fread(&model, sizeof(StateMotor_TypeDef), sizeModel, file);
     file.close();
-  }
+  }*/
 }

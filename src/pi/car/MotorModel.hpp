@@ -18,6 +18,7 @@ class MotorModel {
 
 public :
   MotorModel(void);
+  ~MotorModel(void);
   MotorModel(int sizeModel);
 
   // Create the model by running a simulation and get motor's value
