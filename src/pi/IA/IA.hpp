@@ -10,6 +10,7 @@ class IA {
 	
 		static void SpeedControl(float);
 		static void IAMotorBack(float);
+		static float ReturnSpeed();
 
 	private:		
 		static float Speed;		

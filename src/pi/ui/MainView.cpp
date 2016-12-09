@@ -27,6 +27,7 @@
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
+float SpeedCommand = 0.0;
 
 MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
@@ -195,6 +196,7 @@ void MainView::updateViews(ViewManager & mgr) {
 	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
+		SpeedCommand = IA::ReturnSpeed();
       		
 		l.getDigitalView("dCmdFront").setValue( 0.0 * 100.0);
 		l.getTrackbarView("tbCmdFront").setPosition( 0.0 );
@@ -205,7 +207,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current));
 		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
 		
-		l.getDigitalView("dCmdLeft").setValue( IA::Speed * 100.0);
+		l.getDigitalView("dCmdLeft").setValue( SpeedCommand * 100.0);
 		l.getTrackbarView("tbCmdLeft").setPosition( 0.0 );
 		l.getDigitalView("dVoltage1Left").setValue(((float) model.leftWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Left").setPosition(model.leftWheelMotor.voltage1);
@@ -216,7 +218,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getDigitalView("dCmdRight").setValue( IA::Speed * 100.0);
+		l.getDigitalView("dCmdRight").setValue( SpeedCommand * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( 0.0 );
 	    	l.getDigitalView("dVoltage1Right").setValue(((float) model.rightWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Right").setPosition(model.rightWheelMotor.voltage1);

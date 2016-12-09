@@ -20,6 +20,11 @@ float IA::RealDistance = 0.0;
 float IA::ActualSpeed = 0.0;
 float IA::TargetSpeed = 0.0;
 
+// ---- Return speed value --------------- //
+float IA::ReturnSpeed(){
+return IA::Speed;
+}
+// --------------------------------------- //
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distance){
 	IA::RealDistance = distance-Car::CarSize;
