@@ -1,4 +1,9 @@
 #include "PlotsView.hpp"
+#include <SDL/SDL_gfxPrimitives.h>
+#include <cmath>
+#include <cstdio>
+
+using namespace std;
 
 PlotsView::PlotsView(int x, int y, int w, int h) : 
 	View(x, y),
@@ -51,20 +56,26 @@ void PlotsView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 			float yOffset = minY;
 
 			// Find best horizontal scale lines
+			const int minLinesCount = 3;
 			float horizontalLinesScale;
-			if(ceil(rangeWidthY / (scale * 2)) > 3)
+			if(ceil(rangeWidthY / (scale * 2)) > minLinesCount)
 				horizontalLinesScale = scale * 2;
-			else if(ceil(rangeWidthY / (scale * 1)) > 3)
+			else if(ceil(rangeWidthY / (scale * 1)) > minLinesCount)
 				horizontalLinesScale = scale * 1;
-			else if(ceil(rangeWidthY / (scale / 2)) > 3)
+			else if(ceil(rangeWidthY / (scale / 2)) > minLinesCount)
 				horizontalLinesScale = scale / 2;
 			else
 				horizontalLinesScale = scale / 5;
 
 			// Draw horizontal scale lines
 			float yStart = horizontalLinesScale * ceil(minY / horizontalLinesScale);
-			for(float y = yStart; y < maxY; y += horizontalLinesScale)
-				hlineRGBA(buffer, 0, buffer->w, buffer->h - (int) ((y-yOffset) * yFactor), 180, 180, 180, 255);
+			for(float y = yStart; y < maxY; y += horizontalLinesScale) {
+				int py = buffer->h - (int) ((y-yOffset) * yFactor);
+				int charSize = 8;
+				hlineRGBA(buffer, 0, buffer->w, py, 180, 180, 180, 255);
+				char txt[20]; sprintf(txt, "%.f", y);
+				stringRGBA(buffer, 5, py-charSize-1,  txt, 128,128,128,255);
+			}
 
 			// Draw plot
 			float prev;
@@ -75,7 +86,7 @@ void PlotsView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 				current = next;
 				next = i+1 < plotCount ? plotValues[(plotIndexStart+i+1)%maxPlotCount] : next;
 
-				vline(buffer, i, buffer->h - (int) ((current-yOffset) * yFactor), buffer->h - (int) ((min(min(current,prev),next)-yOffset) * yFactor), 42,42,42, 255);
+				vlineRGBA(buffer, i, buffer->h - (int) ((current-yOffset) * yFactor), buffer->h - (int) ((min(min(current,prev),next)-yOffset) * yFactor), 42,42,42, 255);
 			}
 		}
 	}

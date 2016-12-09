@@ -35,6 +35,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/ImageView.o \
 		   ui/view/TextView.o \
 		   ui/view/Layout.o \
+		   ui/view/PlotsView.o \
 		   ui/ViewManager.o \
 		   ui/CPULoad.o
 

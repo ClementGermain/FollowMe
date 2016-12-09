@@ -3,14 +3,14 @@
 
 #include <SDL/SDL.h>
 #include <memory>
-#include <string>
+#include <vector>
 #include "View.hpp"
 
 class PlotsView : public View {
 	public:
 		PlotsView(int x, int y, int w, int h);
 		void draw(SDL_Surface * screen, bool needRedraw=true, bool updateScreen=false);
-		void addValue(float value);
+		void addPlot(float value);
 		void clearPlots();
 
 	private:

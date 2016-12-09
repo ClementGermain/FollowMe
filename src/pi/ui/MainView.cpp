@@ -22,12 +22,12 @@
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
 #include "view/EmptyBoxView.hpp"
+#include "view/PlotsView.hpp"
 #include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
-float SpeedCommand = 0.0;
 
 MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
@@ -184,7 +184,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	userLayout.addView("filter", new ImageView(0,0,400,240));
 	userLayout.addView("result", new ImageView(400,0,400,240));
-	userLayout.addView("logs", new LogView(0,240,800,160));
+	userLayout.addView("logs", new LogView(0,240,400,160));
+	userLayout.addView("graph", new PlotsView(400,240,400,160));
 
 	//// ROAD IMPROC ////
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
@@ -264,7 +265,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getToggleBoxView("sensor_toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
-		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
+		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
 
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -274,6 +275,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		Layout & l = mgr.getLayout("User Detection");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
 		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
+		((PlotsView*)l.getView("graph"))->addPlot(cpuLoad.get());
 	}
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");
