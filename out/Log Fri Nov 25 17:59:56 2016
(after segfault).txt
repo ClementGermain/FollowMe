@@ -1,0 +1,1829 @@
+E/-8:-2:00.-675/SEGFAULT
+I/-8:-2:00.-676/Found 0 circles
+I/-8:-2:00.-676/Processed image for user pattern detection in 0.0637699 seconds
+I/-8:-2:00.-740/Found 0 circles
+I/-8:-2:00.-740/Processed image for user pattern detection in 0.0643312 seconds
+I/-8:-2:00.-804/Found 0 circles
+I/-8:-2:00.-805/Processed image for user pattern detection in 0.0643992 seconds
+D/-8:-2:00.-846/Dir 1
+D/-8:-2:00.-846/Prop 1
+I/-8:-2:00.-869/Found 0 circles
+I/-8:-2:00.-869/Processed image for user pattern detection in 0.0643252 seconds
+I/-8:-2:00.-934/Found 0 circles
+I/-8:-2:00.-934/Processed image for user pattern detection in 0.0638195 seconds
+I/-8:-2:-1.000/Found 0 circles
+I/-8:-2:-1.000/Processed image for user pattern detection in 0.0640218 seconds
+D/-8:-2:-1.-47/Prop 0
+D/-8:-2:-1.-47/Dir 0
+I/-8:-2:-1.-64/Found 0 circles
+I/-8:-2:-1.-64/Processed image for user pattern detection in 0.0641442 seconds
+I/-8:-2:-1.-129/Found 0 circles
+I/-8:-2:-1.-129/Processed image for user pattern detection in 0.0637913 seconds
+I/-8:-2:-1.-193/Found 0 circles
+I/-8:-2:-1.-193/Processed image for user pattern detection in 0.0638228 seconds
+I/-8:-2:-1.-257/Found 0 circles
+I/-8:-2:-1.-257/Processed image for user pattern detection in 0.0637661 seconds
+I/-8:-2:-1.-323/Found 0 circles
+I/-8:-2:-1.-323/Processed image for user pattern detection in 0.0637212 seconds
+I/-8:-2:-1.-387/Found 0 circles
+I/-8:-2:-1.-387/Processed image for user pattern detection in 0.0639418 seconds
+I/-8:-2:-1.-452/Found 0 circles
+I/-8:-2:-1.-452/Processed image for user pattern detection in 0.063709 seconds
+I/-8:-2:-1.-516/Found 0 circles
+I/-8:-2:-1.-516/Processed image for user pattern detection in 0.0637843 seconds
+I/-8:-2:-1.-581/Found 0 circles
+I/-8:-2:-1.-581/Processed image for user pattern detection in 0.0638939 seconds
+I/-8:-2:-1.-648/Found 0 circles
+I/-8:-2:-1.-648/Processed image for user pattern detection in 0.0638959 seconds
+I/-8:-2:-1.-714/Found 0 circles
+I/-8:-2:-1.-714/Processed image for user pattern detection in 0.0638845 seconds
+I/-8:-2:-1.-778/Found 0 circles
+I/-8:-2:-1.-778/Processed image for user pattern detection in 0.0636952 seconds
+I/-8:-2:-1.-842/Found 0 circles
+I/-8:-2:-1.-842/Processed image for user pattern detection in 0.0642804 seconds
+I/-8:-2:-1.-907/Found 0 circles
+I/-8:-2:-1.-907/Processed image for user pattern detection in 0.0641052 seconds
+I/-8:-2:-1.-971/Found 0 circles
+I/-8:-2:-1.-971/Processed image for user pattern detection in 0.0642388 seconds
+I/-8:-2:-2.-36/Found 0 circles
+I/-8:-2:-2.-36/Processed image for user pattern detection in 0.0640638 seconds
+I/-8:-2:-2.-102/Found 0 circles
+I/-8:-2:-2.-102/Processed image for user pattern detection in 0.0641373 seconds
+I/-8:-2:-2.-167/Found 0 circles
+I/-8:-2:-2.-167/Processed image for user pattern detection in 0.0641533 seconds
+I/-8:-2:-2.-231/Found 0 circles
+I/-8:-2:-2.-231/Processed image for user pattern detection in 0.0639756 seconds
+I/-8:-2:-2.-295/Found 0 circles
+I/-8:-2:-2.-295/Processed image for user pattern detection in 0.0637786 seconds
+I/-8:-2:-2.-359/Found 0 circles
+I/-8:-2:-2.-359/Processed image for user pattern detection in 0.0636879 seconds
+I/-8:-2:-2.-423/Found 0 circles
+I/-8:-2:-2.-423/Processed image for user pattern detection in 0.0639473 seconds
+I/-8:-2:-2.-488/Found 0 circles
+I/-8:-2:-2.-488/Processed image for user pattern detection in 0.0636853 seconds
+I/-8:-2:-2.-555/Found 0 circles
+I/-8:-2:-2.-555/Processed image for user pattern detection in 0.0638097 seconds
+I/-8:-2:-2.-619/Found 0 circles
+I/-8:-2:-2.-619/Processed image for user pattern detection in 0.0637654 seconds
+I/-8:-2:-2.-683/Found 0 circles
+I/-8:-2:-2.-683/Processed image for user pattern detection in 0.0637354 seconds
+I/-8:-2:-2.-747/Found 0 circles
+I/-8:-2:-2.-747/Processed image for user pattern detection in 0.0637044 seconds
+I/-8:-2:-2.-813/Found 0 circles
+I/-8:-2:-2.-813/Processed image for user pattern detection in 0.0637588 seconds
+I/-8:-2:-2.-877/Found 0 circles
+I/-8:-2:-2.-877/Processed image for user pattern detection in 0.064071 seconds
+I/-8:-2:-2.-941/Found 0 circles
+I/-8:-2:-2.-941/Processed image for user pattern detection in 0.063889 seconds
+I/-8:-2:-3.-09/Found 0 circles
+I/-8:-2:-3.-09/Processed image for user pattern detection in 0.063739 seconds
+I/-8:-2:-3.-73/Found 0 circles
+I/-8:-2:-3.-73/Processed image for user pattern detection in 0.0642596 seconds
+I/-8:-2:-3.-137/Found 0 circles
+I/-8:-2:-3.-137/Processed image for user pattern detection in 0.0643666 seconds
+I/-8:-2:-3.-202/Found 0 circles
+I/-8:-2:-3.-202/Processed image for user pattern detection in 0.0645657 seconds
+I/-8:-2:-3.-267/Found 0 circles
+I/-8:-2:-3.-267/Processed image for user pattern detection in 0.0638752 seconds
+I/-8:-2:-3.-333/Found 0 circles
+I/-8:-2:-3.-333/Processed image for user pattern detection in 0.0639093 seconds
+I/-8:-2:-3.-397/Found 0 circles
+I/-8:-2:-3.-397/Processed image for user pattern detection in 0.0641361 seconds
+I/-8:-2:-3.-462/Found 0 circles
+I/-8:-2:-3.-462/Processed image for user pattern detection in 0.0638611 seconds
+I/-8:-2:-3.-526/Found 0 circles
+I/-8:-2:-3.-526/Processed image for user pattern detection in 0.0638872 seconds
+I/-8:-2:-3.-590/Found 0 circles
+I/-8:-2:-3.-590/Processed image for user pattern detection in 0.0639249 seconds
+I/-8:-2:-3.-654/Found 0 circles
+I/-8:-2:-3.-654/Processed image for user pattern detection in 0.0636361 seconds
+I/-8:-2:-3.-720/Found 0 circles
+I/-8:-2:-3.-720/Processed image for user pattern detection in 0.0638944 seconds
+I/-8:-2:-3.-784/Found 0 circles
+I/-8:-2:-3.-784/Processed image for user pattern detection in 0.0638358 seconds
+I/-8:-2:-3.-848/Found 0 circles
+I/-8:-2:-3.-848/Processed image for user pattern detection in 0.0636326 seconds
+I/-8:-2:-3.-914/Found 0 circles
+I/-8:-2:-3.-914/Processed image for user pattern detection in 0.0639588 seconds
+I/-8:-2:-3.-980/Found 0 circles
+I/-8:-2:-3.-980/Processed image for user pattern detection in 0.0635829 seconds
+I/-8:-2:-4.-45/Found 0 circles
+I/-8:-2:-4.-45/Processed image for user pattern detection in 0.0639187 seconds
+I/-8:-2:-4.-110/Found 0 circles
+I/-8:-2:-4.-110/Processed image for user pattern detection in 0.0637773 seconds
+I/-8:-2:-4.-174/Found 0 circles
+I/-8:-2:-4.-174/Processed image for user pattern detection in 0.0642657 seconds
+I/-8:-2:-4.-239/Found 0 circles
+I/-8:-2:-4.-239/Processed image for user pattern detection in 0.0641639 seconds
+I/-8:-2:-4.-303/Found 0 circles
+I/-8:-2:-4.-303/Processed image for user pattern detection in 0.0645259 seconds
+I/-8:-2:-4.-368/Found 0 circles
+I/-8:-2:-4.-368/Processed image for user pattern detection in 0.0641053 seconds
+I/-8:-2:-4.-432/Found 0 circles
+I/-8:-2:-4.-432/Processed image for user pattern detection in 0.0640628 seconds
+I/-8:-2:-4.-497/Found 0 circles
+I/-8:-2:-4.-497/Processed image for user pattern detection in 0.0638933 seconds
+I/-8:-2:-4.-563/Found 0 circles
+I/-8:-2:-4.-563/Processed image for user pattern detection in 0.0637825 seconds
+I/-8:-2:-4.-627/Found 0 circles
+I/-8:-2:-4.-627/Processed image for user pattern detection in 0.0638813 seconds
+I/-8:-2:-4.-691/Found 0 circles
+I/-8:-2:-4.-691/Processed image for user pattern detection in 0.0637747 seconds
+I/-8:-2:-4.-755/Found 0 circles
+I/-8:-2:-4.-755/Processed image for user pattern detection in 0.0637284 seconds
+I/-8:-2:-4.-822/Found 0 circles
+I/-8:-2:-4.-822/Processed image for user pattern detection in 0.0640005 seconds
+I/-8:-2:-4.-886/Found 0 circles
+I/-8:-2:-4.-886/Processed image for user pattern detection in 0.0638483 seconds
+I/-8:-2:-4.-950/Found 0 circles
+I/-8:-2:-4.-950/Processed image for user pattern detection in 0.063808 seconds
+I/-8:-2:-5.-14/Found 0 circles
+I/-8:-2:-5.-14/Processed image for user pattern detection in 0.0637488 seconds
+I/-8:-2:-5.-78/Found 0 circles
+I/-8:-2:-5.-78/Processed image for user pattern detection in 0.0640436 seconds
+I/-8:-2:-5.-145/Found 0 circles
+I/-8:-2:-5.-145/Processed image for user pattern detection in 0.0637363 seconds
+I/-8:-2:-5.-210/Found 0 circles
+I/-8:-2:-5.-210/Processed image for user pattern detection in 0.0640806 seconds
+I/-8:-2:-5.-277/Found 0 circles
+I/-8:-2:-5.-277/Processed image for user pattern detection in 0.0638456 seconds
+I/-8:-2:-5.-341/Found 0 circles
+I/-8:-2:-5.-341/Processed image for user pattern detection in 0.0641531 seconds
+I/-8:-2:-5.-406/Found 0 circles
+I/-8:-2:-5.-406/Processed image for user pattern detection in 0.0645539 seconds
+I/-8:-2:-5.-471/Found 0 circles
+I/-8:-2:-5.-471/Processed image for user pattern detection in 0.0646364 seconds
+I/-8:-2:-5.-536/Found 0 circles
+I/-8:-2:-5.-536/Processed image for user pattern detection in 0.0643847 seconds
+I/-8:-2:-5.-601/Found 0 circles
+I/-8:-2:-5.-601/Processed image for user pattern detection in 0.063962 seconds
+I/-8:-2:-5.-667/Found 0 circles
+I/-8:-2:-5.-667/Processed image for user pattern detection in 0.0639091 seconds
+I/-8:-2:-5.-731/Found 0 circles
+I/-8:-2:-5.-731/Processed image for user pattern detection in 0.063892 seconds
+I/-8:-2:-5.-795/Found 0 circles
+I/-8:-2:-5.-795/Processed image for user pattern detection in 0.0638227 seconds
+I/-8:-2:-5.-859/Found 0 circles
+I/-8:-2:-5.-860/Processed image for user pattern detection in 0.0639408 seconds
+I/-8:-2:-5.-924/Found 0 circles
+I/-8:-2:-5.-924/Processed image for user pattern detection in 0.0635651 seconds
+I/-8:-2:-5.-990/Found 0 circles
+I/-8:-2:-5.-990/Processed image for user pattern detection in 0.0636482 seconds
+I/-8:-2:-6.-54/Found 0 circles
+I/-8:-2:-6.-54/Processed image for user pattern detection in 0.0639823 seconds
+I/-8:-2:-6.-118/Found 0 circles
+I/-8:-2:-6.-118/Processed image for user pattern detection in 0.0636599 seconds
+I/-8:-2:-6.-182/Found 0 circles
+I/-8:-2:-6.-182/Processed image for user pattern detection in 0.0637237 seconds
+I/-8:-2:-6.-248/Found 0 circles
+I/-8:-2:-6.-248/Processed image for user pattern detection in 0.0639265 seconds
+I/-8:-2:-6.-316/Found 0 circles
+I/-8:-2:-6.-316/Processed image for user pattern detection in 0.0639326 seconds
+I/-8:-2:-6.-382/Found 0 circles
+I/-8:-2:-6.-382/Processed image for user pattern detection in 0.0639717 seconds
+I/-8:-2:-6.-446/Found 0 circles
+I/-8:-2:-6.-446/Processed image for user pattern detection in 0.0636443 seconds
+I/-8:-2:-6.-510/Found 0 circles
+I/-8:-2:-6.-510/Processed image for user pattern detection in 0.0639897 seconds
+I/-8:-2:-6.-575/Found 0 circles
+I/-8:-2:-6.-575/Processed image for user pattern detection in 0.0638622 seconds
+I/-8:-2:-6.-639/Found 0 circles
+I/-8:-2:-6.-639/Processed image for user pattern detection in 0.0645926 seconds
+I/-8:-2:-6.-704/Found 0 circles
+I/-8:-2:-6.-704/Processed image for user pattern detection in 0.0645346 seconds
+I/-8:-2:-6.-771/Found 0 circles
+I/-8:-2:-6.-771/Processed image for user pattern detection in 0.0640172 seconds
+I/-8:-2:-6.-835/Found 0 circles
+I/-8:-2:-6.-835/Processed image for user pattern detection in 0.0641652 seconds
+I/-8:-2:-6.-900/Found 0 circles
+I/-8:-2:-6.-900/Processed image for user pattern detection in 0.0638592 seconds
+I/-8:-2:-6.-964/Found 0 circles
+I/-8:-2:-6.-964/Processed image for user pattern detection in 0.0641069 seconds
+I/-8:-2:-7.-28/Found 0 circles
+I/-8:-2:-7.-28/Processed image for user pattern detection in 0.0636632 seconds
+I/-8:-2:-7.-92/Found 0 circles
+I/-8:-2:-7.-92/Processed image for user pattern detection in 0.0635319 seconds
+I/-8:-2:-7.-158/Found 0 circles
+I/-8:-2:-7.-158/Processed image for user pattern detection in 0.0637694 seconds
+I/-8:-2:-7.-222/Found 0 circles
+I/-8:-2:-7.-222/Processed image for user pattern detection in 0.063738 seconds
+I/-8:-2:-7.-286/Found 0 circles
+I/-8:-2:-7.-286/Processed image for user pattern detection in 0.0638189 seconds
+I/-8:-2:-7.-350/Found 0 circles
+I/-8:-2:-7.-350/Processed image for user pattern detection in 0.0637574 seconds
+I/-8:-2:-7.-414/Found 0 circles
+I/-8:-2:-7.-414/Processed image for user pattern detection in 0.0638094 seconds
+I/-8:-2:-7.-484/Found 0 circles
+I/-8:-2:-7.-484/Processed image for user pattern detection in 0.063678 seconds
+I/-8:-2:-7.-548/Found 0 circles
+I/-8:-2:-7.-548/Processed image for user pattern detection in 0.0636902 seconds
+I/-8:-2:-7.-612/Found 0 circles
+I/-8:-2:-7.-612/Processed image for user pattern detection in 0.0636278 seconds
+I/-8:-2:-7.-675/Found 0 circles
+I/-8:-2:-7.-675/Processed image for user pattern detection in 0.06376 seconds
+I/-8:-2:-7.-739/Found 0 circles
+I/-8:-2:-7.-739/Processed image for user pattern detection in 0.0643204 seconds
+I/-8:-2:-7.-804/Found 0 circles
+I/-8:-2:-7.-804/Processed image for user pattern detection in 0.0647532 seconds
+I/-8:-2:-7.-869/Found 0 circles
+I/-8:-2:-7.-869/Processed image for user pattern detection in 0.0645227 seconds
+I/-8:-2:-7.-934/Found 0 circles
+I/-8:-2:-7.-934/Processed image for user pattern detection in 0.0639068 seconds
+I/-8:-2:-8.000/Found 0 circles
+I/-8:-2:-8.000/Processed image for user pattern detection in 0.0638469 seconds
+I/-8:-2:-8.-64/Found 0 circles
+I/-8:-2:-8.-64/Processed image for user pattern detection in 0.0640189 seconds
+I/-8:-2:-8.-129/Found 0 circles
+I/-8:-2:-8.-129/Processed image for user pattern detection in 0.0638015 seconds
+I/-8:-2:-8.-193/Found 0 circles
+I/-8:-2:-8.-193/Processed image for user pattern detection in 0.063853 seconds
+I/-8:-2:-8.-257/Found 0 circles
+I/-8:-2:-8.-257/Processed image for user pattern detection in 0.0635976 seconds
+I/-8:-2:-8.-323/Found 0 circles
+I/-8:-2:-8.-323/Processed image for user pattern detection in 0.0638693 seconds
+I/-8:-2:-8.-387/Found 0 circles
+I/-8:-2:-8.-387/Processed image for user pattern detection in 0.0639182 seconds
+I/-8:-2:-8.-451/Found 0 circles
+I/-8:-2:-8.-451/Processed image for user pattern detection in 0.0636631 seconds
+I/-8:-2:-8.-515/Found 0 circles
+I/-8:-2:-8.-515/Processed image for user pattern detection in 0.0637601 seconds
+I/-8:-2:-8.-581/Found 0 circles
+I/-8:-2:-8.-581/Processed image for user pattern detection in 0.0638575 seconds
+I/-8:-2:-8.-647/Found 0 circles
+I/-8:-2:-8.-647/Processed image for user pattern detection in 0.0639257 seconds
+I/-8:-2:-8.-713/Found 0 circles
+I/-8:-2:-8.-713/Processed image for user pattern detection in 0.0639151 seconds
+I/-8:-2:-8.-778/Found 0 circles
+I/-8:-2:-8.-778/Processed image for user pattern detection in 0.0637261 seconds
+I/-8:-2:-8.-842/Found 0 circles
+I/-8:-2:-8.-842/Processed image for user pattern detection in 0.0641573 seconds
+I/-8:-2:-8.-906/Found 0 circles
+I/-8:-2:-8.-906/Processed image for user pattern detection in 0.0640004 seconds
+I/-8:-2:-8.-971/Found 0 circles
+I/-8:-2:-8.-971/Processed image for user pattern detection in 0.0644544 seconds
+I/-8:-2:-9.-35/Found 0 circles
+I/-8:-2:-9.-36/Processed image for user pattern detection in 0.0639858 seconds
+I/-8:-2:-9.-102/Found 0 circles
+I/-8:-2:-9.-102/Processed image for user pattern detection in 0.0640732 seconds
+I/-8:-2:-9.-166/Found 0 circles
+I/-8:-2:-9.-166/Processed image for user pattern detection in 0.0641923 seconds
+I/-8:-2:-9.-230/Found 0 circles
+I/-8:-2:-9.-230/Processed image for user pattern detection in 0.0639911 seconds
+I/-8:-2:-9.-295/Found 0 circles
+I/-8:-2:-9.-295/Processed image for user pattern detection in 0.0638612 seconds
+I/-8:-2:-9.-359/Found 0 circles
+I/-8:-2:-9.-359/Processed image for user pattern detection in 0.0638167 seconds
+I/-8:-2:-9.-423/Found 0 circles
+I/-8:-2:-9.-423/Processed image for user pattern detection in 0.0636434 seconds
+I/-8:-2:-9.-489/Found 0 circles
+I/-8:-2:-9.-489/Processed image for user pattern detection in 0.0638924 seconds
+I/-8:-2:-9.-553/Found 0 circles
+I/-8:-2:-9.-553/Processed image for user pattern detection in 0.0639065 seconds
+I/-8:-2:-9.-617/Found 0 circles
+I/-8:-2:-9.-617/Processed image for user pattern detection in 0.063779 seconds
+I/-8:-2:-9.-681/Found 0 circles
+I/-8:-2:-9.-681/Processed image for user pattern detection in 0.0637757 seconds
+I/-8:-2:-9.-746/Found 0 circles
+I/-8:-2:-9.-746/Processed image for user pattern detection in 0.0641032 seconds
+I/-8:-2:-9.-811/Found 0 circles
+I/-8:-2:-9.-811/Processed image for user pattern detection in 0.0639025 seconds
+I/-8:-2:-9.-876/Found 0 circles
+I/-8:-2:-9.-876/Processed image for user pattern detection in 0.0642072 seconds
+I/-8:-2:-9.-940/Found 0 circles
+I/-8:-2:-9.-940/Processed image for user pattern detection in 0.0639239 seconds
+I/-8:-2:-10.-08/Found 0 circles
+I/-8:-2:-10.-08/Processed image for user pattern detection in 0.0640465 seconds
+I/-8:-2:-10.-72/Found 0 circles
+I/-8:-2:-10.-72/Processed image for user pattern detection in 0.0641424 seconds
+I/-8:-2:-10.-137/Found 0 circles
+I/-8:-2:-10.-137/Processed image for user pattern detection in 0.0647029 seconds
+I/-8:-2:-10.-202/Found 0 circles
+I/-8:-2:-10.-202/Processed image for user pattern detection in 0.0646207 seconds
+I/-8:-2:-10.-267/Found 0 circles
+I/-8:-2:-10.-267/Processed image for user pattern detection in 0.0640417 seconds
+I/-8:-2:-10.-333/Found 0 circles
+I/-8:-2:-10.-333/Processed image for user pattern detection in 0.0638392 seconds
+I/-8:-2:-10.-397/Found 0 circles
+I/-8:-2:-10.-397/Processed image for user pattern detection in 0.0640819 seconds
+I/-8:-2:-10.-462/Found 0 circles
+I/-8:-2:-10.-462/Processed image for user pattern detection in 0.0637602 seconds
+I/-8:-2:-10.-526/Found 0 circles
+I/-8:-2:-10.-526/Processed image for user pattern detection in 0.0641209 seconds
+I/-8:-2:-10.-590/Found 0 circles
+I/-8:-2:-10.-590/Processed image for user pattern detection in 0.0635923 seconds
+I/-8:-2:-10.-656/Found 0 circles
+I/-8:-2:-10.-656/Processed image for user pattern detection in 0.0637407 seconds
+I/-8:-2:-10.-720/Found 0 circles
+I/-8:-2:-10.-720/Processed image for user pattern detection in 0.0638796 seconds
+I/-8:-2:-10.-784/Found 0 circles
+I/-8:-2:-10.-784/Processed image for user pattern detection in 0.0638065 seconds
+I/-8:-2:-10.-848/Found 0 circles
+I/-8:-2:-10.-848/Processed image for user pattern detection in 0.0636996 seconds
+I/-8:-2:-10.-914/Found 0 circles
+I/-8:-2:-10.-914/Processed image for user pattern detection in 0.06402 seconds
+I/-8:-2:-10.-980/Found 0 circles
+I/-8:-2:-10.-980/Processed image for user pattern detection in 0.0637987 seconds
+I/-8:-2:-11.-46/Found 0 circles
+I/-8:-2:-11.-46/Processed image for user pattern detection in 0.063922 seconds
+I/-8:-2:-11.-110/Found 0 circles
+I/-8:-2:-11.-110/Processed image for user pattern detection in 0.0637154 seconds
+I/-8:-2:-11.-174/Found 0 circles
+I/-8:-2:-11.-174/Processed image for user pattern detection in 0.0641407 seconds
+I/-8:-2:-11.-239/Found 0 circles
+I/-8:-2:-11.-239/Processed image for user pattern detection in 0.0641132 seconds
+I/-8:-2:-11.-303/Found 0 circles
+I/-8:-2:-11.-303/Processed image for user pattern detection in 0.0647901 seconds
+I/-8:-2:-11.-368/Found 0 circles
+I/-8:-2:-11.-368/Processed image for user pattern detection in 0.0642619 seconds
+I/-8:-2:-11.-435/Found 0 circles
+I/-8:-2:-11.-435/Processed image for user pattern detection in 0.0641756 seconds
+I/-8:-2:-11.-499/Found 0 circles
+I/-8:-2:-11.-499/Processed image for user pattern detection in 0.0641063 seconds
+I/-8:-2:-11.-564/Found 0 circles
+I/-8:-2:-11.-564/Processed image for user pattern detection in 0.0639554 seconds
+I/-8:-2:-11.-628/Found 0 circles
+I/-8:-2:-11.-628/Processed image for user pattern detection in 0.0637626 seconds
+I/-8:-2:-11.-692/Found 0 circles
+I/-8:-2:-11.-692/Processed image for user pattern detection in 0.0638122 seconds
+I/-8:-2:-11.-756/Found 0 circles
+I/-8:-2:-11.-756/Processed image for user pattern detection in 0.0636733 seconds
+I/-8:-2:-11.-822/Found 0 circles
+I/-8:-2:-11.-822/Processed image for user pattern detection in 0.0637818 seconds
+I/-8:-2:-11.-886/Found 0 circles
+I/-8:-2:-11.-886/Processed image for user pattern detection in 0.0639287 seconds
+I/-8:-2:-11.-950/Found 0 circles
+I/-8:-2:-11.-950/Processed image for user pattern detection in 0.0637354 seconds
+I/-8:-2:-12.-14/Found 0 circles
+I/-8:-2:-12.-14/Processed image for user pattern detection in 0.0637889 seconds
+I/-8:-2:-12.-78/Found 0 circles
+I/-8:-2:-12.-78/Processed image for user pattern detection in 0.0639362 seconds
+I/-8:-2:-12.-144/Found 0 circles
+I/-8:-2:-12.-144/Processed image for user pattern detection in 0.0638502 seconds
+I/-8:-2:-12.-208/Found 0 circles
+I/-8:-2:-12.-208/Processed image for user pattern detection in 0.0639032 seconds
+I/-8:-2:-12.-272/Found 0 circles
+I/-8:-2:-12.-272/Processed image for user pattern detection in 0.0639702 seconds
+I/-8:-2:-12.-339/Found 0 circles
+I/-8:-2:-12.-339/Processed image for user pattern detection in 0.0643988 seconds
+I/-8:-2:-12.-404/Found 0 circles
+I/-8:-2:-12.-404/Processed image for user pattern detection in 0.0641868 seconds
+I/-8:-2:-12.-468/Found 0 circles
+I/-8:-2:-12.-468/Processed image for user pattern detection in 0.0641743 seconds
+I/-8:-2:-12.-533/Found 0 circles
+I/-8:-2:-12.-533/Processed image for user pattern detection in 0.0639939 seconds
+I/-8:-2:-12.-597/Found 0 circles
+I/-8:-2:-12.-597/Processed image for user pattern detection in 0.0638429 seconds
+I/-8:-2:-12.-663/Found 0 circles
+I/-8:-2:-12.-663/Processed image for user pattern detection in 0.0639387 seconds
+I/-8:-2:-12.-728/Found 0 circles
+I/-8:-2:-12.-728/Processed image for user pattern detection in 0.063902 seconds
+I/-8:-2:-12.-792/Found 0 circles
+I/-8:-2:-12.-792/Processed image for user pattern detection in 0.063775 seconds
+I/-8:-2:-12.-856/Found 0 circles
+I/-8:-2:-12.-856/Processed image for user pattern detection in 0.0640076 seconds
+I/-8:-2:-12.-920/Found 0 circles
+I/-8:-2:-12.-920/Processed image for user pattern detection in 0.063661 seconds
+I/-8:-2:-12.-987/Found 0 circles
+I/-8:-2:-12.-987/Processed image for user pattern detection in 0.0637036 seconds
+I/-8:-2:-13.-51/Found 0 circles
+I/-8:-2:-13.-51/Processed image for user pattern detection in 0.0638732 seconds
+I/-8:-2:-13.-115/Found 0 circles
+I/-8:-2:-13.-115/Processed image for user pattern detection in 0.063803 seconds
+I/-8:-2:-13.-179/Found 0 circles
+I/-8:-2:-13.-179/Processed image for user pattern detection in 0.0639056 seconds
+I/-8:-2:-13.-244/Found 0 circles
+I/-8:-2:-13.-244/Processed image for user pattern detection in 0.0637827 seconds
+I/-8:-2:-13.-309/Found 0 circles
+I/-8:-2:-13.-309/Processed image for user pattern detection in 0.0638014 seconds
+I/-8:-2:-13.-373/Found 0 circles
+I/-8:-2:-13.-373/Processed image for user pattern detection in 0.0637999 seconds
+I/-8:-2:-13.-441/Found 0 circles
+I/-8:-2:-13.-441/Processed image for user pattern detection in 0.0641142 seconds
+I/-8:-2:-13.-506/Found 0 circles
+I/-8:-2:-13.-506/Processed image for user pattern detection in 0.0645492 seconds
+I/-8:-2:-13.-571/Found 0 circles
+I/-8:-2:-13.-571/Processed image for user pattern detection in 0.0646222 seconds
+I/-8:-2:-13.-635/Found 0 circles
+I/-8:-2:-13.-635/Processed image for user pattern detection in 0.0645856 seconds
+I/-8:-2:-13.-700/Found 0 circles
+I/-8:-2:-13.-700/Processed image for user pattern detection in 0.0638977 seconds
+I/-8:-2:-13.-766/Found 0 circles
+I/-8:-2:-13.-766/Processed image for user pattern detection in 0.0639153 seconds
+I/-8:-2:-13.-831/Found 0 circles
+I/-8:-2:-13.-831/Processed image for user pattern detection in 0.0639383 seconds
+I/-8:-2:-13.-895/Found 0 circles
+I/-8:-2:-13.-895/Processed image for user pattern detection in 0.0638558 seconds
+I/-8:-2:-13.-959/Found 0 circles
+I/-8:-2:-13.-959/Processed image for user pattern detection in 0.0640004 seconds
+I/-8:-2:-14.-23/Found 0 circles
+I/-8:-2:-14.-23/Processed image for user pattern detection in 0.0635955 seconds
+I/-8:-2:-14.-89/Found 0 circles
+I/-8:-2:-14.-89/Processed image for user pattern detection in 0.0637037 seconds
+I/-8:-2:-14.-153/Found 0 circles
+I/-8:-2:-14.-153/Processed image for user pattern detection in 0.0639302 seconds
+I/-8:-2:-14.-218/Found 0 circles
+I/-8:-2:-14.-218/Processed image for user pattern detection in 0.0637469 seconds
+I/-8:-2:-14.-282/Found 0 circles
+I/-8:-2:-14.-282/Processed image for user pattern detection in 0.0638352 seconds
+I/-8:-2:-14.-347/Found 0 circles
+I/-8:-2:-14.-347/Processed image for user pattern detection in 0.0639556 seconds
+I/-8:-2:-14.-413/Found 0 circles
+I/-8:-2:-14.-413/Processed image for user pattern detection in 0.0638674 seconds
+I/-8:-2:-14.-482/Found 0 circles
+I/-8:-2:-14.-482/Processed image for user pattern detection in 0.0638142 seconds
+I/-8:-2:-14.-546/Found 0 circles
+I/-8:-2:-14.-546/Processed image for user pattern detection in 0.0637268 seconds
+I/-8:-2:-14.-610/Found 0 circles
+I/-8:-2:-14.-610/Processed image for user pattern detection in 0.0639814 seconds
+I/-8:-2:-14.-674/Found 0 circles
+I/-8:-2:-14.-674/Processed image for user pattern detection in 0.0640126 seconds
+I/-8:-2:-14.-738/Found 0 circles
+I/-8:-2:-14.-738/Processed image for user pattern detection in 0.0645038 seconds
+I/-8:-2:-14.-803/Found 0 circles
+I/-8:-2:-14.-803/Processed image for user pattern detection in 0.0640945 seconds
+I/-8:-2:-14.-869/Found 0 circles
+I/-8:-2:-14.-869/Processed image for user pattern detection in 0.0642974 seconds
+I/-8:-2:-14.-934/Found 0 circles
+I/-8:-2:-14.-934/Processed image for user pattern detection in 0.0641532 seconds
+I/-8:-2:-14.-998/Found 0 circles
+I/-8:-2:-14.-998/Processed image for user pattern detection in 0.0639411 seconds
+I/-8:-2:-15.-62/Found 0 circles
+I/-8:-2:-15.-62/Processed image for user pattern detection in 0.0638715 seconds
+I/-8:-2:-15.-127/Found 0 circles
+I/-8:-2:-15.-127/Processed image for user pattern detection in 0.0637821 seconds
+I/-8:-2:-15.-191/Found 0 circles
+I/-8:-2:-15.-191/Processed image for user pattern detection in 0.0636241 seconds
+I/-8:-2:-15.-257/Found 0 circles
+I/-8:-2:-15.-257/Processed image for user pattern detection in 0.0638497 seconds
+I/-8:-2:-15.-321/Found 0 circles
+I/-8:-2:-15.-321/Processed image for user pattern detection in 0.0637463 seconds
+I/-8:-2:-15.-385/Found 0 circles
+I/-8:-2:-15.-385/Processed image for user pattern detection in 0.0638896 seconds
+I/-8:-2:-15.-449/Found 0 circles
+I/-8:-2:-15.-449/Processed image for user pattern detection in 0.0636317 seconds
+I/-8:-2:-15.-513/Found 0 circles
+I/-8:-2:-15.-513/Processed image for user pattern detection in 0.0637764 seconds
+I/-8:-2:-15.-579/Found 0 circles
+I/-8:-2:-15.-579/Processed image for user pattern detection in 0.0636209 seconds
+I/-8:-2:-15.-643/Found 0 circles
+I/-8:-2:-15.-643/Processed image for user pattern detection in 0.0639483 seconds
+I/-8:-2:-15.-708/Found 0 circles
+I/-8:-2:-15.-708/Processed image for user pattern detection in 0.0643908 seconds
+I/-8:-2:-15.-775/Found 0 circles
+I/-8:-2:-15.-775/Processed image for user pattern detection in 0.0640906 seconds
+I/-8:-2:-15.-839/Found 0 circles
+I/-8:-2:-15.-839/Processed image for user pattern detection in 0.0640216 seconds
+I/-8:-2:-15.-903/Found 0 circles
+I/-8:-2:-15.-903/Processed image for user pattern detection in 0.0648954 seconds
+I/-8:-2:-15.-969/Found 0 circles
+I/-8:-2:-15.-969/Processed image for user pattern detection in 0.0640251 seconds
+I/-8:-2:-16.-33/Found 0 circles
+I/-8:-2:-16.-33/Processed image for user pattern detection in 0.0639905 seconds
+I/-8:-2:-16.-99/Found 0 circles
+I/-8:-2:-16.-99/Processed image for user pattern detection in 0.0638432 seconds
+I/-8:-2:-16.-163/Found 0 circles
+I/-8:-2:-16.-163/Processed image for user pattern detection in 0.0637532 seconds
+I/-8:-2:-16.-227/Found 0 circles
+I/-8:-2:-16.-227/Processed image for user pattern detection in 0.0636006 seconds
+I/-8:-2:-16.-291/Found 0 circles
+I/-8:-2:-16.-291/Processed image for user pattern detection in 0.0638082 seconds
+I/-8:-2:-16.-355/Found 0 circles
+I/-8:-2:-16.-355/Processed image for user pattern detection in 0.0636982 seconds
+I/-8:-2:-16.-421/Found 0 circles
+I/-8:-2:-16.-421/Processed image for user pattern detection in 0.0637093 seconds
+I/-8:-2:-16.-485/Found 0 circles
+I/-8:-2:-16.-485/Processed image for user pattern detection in 0.0638391 seconds
+I/-8:-2:-16.-550/Found 0 circles
+I/-8:-2:-16.-550/Processed image for user pattern detection in 0.063719 seconds
+I/-8:-2:-16.-614/Found 0 circles
+I/-8:-2:-16.-614/Processed image for user pattern detection in 0.0638093 seconds
+I/-8:-2:-16.-680/Found 0 circles
+I/-8:-2:-16.-680/Processed image for user pattern detection in 0.0636226 seconds
+I/-8:-2:-16.-743/Found 0 circles
+I/-8:-2:-16.-743/Processed image for user pattern detection in 0.0640064 seconds
+I/-8:-2:-16.-808/Found 0 circles
+I/-8:-2:-16.-808/Processed image for user pattern detection in 0.064025 seconds
+I/-8:-2:-16.-875/Found 0 circles
+I/-8:-2:-16.-875/Processed image for user pattern detection in 0.0640282 seconds
+I/-8:-2:-16.-939/Found 0 circles
+I/-8:-2:-16.-939/Processed image for user pattern detection in 0.0640435 seconds
+I/-8:-2:-17.-03/Found 0 circles
+I/-8:-2:-17.-03/Processed image for user pattern detection in 0.0641752 seconds
+I/-8:-2:-17.-68/Found 0 circles
+I/-8:-2:-17.-68/Processed image for user pattern detection in 0.0641294 seconds
+I/-8:-2:-17.-132/Found 0 circles
+I/-8:-2:-17.-132/Processed image for user pattern detection in 0.0638689 seconds
+I/-8:-2:-17.-198/Found 0 circles
+I/-8:-2:-17.-199/Processed image for user pattern detection in 0.063787 seconds
+I/-8:-2:-17.-263/Found 0 circles
+I/-8:-2:-17.-263/Processed image for user pattern detection in 0.0639067 seconds
+I/-8:-2:-17.-327/Found 0 circles
+I/-8:-2:-17.-327/Processed image for user pattern detection in 0.0635972 seconds
+I/-8:-2:-17.-391/Found 0 circles
+I/-8:-2:-17.-391/Processed image for user pattern detection in 0.0639145 seconds
+I/-8:-2:-17.-455/Found 0 circles
+I/-8:-2:-17.-455/Processed image for user pattern detection in 0.0636667 seconds
+I/-8:-2:-17.-519/Found 0 circles
+I/-8:-2:-17.-519/Processed image for user pattern detection in 0.0636659 seconds
+I/-8:-2:-17.-585/Found 0 circles
+I/-8:-2:-17.-585/Processed image for user pattern detection in 0.0639319 seconds
+I/-8:-2:-17.-649/Found 0 circles
+I/-8:-2:-17.-649/Processed image for user pattern detection in 0.0636289 seconds
+I/-8:-2:-17.-713/Found 0 circles
+I/-8:-2:-17.-713/Processed image for user pattern detection in 0.063918 seconds
+I/-8:-2:-17.-779/Found 0 circles
+I/-8:-2:-17.-779/Processed image for user pattern detection in 0.0635371 seconds
+I/-8:-2:-17.-843/Found 0 circles
+I/-8:-2:-17.-843/Processed image for user pattern detection in 0.0640366 seconds
+I/-8:-2:-17.-908/Found 0 circles
+I/-8:-2:-17.-908/Processed image for user pattern detection in 0.0637844 seconds
+I/-8:-2:-17.-974/Found 0 circles
+I/-8:-2:-17.-974/Processed image for user pattern detection in 0.0642523 seconds
+I/-8:-2:-18.-38/Found 0 circles
+I/-8:-2:-18.-38/Processed image for user pattern detection in 0.0639086 seconds
+I/-8:-2:-18.-102/Found 0 circles
+I/-8:-2:-18.-102/Processed image for user pattern detection in 0.064118 seconds
+I/-8:-2:-18.-167/Found 0 circles
+I/-8:-2:-18.-167/Processed image for user pattern detection in 0.0639782 seconds
+I/-8:-2:-18.-231/Found 0 circles
+I/-8:-2:-18.-231/Processed image for user pattern detection in 0.0637657 seconds
+I/-8:-2:-18.-295/Found 0 circles
+I/-8:-2:-18.-295/Processed image for user pattern detection in 0.0640385 seconds
+I/-8:-2:-18.-361/Found 0 circles
+I/-8:-2:-18.-361/Processed image for user pattern detection in 0.0638766 seconds
+I/-8:-2:-18.-425/Found 0 circles
+I/-8:-2:-18.-425/Processed image for user pattern detection in 0.063742 seconds
+I/-8:-2:-18.-489/Found 0 circles
+I/-8:-2:-18.-489/Processed image for user pattern detection in 0.0636487 seconds
+I/-8:-2:-18.-553/Found 0 circles
+I/-8:-2:-18.-553/Processed image for user pattern detection in 0.0636757 seconds
+I/-8:-2:-18.-617/Found 0 circles
+I/-8:-2:-18.-617/Processed image for user pattern detection in 0.0639706 seconds
+I/-8:-2:-18.-683/Found 0 circles
+I/-8:-2:-18.-684/Processed image for user pattern detection in 0.0637393 seconds
+I/-8:-2:-18.-748/Found 0 circles
+I/-8:-2:-18.-748/Processed image for user pattern detection in 0.0636393 seconds
+I/-8:-2:-18.-811/Found 0 circles
+I/-8:-2:-18.-811/Processed image for user pattern detection in 0.0637594 seconds
+I/-8:-2:-18.-875/Found 0 circles
+I/-8:-2:-18.-875/Processed image for user pattern detection in 0.0640192 seconds
+I/-8:-2:-18.-940/Found 0 circles
+I/-8:-2:-18.-940/Processed image for user pattern detection in 0.0639641 seconds
+I/-8:-2:-19.-04/Found 0 circles
+I/-8:-2:-19.-04/Processed image for user pattern detection in 0.064298 seconds
+I/-8:-2:-19.-68/Found 0 circles
+I/-8:-2:-19.-68/Processed image for user pattern detection in 0.0640353 seconds
+I/-8:-2:-19.-133/Found 0 circles
+I/-8:-2:-19.-133/Processed image for user pattern detection in 0.0641371 seconds
+I/-8:-2:-19.-199/Found 0 circles
+I/-8:-2:-19.-199/Processed image for user pattern detection in 0.0637676 seconds
+I/-8:-2:-19.-263/Found 0 circles
+I/-8:-2:-19.-263/Processed image for user pattern detection in 0.0637193 seconds
+I/-8:-2:-19.-327/Found 0 circles
+I/-8:-2:-19.-327/Processed image for user pattern detection in 0.0636478 seconds
+I/-8:-2:-19.-391/Found 0 circles
+I/-8:-2:-19.-391/Processed image for user pattern detection in 0.0638329 seconds
+I/-8:-2:-19.-455/Found 0 circles
+I/-8:-2:-19.-455/Processed image for user pattern detection in 0.0637266 seconds
+I/-8:-2:-19.-521/Found 0 circles
+I/-8:-2:-19.-521/Processed image for user pattern detection in 0.0636285 seconds
+I/-8:-2:-19.-585/Found 0 circles
+I/-8:-2:-19.-585/Processed image for user pattern detection in 0.0636944 seconds
+I/-8:-2:-19.-649/Found 0 circles
+I/-8:-2:-19.-649/Processed image for user pattern detection in 0.063712 seconds
+I/-8:-2:-19.-713/Found 0 circles
+I/-8:-2:-19.-713/Processed image for user pattern detection in 0.0639194 seconds
+I/-8:-2:-19.-779/Found 0 circles
+I/-8:-2:-19.-779/Processed image for user pattern detection in 0.0637492 seconds
+I/-8:-2:-19.-842/Found 0 circles
+I/-8:-2:-19.-842/Processed image for user pattern detection in 0.0640243 seconds
+I/-8:-2:-19.-907/Found 0 circles
+I/-8:-2:-19.-907/Processed image for user pattern detection in 0.0640039 seconds
+I/-8:-2:-19.-973/Found 0 circles
+I/-8:-2:-19.-973/Processed image for user pattern detection in 0.0643151 seconds
+I/-8:-2:-20.-38/Found 0 circles
+I/-8:-2:-20.-38/Processed image for user pattern detection in 0.0640632 seconds
+I/-8:-2:-20.-102/Found 0 circles
+I/-8:-2:-20.-102/Processed image for user pattern detection in 0.0641856 seconds
+I/-8:-2:-20.-166/Found 0 circles
+I/-8:-2:-20.-167/Processed image for user pattern detection in 0.064073 seconds
+I/-8:-2:-20.-231/Found 0 circles
+I/-8:-2:-20.-231/Processed image for user pattern detection in 0.0638318 seconds
+I/-8:-2:-20.-297/Found 0 circles
+I/-8:-2:-20.-297/Processed image for user pattern detection in 0.0637383 seconds
+I/-8:-2:-20.-361/Found 0 circles
+I/-8:-2:-20.-361/Processed image for user pattern detection in 0.0637712 seconds
+I/-8:-2:-20.-425/Found 0 circles
+I/-8:-2:-20.-425/Processed image for user pattern detection in 0.0636637 seconds
+I/-8:-2:-20.-489/Found 0 circles
+I/-8:-2:-20.-489/Processed image for user pattern detection in 0.0638582 seconds
+I/-8:-2:-20.-553/Found 0 circles
+I/-8:-2:-20.-553/Processed image for user pattern detection in 0.06366 seconds
+I/-8:-2:-20.-617/Found 0 circles
+I/-8:-2:-20.-617/Processed image for user pattern detection in 0.0636879 seconds
+I/-8:-2:-20.-683/Found 0 circles
+I/-8:-2:-20.-683/Processed image for user pattern detection in 0.0639973 seconds
+I/-8:-2:-20.-747/Found 0 circles
+I/-8:-2:-20.-747/Processed image for user pattern detection in 0.063699 seconds
+I/-8:-2:-20.-811/Found 0 circles
+I/-8:-2:-20.-811/Processed image for user pattern detection in 0.0637991 seconds
+I/-8:-2:-20.-875/Found 0 circles
+I/-8:-2:-20.-875/Processed image for user pattern detection in 0.0639281 seconds
+I/-8:-2:-20.-940/Found 0 circles
+I/-8:-2:-20.-940/Processed image for user pattern detection in 0.0641971 seconds
+I/-8:-2:-21.-04/Found 0 circles
+I/-8:-2:-21.-04/Processed image for user pattern detection in 0.0640593 seconds
+I/-8:-2:-21.-71/Found 0 circles
+I/-8:-2:-21.-71/Processed image for user pattern detection in 0.0639362 seconds
+I/-8:-2:-21.-135/Found 0 circles
+I/-8:-2:-21.-135/Processed image for user pattern detection in 0.06401 seconds
+I/-8:-2:-21.-199/Found 0 circles
+I/-8:-2:-21.-199/Processed image for user pattern detection in 0.0637698 seconds
+I/-8:-2:-21.-263/Found 0 circles
+I/-8:-2:-21.-263/Processed image for user pattern detection in 0.0640006 seconds
+I/-8:-2:-21.-327/Found 0 circles
+I/-8:-2:-21.-327/Processed image for user pattern detection in 0.0636356 seconds
+D/-8:-2:-21.-378/Dir 1
+I/-8:-2:-21.-391/Found 0 circles
+I/-8:-2:-21.-391/Processed image for user pattern detection in 0.0637695 seconds
+D/-8:-2:-21.-445/Dir 0
+I/-8:-2:-21.-457/Found 0 circles
+I/-8:-2:-21.-457/Processed image for user pattern detection in 0.0638506 seconds
+I/-8:-2:-21.-521/Found 0 circles
+I/-8:-2:-21.-521/Processed image for user pattern detection in 0.0635488 seconds
+D/-8:-2:-21.-545/Dir -1
+D/-8:-2:-21.-545/Dir 0
+I/-8:-2:-21.-585/Found 0 circles
+I/-8:-2:-21.-585/Processed image for user pattern detection in 0.0637726 seconds
+I/-8:-2:-21.-649/Found 0 circles
+I/-8:-2:-21.-649/Processed image for user pattern detection in 0.0635559 seconds
+I/-8:-2:-21.-713/Found 0 circles
+I/-8:-2:-21.-713/Processed image for user pattern detection in 0.0639308 seconds
+D/-8:-2:-21.-713/Prop 1
+D/-8:-2:-21.-747/Dir 1
+I/-8:-2:-21.-779/Found 0 circles
+I/-8:-2:-21.-779/Processed image for user pattern detection in 0.0636282 seconds
+I/-8:-2:-21.-843/Found 0 circles
+I/-8:-2:-21.-843/Processed image for user pattern detection in 0.0637772 seconds
+I/-8:-2:-21.-907/Found 0 circles
+I/-8:-2:-21.-907/Processed image for user pattern detection in 0.0640972 seconds
+D/-8:-2:-21.-913/Dir 0
+D/-8:-2:-21.-946/Prop 0
+I/-8:-2:-21.-973/Found 0 circles
+I/-8:-2:-21.-973/Processed image for user pattern detection in 0.064271 seconds
+I/-8:-2:-22.-38/Found 0 circles
+I/-8:-2:-22.-38/Processed image for user pattern detection in 0.0641844 seconds
+I/-8:-2:-22.-102/Found 0 circles
+I/-8:-2:-22.-102/Processed image for user pattern detection in 0.0641457 seconds
+D/-8:-2:-22.-145/Dir -1
+I/-8:-2:-22.-167/Found 0 circles
+I/-8:-2:-22.-167/Processed image for user pattern detection in 0.0638686 seconds
+D/-8:-2:-22.-212/Dir 0
+I/-8:-2:-22.-231/Found 0 circles
+I/-8:-2:-22.-231/Processed image for user pattern detection in 0.0639485 seconds
+I/-8:-2:-22.-297/Found 0 circles
+I/-8:-2:-22.-297/Processed image for user pattern detection in 0.0635203 seconds
+D/-8:-2:-22.-346/Prop 1
+I/-8:-2:-22.-361/Found 0 circles
+I/-8:-2:-22.-361/Processed image for user pattern detection in 0.0637209 seconds
+I/-8:-2:-22.-425/Found 0 circles
+I/-8:-2:-22.-425/Processed image for user pattern detection in 0.0637107 seconds
+D/-8:-2:-22.-478/Prop 0
+I/-8:-2:-22.-489/Found 0 circles
+I/-8:-2:-22.-489/Processed image for user pattern detection in 0.0639046 seconds
+I/-8:-2:-22.-553/Found 0 circles
+I/-8:-2:-22.-553/Processed image for user pattern detection in 0.0637032 seconds
+D/-8:-2:-22.-578/Dir 1
+I/-8:-2:-22.-619/Found 0 circles
+I/-8:-2:-22.-619/Processed image for user pattern detection in 0.0635215 seconds
+D/-8:-2:-22.-678/Dir 0
+I/-8:-2:-22.-683/Found 0 circles
+I/-8:-2:-22.-683/Processed image for user pattern detection in 0.0638536 seconds
+I/-8:-2:-22.-747/Found 0 circles
+I/-8:-2:-22.-747/Processed image for user pattern detection in 0.0636231 seconds
+I/-8:-2:-22.-811/Found 0 circles
+I/-8:-2:-22.-811/Processed image for user pattern detection in 0.0639032 seconds
+I/-8:-2:-22.-875/Found 0 circles
+I/-8:-2:-22.-875/Processed image for user pattern detection in 0.0638322 seconds
+I/-8:-2:-22.-940/Found 0 circles
+I/-8:-2:-22.-940/Processed image for user pattern detection in 0.0643055 seconds
+I/-8:-2:-23.-04/Found 0 circles
+I/-8:-2:-23.-04/Processed image for user pattern detection in 0.0639534 seconds
+I/-8:-2:-23.-71/Found 0 circles
+I/-8:-2:-23.-71/Processed image for user pattern detection in 0.0638818 seconds
+I/-8:-2:-23.-135/Found 0 circles
+I/-8:-2:-23.-135/Processed image for user pattern detection in 0.0641068 seconds
+D/-8:-2:-23.-146/Dir 1
+D/-8:-2:-23.-146/Prop 1
+I/-8:-2:-23.-200/Found 0 circles
+I/-8:-2:-23.-200/Processed image for user pattern detection in 0.0638332 seconds
+I/-8:-2:-23.-264/Found 0 circles
+I/-8:-2:-23.-264/Processed image for user pattern detection in 0.063873 seconds
+I/-8:-2:-23.-328/Found 0 circles
+I/-8:-2:-23.-328/Processed image for user pattern detection in 0.0636916 seconds
+I/-8:-2:-23.-392/Found 0 circles
+I/-8:-2:-23.-392/Processed image for user pattern detection in 0.0637207 seconds
+I/-8:-2:-23.-458/Found 0 circles
+I/-8:-2:-23.-458/Processed image for user pattern detection in 0.0637604 seconds
+I/-8:-2:-23.-522/Found 0 circles
+I/-8:-2:-23.-522/Processed image for user pattern detection in 0.0635168 seconds
+I/-8:-2:-23.-586/Found 0 circles
+I/-8:-2:-23.-586/Processed image for user pattern detection in 0.0637322 seconds
+I/-8:-2:-23.-650/Found 0 circles
+I/-8:-2:-23.-650/Processed image for user pattern detection in 0.0636053 seconds
+I/-8:-2:-23.-714/Found 0 circles
+I/-8:-2:-23.-714/Processed image for user pattern detection in 0.0639425 seconds
+I/-8:-2:-23.-780/Found 0 circles
+I/-8:-2:-23.-780/Processed image for user pattern detection in 0.0635552 seconds
+I/-8:-2:-23.-844/Found 0 circles
+I/-8:-2:-23.-844/Processed image for user pattern detection in 0.0638429 seconds
+I/-8:-2:-23.-908/Found 0 circles
+I/-8:-2:-23.-908/Processed image for user pattern detection in 0.0639365 seconds
+I/-8:-2:-23.-976/Found 0 circles
+I/-8:-2:-23.-976/Processed image for user pattern detection in 0.06396 seconds
+I/-8:-2:-24.-40/Found 0 circles
+I/-8:-2:-24.-40/Processed image for user pattern detection in 0.0641122 seconds
+I/-8:-2:-24.-105/Found 0 circles
+I/-8:-2:-24.-105/Processed image for user pattern detection in 0.0644444 seconds
+I/-8:-2:-24.-169/Found 0 circles
+I/-8:-2:-24.-169/Processed image for user pattern detection in 0.0638753 seconds
+I/-8:-2:-24.-233/Found 0 circles
+I/-8:-2:-24.-233/Processed image for user pattern detection in 0.0638792 seconds
+I/-8:-2:-24.-300/Found 0 circles
+I/-8:-2:-24.-300/Processed image for user pattern detection in 0.0638778 seconds
+I/-8:-2:-24.-364/Found 0 circles
+I/-8:-2:-24.-364/Processed image for user pattern detection in 0.0637264 seconds
+I/-8:-2:-24.-428/Found 0 circles
+I/-8:-2:-24.-428/Processed image for user pattern detection in 0.0636616 seconds
+I/-8:-2:-24.-492/Found 0 circles
+I/-8:-2:-24.-492/Processed image for user pattern detection in 0.0639648 seconds
+I/-8:-2:-24.-556/Found 0 circles
+I/-8:-2:-24.-556/Processed image for user pattern detection in 0.0636465 seconds
+I/-8:-2:-24.-622/Found 0 circles
+I/-8:-2:-24.-622/Processed image for user pattern detection in 0.0636174 seconds
+I/-8:-2:-24.-686/Found 0 circles
+I/-8:-2:-24.-686/Processed image for user pattern detection in 0.0637291 seconds
+I/-8:-2:-24.-750/Found 0 circles
+I/-8:-2:-24.-750/Processed image for user pattern detection in 0.0636932 seconds
+I/-8:-2:-24.-814/Found 0 circles
+I/-8:-2:-24.-814/Processed image for user pattern detection in 0.0638148 seconds
+I/-8:-2:-24.-880/Found 0 circles
+I/-8:-2:-24.-880/Processed image for user pattern detection in 0.0638922 seconds
+I/-8:-2:-24.-947/Found 0 circles
+I/-8:-2:-24.-947/Processed image for user pattern detection in 0.0639179 seconds
+I/-8:-2:-25.-13/Found 0 circles
+I/-8:-2:-25.-13/Processed image for user pattern detection in 0.0636415 seconds
+I/-8:-2:-25.-77/Found 0 circles
+I/-8:-2:-25.-77/Processed image for user pattern detection in 0.0636747 seconds
+I/-8:-2:-25.-141/Found 0 circles
+I/-8:-2:-25.-141/Processed image for user pattern detection in 0.0639352 seconds
+I/-8:-2:-25.-208/Found 0 circles
+I/-8:-2:-25.-208/Processed image for user pattern detection in 0.0637451 seconds
+I/-8:-2:-25.-272/Found 0 circles
+I/-8:-2:-25.-272/Processed image for user pattern detection in 0.0641667 seconds
+I/-8:-2:-25.-337/Found 0 circles
+I/-8:-2:-25.-337/Processed image for user pattern detection in 0.0641524 seconds
+I/-8:-2:-25.-401/Found 0 circles
+I/-8:-2:-25.-401/Processed image for user pattern detection in 0.0637569 seconds
+I/-8:-2:-25.-465/Found 0 circles
+I/-8:-2:-25.-465/Processed image for user pattern detection in 0.0640397 seconds
+I/-8:-2:-25.-531/Found 0 circles
+I/-8:-2:-25.-531/Processed image for user pattern detection in 0.0637626 seconds
+D/-8:-2:-25.-578/Dir 0
+I/-8:-2:-25.-595/Found 0 circles
+I/-8:-2:-25.-596/Processed image for user pattern detection in 0.063626 seconds
+D/-8:-2:-25.-646/Prop 0
+I/-8:-2:-25.-659/Found 0 circles
+I/-8:-2:-25.-659/Processed image for user pattern detection in 0.0636046 seconds
+D/-8:-2:-25.-713/Dir -1
+I/-8:-2:-25.-723/Found 0 circles
+I/-8:-2:-25.-723/Processed image for user pattern detection in 0.0638189 seconds
+I/-8:-2:-25.-790/Found 0 circles
+I/-8:-2:-25.-790/Processed image for user pattern detection in 0.0637141 seconds
+D/-8:-2:-25.-814/Dir 0
+D/-8:-2:-25.-846/Prop 1
+I/-8:-2:-25.-854/Found 0 circles
+I/-8:-2:-25.-854/Processed image for user pattern detection in 0.0636689 seconds
+I/-8:-2:-25.-918/Found 0 circles
+I/-8:-2:-25.-918/Processed image for user pattern detection in 0.0636587 seconds
+D/-8:-2:-25.-979/Dir 1
+I/-8:-2:-25.-982/Found 0 circles
+I/-8:-2:-25.-982/Processed image for user pattern detection in 0.0636155 seconds
+I/-8:-2:-26.-46/Found 0 circles
+I/-8:-2:-26.-46/Processed image for user pattern detection in 0.0638688 seconds
+I/-8:-2:-26.-112/Found 0 circles
+I/-8:-2:-26.-112/Processed image for user pattern detection in 0.0637325 seconds
+I/-8:-2:-26.-177/Found 0 circles
+I/-8:-2:-26.-177/Processed image for user pattern detection in 0.0635479 seconds
+I/-8:-2:-26.-241/Found 0 circles
+I/-8:-2:-26.-241/Processed image for user pattern detection in 0.0639866 seconds
+I/-8:-2:-26.-308/Found 0 circles
+I/-8:-2:-26.-308/Processed image for user pattern detection in 0.0638876 seconds
+I/-8:-2:-26.-372/Found 0 circles
+I/-8:-2:-26.-372/Processed image for user pattern detection in 0.0643912 seconds
+I/-8:-2:-26.-437/Found 0 circles
+I/-8:-2:-26.-437/Processed image for user pattern detection in 0.0645237 seconds
+I/-8:-2:-26.-502/Found 0 circles
+I/-8:-2:-26.-502/Processed image for user pattern detection in 0.0641338 seconds
+I/-8:-2:-26.-566/Found 0 circles
+I/-8:-2:-26.-566/Processed image for user pattern detection in 0.0639946 seconds
+I/-8:-2:-26.-632/Found 0 circles
+I/-8:-2:-26.-632/Processed image for user pattern detection in 0.063813 seconds
+I/-8:-2:-26.-697/Found 0 circles
+I/-8:-2:-26.-697/Processed image for user pattern detection in 0.0637424 seconds
+I/-8:-2:-26.-761/Found 0 circles
+I/-8:-2:-26.-761/Processed image for user pattern detection in 0.063627 seconds
+I/-8:-2:-26.-824/Found 0 circles
+I/-8:-2:-26.-824/Processed image for user pattern detection in 0.0639396 seconds
+I/-8:-2:-26.-889/Found 0 circles
+I/-8:-2:-26.-889/Processed image for user pattern detection in 0.0636155 seconds
+I/-8:-2:-26.-955/Found 0 circles
+I/-8:-2:-26.-955/Processed image for user pattern detection in 0.0636478 seconds
+I/-8:-2:-27.-18/Found 0 circles
+I/-8:-2:-27.-18/Processed image for user pattern detection in 0.063658 seconds
+I/-8:-2:-27.-82/Found 0 circles
+I/-8:-2:-27.-82/Processed image for user pattern detection in 0.0636625 seconds
+I/-8:-2:-27.-146/Found 0 circles
+I/-8:-2:-27.-146/Processed image for user pattern detection in 0.0638404 seconds
+I/-8:-2:-27.-212/Found 0 circles
+I/-8:-2:-27.-212/Processed image for user pattern detection in 0.0635648 seconds
+I/-8:-2:-27.-276/Found 0 circles
+I/-8:-2:-27.-276/Processed image for user pattern detection in 0.0638939 seconds
+I/-8:-2:-27.-341/Found 0 circles
+I/-8:-2:-27.-341/Processed image for user pattern detection in 0.0639336 seconds
+I/-8:-2:-27.-407/Found 0 circles
+I/-8:-2:-27.-407/Processed image for user pattern detection in 0.0638658 seconds
+I/-8:-2:-27.-471/Found 0 circles
+I/-8:-2:-27.-471/Processed image for user pattern detection in 0.0641641 seconds
+I/-8:-2:-27.-535/Found 0 circles
+I/-8:-2:-27.-535/Processed image for user pattern detection in 0.0640603 seconds
+I/-8:-2:-27.-599/Found 0 circles
+I/-8:-2:-27.-599/Processed image for user pattern detection in 0.0639611 seconds
+I/-8:-2:-27.-664/Found 0 circles
+I/-8:-2:-27.-664/Processed image for user pattern detection in 0.063823 seconds
+I/-8:-2:-27.-728/Found 0 circles
+I/-8:-2:-27.-728/Processed image for user pattern detection in 0.0636373 seconds
+I/-8:-2:-27.-794/Found 0 circles
+I/-8:-2:-27.-794/Processed image for user pattern detection in 0.0638878 seconds
+I/-8:-2:-27.-858/Found 0 circles
+I/-8:-2:-27.-858/Processed image for user pattern detection in 0.0636462 seconds
+I/-8:-2:-27.-922/Found 0 circles
+I/-8:-2:-27.-922/Processed image for user pattern detection in 0.0636454 seconds
+I/-8:-2:-27.-986/Found 0 circles
+I/-8:-2:-27.-986/Processed image for user pattern detection in 0.0638355 seconds
+I/-8:-2:-28.-50/Found 0 circles
+I/-8:-2:-28.-50/Processed image for user pattern detection in 0.0639473 seconds
+I/-8:-2:-28.-117/Found 0 circles
+I/-8:-2:-28.-117/Processed image for user pattern detection in 0.0636519 seconds
+I/-8:-2:-28.-181/Found 0 circles
+I/-8:-2:-28.-181/Processed image for user pattern detection in 0.063659 seconds
+I/-8:-2:-28.-245/Found 0 circles
+I/-8:-2:-28.-245/Processed image for user pattern detection in 0.0636881 seconds
+I/-8:-2:-28.-309/Found 0 circles
+I/-8:-2:-28.-309/Processed image for user pattern detection in 0.0636539 seconds
+I/-8:-2:-28.-373/Found 0 circles
+I/-8:-2:-28.-373/Processed image for user pattern detection in 0.0640978 seconds
+I/-8:-2:-28.-437/Found 0 circles
+I/-8:-2:-28.-437/Processed image for user pattern detection in 0.0641797 seconds
+I/-8:-2:-28.-502/Found 0 circles
+I/-8:-2:-28.-502/Processed image for user pattern detection in 0.064009 seconds
+I/-8:-2:-28.-566/Found 0 circles
+I/-8:-2:-28.-566/Processed image for user pattern detection in 0.0639211 seconds
+I/-8:-2:-28.-632/Found 0 circles
+I/-8:-2:-28.-632/Processed image for user pattern detection in 0.0636488 seconds
+I/-8:-2:-28.-696/Found 0 circles
+I/-8:-2:-28.-696/Processed image for user pattern detection in 0.063769 seconds
+I/-8:-2:-28.-760/Found 0 circles
+I/-8:-2:-28.-760/Processed image for user pattern detection in 0.0635015 seconds
+I/-8:-2:-28.-824/Found 0 circles
+I/-8:-2:-28.-824/Processed image for user pattern detection in 0.0638131 seconds
+D/-8:-2:-28.-880/Dir 0
+I/-8:-2:-28.-888/Found 0 circles
+I/-8:-2:-28.-888/Processed image for user pattern detection in 0.0636698 seconds
+D/-8:-2:-28.-946/Prop 0
+I/-8:-2:-28.-952/Found 0 circles
+I/-8:-2:-28.-952/Processed image for user pattern detection in 0.0636607 seconds
+D/-8:-2:-29.-12/Dir -1
+I/-8:-2:-29.-18/Found 0 circles
+I/-8:-2:-29.-18/Processed image for user pattern detection in 0.0636687 seconds
+D/-8:-2:-29.-80/Dir 0
+I/-8:-2:-29.-82/Found 0 circles
+I/-8:-2:-29.-82/Processed image for user pattern detection in 0.0638459 seconds
+D/-8:-2:-29.-112/Prop 1
+I/-8:-2:-29.-146/Found 0 circles
+I/-8:-2:-29.-146/Processed image for user pattern detection in 0.0637627 seconds
+I/-8:-2:-29.-213/Found 0 circles
+I/-8:-2:-29.-213/Processed image for user pattern detection in 0.0635307 seconds
+I/-8:-2:-29.-279/Found 0 circles
+I/-8:-2:-29.-279/Processed image for user pattern detection in 0.063674 seconds
+D/-8:-2:-29.-312/Dir 1
+I/-8:-2:-29.-344/Found 0 circles
+I/-8:-2:-29.-344/Processed image for user pattern detection in 0.0638119 seconds
+I/-8:-2:-29.-408/Found 0 circles
+I/-8:-2:-29.-408/Processed image for user pattern detection in 0.0636192 seconds
+I/-8:-2:-29.-472/Found 0 circles
+I/-8:-2:-29.-472/Processed image for user pattern detection in 0.0642858 seconds
+D/-8:-2:-29.-511/Dir 0
+I/-8:-2:-29.-537/Found 0 circles
+I/-8:-2:-29.-537/Processed image for user pattern detection in 0.0640202 seconds
+I/-8:-2:-29.-601/Found 0 circles
+I/-8:-2:-29.-601/Processed image for user pattern detection in 0.0640167 seconds
+I/-8:-2:-29.-665/Found 0 circles
+I/-8:-2:-29.-665/Processed image for user pattern detection in 0.0639606 seconds
+D/-8:-2:-29.-712/Dir 1
+I/-8:-2:-29.-730/Found 0 circles
+I/-8:-2:-29.-730/Processed image for user pattern detection in 0.0640066 seconds
+D/-8:-2:-29.-746/Dir 0
+I/-8:-2:-29.-796/Found 0 circles
+I/-8:-2:-29.-796/Processed image for user pattern detection in 0.0637995 seconds
+I/-8:-2:-29.-860/Found 0 circles
+I/-8:-2:-29.-860/Processed image for user pattern detection in 0.0635592 seconds
+I/-8:-2:-29.-924/Found 0 circles
+I/-8:-2:-29.-924/Processed image for user pattern detection in 0.0636506 seconds
+I/-8:-2:-29.-988/Found 0 circles
+I/-8:-2:-29.-988/Processed image for user pattern detection in 0.0635699 seconds
+D/-8:-2:-30.-12/Prop 0
+I/-8:-2:-30.-51/Found 0 circles
+I/-8:-2:-30.-51/Processed image for user pattern detection in 0.063904 seconds
+D/-8:-2:-30.-79/Dir -1
+I/-8:-2:-30.-118/Found 0 circles
+I/-8:-2:-30.-118/Processed image for user pattern detection in 0.0635004 seconds
+I/-8:-2:-30.-182/Found 0 circles
+I/-8:-2:-30.-182/Processed image for user pattern detection in 0.0636161 seconds
+D/-8:-2:-30.-211/Dir 0
+D/-8:-2:-30.-245/Prop 1
+I/-8:-2:-30.-246/Found 0 circles
+I/-8:-2:-30.-246/Processed image for user pattern detection in 0.0636649 seconds
+I/-8:-2:-30.-310/Found 0 circles
+I/-8:-2:-30.-310/Processed image for user pattern detection in 0.0636152 seconds
+I/-8:-2:-30.-374/Found 0 circles
+I/-8:-2:-30.-374/Processed image for user pattern detection in 0.0641527 seconds
+D/-8:-2:-30.-411/Prop 0
+D/-8:-2:-30.-411/Dir 1
+I/-8:-2:-30.-438/Found 0 circles
+I/-8:-2:-30.-438/Processed image for user pattern detection in 0.0641227 seconds
+I/-8:-2:-30.-503/Found 0 circles
+I/-8:-2:-30.-503/Processed image for user pattern detection in 0.0645606 seconds
+D/-8:-2:-30.-512/Dir 0
+I/-8:-2:-30.-568/Found 0 circles
+I/-8:-2:-30.-568/Processed image for user pattern detection in 0.0640158 seconds
+I/-8:-2:-30.-634/Found 0 circles
+I/-8:-2:-30.-634/Processed image for user pattern detection in 0.0639586 seconds
+D/-8:-2:-30.-646/Prop -1
+D/-8:-2:-30.-678/Prop 0
+I/-8:-2:-30.-698/Found 0 circles
+I/-8:-2:-30.-698/Processed image for user pattern detection in 0.0640418 seconds
+D/-8:-2:-30.-712/Dir -1
+I/-8:-2:-30.-762/Found 0 circles
+I/-8:-2:-30.-762/Processed image for user pattern detection in 0.0637219 seconds
+I/-8:-2:-30.-826/Found 0 circles
+I/-8:-2:-30.-827/Processed image for user pattern detection in 0.0639644 seconds
+D/-8:-2:-30.-846/Dir 0
+D/-8:-2:-30.-879/Prop 1
+I/-8:-2:-30.-891/Found 0 circles
+I/-8:-2:-30.-891/Processed image for user pattern detection in 0.0637599 seconds
+I/-8:-2:-30.-957/Found 0 circles
+I/-8:-2:-30.-957/Processed image for user pattern detection in 0.0635408 seconds
+I/-8:-2:-31.-21/Found 0 circles
+I/-8:-2:-31.-21/Processed image for user pattern detection in 0.0636679 seconds
+D/-8:-2:-31.-46/Dir 1
+D/-8:-2:-31.-46/Prop 0
+I/-8:-2:-31.-84/Found 0 circles
+I/-8:-2:-31.-84/Processed image for user pattern detection in 0.0637696 seconds
+D/-8:-2:-31.-145/Dir 0
+I/-8:-2:-31.-149/Found 0 circles
+I/-8:-2:-31.-149/Processed image for user pattern detection in 0.0639942 seconds
+I/-8:-2:-31.-215/Found 0 circles
+I/-8:-2:-31.-215/Processed image for user pattern detection in 0.06391 seconds
+I/-8:-2:-31.-281/Found 0 circles
+I/-8:-2:-31.-281/Processed image for user pattern detection in 0.0638965 seconds
+D/-8:-2:-31.-311/Prop -1
+D/-8:-2:-31.-346/Dir -1
+I/-8:-2:-31.-347/Found 0 circles
+I/-8:-2:-31.-347/Processed image for user pattern detection in 0.0639541 seconds
+D/-8:-2:-31.-379/Prop 0
+I/-8:-2:-31.-411/Found 0 circles
+I/-8:-2:-31.-411/Processed image for user pattern detection in 0.0635453 seconds
+I/-8:-2:-31.-475/Found 0 circles
+I/-8:-2:-31.-475/Processed image for user pattern detection in 0.0639169 seconds
+I/-8:-2:-31.-539/Found 0 circles
+I/-8:-2:-31.-539/Processed image for user pattern detection in 0.0638673 seconds
+D/-8:-2:-31.-545/Dir 0
+D/-8:-2:-31.-545/Prop 1
+I/-8:-2:-31.-604/Found 0 circles
+I/-8:-2:-31.-604/Processed image for user pattern detection in 0.0645762 seconds
+I/-8:-2:-31.-669/Found 0 circles
+I/-8:-2:-31.-669/Processed image for user pattern detection in 0.0640431 seconds
+D/-8:-2:-31.-713/Dir 1
+D/-8:-2:-31.-713/Prop 0
+I/-8:-2:-31.-736/Found 0 circles
+I/-8:-2:-31.-736/Processed image for user pattern detection in 0.0638403 seconds
+I/-8:-2:-31.-800/Found 0 circles
+I/-8:-2:-31.-800/Processed image for user pattern detection in 0.0640921 seconds
+D/-8:-2:-31.-812/Dir 0
+I/-8:-2:-31.-865/Found 0 circles
+I/-8:-2:-31.-865/Processed image for user pattern detection in 0.0637824 seconds
+I/-8:-2:-31.-929/Found 0 circles
+I/-8:-2:-31.-929/Processed image for user pattern detection in 0.063872 seconds
+D/-8:-2:-31.-946/Dir -1
+D/-8:-2:-31.-946/Prop -1
+I/-8:-2:-31.-993/Found 0 circles
+I/-8:-2:-31.-993/Processed image for user pattern detection in 0.0637881 seconds
+D/-8:-2:-32.-13/Prop 0
+I/-8:-2:-32.-57/Found 0 circles
+I/-8:-2:-32.-57/Processed image for user pattern detection in 0.0636783 seconds
+D/-8:-2:-32.-112/Dir 0
+I/-8:-2:-32.-123/Found 0 circles
+I/-8:-2:-32.-123/Processed image for user pattern detection in 0.0637812 seconds
+D/-8:-2:-32.-145/Prop 1
+I/-8:-2:-32.-187/Found 0 circles
+I/-8:-2:-32.-187/Processed image for user pattern detection in 0.0635426 seconds
+I/-8:-2:-32.-250/Found 0 circles
+I/-8:-2:-32.-250/Processed image for user pattern detection in 0.0636585 seconds
+D/-8:-2:-32.-311/Dir 1
+D/-8:-2:-32.-311/Prop 0
+I/-8:-2:-32.-314/Found 0 circles
+I/-8:-2:-32.-314/Processed image for user pattern detection in 0.0637515 seconds
+I/-8:-2:-32.-378/Found 0 circles
+I/-8:-2:-32.-378/Processed image for user pattern detection in 0.0639671 seconds
+D/-8:-2:-32.-379/Dir 0
+I/-8:-2:-32.-444/Found 0 circles
+I/-8:-2:-32.-444/Processed image for user pattern detection in 0.0637388 seconds
+D/-8:-2:-32.-478/Prop -1
+I/-8:-2:-32.-510/Found 0 circles
+I/-8:-2:-32.-510/Processed image for user pattern detection in 0.0636712 seconds
+I/-8:-2:-32.-574/Found 0 circles
+I/-8:-2:-32.-574/Processed image for user pattern detection in 0.0638566 seconds
+D/-8:-2:-32.-611/Prop 0
+I/-8:-2:-32.-640/Found 0 circles
+I/-8:-2:-32.-640/Processed image for user pattern detection in 0.0640987 seconds
+I/-8:-2:-32.-705/Found 0 circles
+I/-8:-2:-32.-705/Processed image for user pattern detection in 0.0646116 seconds
+D/-8:-2:-32.-713/Dir -1
+I/-8:-2:-32.-769/Found 0 circles
+I/-8:-2:-32.-769/Processed image for user pattern detection in 0.0642299 seconds
+D/-8:-2:-32.-812/Prop 1
+D/-8:-2:-32.-812/Dir 0
+I/-8:-2:-32.-834/Found 0 circles
+I/-8:-2:-32.-834/Processed image for user pattern detection in 0.0638574 seconds
+I/-8:-2:-32.-898/Found 0 circles
+I/-8:-2:-32.-898/Processed image for user pattern detection in 0.0638715 seconds
+I/-8:-2:-32.-964/Found 0 circles
+I/-8:-2:-32.-964/Processed image for user pattern detection in 0.0636756 seconds
+D/-8:-2:-33.-13/Prop 0
+I/-8:-2:-33.-28/Found 0 circles
+I/-8:-2:-33.-28/Processed image for user pattern detection in 0.0636742 seconds
+D/-8:-2:-33.-46/Dir 1
+I/-8:-2:-33.-92/Found 0 circles
+I/-8:-2:-33.-92/Processed image for user pattern detection in 0.0636 seconds
+D/-8:-2:-33.-145/Dir 0
+I/-8:-2:-33.-156/Found 0 circles
+I/-8:-2:-33.-156/Processed image for user pattern detection in 0.0638319 seconds
+D/-8:-2:-33.-212/Prop 1
+I/-8:-2:-33.-220/Found 0 circles
+I/-8:-2:-33.-220/Processed image for user pattern detection in 0.063639 seconds
+I/-8:-2:-33.-286/Found 0 circles
+I/-8:-2:-33.-286/Processed image for user pattern detection in 0.0637655 seconds
+D/-8:-2:-33.-311/Prop 0
+I/-8:-2:-33.-350/Found 0 circles
+I/-8:-2:-33.-350/Processed image for user pattern detection in 0.0638093 seconds
+D/-8:-2:-33.-379/Dir 1
+I/-8:-2:-33.-414/Found 0 circles
+I/-8:-2:-33.-414/Processed image for user pattern detection in 0.0637637 seconds
+D/-8:-2:-33.-478/Prop 1
+D/-8:-2:-33.-478/Dir 0
+I/-8:-2:-33.-478/Found 0 circles
+I/-8:-2:-33.-478/Processed image for user pattern detection in 0.0639798 seconds
+I/-8:-2:-33.-545/Found 0 circles
+I/-8:-2:-33.-545/Processed image for user pattern detection in 0.0638924 seconds
+D/-8:-2:-33.-578/Prop 0
+I/-8:-2:-33.-612/Found 0 circles
+I/-8:-2:-33.-612/Processed image for user pattern detection in 0.0637556 seconds
+D/-8:-2:-33.-678/Dir 1
+I/-8:-2:-33.-679/Found 0 circles
+I/-8:-2:-33.-679/Processed image for user pattern detection in 0.0638247 seconds
+I/-8:-2:-33.-743/Found 0 circles
+I/-8:-2:-33.-743/Processed image for user pattern detection in 0.0637961 seconds
+I/-8:-2:-33.-807/Found 0 circles
+I/-8:-2:-33.-807/Processed image for user pattern detection in 0.0639799 seconds
+D/-8:-2:-33.-812/Dir 0
+I/-8:-2:-33.-872/Found 0 circles
+I/-8:-2:-33.-872/Processed image for user pattern detection in 0.0640858 seconds
+I/-8:-2:-33.-936/Found 0 circles
+I/-8:-2:-33.-936/Processed image for user pattern detection in 0.064262 seconds
+I/-8:-2:-34.000/Found 0 circles
+I/-8:-2:-34.-01/Processed image for user pattern detection in 0.0643084 seconds
+D/-8:-2:-34.-12/Dir 1
+I/-8:-2:-34.-67/Found 0 circles
+I/-8:-2:-34.-67/Processed image for user pattern detection in 0.06395 seconds
+I/-8:-2:-34.-131/Found 0 circles
+I/-8:-2:-34.-131/Processed image for user pattern detection in 0.0640069 seconds
+D/-8:-2:-34.-146/Dir 0
+I/-8:-2:-34.-195/Found 0 circles
+I/-8:-2:-34.-195/Processed image for user pattern detection in 0.0638935 seconds
+I/-8:-2:-34.-260/Found 0 circles
+I/-8:-2:-34.-260/Processed image for user pattern detection in 0.0637922 seconds
+I/-8:-2:-34.-324/Found 0 circles
+I/-8:-2:-34.-324/Processed image for user pattern detection in 0.0637857 seconds
+D/-8:-2:-34.-346/Prop 1
+I/-8:-2:-34.-388/Found 0 circles
+I/-8:-2:-34.-388/Processed image for user pattern detection in 0.0636155 seconds
+D/-8:-2:-34.-445/Dir 1
+I/-8:-2:-34.-454/Found 0 circles
+I/-8:-2:-34.-454/Processed image for user pattern detection in 0.06385 seconds
+D/-8:-2:-34.-512/Prop 0
+I/-8:-2:-34.-518/Found 0 circles
+I/-8:-2:-34.-518/Processed image for user pattern detection in 0.063657 seconds
+D/-8:-2:-34.-578/Dir 0
+I/-8:-2:-34.-582/Found 0 circles
+I/-8:-2:-34.-582/Processed image for user pattern detection in 0.0638871 seconds
+I/-8:-2:-34.-648/Found 0 circles
+I/-8:-2:-34.-648/Processed image for user pattern detection in 0.0640201 seconds
+I/-8:-2:-34.-715/Found 0 circles
+I/-8:-2:-34.-715/Processed image for user pattern detection in 0.0638459 seconds
+I/-8:-2:-34.-781/Found 0 circles
+I/-8:-2:-34.-781/Processed image for user pattern detection in 0.0637717 seconds
+I/-8:-2:-34.-845/Found 0 circles
+I/-8:-2:-34.-845/Processed image for user pattern detection in 0.0638566 seconds
+D/-8:-2:-34.-880/Prop 1
+D/-8:-2:-34.-880/Dir 1
+I/-8:-2:-34.-909/Found 0 circles
+I/-8:-2:-34.-909/Processed image for user pattern detection in 0.0638863 seconds
+I/-8:-2:-34.-973/Found 0 circles
+I/-8:-2:-34.-973/Processed image for user pattern detection in 0.0637316 seconds
+I/-8:-2:-35.-37/Found 0 circles
+I/-8:-2:-35.-37/Processed image for user pattern detection in 0.0640868 seconds
+I/-8:-2:-35.-101/Found 0 circles
+I/-8:-2:-35.-101/Processed image for user pattern detection in 0.0642668 seconds
+I/-8:-2:-35.-169/Found 0 circles
+I/-8:-2:-35.-169/Processed image for user pattern detection in 0.0638674 seconds
+I/-8:-2:-35.-233/Found 0 circles
+I/-8:-2:-35.-233/Processed image for user pattern detection in 0.0639898 seconds
+I/-8:-2:-35.-297/Found 0 circles
+I/-8:-2:-35.-297/Processed image for user pattern detection in 0.0640128 seconds
+I/-8:-2:-35.-362/Found 0 circles
+I/-8:-2:-35.-362/Processed image for user pattern detection in 0.0637008 seconds
+I/-8:-2:-35.-426/Found 0 circles
+I/-8:-2:-35.-426/Processed image for user pattern detection in 0.0637014 seconds
+I/-8:-2:-35.-490/Found 0 circles
+I/-8:-2:-35.-490/Processed image for user pattern detection in 0.0637258 seconds
+I/-8:-2:-35.-555/Found 0 circles
+I/-8:-2:-35.-555/Processed image for user pattern detection in 0.0637148 seconds
+I/-8:-2:-35.-619/Found 0 circles
+I/-8:-2:-35.-619/Processed image for user pattern detection in 0.0635541 seconds
+I/-8:-2:-35.-683/Found 0 circles
+I/-8:-2:-35.-683/Processed image for user pattern detection in 0.0638579 seconds
+I/-8:-2:-35.-747/Found 0 circles
+I/-8:-2:-35.-747/Processed image for user pattern detection in 0.0636206 seconds
+I/-8:-2:-35.-811/Found 0 circles
+I/-8:-2:-35.-811/Processed image for user pattern detection in 0.0639034 seconds
+I/-8:-2:-35.-877/Found 0 circles
+I/-8:-2:-35.-877/Processed image for user pattern detection in 0.0637489 seconds
+I/-8:-2:-35.-941/Found 0 circles
+I/-8:-2:-35.-941/Processed image for user pattern detection in 0.0637605 seconds
+I/-8:-2:-36.-05/Found 0 circles
+I/-8:-2:-36.-05/Processed image for user pattern detection in 0.0639807 seconds
+I/-8:-2:-36.-71/Found 0 circles
+I/-8:-2:-36.-71/Processed image for user pattern detection in 0.0638313 seconds
+I/-8:-2:-36.-136/Found 0 circles
+I/-8:-2:-36.-136/Processed image for user pattern detection in 0.0640131 seconds
+I/-8:-2:-36.-200/Found 0 circles
+I/-8:-2:-36.-200/Processed image for user pattern detection in 0.0638609 seconds
+I/-8:-2:-36.-264/Found 0 circles
+I/-8:-2:-36.-264/Processed image for user pattern detection in 0.0639975 seconds
+I/-8:-2:-36.-328/Found 0 circles
+I/-8:-2:-36.-328/Processed image for user pattern detection in 0.0639482 seconds
+I/-8:-2:-36.-394/Found 0 circles
+I/-8:-2:-36.-394/Processed image for user pattern detection in 0.0635712 seconds
+I/-8:-2:-36.-458/Found 0 circles
+I/-8:-2:-36.-458/Processed image for user pattern detection in 0.0636971 seconds
+I/-8:-2:-36.-522/Found 0 circles
+I/-8:-2:-36.-522/Processed image for user pattern detection in 0.0635753 seconds
+I/-8:-2:-36.-586/Found 0 circles
+I/-8:-2:-36.-586/Processed image for user pattern detection in 0.0637826 seconds
+I/-8:-2:-36.-650/Found 0 circles
+I/-8:-2:-36.-650/Processed image for user pattern detection in 0.0637149 seconds
+I/-8:-2:-36.-717/Found 0 circles
+I/-8:-2:-36.-717/Processed image for user pattern detection in 0.0637631 seconds
+I/-8:-2:-36.-781/Found 0 circles
+I/-8:-2:-36.-781/Processed image for user pattern detection in 0.0637264 seconds
+I/-8:-2:-36.-845/Found 0 circles
+I/-8:-2:-36.-845/Processed image for user pattern detection in 0.0637166 seconds
+I/-8:-2:-36.-909/Found 0 circles
+I/-8:-2:-36.-909/Processed image for user pattern detection in 0.0639595 seconds
+I/-8:-2:-36.-977/Found 0 circles
+I/-8:-2:-36.-977/Processed image for user pattern detection in 0.0639153 seconds
+I/-8:-2:-37.-41/Found 0 circles
+I/-8:-2:-37.-41/Processed image for user pattern detection in 0.0637882 seconds
+I/-8:-2:-37.-105/Found 0 circles
+I/-8:-2:-37.-105/Processed image for user pattern detection in 0.0638021 seconds
+I/-8:-2:-37.-171/Found 0 circles
+I/-8:-2:-37.-171/Processed image for user pattern detection in 0.0639029 seconds
+I/-8:-2:-37.-235/Found 0 circles
+I/-8:-2:-37.-235/Processed image for user pattern detection in 0.0640434 seconds
+I/-8:-2:-37.-300/Found 0 circles
+I/-8:-2:-37.-300/Processed image for user pattern detection in 0.0639997 seconds
+D/-8:-2:-37.-345/Prop 0
+I/-8:-2:-37.-364/Found 0 circles
+I/-8:-2:-37.-364/Processed image for user pattern detection in 0.0642121 seconds
+D/-8:-2:-37.-412/Dir 0
+I/-8:-2:-37.-428/Found 0 circles
+I/-8:-2:-37.-428/Processed image for user pattern detection in 0.0639423 seconds
+I/-8:-2:-37.-494/Found 0 circles
+I/-8:-2:-37.-494/Processed image for user pattern detection in 0.063694 seconds
+I/-8:-2:-37.-558/Found 0 circles
+I/-8:-2:-37.-558/Processed image for user pattern detection in 0.0638591 seconds
+I/-8:-2:-37.-623/Found 0 circles
+I/-8:-2:-37.-623/Processed image for user pattern detection in 0.0637354 seconds
+I/-8:-2:-37.-687/Found 0 circles
+I/-8:-2:-37.-687/Processed image for user pattern detection in 0.063861 seconds
+I/-8:-2:-37.-751/Found 0 circles
+I/-8:-2:-37.-751/Processed image for user pattern detection in 0.0636608 seconds
+I/-8:-2:-37.-817/Found 0 circles
+I/-8:-2:-37.-817/Processed image for user pattern detection in 0.0637886 seconds
+I/-8:-2:-37.-883/Found 0 circles
+I/-8:-2:-37.-883/Processed image for user pattern detection in 0.0638842 seconds
+I/-8:-2:-37.-947/Found 0 circles
+I/-8:-2:-37.-947/Processed image for user pattern detection in 0.0638462 seconds
+I/-8:-2:-38.-11/Found 0 circles
+I/-8:-2:-38.-11/Processed image for user pattern detection in 0.0639275 seconds
+I/-8:-2:-38.-75/Found 0 circles
+I/-8:-2:-38.-75/Processed image for user pattern detection in 0.0637959 seconds
+I/-8:-2:-38.-140/Found 0 circles
+I/-8:-2:-38.-140/Processed image for user pattern detection in 0.0641326 seconds
+I/-8:-2:-38.-204/Found 0 circles
+I/-8:-2:-38.-204/Processed image for user pattern detection in 0.0639806 seconds
+D/-8:-2:-38.-245/Prop 1
+I/-8:-2:-38.-270/Found 0 circles
+I/-8:-2:-38.-270/Processed image for user pattern detection in 0.0639861 seconds
+D/-8:-2:-38.-278/Dir 1
+I/-8:-2:-38.-334/Found 0 circles
+I/-8:-2:-38.-334/Processed image for user pattern detection in 0.0641206 seconds
+I/-8:-2:-38.-399/Found 0 circles
+I/-8:-2:-38.-399/Processed image for user pattern detection in 0.0637893 seconds
+I/-8:-2:-38.-463/Found 0 circles
+I/-8:-2:-38.-463/Processed image for user pattern detection in 0.0638836 seconds
+I/-8:-2:-38.-527/Found 0 circles
+I/-8:-2:-38.-527/Processed image for user pattern detection in 0.0636467 seconds
+I/-8:-2:-38.-591/Found 0 circles
+I/-8:-2:-38.-591/Processed image for user pattern detection in 0.0636242 seconds
+I/-8:-2:-38.-657/Found 0 circles
+I/-8:-2:-38.-657/Processed image for user pattern detection in 0.0637754 seconds
+I/-8:-2:-38.-721/Found 0 circles
+I/-8:-2:-38.-721/Processed image for user pattern detection in 0.0636504 seconds
+I/-8:-2:-38.-785/Found 0 circles
+I/-8:-2:-38.-785/Processed image for user pattern detection in 0.0637812 seconds
+I/-8:-2:-38.-849/Found 0 circles
+I/-8:-2:-38.-849/Processed image for user pattern detection in 0.0635625 seconds
+I/-8:-2:-38.-913/Found 0 circles
+I/-8:-2:-38.-913/Processed image for user pattern detection in 0.0639426 seconds
+I/-8:-2:-38.-979/Found 0 circles
+I/-8:-2:-38.-979/Processed image for user pattern detection in 0.0638527 seconds
+I/-8:-2:-39.-43/Found 0 circles
+I/-8:-2:-39.-43/Processed image for user pattern detection in 0.0640111 seconds
+I/-8:-2:-39.-107/Found 0 circles
+I/-8:-2:-39.-107/Processed image for user pattern detection in 0.0640542 seconds
+I/-8:-2:-39.-174/Found 0 circles
+I/-8:-2:-39.-174/Processed image for user pattern detection in 0.0640246 seconds
+I/-8:-2:-39.-238/Found 0 circles
+I/-8:-2:-39.-238/Processed image for user pattern detection in 0.0639425 seconds
+I/-8:-2:-39.-302/Found 0 circles
+I/-8:-2:-39.-302/Processed image for user pattern detection in 0.064052 seconds
+I/-8:-2:-39.-367/Found 0 circles
+I/-8:-2:-39.-367/Processed image for user pattern detection in 0.0638566 seconds
+I/-8:-2:-39.-431/Found 0 circles
+I/-8:-2:-39.-431/Processed image for user pattern detection in 0.0639638 seconds
+I/-8:-2:-39.-497/Found 0 circles
+I/-8:-2:-39.-497/Processed image for user pattern detection in 0.063653 seconds
+I/-8:-2:-39.-561/Found 0 circles
+I/-8:-2:-39.-561/Processed image for user pattern detection in 0.0636569 seconds
+I/-8:-2:-39.-625/Found 0 circles
+I/-8:-2:-39.-625/Processed image for user pattern detection in 0.0639144 seconds
+I/-8:-2:-39.-689/Found 0 circles
+I/-8:-2:-39.-689/Processed image for user pattern detection in 0.0638108 seconds
+I/-8:-2:-39.-753/Found 0 circles
+I/-8:-2:-39.-753/Processed image for user pattern detection in 0.0636966 seconds
+I/-8:-2:-39.-819/Found 0 circles
+I/-8:-2:-39.-819/Processed image for user pattern detection in 0.0635257 seconds
+I/-8:-2:-39.-883/Found 0 circles
+I/-8:-2:-39.-883/Processed image for user pattern detection in 0.0637471 seconds
+I/-8:-2:-39.-947/Found 0 circles
+I/-8:-2:-39.-947/Processed image for user pattern detection in 0.0637205 seconds
+I/-8:-2:-40.-11/Found 0 circles
+I/-8:-2:-40.-11/Processed image for user pattern detection in 0.0640471 seconds
+D/-8:-2:-40.-13/Prop 0
+D/-8:-2:-40.-13/Dir 0
+I/-8:-2:-40.-75/Found 0 circles
+I/-8:-2:-40.-75/Processed image for user pattern detection in 0.0640184 seconds
+I/-8:-2:-40.-144/Found 0 circles
+I/-8:-2:-40.-144/Processed image for user pattern detection in 0.0638141 seconds
+I/-8:-2:-40.-208/Found 0 circles
+I/-8:-2:-40.-208/Processed image for user pattern detection in 0.0638847 seconds
+I/-8:-2:-40.-273/Found 0 circles
+I/-8:-2:-40.-273/Processed image for user pattern detection in 0.0639888 seconds
+I/-8:-2:-40.-337/Found 0 circles
+I/-8:-2:-40.-337/Processed image for user pattern detection in 0.0640154 seconds
+I/-8:-2:-40.-401/Found 0 circles
+I/-8:-2:-40.-401/Processed image for user pattern detection in 0.0639973 seconds
+I/-8:-2:-40.-465/Found 0 circles
+I/-8:-2:-40.-465/Processed image for user pattern detection in 0.064074 seconds
+I/-8:-2:-40.-530/Found 0 circles
+I/-8:-2:-40.-530/Processed image for user pattern detection in 0.0638049 seconds
+I/-8:-2:-40.-594/Found 0 circles
+I/-8:-2:-40.-594/Processed image for user pattern detection in 0.0636325 seconds
+I/-8:-2:-40.-660/Found 0 circles
+I/-8:-2:-40.-660/Processed image for user pattern detection in 0.063894 seconds
+I/-8:-2:-40.-724/Found 0 circles
+I/-8:-2:-40.-724/Processed image for user pattern detection in 0.0638396 seconds
+I/-8:-2:-40.-788/Found 0 circles
+I/-8:-2:-40.-788/Processed image for user pattern detection in 0.0635598 seconds
+I/-8:-2:-40.-852/Found 0 circles
+I/-8:-2:-40.-852/Processed image for user pattern detection in 0.0636893 seconds
+I/-8:-2:-40.-916/Found 0 circles
+I/-8:-2:-40.-916/Processed image for user pattern detection in 0.0640766 seconds
+I/-8:-2:-40.-982/Found 0 circles
+I/-8:-2:-40.-982/Processed image for user pattern detection in 0.0637609 seconds
+I/-8:-2:-41.-46/Found 0 circles
+I/-8:-2:-41.-46/Processed image for user pattern detection in 0.0637849 seconds
+I/-8:-2:-41.-110/Found 0 circles
+I/-8:-2:-41.-110/Processed image for user pattern detection in 0.0638257 seconds
+D/-8:-2:-41.-112/Dir 1
+D/-8:-2:-41.-145/Dir 0
+I/-8:-2:-41.-175/Found 0 circles
+I/-8:-2:-41.-175/Processed image for user pattern detection in 0.0639158 seconds
+I/-8:-2:-41.-239/Found 0 circles
+I/-8:-2:-41.-239/Processed image for user pattern detection in 0.0641559 seconds
+D/-8:-2:-41.-245/Dir -1
+I/-8:-2:-41.-303/Found 0 circles
+I/-8:-2:-41.-303/Processed image for user pattern detection in 0.0640862 seconds
+D/-8:-2:-41.-311/Dir 0
+D/-8:-2:-41.-311/Prop 1
+I/-8:-2:-41.-368/Found 0 circles
+I/-8:-2:-41.-368/Processed image for user pattern detection in 0.0640801 seconds
+I/-8:-2:-41.-432/Found 0 circles
+I/-8:-2:-41.-432/Processed image for user pattern detection in 0.063893 seconds
+D/-8:-2:-41.-478/Dir 1
+D/-8:-2:-41.-478/Prop 0
+I/-8:-2:-41.-498/Found 0 circles
+I/-8:-2:-41.-498/Processed image for user pattern detection in 0.0639877 seconds
+D/-8:-2:-41.-511/Dir 0
+I/-8:-2:-41.-563/Found 0 circles
+I/-8:-2:-41.-563/Processed image for user pattern detection in 0.0638882 seconds
+D/-8:-2:-41.-578/Dir -1
+I/-8:-2:-41.-627/Found 0 circles
+I/-8:-2:-41.-627/Processed image for user pattern detection in 0.0637074 seconds
+D/-8:-2:-41.-645/Dir 0
+D/-8:-2:-41.-645/Prop -1
+I/-8:-2:-41.-691/Found 0 circles
+I/-8:-2:-41.-691/Processed image for user pattern detection in 0.0640243 seconds
+I/-8:-2:-41.-755/Found 0 circles
+I/-8:-2:-41.-755/Processed image for user pattern detection in 0.0638124 seconds
+I/-8:-2:-41.-821/Found 0 circles
+I/-8:-2:-41.-821/Processed image for user pattern detection in 0.0636049 seconds
+D/-8:-2:-41.-880/Dir 1
+I/-8:-2:-41.-885/Found 0 circles
+I/-8:-2:-41.-885/Processed image for user pattern detection in 0.0637964 seconds
+D/-8:-2:-41.-912/Prop 0
+D/-8:-2:-41.-946/Dir 0
+I/-8:-2:-41.-949/Found 0 circles
+I/-8:-2:-41.-949/Processed image for user pattern detection in 0.0637012 seconds
+D/-8:-2:-42.-12/Dir -1
+I/-8:-2:-42.-13/Found 0 circles
+I/-8:-2:-42.-13/Processed image for user pattern detection in 0.0639133 seconds
+I/-8:-2:-42.-79/Found 0 circles
+I/-8:-2:-42.-79/Processed image for user pattern detection in 0.0639099 seconds
+D/-8:-2:-42.-79/Dir 0
+D/-8:-2:-42.-80/Prop 1
+I/-8:-2:-42.-143/Found 0 circles
+I/-8:-2:-42.-143/Processed image for user pattern detection in 0.0640525 seconds
+D/-8:-2:-42.-178/Dir 1
+I/-8:-2:-42.-209/Found 0 circles
+I/-8:-2:-42.-209/Processed image for user pattern detection in 0.0637799 seconds
+D/-8:-2:-42.-245/Prop 0
+D/-8:-2:-42.-245/Dir 0
+I/-8:-2:-42.-274/Found 0 circles
+I/-8:-2:-42.-274/Processed image for user pattern detection in 0.0641078 seconds
+I/-8:-2:-42.-338/Found 0 circles
+I/-8:-2:-42.-338/Processed image for user pattern detection in 0.0639649 seconds
+D/-8:-2:-42.-378/Dir -1
+I/-8:-2:-42.-402/Found 0 circles
+I/-8:-2:-42.-402/Processed image for user pattern detection in 0.0638799 seconds
+D/-8:-2:-42.-411/Dir 0
+I/-8:-2:-42.-467/Found 0 circles
+I/-8:-2:-42.-467/Processed image for user pattern detection in 0.0641962 seconds
+D/-8:-2:-42.-479/Prop 1
+D/-8:-2:-42.-511/Dir 1
+I/-8:-2:-42.-531/Found 0 circles
+I/-8:-2:-42.-531/Processed image for user pattern detection in 0.0638688 seconds
+D/-8:-2:-42.-578/Dir 0
+I/-8:-2:-42.-595/Found 0 circles
+I/-8:-2:-42.-595/Processed image for user pattern detection in 0.0638013 seconds
+D/-8:-2:-42.-645/Prop 0
+I/-8:-2:-42.-661/Found 0 circles
+I/-8:-2:-42.-661/Processed image for user pattern detection in 0.0639103 seconds
+I/-8:-2:-42.-725/Found 0 circles
+I/-8:-2:-42.-725/Processed image for user pattern detection in 0.0637302 seconds
+D/-8:-2:-42.-779/Dir -1
+I/-8:-2:-42.-789/Found 0 circles
+I/-8:-2:-42.-789/Processed image for user pattern detection in 0.0641001 seconds
+D/-8:-2:-42.-813/Dir 0
+I/-8:-2:-42.-854/Found 0 circles
+I/-8:-2:-42.-854/Processed image for user pattern detection in 0.0637577 seconds
+D/-8:-2:-42.-879/Prop 1
+I/-8:-2:-42.-918/Found 0 circles
+I/-8:-2:-42.-918/Processed image for user pattern detection in 0.0637601 seconds
+D/-8:-2:-42.-980/Dir 1
+I/-8:-2:-42.-984/Found 0 circles
+I/-8:-2:-42.-984/Processed image for user pattern detection in 0.063585 seconds
+I/-8:-2:-43.-48/Found 0 circles
+I/-8:-2:-43.-48/Processed image for user pattern detection in 0.0635629 seconds
+I/-8:-2:-43.-112/Found 0 circles
+I/-8:-2:-43.-112/Processed image for user pattern detection in 0.0637098 seconds
+I/-8:-2:-43.-176/Found 0 circles
+I/-8:-2:-43.-176/Processed image for user pattern detection in 0.0636976 seconds
+I/-8:-2:-43.-240/Found 0 circles
+I/-8:-2:-43.-240/Processed image for user pattern detection in 0.0639556 seconds
+I/-8:-2:-43.-304/Found 0 circles
+I/-8:-2:-43.-304/Processed image for user pattern detection in 0.0641401 seconds
+I/-8:-2:-43.-368/Found 0 circles
+I/-8:-2:-43.-368/Processed image for user pattern detection in 0.0639334 seconds
+I/-8:-2:-43.-432/Found 0 circles
+I/-8:-2:-43.-432/Processed image for user pattern detection in 0.0639772 seconds
+I/-8:-2:-43.-499/Found 0 circles
+I/-8:-2:-43.-499/Processed image for user pattern detection in 0.0637528 seconds
+I/-8:-2:-43.-563/Found 0 circles
+I/-8:-2:-43.-563/Processed image for user pattern detection in 0.0638317 seconds
+I/-8:-2:-43.-627/Found 0 circles
+I/-8:-2:-43.-627/Processed image for user pattern detection in 0.0635075 seconds
+I/-8:-2:-43.-690/Found 0 circles
+I/-8:-2:-43.-690/Processed image for user pattern detection in 0.0639188 seconds
+I/-8:-2:-43.-755/Found 0 circles
+I/-8:-2:-43.-755/Processed image for user pattern detection in 0.0638495 seconds
+I/-8:-2:-43.-821/Found 0 circles
+I/-8:-2:-43.-821/Processed image for user pattern detection in 0.0635082 seconds
+I/-8:-2:-43.-884/Found 0 circles
+I/-8:-2:-43.-884/Processed image for user pattern detection in 0.0637178 seconds
+I/-8:-2:-43.-948/Found 0 circles
+I/-8:-2:-43.-948/Processed image for user pattern detection in 0.0636576 seconds
+I/-8:-2:-44.-12/Found 0 circles
+I/-8:-2:-44.-12/Processed image for user pattern detection in 0.0639544 seconds
+I/-8:-2:-44.-78/Found 0 circles
+I/-8:-2:-44.-78/Processed image for user pattern detection in 0.0638232 seconds
+I/-8:-2:-44.-142/Found 0 circles
+I/-8:-2:-44.-142/Processed image for user pattern detection in 0.0641639 seconds
+I/-8:-2:-44.-207/Found 0 circles
+I/-8:-2:-44.-207/Processed image for user pattern detection in 0.0641567 seconds
+I/-8:-2:-44.-274/Found 0 circles
+I/-8:-2:-44.-274/Processed image for user pattern detection in 0.0640126 seconds
+I/-8:-2:-44.-338/Found 0 circles
+I/-8:-2:-44.-338/Processed image for user pattern detection in 0.064028 seconds
+I/-8:-2:-44.-402/Found 0 circles
+I/-8:-2:-44.-402/Processed image for user pattern detection in 0.0642124 seconds
+I/-8:-2:-44.-467/Found 0 circles
+I/-8:-2:-44.-467/Processed image for user pattern detection in 0.0639183 seconds
+I/-8:-2:-44.-531/Found 0 circles
+I/-8:-2:-44.-531/Processed image for user pattern detection in 0.0638853 seconds
+I/-8:-2:-44.-599/Found 0 circles
+I/-8:-2:-44.-599/Processed image for user pattern detection in 0.0638691 seconds
+I/-8:-2:-44.-663/Found 0 circles
+I/-8:-2:-44.-663/Processed image for user pattern detection in 0.0637687 seconds
+I/-8:-2:-44.-727/Found 0 circles
+I/-8:-2:-44.-727/Processed image for user pattern detection in 0.0636693 seconds
+I/-8:-2:-44.-791/Found 0 circles
+I/-8:-2:-44.-791/Processed image for user pattern detection in 0.0639537 seconds
+I/-8:-2:-44.-855/Found 0 circles
+I/-8:-2:-44.-855/Processed image for user pattern detection in 0.0637194 seconds
+I/-8:-2:-44.-921/Found 0 circles
+I/-8:-2:-44.-921/Processed image for user pattern detection in 0.0635781 seconds
+I/-8:-2:-44.-985/Found 0 circles
+I/-8:-2:-44.-985/Processed image for user pattern detection in 0.0637281 seconds
+I/-8:-2:-45.-49/Found 0 circles
+I/-8:-2:-45.-49/Processed image for user pattern detection in 0.0636222 seconds
+I/-8:-2:-45.-113/Found 0 circles
+I/-8:-2:-45.-113/Processed image for user pattern detection in 0.0639756 seconds
+I/-8:-2:-45.-179/Found 0 circles
+I/-8:-2:-45.-179/Processed image for user pattern detection in 0.0636711 seconds
+I/-8:-2:-45.-245/Found 0 circles
+I/-8:-2:-45.-245/Processed image for user pattern detection in 0.0637587 seconds
+I/-8:-2:-45.-311/Found 0 circles
+I/-8:-2:-45.-311/Processed image for user pattern detection in 0.0638529 seconds
+I/-8:-2:-45.-375/Found 0 circles
+I/-8:-2:-45.-375/Processed image for user pattern detection in 0.0638217 seconds
+I/-8:-2:-45.-439/Found 0 circles
+I/-8:-2:-45.-439/Processed image for user pattern detection in 0.0642692 seconds
+I/-8:-2:-45.-504/Found 0 circles
+I/-8:-2:-45.-504/Processed image for user pattern detection in 0.0645689 seconds
+I/-8:-2:-45.-569/Found 0 circles
+I/-8:-2:-45.-569/Processed image for user pattern detection in 0.0637982 seconds
+I/-8:-2:-45.-633/Found 0 circles
+I/-8:-2:-45.-633/Processed image for user pattern detection in 0.0639591 seconds
+I/-8:-2:-45.-700/Found 0 circles
+I/-8:-2:-45.-700/Processed image for user pattern detection in 0.0638268 seconds
+I/-8:-2:-45.-764/Found 0 circles
+I/-8:-2:-45.-764/Processed image for user pattern detection in 0.0637027 seconds
+I/-8:-2:-45.-828/Found 0 circles
+I/-8:-2:-45.-828/Processed image for user pattern detection in 0.0635321 seconds
+I/-8:-2:-45.-892/Found 0 circles
+I/-8:-2:-45.-892/Processed image for user pattern detection in 0.0638771 seconds
+I/-8:-2:-45.-956/Found 0 circles
+I/-8:-2:-45.-956/Processed image for user pattern detection in 0.0636716 seconds
+I/-8:-2:-46.-20/Found 0 circles
+I/-8:-2:-46.-20/Processed image for user pattern detection in 0.0636968 seconds
+I/-8:-2:-46.-86/Found 0 circles
+I/-8:-2:-46.-86/Processed image for user pattern detection in 0.0636851 seconds
+I/-8:-2:-46.-150/Found 0 circles
+I/-8:-2:-46.-150/Processed image for user pattern detection in 0.063486 seconds
+I/-8:-2:-46.-214/Found 0 circles
+I/-8:-2:-46.-214/Processed image for user pattern detection in 0.0637742 seconds
+I/-8:-2:-46.-278/Found 0 circles
+I/-8:-2:-46.-278/Processed image for user pattern detection in 0.0636569 seconds
+I/-8:-2:-46.-342/Found 0 circles
+I/-8:-2:-46.-342/Processed image for user pattern detection in 0.0641109 seconds
+I/-8:-2:-46.-406/Found 0 circles
+I/-8:-2:-46.-406/Processed image for user pattern detection in 0.0640458 seconds
+I/-8:-2:-46.-471/Found 0 circles
+I/-8:-2:-46.-471/Processed image for user pattern detection in 0.0643733 seconds
+I/-8:-2:-46.-535/Found 0 circles
+I/-8:-2:-46.-535/Processed image for user pattern detection in 0.0640792 seconds
+I/-8:-2:-46.-602/Found 0 circles
+I/-8:-2:-46.-602/Processed image for user pattern detection in 0.0637418 seconds
+I/-8:-2:-46.-666/Found 0 circles
+I/-8:-2:-46.-666/Processed image for user pattern detection in 0.064008 seconds
+I/-8:-2:-46.-730/Found 0 circles
+I/-8:-2:-46.-730/Processed image for user pattern detection in 0.0638352 seconds
+I/-8:-2:-46.-794/Found 0 circles
+I/-8:-2:-46.-794/Processed image for user pattern detection in 0.0637771 seconds
+I/-8:-2:-46.-858/Found 0 circles
+I/-8:-2:-46.-858/Processed image for user pattern detection in 0.0636731 seconds
+I/-8:-2:-46.-924/Found 0 circles
+I/-8:-2:-46.-924/Processed image for user pattern detection in 0.0637064 seconds
+I/-8:-2:-46.-988/Found 0 circles
+I/-8:-2:-46.-988/Processed image for user pattern detection in 0.0636668 seconds
+I/-8:-2:-47.-52/Found 0 circles
+I/-8:-2:-47.-52/Processed image for user pattern detection in 0.0636074 seconds
+I/-8:-2:-47.-116/Found 0 circles
+I/-8:-2:-47.-116/Processed image for user pattern detection in 0.0638706 seconds
+I/-8:-2:-47.-182/Found 0 circles
+I/-8:-2:-47.-182/Processed image for user pattern detection in 0.0637532 seconds
+I/-8:-2:-47.-248/Found 0 circles
+I/-8:-2:-47.-248/Processed image for user pattern detection in 0.0638094 seconds
+I/-8:-2:-47.-314/Found 0 circles
+I/-8:-2:-47.-314/Processed image for user pattern detection in 0.0638201 seconds
+I/-8:-2:-47.-379/Found 0 circles
+I/-8:-2:-47.-379/Processed image for user pattern detection in 0.0636713 seconds
+I/-8:-2:-47.-443/Found 0 circles
+I/-8:-2:-47.-443/Processed image for user pattern detection in 0.0640288 seconds
+I/-8:-2:-47.-507/Found 0 circles
+I/-8:-2:-47.-507/Processed image for user pattern detection in 0.0640854 seconds
+I/-8:-2:-47.-571/Found 0 circles
+I/-8:-2:-47.-571/Processed image for user pattern detection in 0.063868 seconds
+I/-8:-2:-47.-635/Found 0 circles
+I/-8:-2:-47.-635/Processed image for user pattern detection in 0.0639394 seconds
+I/-8:-2:-47.-702/Found 0 circles
+I/-8:-2:-47.-702/Processed image for user pattern detection in 0.0640981 seconds
+I/-8:-2:-47.-766/Found 0 circles
+I/-8:-2:-47.-766/Processed image for user pattern detection in 0.0640518 seconds
+I/-8:-2:-47.-830/Found 0 circles
+I/-8:-2:-47.-830/Processed image for user pattern detection in 0.0636875 seconds
+I/-8:-2:-47.-895/Found 0 circles
+I/-8:-2:-47.-895/Processed image for user pattern detection in 0.0644288 seconds
+I/-8:-2:-47.-959/Found 0 circles
+I/-8:-2:-47.-959/Processed image for user pattern detection in 0.0635877 seconds
+I/-8:-2:-48.-23/Found 0 circles
+I/-8:-2:-48.-23/Processed image for user pattern detection in 0.0636459 seconds
+I/-8:-2:-48.-89/Found 0 circles
+I/-8:-2:-48.-89/Processed image for user pattern detection in 0.0637399 seconds
+I/-8:-2:-48.-153/Found 0 circles
+I/-8:-2:-48.-153/Processed image for user pattern detection in 0.0635941 seconds
+D/-8:-2:-48.-178/Dir 0
+I/-8:-2:-48.-217/Found 0 circles
+I/-8:-2:-48.-217/Processed image for user pattern detection in 0.0637639 seconds
+I/-8:-2:-48.-281/Found 0 circles
+I/-8:-2:-48.-281/Processed image for user pattern detection in 0.0635945 seconds
+I/-8:-2:-48.-345/Found 0 circles
+I/-8:-2:-48.-345/Processed image for user pattern detection in 0.0639489 seconds
+I/-8:-2:-48.-411/Found 0 circles
+I/-8:-2:-48.-411/Processed image for user pattern detection in 0.0637634 seconds
+I/-8:-2:-48.-476/Found 0 circles
+I/-8:-2:-48.-476/Processed image for user pattern detection in 0.0637983 seconds
+I/-8:-2:-48.-540/Found 0 circles
+I/-8:-2:-48.-540/Processed image for user pattern detection in 0.0641579 seconds
+I/-8:-2:-48.-607/Found 0 circles
+I/-8:-2:-48.-607/Processed image for user pattern detection in 0.0639905 seconds
+I/-8:-2:-48.-672/Found 0 circles
+I/-8:-2:-48.-672/Processed image for user pattern detection in 0.0640433 seconds
+D/-8:-2:-48.-712/Dir -1
+D/-8:-2:-48.-712/Dir 0
+I/-8:-2:-48.-736/Found 0 circles
+I/-8:-2:-48.-736/Processed image for user pattern detection in 0.0641152 seconds
+I/-8:-2:-48.-800/Found 0 circles
+I/-8:-2:-48.-800/Processed image for user pattern detection in 0.0638782 seconds
+I/-8:-2:-48.-865/Found 0 circles
+I/-8:-2:-48.-865/Processed image for user pattern detection in 0.063984 seconds
+I/-8:-2:-48.-931/Found 0 circles
+I/-8:-2:-48.-931/Processed image for user pattern detection in 0.0635633 seconds
+I/-8:-2:-48.-995/Found 0 circles
+I/-8:-2:-48.-995/Processed image for user pattern detection in 0.0638781 seconds
+I/-8:-2:-49.-59/Found 0 circles
+I/-8:-2:-49.-59/Processed image for user pattern detection in 0.0635086 seconds
+D/-8:-2:-49.-79/Dir 1
+I/-8:-2:-49.-123/Found 0 circles
+I/-8:-2:-49.-123/Processed image for user pattern detection in 0.0637654 seconds
+I/-8:-2:-49.-187/Found 0 circles
+I/-8:-2:-49.-187/Processed image for user pattern detection in 0.0636132 seconds
+D/-8:-2:-49.-211/Dir 0
+I/-8:-2:-49.-252/Found 0 circles
+I/-8:-2:-49.-252/Processed image for user pattern detection in 0.0636124 seconds
+I/-8:-2:-49.-316/Found 0 circles
+I/-8:-2:-49.-316/Processed image for user pattern detection in 0.063662 seconds
+I/-8:-2:-49.-380/Found 0 circles
+I/-8:-2:-49.-380/Processed image for user pattern detection in 0.0636649 seconds
+D/-8:-2:-49.-412/Prop 0
+I/-8:-2:-49.-444/Found 0 circles
+I/-8:-2:-49.-444/Processed image for user pattern detection in 0.0640246 seconds
+D/-8:-2:-49.-478/Dir -1
+I/-8:-2:-49.-508/Found 0 circles
+I/-8:-2:-49.-508/Processed image for user pattern detection in 0.0641029 seconds
+D/-8:-2:-49.-512/Prop 1
+D/-8:-2:-49.-512/Dir 0
+I/-8:-2:-49.-573/Found 0 circles
+I/-8:-2:-49.-573/Processed image for user pattern detection in 0.0638916 seconds
+I/-8:-2:-49.-637/Found 0 circles
+I/-8:-2:-49.-637/Processed image for user pattern detection in 0.0643591 seconds
+I/-8:-2:-49.-704/Found 0 circles
+I/-8:-2:-49.-704/Processed image for user pattern detection in 0.0640499 seconds
+D/-8:-2:-49.-714/Prop 0
+D/-8:-2:-49.-714/Dir 1
+I/-8:-2:-49.-768/Found 0 circles
+I/-8:-2:-49.-768/Processed image for user pattern detection in 0.0639205 seconds
+I/-8:-2:-49.-832/Found 0 circles
+I/-8:-2:-49.-832/Processed image for user pattern detection in 0.0639425 seconds
+D/-8:-2:-49.-846/Dir 0
+D/-8:-2:-49.-879/Prop -1
+I/-8:-2:-49.-897/Found 0 circles
+I/-8:-2:-49.-897/Processed image for user pattern detection in 0.0639569 seconds
+I/-8:-2:-49.-961/Found 0 circles
+I/-8:-2:-49.-961/Processed image for user pattern detection in 0.0638339 seconds
+I/-8:-2:-50.-27/Found 0 circles
+I/-8:-2:-50.-27/Processed image for user pattern detection in 0.0634582 seconds
+I/-8:-2:-50.-91/Found 0 circles
+I/-8:-2:-50.-91/Processed image for user pattern detection in 0.0637382 seconds
+D/-8:-2:-50.-145/Prop 0
+I/-8:-2:-50.-155/Found 0 circles
+I/-8:-2:-50.-155/Processed image for user pattern detection in 0.0635999 seconds
+I/-8:-2:-50.-218/Found 0 circles
+I/-8:-2:-50.-219/Processed image for user pattern detection in 0.0638493 seconds
+D/-8:-2:-50.-245/Dir -1
+D/-8:-2:-50.-278/Dir 0
+I/-8:-2:-50.-283/Found 0 circles
+I/-8:-2:-50.-283/Processed image for user pattern detection in 0.0638813 seconds
+D/-8:-2:-50.-311/Prop 1
+I/-8:-2:-50.-349/Found 0 circles
+I/-8:-2:-50.-349/Processed image for user pattern detection in 0.0637578 seconds
+I/-8:-2:-50.-415/Found 0 circles
+I/-8:-2:-50.-415/Processed image for user pattern detection in 0.0637329 seconds
+I/-8:-2:-50.-479/Found 0 circles
+I/-8:-2:-50.-479/Processed image for user pattern detection in 0.0636104 seconds
+I/-8:-2:-50.-543/Found 0 circles
+I/-8:-2:-50.-543/Processed image for user pattern detection in 0.0639879 seconds
+I/-8:-2:-50.-607/Found 0 circles
+I/-8:-2:-50.-607/Processed image for user pattern detection in 0.0640579 seconds
+D/-8:-2:-50.-611/Dir 1
+D/-8:-2:-50.-669/Dir 0
+I/-8:-2:-50.-671/Found 0 circles
+I/-8:-2:-50.-671/Processed image for user pattern detection in 0.0637931 seconds
+I/-8:-2:-50.-735/Found 0 circles
+I/-8:-2:-50.-735/Processed image for user pattern detection in 0.0641627 seconds
+I/-8:-2:-50.-802/Found 0 circles
+I/-8:-2:-50.-802/Processed image for user pattern detection in 0.0638782 seconds
+I/-8:-2:-50.-866/Found 0 circles
+I/-8:-2:-50.-866/Processed image for user pattern detection in 0.0640491 seconds
+I/-8:-2:-50.-930/Found 0 circles
+I/-8:-2:-50.-930/Processed image for user pattern detection in 0.063808 seconds
+I/-8:-2:-50.-994/Found 0 circles
+I/-8:-2:-50.-994/Processed image for user pattern detection in 0.0643085 seconds
+D/-8:-2:-51.-12/Dir -1
+I/-8:-2:-51.-59/Found 0 circles
+I/-8:-2:-51.-59/Processed image for user pattern detection in 0.0636401 seconds
+I/-8:-2:-51.-123/Found 0 circles
+I/-8:-2:-51.-123/Processed image for user pattern detection in 0.0639095 seconds
+I/-8:-2:-51.-189/Found 0 circles
+I/-8:-2:-51.-189/Processed image for user pattern detection in 0.0635987 seconds
+I/-8:-2:-51.-253/Found 0 circles
+I/-8:-2:-51.-253/Processed image for user pattern detection in 0.0636441 seconds
+I/-8:-2:-51.-317/Found 0 circles
+I/-8:-2:-51.-317/Processed image for user pattern detection in 0.06367 seconds
+D/-8:-2:-51.-335/Prop 0
+I/-8:-2:-51.-381/Found 0 circles
+I/-8:-2:-51.-381/Processed image for user pattern detection in 0.063631 seconds
+I/-8:-2:-51.-445/Found 0 circles
+I/-8:-2:-51.-445/Processed image for user pattern detection in 0.0640665 seconds
+D/-8:-2:-51.-478/Prop 1
+I/-8:-2:-51.-511/Found 0 circles
+I/-8:-2:-51.-511/Processed image for user pattern detection in 0.0637559 seconds
+I/-8:-2:-51.-576/Found 0 circles
+I/-8:-2:-51.-576/Processed image for user pattern detection in 0.0638465 seconds
+I/-8:-2:-51.-640/Found 0 circles
+I/-8:-2:-51.-640/Processed image for user pattern detection in 0.0639483 seconds
+I/-8:-2:-51.-706/Found 0 circles
+I/-8:-2:-51.-706/Processed image for user pattern detection in 0.0640126 seconds
+I/-8:-2:-51.-770/Found 0 circles
+I/-8:-2:-51.-770/Processed image for user pattern detection in 0.064012 seconds
+I/-8:-2:-51.-834/Found 0 circles
+I/-8:-2:-51.-835/Processed image for user pattern detection in 0.0640819 seconds
+I/-8:-2:-51.-899/Found 0 circles
+I/-8:-2:-51.-899/Processed image for user pattern detection in 0.0637944 seconds
+I/-8:-2:-51.-963/Found 0 circles
+I/-8:-2:-51.-963/Processed image for user pattern detection in 0.0639664 seconds
+I/-8:-2:-52.-29/Found 0 circles
+I/-8:-2:-52.-29/Processed image for user pattern detection in 0.0635441 seconds
+I/-8:-2:-52.-93/Found 0 circles
+I/-8:-2:-52.-93/Processed image for user pattern detection in 0.0636813 seconds
+I/-8:-2:-52.-157/Found 0 circles
+I/-8:-2:-52.-157/Processed image for user pattern detection in 0.0635697 seconds
+I/-8:-2:-52.-221/Found 0 circles
+I/-8:-2:-52.-221/Processed image for user pattern detection in 0.0638264 seconds
+I/-8:-2:-52.-285/Found 0 circles
+I/-8:-2:-52.-285/Processed image for user pattern detection in 0.0637774 seconds
+I/-8:-2:-52.-351/Found 0 circles
+I/-8:-2:-52.-351/Processed image for user pattern detection in 0.063547 seconds
+I/-8:-2:-52.-415/Found 0 circles
+I/-8:-2:-52.-415/Processed image for user pattern detection in 0.0638016 seconds
+I/-8:-2:-52.-479/Found 0 circles
+I/-8:-2:-52.-479/Processed image for user pattern detection in 0.0636128 seconds
+I/-8:-2:-52.-543/Found 0 circles
+I/-8:-2:-52.-543/Processed image for user pattern detection in 0.0641866 seconds
+I/-8:-2:-52.-607/Found 0 circles
+I/-8:-2:-52.-607/Processed image for user pattern detection in 0.0639016 seconds
+I/-8:-2:-52.-671/Found 0 circles
+I/-8:-2:-52.-671/Processed image for user pattern detection in 0.0638617 seconds
+I/-8:-2:-52.-735/Found 0 circles
+I/-8:-2:-52.-735/Processed image for user pattern detection in 0.0639614 seconds
+I/-8:-2:-52.-801/Found 0 circles
+I/-8:-2:-52.-801/Processed image for user pattern detection in 0.0637322 seconds
+I/-8:-2:-52.-865/Found 0 circles
+I/-8:-2:-52.-865/Processed image for user pattern detection in 0.0639187 seconds
+I/-8:-2:-52.-930/Found 0 circles
+I/-8:-2:-52.-930/Processed image for user pattern detection in 0.0637809 seconds
+I/-8:-2:-52.-994/Found 0 circles
+I/-8:-2:-52.-994/Processed image for user pattern detection in 0.0638209 seconds
+I/-8:-2:-53.-58/Found 0 circles
+I/-8:-2:-53.-58/Processed image for user pattern detection in 0.0637016 seconds
+I/-8:-2:-53.-124/Found 0 circles
+I/-8:-2:-53.-124/Processed image for user pattern detection in 0.0635053 seconds
+I/-8:-2:-53.-188/Found 0 circles
+I/-8:-2:-53.-188/Processed image for user pattern detection in 0.0637177 seconds
+I/-8:-2:-53.-252/Found 0 circles
+I/-8:-2:-53.-252/Processed image for user pattern detection in 0.063579 seconds
+I/-8:-2:-53.-315/Found 0 circles
+I/-8:-2:-53.-315/Processed image for user pattern detection in 0.0637736 seconds
+I/-8:-2:-53.-379/Found 0 circles
+I/-8:-2:-53.-379/Processed image for user pattern detection in 0.0638974 seconds
+I/-8:-2:-53.-444/Found 0 circles
+I/-8:-2:-53.-444/Processed image for user pattern detection in 0.0703913 seconds
+I/-8:-2:-53.-517/Found 0 circles
+I/-8:-2:-53.-517/Processed image for user pattern detection in 0.0831179 seconds
+I/-8:-2:-53.-603/Found 0 circles
+I/-8:-2:-53.-603/Processed image for user pattern detection in 0.0641806 seconds
+I/-8:-2:-53.-667/Found 0 circles
+I/-8:-2:-53.-667/Processed image for user pattern detection in 0.0700398 seconds
+I/-8:-2:-53.-739/Found 0 circles
+I/-8:-2:-53.-739/Processed image for user pattern detection in 0.0636646 seconds
+I/-8:-2:-53.-810/Found 0 circles
+I/-8:-2:-53.-810/Processed image for user pattern detection in 0.0634223 seconds
+I/-8:-2:-53.-873/Found 0 circles
+I/-8:-2:-53.-873/Processed image for user pattern detection in 0.0641727 seconds
+I/-8:-2:-53.-940/Found 0 circles
+I/-8:-2:-53.-940/Processed image for user pattern detection in 0.0657233 seconds
+I/-8:-2:-54.-39/Found 0 circles
+I/-8:-2:-54.-39/Processed image for user pattern detection in 0.065159 seconds
+I/-8:-2:-54.-104/Found 0 circles
+I/-8:-2:-54.-104/Processed image for user pattern detection in 0.0654786 seconds
+I/-8:-2:-54.-172/Found 0 circles
+I/-8:-2:-54.-172/Processed image for user pattern detection in 0.0635877 seconds
+I/-8:-2:-54.-238/Found 0 circles
+I/-8:-2:-54.-238/Processed image for user pattern detection in 0.0635567 seconds
+I/-8:-2:-54.-308/Found 0 circles
+I/-8:-2:-54.-308/Processed image for user pattern detection in 0.0638025 seconds
+I/-8:-2:-54.-376/Found 0 circles
+I/-8:-2:-54.-376/Processed image for user pattern detection in 0.0634537 seconds
+I/-8:-2:-54.-439/Found 0 circles
+I/-8:-2:-54.-439/Processed image for user pattern detection in 0.0650341 seconds
+I/-8:-2:-54.-515/Found 0 circles
+I/-8:-2:-54.-515/Processed image for user pattern detection in 0.0875966 seconds
+I/-8:-2:-54.-623/Found 0 circles
+I/-8:-2:-54.-623/Processed image for user pattern detection in 0.0799286 seconds
+I/-8:-2:-54.-709/Found 0 circles
+I/-8:-2:-54.-709/Processed image for user pattern detection in 0.0633992 seconds
+I/-8:-2:-54.-773/Found 0 circles
+I/-8:-2:-54.-773/Processed image for user pattern detection in 0.0636661 seconds
+I/-8:-2:-54.-839/Found 0 circles
+I/-8:-2:-54.-839/Processed image for user pattern detection in 0.0636181 seconds
+I/-8:-2:-54.-940/Found 0 circles
+I/-8:-2:-54.-940/Processed image for user pattern detection in 0.0633656 seconds
+I/-8:-2:-55.-03/Found 0 circles
+I/-8:-2:-55.-03/Processed image for user pattern detection in 0.0670348 seconds
+I/-8:-2:-55.-96/Found 0 circles
+I/-8:-2:-55.-96/Processed image for user pattern detection in 0.0741592 seconds
+I/-8:-2:-55.-195/Found 0 circles
+I/-8:-2:-55.-195/Processed image for user pattern detection in 0.074915 seconds

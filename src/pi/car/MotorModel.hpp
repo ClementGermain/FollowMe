@@ -7,7 +7,7 @@
 
 // struct that will contain all the models motors informations
 typedef struct {
-  uint32_t cmd;
+  float cmd;
   uint32_t current;
   uint32_t voltage1;
   uint32_t voltage2;
@@ -23,13 +23,13 @@ public :
 
   // Create the model by running a simulation and get motor's value
   // time in seconds
-  void create(int cmdStart, int CmdStop, float waitTime);
+  void create(float cmdStart, float CmdStop, float waitTime);
 
   // save the model into a file
-  void save(const std::string & FileName);
+  void save(const char * FileName);
 
   // load the model
-  void load(const std::string & FileName);
+  void load(const char * FileName);
 
   StateMotor_TypeDef getState(uint32_t cmd);
 
