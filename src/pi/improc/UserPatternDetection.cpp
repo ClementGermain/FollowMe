@@ -14,7 +14,7 @@ int UserPattern::vLo = 50;
 int UserPattern::hHi = 5;//58*180/255;
 int UserPattern::sHi = 255;
 int UserPattern::vHi = 255;
-const int UserPattern::maxFrameUserUndetected = 10;
+const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
@@ -105,7 +105,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		bgr_image.copyTo(resultImage);
 
 		// draw kalman filtered circle on camera image
-		if(frameCountSinceUserUndetected == 0) {
+		if(isUserDetected) {
 			cv::Point center(std::round(filteredCircle[0] + Camera::getFrameWidth() * 0.5f), std::round(filteredCircle[1] + Camera::getFrameHeight() * 0.5f));
 			int radius = std::round(filteredCircle[2]);
 
@@ -113,7 +113,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		}
 
 		// draw hough circle on camera image
-		if(isUserDetected) {
+		if(frameCountSinceUserUndetected == 0) {
 			cv::Point center(std::round(imageCircles[0][0]), std::round(imageCircles[0][1]));
 			int radius = std::round(imageCircles[0][2]);
 
