@@ -209,6 +209,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbVoltage2Front").setPosition(model.directionMotor.voltage2);
 		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current));
 		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
+		l.getTrackbarView("tbCurrentFront").setInnerBounds(860, 1140); // example: add inner bounds 
 		
 		l.getDigitalView("dCmdLeft").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdLeft").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
