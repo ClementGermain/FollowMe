@@ -31,7 +31,7 @@ void IA::SpeedControl (float distance){
 		if (TargetSpeed - IA::Speed  > 0){
 			IA::Speed = min(IA::Speed + 0.1f,IA::TargetSpeed);
 		}
-		else if (TargetSpeed - IA::Speed  > 0){
+		else if (TargetSpeed - IA::Speed  < 0){
 			IA::Speed  = max(IA::Speed - 0.1f,IA::TargetSpeed);
 		}
 	}

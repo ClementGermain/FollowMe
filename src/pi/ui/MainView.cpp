@@ -199,8 +199,8 @@ void MainView::updateViews(ViewManager & mgr) {
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
       		
-		l.getDigitalView("dCmdFront").setValue( control.directionMotor.speed * 100.0);
-		l.getTrackbarView("tbCmdFront").setPosition( control.directionMotor.speed );
+		l.getDigitalView("dCmdFront").setValue( control.directionMotor.speed * control.directionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdFront").setPosition( control.directionMotor.speed * control.directionMotor.direction );
 		l.getDigitalView("dVoltage1Front").setValue(((float) model.directionMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Front").setPosition(model.directionMotor.voltage1);
 		l.getDigitalView("dVoltage2Front").setValue(((float) model.directionMotor.voltage2)/1000.0);
@@ -208,8 +208,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current));
 		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
 		
-		l.getDigitalView("dCmdLeft").setValue( control.propulsionMotor.speed * 100.0);
-		l.getTrackbarView("tbCmdLeft").setPosition( control.propulsionMotor.speed );
+		l.getDigitalView("dCmdLeft").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdLeft").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 		l.getDigitalView("dVoltage1Left").setValue(((float) model.leftWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Left").setPosition(model.leftWheelMotor.voltage1);
 		l.getDigitalView("dVoltage2Left").setValue(((float) model.leftWheelMotor.voltage2)/1000.0);
@@ -219,8 +219,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * 100.0);
-		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed );
+		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 	    	l.getDigitalView("dVoltage1Right").setValue(((float) model.rightWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Right").setPosition(model.rightWheelMotor.voltage1);
 		l.getDigitalView("dVoltage2Right").setValue(((float) model.rightWheelMotor.voltage2)/1000.0);
