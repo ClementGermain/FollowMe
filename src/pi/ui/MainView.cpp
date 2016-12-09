@@ -161,6 +161,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	// position user trackbar
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 425, 85, 10, 100, INVERSE));
 	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 7, 170, 11, CENTREE));
+	// position user text
+	sensorLayout.addView("sensor_UserDistanceText", new Digital("%.2fm", 365, 85, 60));
 
 	// distance Usound text
 	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 210, 65));
@@ -252,8 +254,9 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
 		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
 		
-		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
+		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance()-Car::CarSize);
 		l.getTrackbarView("sensor_UserAngle").setPosition(-UserDetectionTest.detector.getDirection()*180/M_PI);
+		l.getDigitalView("sensor_UserDistanceText").setValue(UserDetectionTest.detector.getDistance()-Car::CarSize);
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
