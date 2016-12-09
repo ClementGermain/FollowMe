@@ -9,7 +9,7 @@ mutex Car::controlMutex;
 mutex Car::modelMutex;
 BarstowControl_Typedef Car::controlStructure;
 BarstowModel_Typedef Car::modelStructure;
-const float CarSize = 1.0;
+const float Car::CarSize = 1.0;
 
 void Car::getControlStructure(BarstowControl_Typedef & out) {
 	controlMutex.lock();
