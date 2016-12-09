@@ -15,7 +15,6 @@ class MainView {
 		void close();
 		bool isOpen();
 	private:
-		float SpeedCommand;
 		void run();
 		void initializeViews(ViewManager & mgr);
 		void updateViews(ViewManager & mgr);

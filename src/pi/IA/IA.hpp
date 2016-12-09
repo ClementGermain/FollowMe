@@ -10,7 +10,6 @@ class IA {
 	
 		static void SpeedControl(float);
 		static void IAMotorBack(float);
-		static float ReturnSpeed();
 
 	private:		
 		static float Speed;		
@@ -18,7 +17,6 @@ class IA {
 		static bool ObstacleDetected;
 		static bool UserDetected;
 		static float RealDistance;
-		static float ActualSpeed;
 		static float TargetSpeed;
 
 		static void run();
