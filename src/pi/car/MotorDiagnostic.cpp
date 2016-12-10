@@ -40,7 +40,7 @@ void DiagnosticMotor::Diagnostic_create_and_save_model(int CmdStart, int CmdStop
 	
 	if (not((Model_value.current-delta_current)<barstow_model.rightWheelMotor) && ((Model_value.current+delta_current)>barstow_model.rightWheelMotor)){panne=true;}
 return panne;
-}*/
+}
 
 
 float getValVotage1(){
