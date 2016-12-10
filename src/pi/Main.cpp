@@ -73,6 +73,7 @@ int main() {
 	runUI();
 
 	// Destroying
+	IA::stop();
 	Camera::destroy();
 	Sound::stop();
 	UserDetectionTest.stop();
