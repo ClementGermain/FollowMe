@@ -7,12 +7,12 @@
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 
 
-class DiagnosticMotor:public MotorModel{
+class DiagnosticMotor : public MotorModel{
 
 	public:
 		//constructor
 		DiagnosticMotor(void);
-		DiagnosticMotor(size_model);
+		DiagnosticMotor(int size_model);
 		//create and save the model
 		void Diagnostic_create_and_save_model(int CmdStart, int CmdStop, float waitTime, const std::string & fileName);
 
@@ -25,7 +25,7 @@ class DiagnosticMotor:public MotorModel{
 
 
 
-}
+};
 
 
 

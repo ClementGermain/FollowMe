@@ -46,6 +46,7 @@ OBJECTS=Main.o \
 		car/Obstacle.o \
 		car/SPI_Interface.o \
 		car/MotorModel.o\
+		car/MotorDiagnostic.o\
 		IA/IA.o\
 		utils/Log.o \
 		utils/Timer.o \
