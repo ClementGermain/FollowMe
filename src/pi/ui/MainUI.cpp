@@ -232,9 +232,9 @@ int runIA(istream & input, vector<int> i, vector<string> s) {
 }
 
 int runModelAcquire(istream & input, vector<int> i, vector<string> s){
-  MotorModel model(600);
-  model.create(0.0, 1.0, 10000);
-  model.save("test_modelAquire");
+  MotorModel model;
+  model.create(-1.0, 1.0, 10000);
+  model.save("model_propulsion");
   return 0;
 }
 

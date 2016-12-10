@@ -13,6 +13,7 @@
 #include "IA/IA.hpp"
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
+#include "car/MotorModel.hpp"
 #include "view/KeyboardInput.hpp"
 #include "view/trackbar/Trackbar_Horizontal.hpp"
 #include "view/trackbar/Trackbar_Vertical.hpp"
@@ -112,18 +113,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	
 	// motors trackbar
 
-	defaultLayout.addView("tbCmdFront", new Trackbar_Horizontal(0, 1, 385, 70, 90, 10));
+	defaultLayout.addView("tbCmdFront", new Trackbar_Horizontal(-1, 1, 385, 70, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 2000, 385, 100, 90, 10));
 	defaultLayout.addView("tbVoltage1Front", new Trackbar_Horizontal(0, 8000, 385, 130, 90, 10));
 	defaultLayout.addView("tbVoltage2Front", new Trackbar_Horizontal(0, 8000, 385, 160, 90, 10));
 
-	defaultLayout.addView("tbCmdLeft", new Trackbar_Horizontal(0, 1, 333, 240, 90, 10));
+	defaultLayout.addView("tbCmdLeft", new Trackbar_Horizontal(-1, 1, 333, 240, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 2000, 333, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Left", new Trackbar_Horizontal(0, 8000, 333, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Left", new Trackbar_Horizontal(0, 8000, 333, 330, 90, 10));
 	defaultLayout.addView("tbSpeedLeft", new Trackbar_Horizontal(0, 10, 333, 360, 90, 10));
 
-	defaultLayout.addView("tbCmdRight", new Trackbar_Horizontal(0, 1, 438, 240, 90, 10));
+	defaultLayout.addView("tbCmdRight", new Trackbar_Horizontal(-1, 1, 438, 240, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 2000, 438, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Right", new Trackbar_Horizontal(0, 8000, 438, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Right", new Trackbar_Horizontal(0, 8000, 438, 330, 90, 10));
@@ -195,8 +196,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
-	Car::getModelStructure(model);
 	BarstowControl_Typedef control;
+	Car::getModelStructure(model);
 	Car::getControlStructure(control);
 	
 	if(mgr.isActive("Motor")) {
@@ -275,7 +276,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		Layout & l = mgr.getLayout("User Detection");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
 		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
-		((PlotsView*)l.getView("graph"))->addPlot(cpuLoad.get());
+		((PlotsView*)l.getView("graph"))->addPlot(UserDetectionTest.detector.getDistance());
 	}
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");

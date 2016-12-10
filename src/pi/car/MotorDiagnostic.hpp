@@ -5,30 +5,27 @@
 #include <cstdio>
 #include "MotorModel.hpp"
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
+#include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 
+typedef struct{
+  bool yes;              //if there is at least one failure
+  bool failure_cmd;
+} failure_TypeDef;
 
 class DiagnosticMotor : public MotorModel{
+  
+public:
+  //constructor
+  DiagnosticMotor(const char * fileName,  BarstowControl_Typedef * BarstowControl_, int size_model = 1200);
 
-	public:
-		//constructor
-		DiagnosticMotor(void);
-		DiagnosticMotor(int size_model);
-		//create and save the model
-		void Diagnostic_create_and_save_model(int CmdStart, int CmdStop, float waitTime, const std::string & fileName);
+  void getFailure(failure_TypeDef * failure);
 
-		//function comparison between the Barstow Model and the Model, attribut in my class
-		
-		bool Diagnostic_panne (BarstowModel_Typedef);
-	
-	protected: 
-		bool panne;
-
-
-
+  float getDeltaVoltage();
+  float getValVoltage();
+  
+protected:
+  Model_TypeDef * Model;
+  float delta_voltage;
+  BarstowControl_Typedef * BarstowControl;
 };
-
-
-
-
-
 #endif
