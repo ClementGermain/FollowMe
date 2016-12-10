@@ -18,6 +18,8 @@ class DiagnosticMotor : public MotorModel{
 
 		//function comparison between the Barstow Model and the Model, attribut in my class
 		
+
+
 		bool Diagnostic_panne (BarstowModel_Typedef);
 	
 	protected: 
