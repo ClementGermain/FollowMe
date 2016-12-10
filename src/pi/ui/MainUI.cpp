@@ -8,6 +8,7 @@
 #include "MainUI.hpp"
 #include "MainView.hpp"
 #include "car/Camera.hpp"
+#include "car/MotorModel.hpp"
 #include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
@@ -28,7 +29,8 @@ int saveLog(istream & input, vector<int> i, vector<string> s);
 int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
-int runIA (istream & input, vector<int> i, vector<string> s);
+int runIA(istream & input, vector<int> i, vector<string> s);
+int runModelAcquire(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -78,6 +80,7 @@ void runUI() {
 			new Menu ("stop", 2, runIA, NULL),
 			NULL
 		),
+		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -226,6 +229,13 @@ int runIA(istream & input, vector<int> i, vector<string> s) {
 			break;
 	}
 	return 0;
+}
+
+int runModelAcquire(istream & input, vector<int> i, vector<string> s){
+  MotorModel model(600);
+  model.create(0.0, 1.0, 10000);
+  model.save("test_modelAquire");
+  return 0;
 }
 
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {

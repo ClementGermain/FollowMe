@@ -51,7 +51,7 @@ void UserPatternDetectionTest::run() {
 			detector.findPattern(img, true);
 		detector.imageCirclesToPosition();
 		
-		int sleep_ms = max(0, 100 - (int) (t.elapsed() * 1000));
+		int sleep_ms = max(0, UserPattern::frameDurationMillis - (int) (t.elapsed() * 1000));
 		// sleep 
 		for(int s = 0; s < sleep_ms && !endThread; s++)
 			this_thread::sleep_for(chrono::milliseconds(1));

@@ -30,19 +30,25 @@ void handler(int sig) {
 	LogE << "SEGFAULT" << endl;
 
 	// Save logs
-	system_clock::time_point today = system_clock::now();
-	std::time_t tt = system_clock::to_time_t ( today );
-	
-	string date(ctime(&tt));
-	string dir("../../out/");
-	mkdir(dir.c_str(), 0700);
-	fstream file((dir+"Log "+date+"(after segfault).txt").c_str(), std::fstream::out);
-
 	LogStream::Cursor cur(Log.getCursor(false));
-	while(Log.hasPrevious(cur))
-		file << Log.readPrevious(cur).formatedString() << endl;
+	if(Log.hasPrevious(cur)) {
+		// generate file name with date
+		system_clock::time_point today = system_clock::now();
+		std::time_t tt = system_clock::to_time_t ( today );
+		string date(ctime(&tt));
+		date.pop_back(); // remove '\n' at the end
 
-	file.close();
+		// create directory and file
+		string dir("../../out/");
+		mkdir(dir.c_str(), 0700);
+		fstream file((dir+"Log "+date+" (segfault).txt").c_str(), std::fstream::out);
+
+		// write log in file
+		while(Log.hasPrevious(cur))
+			file << Log.readPrevious(cur).formatedString() << endl;
+
+		file.close();
+	}
 
 	// Release camera and sound
 	Sound::stop();

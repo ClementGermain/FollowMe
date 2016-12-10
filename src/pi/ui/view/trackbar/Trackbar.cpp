@@ -9,6 +9,7 @@ Trackbar::Trackbar(float rangeMin, float rangeMax, int x, int y, int width, int 
 	View(x, y),
 	rangeMin(rangeMin), rangeMax(rangeMax),
 	position(rangeMin),
+	hasInnerBounds(false),
 	drawable(SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, 0,0,0,0), [](SDL_Surface * s){SDL_FreeSurface(s);}),
 	invalidate(true),
 	borderSize(2),
@@ -24,3 +25,14 @@ void Trackbar::setPosition(float pos) {
 	}
 }
 
+void Trackbar::setInnerBounds(float boundMin, float boundMax) {
+	float newInnerBoundMin = min(max(rangeMin, boundMin), rangeMax);
+	float newInnerBoundMax = min(max(rangeMin, boundMax), rangeMax);
+
+	if(newInnerBoundMin != innerBoundMin || newInnerBoundMax != innerBoundMax || !hasInnerBounds) {
+		hasInnerBounds = true;
+		innerBoundMin = newInnerBoundMin;
+		innerBoundMax = newInnerBoundMax;
+		invalidate = true;
+	}
+}
