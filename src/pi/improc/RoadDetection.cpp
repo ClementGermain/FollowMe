@@ -1,8 +1,9 @@
 #include "RoadDetection.hpp"
 
 #include <iostream>
-using namespace std;
+#include <vector>
 
+using namespace std;
 using namespace cv;
 
 /*RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATROW, ROADMATCOL, 0}
@@ -11,7 +12,47 @@ using namespace cv;
 RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3},
 				m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_8UC3}
 				
-{
+{	
+	//! Calculate the camera's focal distances
+	float dfy = Camera::getFrameHeight() / (2.f*tan(Camera::verticalFOV / 2.f));
+	float dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
+
+	//! Set real point distance from car
+	float py = 1.50f;
+	float px = 1.f;		
+	
+	//! Calculate y coord
+	float tetay = atan2(py, Camera::PosZ);
+	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
+	float y = tan(dtetay) * dfy;
+	
+	//! Calculate x coord
+	float distx = sqrt(Camera::PosZ + pow(py,2));
+	float dtetax = atan2(0.5f * px, distx);	
+	float x = dfx * tan(dtetax);
+
+	//! Set points coordinates
+	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
+	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));
+
+	//! Set real point distance from car
+	py = 3.f;
+	px = 1.f;		
+	
+	//! Calculate y coord
+	tetay = atan2(py, Camera::PosZ);
+	dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
+	y = tan(dtetay) * dfy;
+	
+	//! Calculate x coord
+	distx = sqrt(Camera::PosZ + pow(py,2));
+	dtetax = atan2(0.5f * px, distx);	
+	x = dfx * tan(dtetax);
+	
+	//! Set points coordinates	
+	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));
+	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
+
 }
 
 RoadDetection::~RoadDetection()
@@ -25,21 +66,11 @@ int RoadDetection::canGoForward()
 
 void RoadDetection::drawForwardRect()
 {
-	Vec3b color;
-	color[0] = 255;
-	//m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2,ROADMATROW-6)) = color;	
-	m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2-7,ROADMATROW-6)) = color;	
-	m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2+6,ROADMATROW-6)) = color;
-
-	//m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2,ROADMATROW-14)) = color;	
-	m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2-4,ROADMATROW-14)) = color;	
-	m_displayedImage.at<Vec3b>(Point(ROADMATCOL/2+3,ROADMATROW-14)) = color;
-
+	polylines(m_cameraImage,  m_forwardRect, true, 0x6CB8FD);
 }
 
 void RoadDetection::applyRoadThreshold(Mat image)
 {
-
 	//! Init default detection parameters !//
 	
 	//! Convert the captured frame from BGR to HSV !//
@@ -123,7 +154,10 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	}
 	m_thresholdedImage.copyTo(m_displayedImage);
 	//resize(image, m_displayedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
-	//drawForwardRect();
+	
+	//! Copy img to buffer !//
+	image.copyTo(m_cameraImage);
+	drawForwardRect();
 }
 
 
@@ -166,3 +200,6 @@ Mat & RoadDetection::getImage() {
 	return m_displayedImage;	
 }
 
+Mat & RoadDetection::getCameraImage() {
+	return m_cameraImage;	
+}

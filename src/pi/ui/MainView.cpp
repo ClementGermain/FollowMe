@@ -184,8 +184,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	//// ROAD IMPROC ////
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
-	roadImprocLayout.addView("roadimage", new ImageView(0, 0, 400, 300));
-	roadImprocLayout.addView("roadcamera", new ImageView(400, 0, 400, 300));
+	roadImprocLayout.addView("roadimage", new ImageView(40, 80, 320, 240));
+	roadImprocLayout.addView("roadcamera", new ImageView(440, 80, 320, 240));
 }
 
 void MainView::updateViews(ViewManager & mgr) {
@@ -272,7 +272,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
 		cv::Mat cam;
 		Camera::getImage(cam);
-		l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
+		//l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
+		l.getImageView("roadcamera").setImage(&roadDetectionTest.detector.getCameraImage(), ImageView::FITXY);	
 	}
 }
 

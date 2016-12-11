@@ -31,7 +31,8 @@ void ImageView::setImage(SDL_Surface * image, ScaleType mode) {
 		case ImageView::FITXY:
 			if (image->w != 0 && image->h != 0)
 			{
-				SDL_Surface * zoomed = rotozoomSurfaceXY(image, 0.0, buffer->w / image->w, buffer->h / image->h, 0);
+				SDL_Surface * zoomed = rotozoomSurfaceXY(image, 0.0, (float)buffer->w / (float)image->w, (float)buffer->h / (float)image->h, 0);
+
 			
 				SDL_BlitSurface(zoomed,
 								NULL,
