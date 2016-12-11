@@ -3,6 +3,7 @@
 *.d
 Objects/
 Listings/
+out/
 *.map
 *.TMP
 *.uvguix*

@@ -2,6 +2,7 @@
 #include "UserPatternDetection.hpp"
 #include <vector>
 #include "utils/Log.hpp"
+#include <iostream>
 #include "car/Camera.hpp"
 
 using namespace std;
@@ -13,10 +14,14 @@ int UserPattern::vLo = 50;
 int UserPattern::hHi = 5;//58*180/255;
 int UserPattern::sHi = 255;
 int UserPattern::vHi = 255;
+const int UserPattern::maxFrameUserUndetected = 5;
+const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false) {
-
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::frameDurationMillis) {
+	filteredCircle[0] = 0;
+	filteredCircle[1] = 0;
+	filteredCircle[2] = 0;
 }
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
@@ -56,38 +61,81 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
 
 	// Use the Hough transform to detect circles in the combined threshold image
-	imageCircles.clear();
+	std::vector<cv::Vec3f> imageCircles;
 	cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
+
+	
+	// User is detected
+	if(imageCircles.size() > 0) {
+		frameCountSinceUserUndetected = 0;
+		// apply kalman filter
+		float x = imageCircles[0][0] - Camera::getFrameWidth() * 0.5f;
+		float y = imageCircles[0][1] - Camera::getFrameHeight() * 0.5f;
+		float r = imageCircles[0][2];
+		cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
+		filteredCircle[0] = corrected.at<float>(0);
+		filteredCircle[1] = corrected.at<float>(1);
+		filteredCircle[2] = corrected.at<float>(2);
+		isUserDetected = true;
+	}
+	// User is no longer visible
+	else {
+		frameCountSinceUserUndetected++;
+
+		// User has remained undetected for far too long
+		if(frameCountSinceUserUndetected >= UserPattern::maxFrameUserUndetected) {
+			isUserDetected = false;
+		}
+		// User has remained undetected for a short time
+		else {
+			// apply kalman filter with old values as input
+			cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(filteredCircle[0], filteredCircle[1], filteredCircle[2]);
+			filteredCircle[0] = corrected.at<float>(0);
+			filteredCircle[1] = corrected.at<float>(1);
+			filteredCircle[2] = corrected.at<float>(2);
+			isUserDetected = true;
+		}
+	}
 
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult)  {
+		// copy filtered image
 		hue_image.copyTo(filterImage);
+		// copy camera image
 		bgr_image.copyTo(resultImage);
-		if(imageCircles.size() > 0) {
+
+		// draw kalman filtered circle on camera image
+		if(isUserDetected) {
+			cv::Point center(std::round(filteredCircle[0] + Camera::getFrameWidth() * 0.5f), std::round(filteredCircle[1] + Camera::getFrameHeight() * 0.5f));
+			int radius = std::round(filteredCircle[2]);
+
+			cv::circle(resultImage, center, radius, cv::Scalar(255, 128, 0), 2);
+		}
+
+		// draw hough circle on camera image
+		if(frameCountSinceUserUndetected == 0) {
 			cv::Point center(std::round(imageCircles[0][0]), std::round(imageCircles[0][1]));
 			int radius = std::round(imageCircles[0][2]);
 
-			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 2);
+			cv::circle(resultImage, center, radius, cv::Scalar(0, 255, 0), 1);
 		}
+
 		resultImageCreated = true;
 	}
 }
 
 void UserPatternDetection::imageCirclesToPosition() {
-	isUserDetected = false;
-
-	// Half width/height of the image in pixels
+	// Half width of the image in pixels
 	float halfWidth = Camera::getFrameWidth() * 0.5f;
-	float halfHeight = Camera::getFrameHeight() * 0.5f;
 	// focal length of the camera in pixels (yes, in pixels)
 	float focalLength = halfWidth / tan(Camera::horizontalFOV/2);
 
-	if(imageCircles.size() > 0) {
+	if(isUserDetected) {
 		// Center x and y coordinate with center of image as origin
-		float x = imageCircles[0][0] - halfWidth;
-		float y = imageCircles[0][1] - halfHeight;
+		float x = filteredCircle[0];
+		float y = filteredCircle[1];
 		// Radius
-		float r = imageCircles[0][2];
+		float r = filteredCircle[2];
 
 		// position and radius -> perceived visual angle (PVA) of the circle
 		// left and right bounds of the horizontal PVA (transform circle's horizontal bounds image position to an angle from camera direction)
@@ -112,7 +160,6 @@ void UserPatternDetection::imageCirclesToPosition() {
 		float direction = atan2(px, py);
 
 		// export result
-		isUserDetected = true;
 		detectedDirection = direction;
 		detectedDistance = distance;
 	}

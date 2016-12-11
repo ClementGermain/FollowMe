@@ -13,7 +13,7 @@ RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
 RASPI_LDFLAGS +=-lwiringPi
 
 # other flags
-CXXFLAGS +=-Wall -std=c++11 -I. -MD -O2
+CXXFLAGS +=-Wall -std=c++11 -I. -MD -g
 LDFLAGS +=-lpthread
 
 # binary name and location
@@ -31,10 +31,12 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/trackbar/Trackbar_Vertical.o\
 		   ui/view/Digital.o \
 		   ui/view/ToggleBox.o\
+		   ui/view/StateBox.o\
 		   ui/view/LogView.o \
 		   ui/view/ImageView.o \
 		   ui/view/TextView.o \
 		   ui/view/Layout.o \
+		   ui/view/PlotsView.o \
 		   ui/ViewManager.o \
 		   ui/CPULoad.o
 
@@ -44,10 +46,13 @@ OBJECTS=Main.o \
 		car/Camera.o \
 		car/Obstacle.o \
 		car/SPI_Interface.o \
+		car/MotorModel.o\
+		car/MotorDiagnostic.o\
 		IA/IA.o\
 		utils/Log.o \
 		utils/Timer.o \
 		improc/UserPatternDetection.o \
+		improc/KalmanFilterForUserDetection.o \
 		improc/UserPatternDetectionTest.o \
 		improc/RoadDetection.o \
 		improc/RoadDetectionTest.o \

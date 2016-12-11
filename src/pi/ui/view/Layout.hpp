@@ -13,6 +13,7 @@
 #include "KeyboardInput.hpp"
 #include "LogView.hpp"
 #include "ToggleBox.hpp"
+#include "StateBox.hpp"
 
 class Layout : public View {
 	public:
@@ -24,6 +25,7 @@ class Layout : public View {
 		Digital & getDigitalView(const std::string & name);
 		Trackbar & getTrackbarView(const std::string & name);
 		ToggleBox & getToggleBoxView(const std::string & name);
+		StateBox & getStateBoxView(const std::string & name);
 		ImageView & getImageView(const std::string & name);
 		LogView & getLogView(const std::string & name);
 		KeyboardInput & getKeyboardView(const std::string & name);
