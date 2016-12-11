@@ -83,7 +83,7 @@ if (file){
   }
 }
 
-MotorModel_Typedef MotorModel::getState(float cmd){
+void MotorModel::getState(float cmd, MotorModel_Typedef * MotorModel){
   int index=0;
   float delta=1000;
   for (int i=0; i<sizeModel ; i++){
@@ -92,6 +92,6 @@ MotorModel_Typedef MotorModel::getState(float cmd){
       index = i;
     }
   }
-  return Model[index].MotorModel;
+  MotorModel = &(Model[index].MotorModel);
 }
   

@@ -5,6 +5,7 @@
 #include <cstdio>
 #include "Car.hpp"
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
+#include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 
 
 // struct that will contain all the models motors informations
@@ -29,11 +30,11 @@ public :
   // load the model
   void load(const char * FileName);
 
-  MotorModel_Typedef getState(float cmd);
+  void getState(float cmd, MotorModel_Typedef * MotorModel);
 
 protected :
-  int sizeModel;
-  Model_TypeDef *  Model;
+  int sizeModel;  
+  Model_TypeDef * Model;
 };
 
 #endif
