@@ -17,6 +17,7 @@
 #include "view/trackbar/Trackbar_Vertical.hpp"
 #include "view/Digital.hpp"
 #include "view/ToggleBox.hpp"
+#include "view/StateBox.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
@@ -24,6 +25,7 @@
 #include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetection.hpp"
 
 using namespace std;
 
@@ -88,6 +90,11 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	defaultLayout.addView("toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
 	defaultLayout.addView("toggle_road", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+	defaultLayout.addView("state_road", new StateBox(535, 230)); //image processing not operational
+	defaultLayout.getStateBoxView("state_road").add_state("NO ROAD DETECTED", 150, 0, 0);
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD DETECTED", 0, 150, 0);
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD UNCERTAIN", 255, 153, 0);
+	defaultLayout.getStateBoxView("state_road").add_state("GRASS DETECTED", 150, 0, 0);
 
 	// motors digital infos 
 
@@ -232,7 +239,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getToggleBoxView("toggle_road").toggle(roadDetectionTest.detector.grassDetected);
-		
+		l.getStateBoxView("state_road").set_state(2); //RoadDetection::canGoForward()
+
 		cv::Mat cam;
 		Camera::getImage(cam);
 		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);

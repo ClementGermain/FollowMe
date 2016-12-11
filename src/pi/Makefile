@@ -31,6 +31,7 @@ UI_OBJECTS=ui/MainUI.o \
 		   ui/view/trackbar/Trackbar_Vertical.o\
 		   ui/view/Digital.o \
 		   ui/view/ToggleBox.o\
+		   ui/view/StateBox.o\
 		   ui/view/LogView.o \
 		   ui/view/ImageView.o \
 		   ui/view/TextView.o \
