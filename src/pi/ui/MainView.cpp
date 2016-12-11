@@ -10,8 +10,10 @@
 #include <memory>
 #include "car/Car.hpp"
 #include "utils/Log.hpp"
+#include "IA/IA.hpp"
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
+#include "car/MotorModel.hpp"
 #include "view/KeyboardInput.hpp"
 #include "view/trackbar/Trackbar_Horizontal.hpp"
 #include "view/trackbar/Trackbar_Vertical.hpp"
@@ -22,6 +24,7 @@
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
 #include "view/EmptyBoxView.hpp"
+#include "view/PlotsView.hpp"
 #include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
@@ -117,18 +120,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	
 	// motors trackbar
 
-	defaultLayout.addView("tbCmdFront", new Trackbar_Horizontal(0, 1, 385, 70, 90, 10));
+	defaultLayout.addView("tbCmdFront", new Trackbar_Horizontal(-1, 1, 385, 70, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 2000, 385, 100, 90, 10));
 	defaultLayout.addView("tbVoltage1Front", new Trackbar_Horizontal(0, 8000, 385, 130, 90, 10));
 	defaultLayout.addView("tbVoltage2Front", new Trackbar_Horizontal(0, 8000, 385, 160, 90, 10));
 
-	defaultLayout.addView("tbCmdLeft", new Trackbar_Horizontal(0, 1, 333, 240, 90, 10));
+	defaultLayout.addView("tbCmdLeft", new Trackbar_Horizontal(-1, 1, 333, 240, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 2000, 333, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Left", new Trackbar_Horizontal(0, 8000, 333, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Left", new Trackbar_Horizontal(0, 8000, 333, 330, 90, 10));
 	defaultLayout.addView("tbSpeedLeft", new Trackbar_Horizontal(0, 10, 333, 360, 90, 10));
 
-	defaultLayout.addView("tbCmdRight", new Trackbar_Horizontal(0, 1, 438, 240, 90, 10));
+	defaultLayout.addView("tbCmdRight", new Trackbar_Horizontal(-1, 1, 438, 240, 90, 10, CENTREE));
 	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 2000, 438, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Right", new Trackbar_Horizontal(0, 8000, 438, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Right", new Trackbar_Horizontal(0, 8000, 438, 330, 90, 10));
@@ -166,6 +169,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	// position user trackbar
 	sensorLayout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 425, 85, 10, 100, INVERSE));
 	sensorLayout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 345, 7, 170, 11, CENTREE));
+	// position user text
+	sensorLayout.addView("sensor_UserDistanceText", new Digital("%.2fm", 365, 85, 60));
 
 	// distance Usound text
 	sensorLayout.addView("sensor_distFrontLeft", new Digital("%.0fcm", 330, 210, 65));
@@ -187,7 +192,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	userLayout.addView("filter", new ImageView(0,0,400,240));
 	userLayout.addView("result", new ImageView(400,0,400,240));
-	userLayout.addView("logs", new LogView(0,240,800,160));
+	userLayout.addView("logs", new LogView(0,240,400,160));
+	userLayout.addView("graph", new PlotsView(400,240,400,160));
 
 	//// ROAD IMPROC ////
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
@@ -197,22 +203,25 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
+	BarstowControl_Typedef control;
 	Car::getModelStructure(model);
+	Car::getControlStructure(control);
 	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
       		
-		l.getDigitalView("dCmdFront").setValue( 0.0 * 100.0);
-		l.getTrackbarView("tbCmdFront").setPosition( 0.0 );
+		l.getDigitalView("dCmdFront").setValue( control.directionMotor.speed * control.directionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdFront").setPosition( control.directionMotor.speed * control.directionMotor.direction );
 		l.getDigitalView("dVoltage1Front").setValue(((float) model.directionMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Front").setPosition(model.directionMotor.voltage1);
 		l.getDigitalView("dVoltage2Front").setValue(((float) model.directionMotor.voltage2)/1000.0);
 		l.getTrackbarView("tbVoltage2Front").setPosition(model.directionMotor.voltage2);
 		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current));
 		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
+		l.getTrackbarView("tbCurrentFront").setInnerBounds(860, 1140); // example: add inner bounds 
 		
-		l.getDigitalView("dCmdLeft").setValue( 0.0 * 100.0);
-		l.getTrackbarView("tbCmdLeft").setPosition( 0.0 );
+		l.getDigitalView("dCmdLeft").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdLeft").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 		l.getDigitalView("dVoltage1Left").setValue(((float) model.leftWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Left").setPosition(model.leftWheelMotor.voltage1);
 		l.getDigitalView("dVoltage2Left").setValue(((float) model.leftWheelMotor.voltage2)/1000.0);
@@ -222,8 +231,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getDigitalView("dCmdRight").setValue( 0.0 * 100.0);
-		l.getTrackbarView("tbCmdRight").setPosition( 0.0 );
+		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
+		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 	    	l.getDigitalView("dVoltage1Right").setValue(((float) model.rightWheelMotor.voltage1)/1000.0);
 		l.getTrackbarView("tbVoltage1Right").setPosition(model.rightWheelMotor.voltage1);
 		l.getDigitalView("dVoltage2Right").setValue(((float) model.rightWheelMotor.voltage2)/1000.0);
@@ -256,15 +265,16 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
 		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
 		
-		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance());
+		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance()-Car::CarSize);
 		l.getTrackbarView("sensor_UserAngle").setPosition(-UserDetectionTest.detector.getDirection()*180/M_PI);
+		l.getDigitalView("sensor_UserDistanceText").setValue(UserDetectionTest.detector.getDistance()-Car::CarSize);
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getToggleBoxView("sensor_toggle_road").toggle(roadDetectionTest.detector.grassDetected);
 		
-		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
+		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
 
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -274,6 +284,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		Layout & l = mgr.getLayout("User Detection");
 		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
 		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
+		((PlotsView*)l.getView("graph"))->addPlot(UserDetectionTest.detector.getDistance());
 	}
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");

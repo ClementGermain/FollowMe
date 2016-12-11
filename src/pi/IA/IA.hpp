@@ -8,14 +8,11 @@ class IA {
 		static void start();
 		static void stop();
 	
-		static void SpeedControl(float);
-		static void IAMotorBack(float);
+		static void SpeedControl(float distanceUserToCamera, bool isUserDetected);
+		static void IAMotorBack();
 
 	private:		
 		static float Speed;		
-		static float Dist;
-		static bool ObstacleDetected;
-		static bool UserDetected;
 
 		static void run();
 

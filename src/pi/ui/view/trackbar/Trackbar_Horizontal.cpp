@@ -10,7 +10,7 @@ Trackbar_Horizontal::Trackbar_Horizontal(float rangeMin, float rangeMax, int x, 
 void Trackbar_Horizontal::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 	SDL_Surface * drawable = this->drawable.get();
 	if(invalidate) {
-	  int cursorPos = (borderSize + (drawable->w-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
+		int cursorPos = (borderSize + (drawable->w-borderSize*2) * (position-rangeMin) / (rangeMax-rangeMin));
 
 		// border
 		SDL_FillRect(drawable, NULL, 0x0);
@@ -36,6 +36,14 @@ void Trackbar_Horizontal::draw(SDL_Surface * screen, bool needRedraw, bool updat
 		// cursor
 		boxRGBA(drawable, cursorPos-(borderSize-1), 0, cursorPos+(borderSize-1)-1, drawable->h, 255, 20, 20, 255);
 		
+		// Inner bounds (black cursors)
+		if(hasInnerBounds) {
+			int boundMinPos = (borderSize + (drawable->w-borderSize*2) * (innerBoundMin-rangeMin) / (rangeMax-rangeMin));
+			int boundMaxPos = (borderSize + (drawable->w-borderSize*2) * (innerBoundMax-rangeMin) / (rangeMax-rangeMin));
+
+			boxRGBA(drawable, boundMinPos-(borderSize/2-1), 0, boundMinPos+(borderSize/2-1)-1, drawable->h, 100, 100, 100, 255);
+			boxRGBA(drawable, boundMaxPos-(borderSize/2-1), 0, boundMaxPos+(borderSize/2-1)-1, drawable->h, 100, 100, 100, 255);
+		}
 	}
 
 	if(needRedraw || invalidate) {

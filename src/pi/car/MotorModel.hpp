@@ -4,38 +4,37 @@
 #include <string>
 #include <cstdio>
 #include "Car.hpp"
+#include "../../stm32/KeilProject/Sources/Barstow/Model.h"
+#include "../../stm32/KeilProject/Sources/Barstow/Control.h"
+
 
 // struct that will contain all the models motors informations
 typedef struct {
-  uint32_t cmd;
-  uint32_t current;
-  uint32_t voltage1;
-  uint32_t voltage2;
-  uint32_t speed;
-} StateMotor_TypeDef;
+  float cmd;
+  MotorModel_Typedef MotorModel;
+} Model_TypeDef;
 
 class MotorModel {
 
 public :
-  MotorModel(void);
   ~MotorModel(void);
-  MotorModel(int sizeModel);
+  MotorModel(int sizeModel = 1200);
 
   // Create the model by running a simulation and get motor's value
   // time in seconds
-  void create(int cmdStart, int CmdStop, float waitTime);
+  void create(float cmdStart, float CmdStop, float waitTime);
 
   // save the model into a file
-  void save(const std::string & FileName);
+  void save(const char * FileName);
 
   // load the model
-  void load(const std::string & FileName);
+  void load(const char * FileName);
 
-  StateMotor_TypeDef getState(uint32_t cmd);
+  void getState(float cmd, MotorModel_Typedef * MotorModel);
 
 protected :
-  int sizeModel;
-  StateMotor_TypeDef *  model;
+  int sizeModel;  
+  Model_TypeDef * Model;
 };
 
 #endif
