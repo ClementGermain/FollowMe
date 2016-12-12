@@ -66,7 +66,10 @@ int RoadDetection::canGoForward()
 
 void RoadDetection::drawForwardRect()
 {
-	polylines(m_cameraImage,  m_forwardRect, true, 0x6CB8FD);
+	cout << m_forwardRect.size() << endl; 
+	cout << m_cameraImage.cols << endl;
+	cout << m_cameraImage.rows << endl;
+	//polylines(m_cameraImage,  m_forwardRect, true, 0x6CB8FD);
 }
 
 void RoadDetection::applyRoadThreshold(Mat image)

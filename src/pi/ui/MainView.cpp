@@ -159,7 +159,7 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	sensorLayout.addView("state_road", new StateBox(535, 190));
+	sensorLayout.addView("sensor_state_road", new StateBox(535, 190));
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : NO IDEA", 150, 0, 0); //NO ROAD DETECTED
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : YES", 0, 150, 0); //ROAD DETECTED
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
@@ -252,7 +252,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getStateBoxView("state_road").set_state(RoadDetection::canGoForward());
+		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
 
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -276,7 +276,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getStateBoxView("sensor_state_road").set_state(RoadDetection::canGoForward());
+		l.getStateBoxView("sensor_state_road").set_state(roadDetectionTest.detector.canGoForward());
 		
 		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
 
