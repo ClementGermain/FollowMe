@@ -11,6 +11,8 @@
 #include "car/Car.hpp"
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
+#include "car/MotorModel.hpp"
+#include "IA/Diagnostic.hpp"
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
@@ -76,6 +78,7 @@ int main() {
 	IA::stop();
 	Camera::destroy();
 	Sound::stop();
+	//Diagnostic::stop();
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
 	ObstacleDetection::stop();

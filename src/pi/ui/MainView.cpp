@@ -19,6 +19,7 @@
 #include "view/trackbar/Trackbar_Vertical.hpp"
 #include "view/Digital.hpp"
 #include "view/ToggleBox.hpp"
+#include "view/StateBox.hpp"
 #include "view/LogView.hpp"
 #include "view/ImageView.hpp"
 #include "view/TextView.hpp"
@@ -27,6 +28,7 @@
 #include "view/PointerView.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetection.hpp"
 
 using namespace std;
 
@@ -90,7 +92,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	defaultLayout.addView("toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	defaultLayout.addView("toggle_road", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+	defaultLayout.addView("state_road", new StateBox(535, 190));
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD : NO IDEA", 150, 0, 0); //NO ROAD DETECTED
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD : YES", 0, 150, 0); //ROAD DETECTED
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	defaultLayout.getStateBoxView("state_road").add_state("ROAD : NO", 150, 0, 0);
 
 	// motors digital infos 
 
@@ -152,7 +159,12 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
-	sensorLayout.addView("sensor_toggle_road", new ToggleBox("NO GRASS", "GRASS DETECTED", 535, 190));
+	sensorLayout.addView("sensor_state_road", new StateBox(535, 190));
+	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : NO IDEA", 150, 0, 0); //NO ROAD DETECTED
+	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : YES", 0, 150, 0); //ROAD DETECTED
+	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : NO", 150, 0, 0);
 
 	// distance Usound trackbar
 	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 240, 10, 130, INVERSE));
@@ -190,8 +202,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	//// ROAD IMPROC ////
 	Layout & roadImprocLayout = mgr.createLayout("Road Detection");
-	roadImprocLayout.addView("roadimage", new ImageView(0, 0, 400, 300));
-	roadImprocLayout.addView("roadcamera", new ImageView(400, 0, 400, 300));
+	roadImprocLayout.addView("roadimage", new ImageView(40, 80, 320, 240));
+	roadImprocLayout.addView("roadcamera", new ImageView(440, 80, 320, 240));
 }
 
 void MainView::updateViews(ViewManager & mgr) {
@@ -240,8 +252,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("toggle_road").toggle(roadDetectionTest.detector.grassDetected);
-		
+		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
+
 		cv::Mat cam;
 		Camera::getImage(cam);
 		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
@@ -264,7 +276,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getToggleBoxView("sensor_toggle_road").toggle(roadDetectionTest.detector.grassDetected);
+		l.getStateBoxView("sensor_state_road").set_state(roadDetectionTest.detector.canGoForward());
 		
 		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
 
@@ -283,7 +295,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
 		cv::Mat cam;
 		Camera::getImage(cam);
-		l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
+		//l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
+		l.getImageView("roadcamera").setImage(&roadDetectionTest.detector.getCameraImage(), ImageView::FITXY);	
 	}
 }
 

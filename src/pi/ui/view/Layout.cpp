@@ -36,6 +36,10 @@ ToggleBox & Layout::getToggleBoxView(const string & name){
   return *((ToggleBox*) getView(name));
 }
 
+StateBox & Layout::getStateBoxView(const string & name){
+  return *((StateBox*) getView(name));
+}
+
 ImageView & Layout::getImageView(const string & name) {
 	return *((ImageView*) getView(name));
 }
