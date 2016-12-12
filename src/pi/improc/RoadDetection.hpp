@@ -8,7 +8,15 @@
 #define ROADMATCOL 32
 #define ROADMATROW 24
 
-#define OBLIVIOUSNESS 0.8
+
+//! Road detection parameters
+#define RD_NOIDEA_MAX_BRIGHTNESS 180
+#define RD_YES_H1 35
+#define RD_YES_H2 85
+#define RD_YES_MAX_S 30
+#define RD_YES_MAX_V 180
+#define RD_LIKELY_MAX_S 80
+#define RD_LIKELY_MAX_V 255
 
 class RoadDetection
 {
@@ -34,6 +42,10 @@ private:
 	std::vector<cv::Point> m_forwardRect;
 
 	void drawForwardRect();
+	bool m_forwardBool;
+	
+	//! Color constant for display
+	static const cv::Vec3b white, green, yellow, red;
 };
 
 #endif

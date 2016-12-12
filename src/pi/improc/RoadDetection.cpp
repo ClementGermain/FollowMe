@@ -6,6 +6,12 @@
 using namespace std;
 using namespace cv;
 
+const cv::Vec3b RoadDetection::white{255, 255, 255};
+const cv::Vec3b RoadDetection::green{100, 255, 0};
+const cv::Vec3b RoadDetection::yellow{0, 255, 255};
+const cv::Vec3b RoadDetection::red{0, 0, 255};
+
+
 /*RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATROW, ROADMATCOL, 0}
 {
 }*/
@@ -61,7 +67,7 @@ RoadDetection::~RoadDetection()
 
 int RoadDetection::canGoForward()
 {
-	return 0;	
+	return m_forwardBool;
 }
 
 void RoadDetection::drawForwardRect()
@@ -120,32 +126,24 @@ void RoadDetection::applyRoadThreshold(Mat image)
 			avrgV /= pxPerRect;
 
 			Vec3b color;			
-			if (avrgV > 180) //! Brightness to high
+			if (avrgV > RD_NOIDEA_MAX_BRIGHTNESS) //! Brightness to high => NoIdea
 			{
-				color[0] = 255;
-				color[1] = 255;
-				color[2] = 255;
+				color = white;
 			}
-			else if ((avrgH < 35 or avrgH>85) //! Road
-				and avrgS < 30
-				and avrgV < 180)
+			else if ((avrgH < RD_YES_H1 or avrgH>RD_YES_H2) //! => yes
+				and avrgS < RD_YES_MAX_S
+				and avrgV < RD_YES_MAX_V)
 			{
-				color[0] = 100;
-				color[1] = 255;
-				color[2] = 0;
+				color = green;
 			}
-			else if(avrgS < 80 //!Maybe road
-				and avrgV < 255)
+			else if(avrgS < RD_LIKELY_MAX_S 		//!Likely
+				and avrgV < RD_LIKELY_MAX_V)
 			{
-				color[0] = 0;
-				color[1] = 255;
-				color[2] = 255;			
+				color = yellow;			
 			}
-			else
+			else				//!No
 			{
-				color[0] = 0;
-				color[1] = 0;
-				color[2] = 255;
+				color = red;
 			}
 			
 			//! Write the results into the Matrix !//
