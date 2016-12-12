@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const float UserPattern::CircleRadius = 0.07f; // diameter = 14 cm
+const float UserPattern::CircleRadius = 0.065f; // diameter = 13 cm
 int UserPattern::hLo = 160;//35*180/255;
 int UserPattern::sLo = 70;
 int UserPattern::vLo = 50;
