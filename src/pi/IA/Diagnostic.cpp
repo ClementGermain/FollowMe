@@ -3,35 +3,46 @@
 
 using namespace std;
 
-void Diagnostic::diagnostic(){
-	BarstowControl_Typedef * BarstowControl = &(Car::controlStructure);
-	BarstowModel_Typedef * BarstowModel = &(Car::modelStructure);
-    bool firstLoop = True;
-    if (firstLoop)
-        init();
-    update();
-    
-    if (abs(ModelRef.speed - BarstowModel->propulsionMotor.speed) > delta_voltage){
-        failure = True;
-        failureMotor = True;
-    }
-    else{
-        failure = False;
-        failureMotor = False;
-    }        
-}
-
-void Diagnostic::init(){
-    MotorModel ModelRef();
-    ModelRef.load("model_propulsion");
-}
-
-void Diagnostic::update(){
-    ModelRef.getState(BarstowControl->propulsionMotor.speed, &MotorModel)
-}
 
 thread * Diagnostic::threadTest = NULL;
 bool Diagnostic::endThread = true;
+
+bool Diagnostic::failure = false;
+bool Diagnostic::failureMotor = false;
+
+MotorModel Diagnostic::Model;
+
+float Diagnostic::delta_voltage = 0.5; // TODO set real value
+float Diagnostic::delta_current = 200;// TODO set real value
+float Diagnostic::delta_speed = 0.1; // TODO set real value
+
+void Diagnostic::init(){
+    Model.load("model_propulsion");
+}
+
+void Diagnostic::diagnostic(){
+    BarstowControl_Typedef BarstowControl;
+    BarstowModel_Typedef BarstowModel;
+
+	// Get data from car
+	Car::getControlStructure(BarstowControl);
+	Car::getModelStructure(BarstowModel);
+
+	// Get data from expectation
+	MotorModel_Typedef MotorM;
+    Model.getState(BarstowControl.propulsionMotor.speed, MotorM);
+    
+	// compare data
+	// TODO comparison for all the motors
+    if(abs(MotorM.speed - BarstowModel.leftWheelMotor.speed) > delta_voltage) {
+        failure = true;
+        failureMotor = true;
+    }
+    else {
+        failure = false;
+        failureMotor = false;
+    }
+}
 
 // ------------ Thread management -------- //
 void Diagnostic::start() {
@@ -50,7 +61,9 @@ void Diagnostic::stop() {
 	}
 }
 
-voidDiagnostic::run() {
+void Diagnostic::run() {
+	init();
+
 	while(!Diagnostic::endThread) {
         Diagnostic::diagnostic();
 		// sleep 

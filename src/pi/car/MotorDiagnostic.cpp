@@ -30,7 +30,7 @@ void DiagnosticMotor::Diagnostic_create_and_save_model(int CmdStart, int CmdStop
 	//MotorModel::save(std::fileName);
 }
 
-/*bool DiagnosticMotor::Comparison_RealModel(int delta_current, int delta_voltage1, int delta_voltage2, int delta_speed){
+bool DiagnosticMotor::Comparison_RealModel(int delta_current, int delta_voltage1, int delta_voltage2, int delta_speed){
 
 	model=MotorModel::getState(Cmd);
 	

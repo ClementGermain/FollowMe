@@ -16,19 +16,18 @@ class Diagnostic {
 
         static void run();
         static void init();
-        static void update();
 
         static bool failure;
         static bool failureMotor;
 
-        BarstowControl_Typedef * BarstowControl;
-        BarstowModel_Typedef * BarstowModel;
-        MotorModel_Typedef MotorM;
-        MotorModel Model;
+        static MotorModel Model;
 
         static float delta_voltage;
         static float delta_current;
         static float delta_speed;
+
+		static bool endThread;
+		static std::thread * threadTest;
 };
 
 #endif
