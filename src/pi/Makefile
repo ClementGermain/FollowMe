@@ -49,6 +49,7 @@ OBJECTS=Main.o \
 		car/MotorModel.o\
 		car/MotorDiagnostic.o\
 		IA/IA.o\
+		IA/Diagnostic.o \
 		utils/Log.o \
 		utils/Timer.o \
 		improc/UserPatternDetection.o \

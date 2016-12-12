@@ -33,12 +33,12 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 
 		// Get target speed
 		float targetSpeed;
-		if(isUserDetected || realDistance < distanceMin)
+		if(!isUserDetected || realDistance < distanceMin)
 			targetSpeed = 0.0f;
 		else if(realDistance > distanceMax)
 			targetSpeed = 1.0f;
 		else
-			targetSpeed = (realDistance-distanceMin) / (speedMax-speedMin) + speedMin;
+			targetSpeed = (realDistance-distanceMin) / (distanceMax-distanceMin) * (speedMax-speedMin) + speedMin;
 
 		// update command speed
 		if(targetSpeed - IA::Speed > 0)
@@ -60,7 +60,8 @@ void IA::IAMotorBack() {
 
 	// Send speed command if no obstacle detected
 	bool obstacleDetected = ObstacleDetection::isGlobalDetected();
-	if (!obstacleDetected) {
+	// ignore obstacleDetected because not reliable
+	if (!obstacleDetected || true) {
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
 	}
 	// otherwise, emergency brake

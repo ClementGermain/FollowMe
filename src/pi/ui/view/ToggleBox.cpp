@@ -6,9 +6,9 @@
 
 ToggleBox::ToggleBox(const std::string & text_ok_, const std::string & text_ko_, int x_, int y_, int w_, int h_) :
   TextView(text_ok_, x_, y_, w_, h_, true), 
-  text_ok(text_ok_), text_ko(text_ko_), 
   R(255), G(255), B(255),
-  state(false)
+  state(false),
+  text_ok(text_ok_), text_ko(text_ko_)
 {
   toggle_KO();
 }

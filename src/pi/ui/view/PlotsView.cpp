@@ -73,7 +73,7 @@ void PlotsView::draw(SDL_Surface * screen, bool needRedraw, bool updateScreen) {
 				int py = buffer->h - (int) ((y-yOffset) * yFactor);
 				int charSize = 8;
 				hlineRGBA(buffer, 0, buffer->w, py, 180, 180, 180, 255);
-				char txt[20]; sprintf(txt, "%.f", y);
+				char txt[20]; sprintf(txt, "%.1e", y);
 				stringRGBA(buffer, 5, py-charSize-1,  txt, 128,128,128,255);
 			}
 
