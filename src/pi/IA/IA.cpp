@@ -3,14 +3,16 @@
 #include "improc/UserPatternDetectionTest.hpp"
 #include "car/Obstacle.hpp"
 #include "utils/Log.hpp"
-#include "car/Car.hpp"
 #include <chrono>
 #include <thread>
 #include <algorithm>
+#include "car/Car.hpp"
 
 using namespace std;
 
 float IA::Speed = 0.0;
+float IA::directionSpeed=0.0;
+Car::Turn IA::Direction=Car::NoTurn; 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
 
@@ -42,13 +44,14 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 
 		// update command speed
 		if(targetSpeed - IA::Speed > 0)
-			IA::Speed = min(IA::Speed + acceleration, targetSpeed);
+			IA::Speed = min(IA::Speed + acceleration, targetSpeed); //acceleration
 		else if(targetSpeed - IA::Speed < 0)
-			IA::Speed = max(IA::Speed - acceleration, targetSpeed);
+			IA::Speed = max(IA::Speed - acceleration, targetSpeed); //desceleration
 		else
 			IA::Speed = targetSpeed;
 	}
 }
+
 // --------------------------------------- //
 
 // ---------Back motors management-------- //
@@ -72,6 +75,49 @@ void IA::IAMotorBack() {
 }
 // --------------------------------------- //
 
+// ---------function for direction control -------- //
+
+void IA::DirectionControl(float angleUserToCamera, bool isUserDetected){
+	if (isUserDetected){
+		//rajouter hystérésis
+		//rajouter itératif pour pas tourner trop vite
+
+		if (angleUserToCamera>0.0){ //user if left
+			IA::Direction = Car::TurnLeft;
+			directionSpeed=0.3f;			
+			//directionSpeed = PI : calcul de l'erreur
+		}
+		else if (angleUserToCamera<0.0){
+			IA::Direction = Car::TurnRight;
+			directionSpeed=0.3f;
+			//directionSpeed = PI : calcul de l'erreur
+		}
+		else {
+			IA::Direction = Car::NoTurn;
+		}
+	}
+	else {
+		IA::Direction = Car::NoTurn;
+		directionSpeed=0.0;
+	}
+}
+
+// --------------------------------------- //
+
+// ---------Direction motors management-------- //
+
+void IA::IAMotorDirection(){
+	float angleUserToCamera = UserDetectionTest.detector.getDirection();
+	bool isUserDetected = UserDetectionTest.detector.isDetected();
+	IA::DirectionControl(angleUserToCamera, isUserDetected);
+	//send command to direction motor
+	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
+}
+
+
+
+// --------------------------------------- //
+
 // ------------ Thread management -------- //
 void IA::start() {
 	if(threadTest == NULL) {
@@ -92,6 +138,7 @@ void IA::stop() {
 void IA::run() {
 	while(!IA::endThread) {
 		IA::IAMotorBack();
+		IA::IAMotorDirection();
 		// sleep 
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}
