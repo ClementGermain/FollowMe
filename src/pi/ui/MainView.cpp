@@ -98,8 +98,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : NO", 150, 0, 0);
-	defaultLayout.addView("toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 190));
-	defaultLayout.addView("toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 230));
+	defaultLayout.addView("toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 230));
+	defaultLayout.addView("toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 270));
 
 	// motors digital infos 
 
@@ -167,8 +167,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : NO", 150, 0, 0);
-	sensorLayout.addView("sensor_toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 190));
-	sensorLayout.addView("sensor_toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 230));
+	sensorLayout.addView("sensor_toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 230));
+	sensorLayout.addView("sensor_toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 270));
 
 	// distance Usound trackbar
 	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 240, 10, 130, INVERSE));
