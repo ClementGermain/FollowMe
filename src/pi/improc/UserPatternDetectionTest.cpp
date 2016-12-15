@@ -57,11 +57,13 @@ void UserPatternDetectionTest::run() {
 			detector.findPattern(img, true);
 			if (num_mesure>=1000)
 				num_mesure = 0;
+			if((detector.Get_x_mes() != x_mes_1000[num_mesure - 1]) || (detector.Get_y_mes() != y_mes_1000[num_mesure - 1]) || (detector.Get_r_mes() != r_mes_1000[num_mesure - 1])) {
 
 			x_mes_1000[num_mesure] = detector.Get_x_mes();
 			y_mes_1000[num_mesure] = detector.Get_y_mes();
 			r_mes_1000[num_mesure] = detector.Get_r_mes();
 			num_mesure++;
+}
 
 		
 		detector.imageCirclesToPosition();
