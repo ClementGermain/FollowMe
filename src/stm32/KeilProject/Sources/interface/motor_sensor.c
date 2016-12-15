@@ -31,14 +31,11 @@ void MotorSensor_Update(BarstowModel_Typedef * Modele){
 
 MotorSensor_SetCurrent(&(Modele->directionMotor), MOTOR_DIRECTION);
 MotorSensor_SetVoltage(&(Modele->directionMotor), MOTOR_DIRECTION);
-MotorSensor_SetVoltage(&(Modele->directionMotor), MOTOR_DIRECTION);
 
 MotorSensor_SetCurrent(&(Modele->leftWheelMotor), MOTOR_LEFT);
 MotorSensor_SetVoltage(&(Modele->leftWheelMotor), MOTOR_LEFT);
-MotorSensor_SetVoltage(&(Modele->leftWheelMotor), MOTOR_LEFT);
 
 MotorSensor_SetCurrent(&(Modele->rightWheelMotor), MOTOR_RIGHT);
-MotorSensor_SetVoltage(&(Modele->rightWheelMotor), MOTOR_RIGHT);
 MotorSensor_SetVoltage(&(Modele->rightWheelMotor), MOTOR_RIGHT);
 }
 
@@ -112,6 +109,9 @@ uint32_t MotorSensor_FindChannel(GPIO_TypeDef * GPIO, uint16_t Pin){
 		}
 		else if (GPIO == GPIOC){
 		switch (Pin){
+			case GPIO_Pin_0:
+				channel = ADC_Channel_10;
+				break;
 			case GPIO_Pin_4:
 				channel = ADC_Channel_14;
 				break;
