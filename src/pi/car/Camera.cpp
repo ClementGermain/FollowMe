@@ -16,7 +16,7 @@ using namespace std;
 const float Camera::PosX			= 0.0f;
 const float Camera::PosY			= 0.0f;
 const float Camera::PosZ			= 1.06f;//1m and 6cm above ground
-const float Camera::pitch			= -20.f * M_PI/180.f;
+const float Camera::pitch			= -30.f * M_PI/180.f;
 const float Camera::horizontalFOV	= 62.2f * M_PI/180.f;
 const float Camera::verticalFOV		= 48.8f * M_PI/180.f;
 std::mutex Camera::camLock;

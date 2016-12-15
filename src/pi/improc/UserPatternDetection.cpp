@@ -22,7 +22,14 @@ UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameC
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
+	x_mes =0.0;
+	y_mes=0.0;
+	r_mes=0.0;
 }
+
+float UserPatternDetection::Get_x_mes(){ return x_mes;};
+float UserPatternDetection::Get_y_mes(){ return y_mes;};
+float UserPatternDetection::Get_r_mes(){ return r_mes;};
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	// Convert input image to HSV
@@ -72,6 +79,10 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		float x = imageCircles[0][0] - Camera::getFrameWidth() * 0.5f;
 		float y = imageCircles[0][1] - Camera::getFrameHeight() * 0.5f;
 		float r = imageCircles[0][2];
+		x_mes =x;
+		y_mes =y;
+		r_mes =r;
+
 		cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
 		filteredCircle[0] = corrected.at<float>(0);
 		filteredCircle[1] = corrected.at<float>(1);
