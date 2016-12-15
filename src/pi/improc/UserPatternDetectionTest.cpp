@@ -55,11 +55,14 @@ void UserPatternDetectionTest::run() {
 		Timer t;
 		if(img.data)
 			detector.findPattern(img, true);
-			if (num_mesure<1000){
+			if (num_mesure>=1000)
+				num_mesure = 0;
+
 			x_mes_1000[num_mesure] = detector.Get_x_mes();
 			y_mes_1000[num_mesure] = detector.Get_y_mes();
 			r_mes_1000[num_mesure] = detector.Get_r_mes();
-			num_mesure++;}
+			num_mesure++;
+
 		
 		detector.imageCirclesToPosition();
 		
@@ -78,6 +81,7 @@ void UserPatternDetectionTest::Get_measures(){
 		for(int i=0;i<1000; i++) {
 			fprintf (pFile, "%f,%f, %f \n",x_mes_1000[i],y_mes_1000[i], r_mes_1000[i] );
 			}
+fclose(pFile);
 
 }
 
