@@ -2,8 +2,6 @@
 #include "stm32f10x_tim.h"
 #include "stm32f10x.h"
 
-//promis je clean le code des qu'il fonctionnera 0:) (LEA)
-
 // variable globale qui change à chaque passage dans le handler
 enum TRIG_STATE {FALLING,RISING};
 enum TRIG_STATE Trigger_State;

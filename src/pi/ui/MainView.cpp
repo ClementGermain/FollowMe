@@ -98,6 +98,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : NO", 150, 0, 0);
+	defaultLayout.addView("toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 230));
+	defaultLayout.addView("toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 270));
 
 	// motors digital infos 
 
@@ -165,6 +167,8 @@ void MainView::initializeViews(ViewManager & mgr) {
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
 	sensorLayout.getStateBoxView("sensor_state_road").add_state("ROAD : NO", 150, 0, 0);
+	sensorLayout.addView("sensor_toggle_eoc_left", new ToggleBox("NO EOC LEFT", "EOC LEFT", 535, 230));
+	sensorLayout.addView("sensor_toggle_eoc_right", new ToggleBox("NO EOC RIGHT", "EOC RIGHT", 535, 270));
 
 	// distance Usound trackbar
 	sensorLayout.addView("sensor_USCenter", new Trackbar_Vertical(0, 500, 426, 240, 10, 130, INVERSE));
@@ -254,6 +258,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
+		l.getToggleBoxView("toggle_eoc_left").toggle(model.leftEocSensor.endOfCourse);
+		l.getToggleBoxView("toggle_eoc_right").toggle(model.rightEocSensor.endOfCourse);
 
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -279,7 +285,9 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("sensor_state_road").set_state(roadDetectionTest.detector.canGoForward());
-		
+		l.getToggleBoxView("sensor_toggle_eoc_left").toggle(model.leftEocSensor.endOfCourse);
+		l.getToggleBoxView("sensor_toggle_eoc_right").toggle(model.rightEocSensor.endOfCourse);
+
 		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
 
 		cv::Mat cam;

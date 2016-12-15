@@ -77,28 +77,55 @@ void IA::IAMotorBack() {
 
 // ---------function for direction control -------- //
 
-void IA::DirectionControl(float angleUserToCamera, bool isUserDetected){
-	if (isUserDetected){
-		//rajouter hystérésis
-		//rajouter itératif pour pas tourner trop vite
-
-		if (angleUserToCamera>0.0){ //user if left
-			IA::Direction = Car::TurnLeft;
-			directionSpeed=0.3f;			
-			//directionSpeed = PI : calcul de l'erreur
-		}
-		else if (angleUserToCamera<0.0){
-			IA::Direction = Car::TurnRight;
-			directionSpeed=0.3f;
-			//directionSpeed = PI : calcul de l'erreur
-		}
-		else {
-			IA::Direction = Car::NoTurn;
-		}
-	}
-	else {
+void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
+	
+	if (!isUserDetected){
 		IA::Direction = Car::NoTurn;
 		directionSpeed=0.0;
+	}
+	else {
+		const float dirAcceleration = 0.1f;
+		const float dirSpeedMin = 0.35f;
+		const float dirSpeedMax = 1.0f;
+		// hysteresis threshold: if car is moving then stop less than 2° else start if angle>4°.
+		const float angleMin = IA::directionSpeed > 0 ? 0.03f : 0.07f; //2° - 8°. To be adjusted
+		const float angleMax = 0.17f; //10°. To be adjusted
+
+		// Get target direction speed : PI !!
+		float targetDirSpeed;
+		if(abs(angleUserToCamera) < angleMin)
+			targetDirSpeed = 0.0f; //no turn
+		else if(abs(angleUserToCamera) > angleMax)
+			targetDirSpeed = dirSpeedMax;
+		else {
+			//a modifier
+			targetDirSpeed = 0.1f;
+			//targetSpeed = (realDistance-distanceMin) / (distanceMax-distanceMin) * (speedMax-speedMin) + speedMin;
+		}
+
+
+		if (endOfCourseLeft || endOfCourseRight){
+			directionSpeed-=dirAcceleration;
+		}				
+		else {
+			//update direction
+			if (angleUserToCamera<0.0) //user if left
+				IA::Direction = Car::TurnLeft;
+			else if (angleUserToCamera>0.0)
+				IA::Direction = Car::TurnRight;
+			else
+				IA::Direction = Car::NoTurn;
+
+			// update direction speed : iterative command to be smoother
+			if(targetDirSpeed - IA::directionSpeed > 0)
+				IA::directionSpeed = min(IA::directionSpeed + dirAcceleration, targetDirSpeed); //smooth acceleration
+			else if(targetDirSpeed - IA::directionSpeed < 0)
+				IA::directionSpeed = max(IA::directionSpeed - dirAcceleration, targetDirSpeed); //smooth desceleration
+			else
+				IA::directionSpeed = targetDirSpeed;
+
+
+		}
 	}
 }
 
@@ -109,7 +136,9 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected){
 void IA::IAMotorDirection(){
 	float angleUserToCamera = UserDetectionTest.detector.getDirection();
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
-	IA::DirectionControl(angleUserToCamera, isUserDetected);
+	bool isEndOfCourseLeft = false; // Car :: ??
+	bool isEndOfCourseRight = false; //Car :: ??
+	IA::DirectionControl(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }
@@ -138,7 +167,7 @@ void IA::stop() {
 void IA::run() {
 	while(!IA::endThread) {
 		IA::IAMotorBack();
-		IA::IAMotorDirection();
+		//IA::IAMotorDirection();
 		// sleep 
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}
