@@ -11,3 +11,4 @@ src/pi/barstow
 *#*
 *.db
 tools/wlan0-mode
+src/pi/out.txt
