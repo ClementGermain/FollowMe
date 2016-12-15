@@ -12,6 +12,15 @@ class UserPatternDetectionTest {
 		void start();
 		void stop();
 		UserPatternDetection detector;
+		float x_mes_1000[1000];
+		float y_mes_1000[1000];
+		float r_mes_1000[1000];
+
+		float* Get_x_mes_1000(void);
+		float* Get_y_mes_1000(void);
+		float* Get_r_mes_1000(void);
+
+		void Get_measures(void);
 
 	private:
 		void run();
