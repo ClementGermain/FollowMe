@@ -47,11 +47,8 @@ public:
 private:
 	/*! **** Methods **** !*/	
 	
-	/*! Detect the road in the rectangle !*/
-	//! Caution : can only work with trapezes
-
-	// ********************* not fully implemented yet TODO ***************	
-	int roadInRect(std::vector<cv::Point> Rect);
+	/*! Detect the road beetween 4 points !*/
+	int roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
 	
 	//! Detect road in front of the car
 	std::vector<cv::Point> m_forwardRect;
@@ -59,7 +56,7 @@ private:
 	bool m_forwardBool;
 	
 	//! Color constant for display
-	static const cv::Vec3b white, green, yellow, red;
+	static const cv::Vec3b white, green, yellow, red, blue;
 
 	//! Project a 3D point on the camera
 	//@Param : relative distance from the car (see car documentation)

@@ -11,6 +11,7 @@ const cv::Vec3b RoadDetection::white{255, 255, 255};
 const cv::Vec3b RoadDetection::green{100, 255, 0};
 const cv::Vec3b RoadDetection::yellow{0, 255, 255};
 const cv::Vec3b RoadDetection::red{0, 0, 255};
+const cv::Vec3b RoadDetection::blue{255, 0, 0};
 
 
 RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3},
@@ -22,42 +23,20 @@ RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3
 	m_dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
 
 	//! Set real point distance from car
-	float py = 1.50f;
-	float px = 1.f;
+	float py = 1.f;
+	float px = 0.8f;
 	
-	//! Calculate y coord
-	float tetay = atan2(py, Camera::PosZ);
-	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
-	float y = tan(dtetay) * m_dfy;
-	
-	//! Calculate x coord
-	float distx = sqrt(Camera::PosZ + pow(py,2));
-	float dtetax = atan2(0.5f * px, distx);	
-	float x = m_dfx * tan(dtetax);
-
-	//! Set points coordinates
-	//m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
-	//m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));	
-	m_forwardRect.push_back(project2D(cv::Point(-1*px, py)));	
+	//! Set points coordinates	
+	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));	
 	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
 
 	//! Set real point distance from car
 	py = 3.f;
-	px = 1.f;		
+	px = 0.8f;		
 	
-	//! Calculate y coord
-	tetay = atan2(py, Camera::PosZ);
-	dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
-	y = tan(dtetay) * m_dfy;
-	
-	//! Calculate x coord
-	distx = sqrt(Camera::PosZ + pow(py,2));
-	dtetax = atan2(0.5f * px, distx);	
-	x = m_dfx * tan(dtetax);
-	
-	//! Set points coordinates	
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
+	//! Set points coordinates
+	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
+	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));
 
 }
 
@@ -151,49 +130,62 @@ void RoadDetection::applyRoadThreshold(Mat image)
 		}
 	}
 	m_thresholdedImage.copyTo(m_displayedImage);
-	//resize(image, m_displayedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
 	
 	//! Copy img to buffer !//
 	image.copyTo(m_cameraImage);
 	drawForwardRect();
+	roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
 }
 
-
-int RoadDetection::roadInRect(std::vector<cv::Point> Rect)
+int RoadDetection::roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft)
 {
-	/*if (Rect.size()!=4)
-		return 0;
+	//! Create the bounding box of the quad !//
+	int bMinX = min(topLeft.x, 	bottomLeft.x);
+	int bMaxX = max(topRight.x, 	bottomRight.x);
+	int bMinY = min(topLeft.y, 	topRight.y);
+	int bMaxY = max(bottomLeft.y, 	bottomRight.y);
 	
-	int minX0 = Rect[0].x;
-	int maxX0 = Rect[1].x;
+	//! Display the bounding box !//
+	/*vector<cv::Point> shape;
+	shape.push_back(cv::Point(bMinX, bMinY));
+	shape.push_back(cv::Point(bMaxX, bMinY));
+	shape.push_back(cv::Point(bMaxX, bMaxY));
+	shape.push_back(cv::Point(bMinX, bMaxY));
+	polylines(m_cameraImage,  shape, true, 0x198423);*/
+	
+	//! Scale points to the threshold image !//
+	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
+	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
+	bMinX *= scaleX;
+	bMaxX *= scaleX;
+	bMinY *= scaleY;
+	bMaxY *= scaleY;
 
-	int minX1 = Rect[2].x;
-	int maxX1 = Rect[3].x;
-
-	int minY = Rect[0].y;
-	int maxY = Rect[2].y;
-
-	if (minY > maxY)
-		return 0;
-
-	for (int y = minY ;  y<maxY ; y++)
+	//! Test each pixel in the bounding box !//
+	for (int x=bMinX ; x<=bMaxX ; x++)
 	{
-		float a = (float)(maxY - y) / (maxY - minY);
-		minX = Rect[0].x*(1.f-a) + Rect[3].x * a;
-		maxX = Rect[1].x*(1.f-a) + Rect[2].x * a;
-		
-		if (minX > maxX)
-			return 0;
-
-		for (int x = minX ; x<maxX ; x++)
+		float xAdv = (float)(x-bMinX) / (float)(bMaxX - bMinX);
+		for (int y=bMinY; y<=bMaxY ; y++)
 		{
-			if (	x>0 	and x<ROADMATCOL
-				y>0	and y<ROADMATROW)
+			float yAdv 	= (float)(y-bMinY) / (float)(bMaxY - bMinY);
+			float left 	= scaleX * (topLeft.x * (1-yAdv) + bottomLeft.x * yAdv);
+			float right 	= scaleX * (topRight.x * (1-yAdv) + bottomRight.x * yAdv);
+			float top	= scaleY * (topLeft.y * (1-xAdv) + topRight.y * xAdv);
+			float bottom	= scaleY * (bottomLeft.y * (1-xAdv) + bottomRight.y * xAdv);
+			
+			//! Check that the pixel is inside the image		
+			if (x>=0 and x<ROADMATCOL and y>=0 and y<ROADMATROW)
 			{
-				//TODO
-			}
+				//! Check that the pixel is inside the quad
+				if (x>left and x<right and y>top and y<bottom)
+				{
+					m_displayedImage.at<Vec3b>(Point(x,y)) = blue;
+				}
+			}			
+			
 		}
-	}*/
+	}
+	
 	return 0;
 }
 
@@ -207,11 +199,11 @@ cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 	
 	//! Calculate x coord
 	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
-	float dtetax = atan2(0.5f * abs(relativePoint.x), distx);	
+	float dtetax = atan2(0.5f * relativePoint.x, distx);	
 	float x = m_dfx * tan(dtetax);
 
 	//! Set points coordinates
-	x = relativePoint.x >= 0 ? Camera::getFrameWidth()/2 + x : Camera::getFrameWidth()/2 - x;
+	x += Camera::getFrameWidth()/2;	
 	y += Camera::getFrameHeight()/2;	
 	return cv::Point(x, y);
 }
