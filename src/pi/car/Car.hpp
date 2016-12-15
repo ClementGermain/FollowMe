@@ -22,9 +22,9 @@ class Car {
 		static void getModelStructure(BarstowModel_Typedef & out);
 		/** Write control to the targeted motor **/
 		static void writeControlMotor(Car::Motor target, MotorControl_Typedef & control);
-		/** Write control to the direction motor **/
+		/** Write control to the propulsion motor **/
 		static void writeControlMotor(Car::Moving action, float speed);
-		/** Write control to the propulsion motors **/
+		/** Write control to the direction motors **/
 		static void writeControlMotor(Car::Turn action, float speed);
 		/** Write model (could be used to simulate sensor output, if SPI communication is disabled) **/
 		static void updateModelStructure(BarstowModel_Typedef & model);

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 using namespace cv;
@@ -10,54 +11,32 @@ const cv::Vec3b RoadDetection::white{255, 255, 255};
 const cv::Vec3b RoadDetection::green{100, 255, 0};
 const cv::Vec3b RoadDetection::yellow{0, 255, 255};
 const cv::Vec3b RoadDetection::red{0, 0, 255};
+const cv::Vec3b RoadDetection::blue{255, 0, 0};
 
 
-/*RoadDetection::RoadDetection() : m_thresholdedImage{ROADMATROW, ROADMATCOL, 0}
-{
-}*/
 RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3},
 				m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_8UC3}
 				
 {	
 	//! Calculate the camera's focal distances
-	float dfy = Camera::getFrameHeight() / (2.f*tan(Camera::verticalFOV / 2.f));
-	float dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
+	m_dfy = Camera::getFrameHeight() / (2.f*tan(Camera::verticalFOV / 2.f));
+	m_dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
 
 	//! Set real point distance from car
-	float py = 1.50f;
-	float px = 1.f;		
+	float py = 1.f;
+	float px = 0.8f;
 	
-	//! Calculate y coord
-	float tetay = atan2(py, Camera::PosZ);
-	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
-	float y = tan(dtetay) * dfy;
-	
-	//! Calculate x coord
-	float distx = sqrt(Camera::PosZ + pow(py,2));
-	float dtetax = atan2(0.5f * px, distx);	
-	float x = dfx * tan(dtetax);
-
-	//! Set points coordinates
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));
+	//! Set points coordinates	
+	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));	
+	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
 
 	//! Set real point distance from car
 	py = 3.f;
-	px = 1.f;		
+	px = 0.8f;		
 	
-	//! Calculate y coord
-	tetay = atan2(py, Camera::PosZ);
-	dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
-	y = tan(dtetay) * dfy;
-	
-	//! Calculate x coord
-	distx = sqrt(Camera::PosZ + pow(py,2));
-	dtetax = atan2(0.5f * px, distx);	
-	x = dfx * tan(dtetax);
-	
-	//! Set points coordinates	
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 + x, Camera::getFrameHeight()/2 + y));
-	m_forwardRect.push_back(cv::Point(Camera::getFrameWidth()/2 - x, Camera::getFrameHeight()/2 + y));
+	//! Set points coordinates
+	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
+	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));
 
 }
 
@@ -151,48 +130,84 @@ void RoadDetection::applyRoadThreshold(Mat image)
 		}
 	}
 	m_thresholdedImage.copyTo(m_displayedImage);
-	//resize(image, m_displayedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
 	
 	//! Copy img to buffer !//
 	image.copyTo(m_cameraImage);
 	drawForwardRect();
+	roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
+}
+
+int RoadDetection::roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft)
+{
+	//! Create the bounding box of the quad !//
+	int bMinX = min(topLeft.x, 	bottomLeft.x);
+	int bMaxX = max(topRight.x, 	bottomRight.x);
+	int bMinY = min(topLeft.y, 	topRight.y);
+	int bMaxY = max(bottomLeft.y, 	bottomRight.y);
+	
+	//! Display the bounding box !//
+	/*vector<cv::Point> shape;
+	shape.push_back(cv::Point(bMinX, bMinY));
+	shape.push_back(cv::Point(bMaxX, bMinY));
+	shape.push_back(cv::Point(bMaxX, bMaxY));
+	shape.push_back(cv::Point(bMinX, bMaxY));
+	polylines(m_cameraImage,  shape, true, 0x198423);*/
+	
+	//! Scale points to the threshold image !//
+	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
+	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
+	bMinX *= scaleX;
+	bMaxX *= scaleX;
+	bMinY *= scaleY;
+	bMaxY *= scaleY;
+
+	//! Test each pixel in the bounding box !//
+	for (int x=bMinX ; x<=bMaxX ; x++)
+	{
+		float xAdv = (float)(x-bMinX) / (float)(bMaxX - bMinX);
+		for (int y=bMinY; y<=bMaxY ; y++)
+		{
+			float yAdv 	= (float)(y-bMinY) / (float)(bMaxY - bMinY);
+			float left 	= scaleX * (topLeft.x * (1-yAdv) + bottomLeft.x * yAdv);
+			float right 	= scaleX * (topRight.x * (1-yAdv) + bottomRight.x * yAdv);
+			float top	= scaleY * (topLeft.y * (1-xAdv) + topRight.y * xAdv);
+			float bottom	= scaleY * (bottomLeft.y * (1-xAdv) + bottomRight.y * xAdv);
+			
+			//! Check that the pixel is inside the image		
+			if (x>=0 and x<ROADMATCOL and y>=0 and y<ROADMATROW)
+			{
+				//! Check that the pixel is inside the quad
+				if (x>left and x<right and y>top and y<bottom)
+				{
+					m_displayedImage.at<Vec3b>(Point(x,y)) = blue;
+				}
+			}			
+			
+		}
+	}
+	
+	return 0;
 }
 
 
-/*void RoadDetection::applyRoadThreshold(Mat image)
+cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 {
-	int iLowH = 0;
-	int iHighH = 35;
-
-	int iLowS = 0;
-	int iHighS = 110;
-
-	int iLowV = 0;
-	int iHighV = 255;
-
-	Mat imageHSV;
-	cvtColor(image, imageHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
+	//! Calculate y coord
+	float tetay = atan2(relativePoint.y, Camera::PosZ);
+	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
+	float y = tan(dtetay) * m_dfy;
 	
-	Mat threshold, threshold1, threshold2;
-	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold1); //Threshold the image
-	
-	iLowH = 85;
-	iHighH = 180;
-	inRange(imageHSV, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), threshold2);
+	//! Calculate x coord
+	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
+	float dtetax = atan2(0.5f * relativePoint.x, distx);	
+	float x = m_dfx * tan(dtetax);
 
-	threshold = threshold1 + threshold2;
+	//! Set points coordinates
+	x += Camera::getFrameWidth()/2;	
+	y += Camera::getFrameHeight()/2;	
+	return cv::Point(x, y);
+}
 
-	Mat thresholdedImage;
-	resize(threshold, thresholdedImage, Size(ROADMATCOL, ROADMATROW), 0, 0, INTER_AREA);
-
-	// Interpolate new image with previous result
-	addWeighted(m_thresholdedImage, (1-OBLIVIOUSNESS), thresholdedImage, OBLIVIOUSNESS, 0, m_thresholdedImage);
-
-	Mat front = m_thresholdedImage(Range(ROADMATCOL/4, ROADMATCOL*3/4), Range(ROADMATROW/2, ROADMATROW-1));// yolo
-	int sumOfFront = sum(front)[0];
-	grassDetected = sumOfFront >= (ROADMATROW/2 * ROADMATCOL/2) * 255 * 50/100; // detected if at least 50% of the middle down area of image is grass
-	
-}*/
 
 Mat & RoadDetection::getImage() {
 	return m_displayedImage;	
