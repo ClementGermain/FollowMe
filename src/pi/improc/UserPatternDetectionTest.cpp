@@ -73,7 +73,6 @@ void UserPatternDetectionTest::run() {
 		for(int s = 0; s < sleep_ms && !endThread; s++)
 			this_thread::sleep_for(chrono::milliseconds(1));
 	}
-	UserPatternDetectionTest::Get_measures();
 }
 
 

@@ -31,6 +31,7 @@ int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
+int saveUserData(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -55,6 +56,7 @@ void runUI() {
 		new Menu("user", 0, 0,
 			new Menu("red", 1, userDetectionSettings, NULL),
 			new Menu("yellow", 2, userDetectionSettings, NULL),
+			new Menu("save", 0, saveUserData, NULL),
 			NULL
 		),
 		new Menu("gui", 0, openGUI, NULL),
@@ -257,5 +259,10 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 			UserPattern::vHi = 255;
 			break;
 	}
+	return 0;
+}
+
+int saveUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.Get_measures();
 	return 0;
 }
