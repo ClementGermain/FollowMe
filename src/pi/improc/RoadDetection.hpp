@@ -52,49 +52,46 @@ public:
 	/*! Return a new direction with a safe road */
 	float getGrassFreeDirection(void);
 
-	//! return True if the algorithm successed to find a safe path
+	/*! return True if the algorithm successed to find a safe path !*/
 	bool pathFound(void);
 
-	//Shoudn't be there, should be replace by canGoForward function !
+	/*Shoudn't be there, should be replace by canGoForward function ! !*/
 	bool grassDetected;
 
 	enum{Yes, Likely, Unlikely, No, NoIdea};
 
 private:
-	/*! **** Methods **** !*/
-
-	/*! Detect the road in the rectangle !*/
-	//! Caution : can only work with trapezes
-
-	// ********************* not fully implemented yet TODO ***************
-	int roadInRect(std::vector<cv::Point> Rect);
-
+	/*! **** Methods **** !*/	
+	
+	/*! Detect the road beetween 4 points !*/
+	int roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
+	
 	//! Detect road in front of the car
 	std::vector<cv::Point> m_forwardRect;
 	std::vector<cv::Point> m_path;
 	void drawForwardRect();
 	void drawPath();
 
-//! This function as to determine if pts is in Path
+	//! This function as to determine if pts is in Path
 	bool isInPath(cv::Point pts);
 
 	fuzzyModel_TypeDef m_fuzzyPath;
 
-//! Do a fuzzy analyse of the content of the path */
-//! This function as to update the FuzzyState struct
+	//! Do a fuzzy analyse of the content of the path */
+	//! This function as to update the FuzzyState struct
 	void pathContentAnalyse(void);
 
-//! determine if the path is ok to go or not based on the fuzzyPath struct
+	//! determine if the path is ok to go or not based on the fuzzyPath struct
 	bool pathIsOk(void);
 
-//! Create a new path by rotating the current path
-//	@ param : angle in degres
+	//! Create a new path by rotating the current path
+	//	@ param : angle in degres
 	void calculNewPath(int angle);
 
 	bool m_forwardBool;
 
 	//! Color constant for display
-	static const cv::Vec3b white, green, yellow, red;
+	static const cv::Vec3b white, green, yellow, red, blue;
 
 	//! Project a 3D point on the camera
 	//@Param : relative distance from the car (see car documentation)

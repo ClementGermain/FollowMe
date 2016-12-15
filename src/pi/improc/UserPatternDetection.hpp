@@ -30,7 +30,12 @@ class UserPatternDetection {
 		bool isDetected();
 		float getDirection();
 		float getDistance();
-
+		float x_mes;
+		float y_mes;
+		float r_mes;
+		float Get_x_mes(void);
+		float Get_y_mes(void);
+		float Get_r_mes(void);
 	private:
 		bool resultImageCreated;
 		cv::Mat resultImage;
@@ -41,6 +46,7 @@ class UserPatternDetection {
 		bool isUserDetected;
 		float detectedDirection, detectedDistance;
 		Kalman_Filter_User kalmanFilter;
+		
 };
 
 #endif
