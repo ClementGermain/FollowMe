@@ -27,6 +27,16 @@ typedef struct
 }UltrasonicSensor_Typedef;
 
 
+/** @brief 	Strcuture that contains the feedback
+	*  				variables of an ultrasonic sensor
+	* 
+*/
+typedef struct
+{
+	int endOfCourse; //1 if end of course, 0 else
+}EOCSensorModel_Typedef;
+
+
 /** @brief 	Strcuture that contains all the feedback
 	*  				variables of the Barstow car
 	* 
@@ -43,6 +53,9 @@ typedef struct
 	UltrasonicSensor_Typedef rearLeftUSensor;
 	UltrasonicSensor_Typedef rearRightUSensor;
 	UltrasonicSensor_Typedef rearCenterUSensor;
+	
+	EOCSensorModel_Typedef leftEocSensor;
+	EOCSensorModel_Typedef rightEocSensor;
 	
 	//uint32_t checksum; 
 	

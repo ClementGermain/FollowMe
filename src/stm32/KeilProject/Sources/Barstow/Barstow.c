@@ -25,7 +25,10 @@ void StartBarstow(void)
 	Init_All_Motor();
 	
 	/*!< Init Ultrasonic sensor. */
-	Start_US_Sensor(BarstowModel);
+	//Start_US_Sensor(BarstowModel);
+	
+	/*!< Init EOC sensors. */
+	Init_All_EOC_Sensors();
 	
 	/*< Init Motor Sensors. */
 	MotorSensor_Init(BarstowModel);
@@ -48,6 +51,9 @@ void StartBarstow(void)
 		
 		/*!< Updating motors Sensor. */
 		MotorSensor_Update(BarstowModel);
+		
+		/*!< Updating EOC Sensor. */
+		EOC_Sensor_Update(BarstowModel);
 		
 		/*!< Updating Gyro. */
 		Gyro_Toggle(BarstowControl);
