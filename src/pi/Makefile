@@ -13,7 +13,7 @@ RASPI_LDFLAGS +=-L/home/pi/raspicam_cv/robidouille/raspicam_cv \
 RASPI_LDFLAGS +=-lwiringPi
 
 # other flags
-CXXFLAGS +=-Wall -std=c++11 -I. -MD -g
+CXXFLAGS +=-Wall -std=c++11 -I. -g
 LDFLAGS +=-lpthread
 
 # binary name and location
@@ -22,43 +22,48 @@ TARGET=barstow
 UI_OBJECTS=ui/MainUI.o \
 		   ui/MainView.o \
 		   ui/CommandLine.o \
-		   ui/view/View.o \
-		   ui/view/EmptyBoxView.o \
-		   ui/view/PointerView.o \
-		   ui/view/KeyboardInput.o \
-		   ui/view/trackbar/Trackbar.o \
-		   ui/view/trackbar/Trackbar_Horizontal.o\
-		   ui/view/trackbar/Trackbar_Vertical.o\
-		   ui/view/Digital.o \
-		   ui/view/ToggleBox.o\
-		   ui/view/StateBox.o\
-		   ui/view/LogView.o \
-		   ui/view/ImageView.o \
-		   ui/view/TextView.o \
-		   ui/view/Layout.o \
-		   ui/view/PlotsView.o \
-		   ui/ViewManager.o \
 		   ui/CPULoad.o
 
-OBJECTS=Main.o \
-		car/Car.o \
-		car/LinkSTM32.o \
-		car/Camera.o \
-		car/Obstacle.o \
-		car/SPI_Interface.o \
-		car/MotorModel.o\
-		car/MotorDiagnostic.o\
-		IA/IA.o\
-		IA/Diagnostic.o \
-		utils/Log.o \
-		utils/Timer.o \
-		improc/UserPatternDetection.o \
-		improc/KalmanFilterForUserDetection.o \
-		improc/UserPatternDetectionTest.o \
-		improc/RoadDetection.o \
-		improc/RoadDetectionTest.o \
-		sound/Sound.o \
-		$(UI_OBJECTS)
+VIEW_OBJECTS=ui/view/View.o \
+			 ui/view/EmptyBoxView.o \
+			 ui/view/PointerView.o \
+			 ui/view/KeyboardInput.o \
+			 ui/view/trackbar/Trackbar.o \
+			 ui/view/trackbar/Trackbar_Horizontal.o\
+			 ui/view/trackbar/Trackbar_Vertical.o\
+			 ui/view/Digital.o \
+			 ui/view/ToggleBox.o\
+			 ui/view/StateBox.o\
+			 ui/view/LogView.o \
+			 ui/view/ImageView.o \
+			 ui/view/TextView.o \
+			 ui/view/Layout.o \
+			 ui/view/PlotsView.o \
+			 ui/ViewManager.o \
+
+OTHER_OBJECTS=Main.o \
+			  car/Car.o \
+			  car/LinkSTM32.o \
+			  car/Camera.o \
+			  car/Obstacle.o \
+			  car/SPI_Interface.o \
+			  car/MotorModel.o\
+			  car/MotorDiagnostic.o\
+			  IA/IA.o\
+			  IA/Diagnostic.o \
+			  utils/Log.o \
+			  utils/Timer.o \
+			  improc/UserPatternDetection.o \
+			  improc/KalmanFilterForUserDetection.o \
+			  improc/UserPatternDetectionTest.o \
+			  improc/RoadDetection.o \
+			  improc/RoadDetectionTest.o \
+			  sound/Sound.o
+
+OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)
+
+# pull in dependency info for *existing* .o files
+-include $(OBJS:.o=.d)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)
 all: CXXFLAGS +=$(RASPI_CXXFLAGS)
@@ -68,10 +73,22 @@ noraspi: CXXFLAGS += -D__NO_RASPI__
 noraspi: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	g++ $+ $(LDFLAGS) -o $@
+	@echo 'Link and build "$@"'
+	@g++ $+ $(LDFLAGS) -o $@
 
 %.o: %.cpp
-	g++ -c $(CXXFLAGS) $< -o $@
+	@echo -e 'Compile "$<"'
+	@g++ -c $(CXXFLAGS) $< -o $@
+	@g++ -MM $(CXXFLAGS) $< > $*.d
+	@mv -f $*.d $*.d.tmp
+	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
+	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
+	@rm -f $*.d.tmp
 
+cleanall:
+	@echo "Remove all *.o and *.d files"
+	@rm -f $(OBJECTS) $(OBJECTS:.o=.d)
 clean:
-	rm -f $(OBJECTS)
+	@echo "Remove all *.o and *.d files (excluding ui/view/)"
+	@rm -f $(OTHER_OBJECTS) $(OTHER_OBJECTS:.o=.d)
+	@rm -f $(UI_OBJECTS) $(UI_OBJECTS:.o=.d)

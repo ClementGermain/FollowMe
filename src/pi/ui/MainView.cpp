@@ -288,7 +288,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_eoc_left").toggle(model.leftEocSensor.endOfCourse);
 		l.getToggleBoxView("sensor_toggle_eoc_right").toggle(model.rightEocSensor.endOfCourse);
 
-		l.getDigitalView("sensor_cpu").setValue(UserDetectionTest.detector.getDistance());
+		l.getDigitalView("sensor_cpu").setValue(cpuLoad.get());
 
 		cv::Mat cam;
 		Camera::getImage(cam);
