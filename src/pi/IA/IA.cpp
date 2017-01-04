@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 #include <algorithm>
+#include <cmath>
 #include "car/Car.hpp"
 
 using namespace std;
@@ -86,10 +87,11 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 	else {
 		const float dirAcceleration = 0.1f;
 		const float dirSpeedMin = 0.35f;
-		const float dirSpeedMax = 1.0f;
+		const float dirSpeedMax = 0.6f;
 		// hysteresis threshold: if car is moving then stop less than 2° else start if angle>4°.
-		const float angleMin = IA::directionSpeed > 0 ? 0.03f : 0.07f; //2° - 8°. To be adjusted
-		const float angleMax = 0.17f; //10°. To be adjusted
+		//const float angleMin = IA::directionSpeed > 0 ? 0.03f : 0.07f; //2° - 8°. To be adjusted
+		const float angleMin = 5 * M_PI/180;
+		const float angleMax = 30 * M_PI/180; //10°. To be adjusted
 
 		// Get target direction speed : PI !!
 		float targetDirSpeed;
@@ -99,7 +101,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			targetDirSpeed = dirSpeedMax;
 		else {
 			//a modifier
-			targetDirSpeed = 0.1f;
+			targetDirSpeed = dirSpeedMin;
 			//targetSpeed = (realDistance-distanceMin) / (distanceMax-distanceMin) * (speedMax-speedMin) + speedMin;
 		}
 
@@ -109,9 +111,9 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 		}				
 		else {
 			//update direction
-			if (angleUserToCamera<0.0) //user if left
+			if (angleUserToCamera<-angleMin) //user if left
 				IA::Direction = Car::TurnLeft;
-			else if (angleUserToCamera>0.0)
+			else if (angleUserToCamera>angleMin)
 				IA::Direction = Car::TurnRight;
 			else
 				IA::Direction = Car::NoTurn;
@@ -167,7 +169,7 @@ void IA::stop() {
 void IA::run() {
 	while(!IA::endThread) {
 		IA::IAMotorBack();
-		//IA::IAMotorDirection();
+		IA::IAMotorDirection();
 		// sleep 
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}
