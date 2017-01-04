@@ -32,6 +32,8 @@ class Car {
 		static void writeControlGyro(bool isGyrophareOn);
 		/**Size of the car**/
 		static const float CarSize;
+		/**Width of the car**/
+		static const float CarWidth;
 
 	private:
 		// disallow creating an instance of this object
