@@ -8,24 +8,37 @@
 #include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 
 typedef struct{
-	bool yes;              //if there is at least one failure
-	bool failure_cmd;
+  bool yes;              //if there is at least one failure
+  bool failure_cmd;
+  bool failure_current;
+  bool failure_speed;
 } failure_TypeDef;
 
-class DiagnosticMotor : public MotorModel{
+class DiagnosticMotor {
+  
+public:
+  //constructor
+  DiagnosticMotor(const char * filename_, int size_model);
+  
+  void loadModel();
+  void createModel(int CmdStart, int CmdStop, float waitTime);
+  void compareModel();
 
-	public:
-		//constructor
-		DiagnosticMotor(const char * fileName,  BarstowControl_Typedef * BarstowControl_, int size_model = 1200);
+  void getFailure(failure_TypeDef * failure);
+  
+  float getDeltaVoltage();
+  float getValVoltage1();
+  float getValVoltage2();
 
-		void getFailure(failure_TypeDef * failure);
+  float getCmd_Propulsion();
 
-		float getDeltaVoltage();
-		float getValVoltage();
-
-	protected:
-		Model_TypeDef * Model;
-		float delta_voltage;
-		BarstowControl_Typedef * BarstowControl;
+protected:
+  const char * filename;
+  BarstowControl_Typedef BarstowControl;
+  BarstowModel_Typedef BarstowModel;
+  float delta_voltage;
+  float delta_current;
+  MotorModel MotorModel_Prop;
+  failure_TypeDef failure;
 };
 #endif
