@@ -22,17 +22,17 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0){
 	//parameters:
 	float halfWidth = Camera::getFrameWidth() * 0.5f;
 	float focalLength = halfWidth / tan(Camera::horizontalFOV/2);
-	v_max_user=5 //m per seconds
-	time =0.1 //seconds
-	d=1.80;
-	delta_x_max = focalLength * 1/d * v_max_user * time; 
-	delta_r_max =focalLength * 1/(d * v_max_user * time; 
+	float v_max_user=5; //m per seconds
+	float time =0.1; //seconds
+	float d=1.80;
+	float delta_x_max = focalLength * 1/(d * v_max_user * time); 
+	float delta_r_max =focalLength * 1/(d * v_max_user * time); 
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(5.0));//Q 
 	K_Filter.processNoiseCov.at<float>(2,2) = 0.0;
 	K_Filter.processNoiseCov.at<float>(1,1) = delta_x_max;
 	K_Filter.processNoiseCov.at<float>(3,3) = delta_r_max;
-	K_Filter.processNoiseCov.at<float>(4,4) = 1
-	K_Filter.processNoiseCov.at<float>(5,5) = 1
+	K_Filter.processNoiseCov.at<float>(4,4) = 1;
+	K_Filter.processNoiseCov.at<float>(5,5) = 1;
 	
 	//setIdentity(K_Filter.measurementNoiseCov, Scalar::all(1.0));  //R
 	//K_Filter.measurementNoiseCov.at<float>(2,2) = 5.0;
