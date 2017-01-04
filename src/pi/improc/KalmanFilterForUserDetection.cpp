@@ -30,7 +30,7 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0){
 	float delta_x_max = focalLength * 1/(d * v_max_user * time); 
 	float delta_r_max =focalLength * R_cible/(d-v_max_user*time) - focalLength * R_cible/d; 
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(0.0));//Q 
-	K_Filter.processNoiseCov.at<float>(2,2) = 0.0;
+	K_Filter.processNoiseCov.at<float>(2,2) = 50;
 	K_Filter.processNoiseCov.at<float>(1,1) = delta_x_max;
 	K_Filter.processNoiseCov.at<float>(3,3) = delta_r_max;
 		
