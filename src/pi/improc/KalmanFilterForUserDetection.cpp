@@ -36,7 +36,7 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0){
 		
 	//setIdentity(K_Filter.measurementNoiseCov, Scalar::all(1.0));  //R
 	//K_Filter.measurementNoiseCov.at<float>(2,2) = 5.0;
-	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	50,0,0,   0,50,0,  0,0,65); //TAB EXCEL
+	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	10,0,0,   0,10,0,  0,0,65); //TAB EXCEL
 	setIdentity(K_Filter.errorCovPost, Scalar::all(1));//P
 
 	
