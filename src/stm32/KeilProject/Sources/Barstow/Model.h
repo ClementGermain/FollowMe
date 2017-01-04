@@ -33,7 +33,7 @@ typedef struct
 */
 typedef struct
 {
-	int endOfCourse; //1 if end of course, 0 else
+	uint32_t endOfCourse; //1 if end of course, 0 else
 }EOCSensorModel_Typedef;
 
 
