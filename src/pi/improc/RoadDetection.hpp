@@ -46,6 +46,11 @@ public:
 	/*! Return the camera image with HUD displayed !*/
 	cv::Mat & getCameraImage();
 
+	/*! Compute next way point !*/
+	//@Param  : user position relative to the car (x,y) in meters
+	//@Return : next accessible way point to follow the user 
+	cv::Point computeNextWayPoint(cv::Point_<float>  userPosition);
+
 	/*! Return if the car can go forward without going into the grass !*/
 	int canGoForward();
 
@@ -65,6 +70,7 @@ private:
 	
 	/*! Detect the road beetween 4 points !*/
 	int roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
+	int maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
 	
 	//! Detect road in front of the car
 	std::vector<cv::Point> m_forwardRect;
@@ -91,7 +97,7 @@ private:
 	bool m_forwardBool;
 
 	//! Color constant for display
-	static const cv::Vec3b white, green, yellow, red, blue;
+	static const cv::Vec3b white, green, yellow, red, blue, orange;
 
 	//! Project a 3D point on the camera
 	//@Param : relative distance from the car (see car documentation)

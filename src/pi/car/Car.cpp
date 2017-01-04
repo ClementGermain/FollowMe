@@ -10,6 +10,7 @@ mutex Car::modelMutex;
 BarstowControl_Typedef Car::controlStructure;
 BarstowModel_Typedef Car::modelStructure;
 const float Car::CarSize = 0.80f; // 80cm from back wheel axis to front of the car
+const float Car::CarWidth = 0.52f;
 
 void Car::getControlStructure(BarstowControl_Typedef & out) {
 	controlMutex.lock();
