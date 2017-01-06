@@ -10,6 +10,7 @@
 #define MOTOR_DIRECTION_LEFT		(+1)
 #define MOTOR_DIRECTION_RIGHT		(-1)
 #define MOTOR_DIRECTION_STOP		(0)
+#define CHECK_VALUE					(170)
 
 /** @brief 	Structure that contains the
 	*					set point for a motor
@@ -29,6 +30,7 @@ typedef struct
 */
 typedef struct 
 {
+	uint8_t checkValue;
 	MotorControl_Typedef directionMotor;
 	MotorControl_Typedef propulsionMotor;
 	int gyro;
