@@ -1,5 +1,14 @@
 #include "spi.h"
 
+// include stm32 library
+#include "stm32f10x_spi.h"
+#include "stm32f10x_dma.h"
+#include "stm32f10x.h"
+
+// include local library
+#include "../library/gpio.h"
+
+
 void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char * sendBuffer, int sendLen)
 {
 	/********** GPIO configuration *************************/
@@ -88,3 +97,4 @@ void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char
 	DMA_ITConfig(DMA1_Channel4, DMA_IT_TC, ENABLE);
 	DMA_ITConfig(DMA1_Channel5, DMA_IT_TE, ENABLE);
 }
+

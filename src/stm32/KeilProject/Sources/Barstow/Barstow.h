@@ -11,8 +11,7 @@
 #include "../interface/spi.h"
 #include "../interface/motor_sensor.h"
 #include "../interface/gyrophare.h"
-
-
+	
 /** @brief Start the Barstow car's programm
 	* @retval None
 */

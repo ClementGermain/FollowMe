@@ -10,7 +10,7 @@
 #define MOTOR_DIRECTION_LEFT		(+1)
 #define MOTOR_DIRECTION_RIGHT		(-1)
 #define MOTOR_DIRECTION_STOP		(0)
-#define CHECK_VALUE					(170)
+#define CHECK_VALUE								(170) //0b10101010
 
 /** @brief 	Structure that contains the
 	*					set point for a motor
