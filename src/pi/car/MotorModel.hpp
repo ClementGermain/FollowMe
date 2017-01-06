@@ -7,6 +7,7 @@
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 #include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 
+enum numVoltage {v1 = 1, v2 = 2};
 
 // struct that will contain all the models motors informations
 typedef struct {
@@ -32,8 +33,7 @@ public :
   
   void getState(float cmd, MotorModel_Typedef & MotorModel);
   
-  float getVoltage1(float cmd);
-  float getVoltage2(float cmd);
+  float getVoltage(float cmd, numVoltage n);
   
 protected :
   int sizeModel;  

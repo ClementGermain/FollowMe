@@ -1,11 +1,16 @@
 #include "barstow.h"
+#include "stm32f10x_dma.h"
+#include "DMA_STM32F10x.h"
+
+int bufferSize;
+BarstowControl_Typedef 	* BarstowControlBuffer;
 
 void StartBarstow(void)
 {	
 	/*!< Create model and control structure for SPI. */
 	int modSize = sizeof(BarstowModel_Typedef);
 	int conSize = sizeof(BarstowControl_Typedef);
-	int bufferSize = modSize > conSize ? modSize : conSize;
+	bufferSize = modSize > conSize ? modSize : conSize;
 	bufferSize = bufferSize / sizeof(unsigned char) + sizeof(unsigned char);
 	
 	unsigned char sendBuffer[bufferSize];
@@ -13,6 +18,7 @@ void StartBarstow(void)
 	
 	BarstowControl_Typedef 	* BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
 	BarstowModel_Typedef * BarstowModel 			= (BarstowModel_Typedef*) sendBuffer;
+	BarstowControlBuffer = BarstowControl;
 	
 	/*!< Init control structures. */
 	BarstowControl->directionMotor.direction=0;
@@ -63,3 +69,25 @@ void StartBarstow(void)
 		 for (int i=0 ; i < 50000 ; i++);
 	}
 }
+
+void DMA1_Channel4_Event(uint32_t events){
+	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
+		DMA_Cmd(DMA1_Channel4, DISABLE);
+		DMA_SetCurrDataCounter(DMA1_Channel4, bufferSize);
+		DMA_Cmd(DMA1_Channel4, ENABLE);
+		
+		DMA_Cmd(DMA1_Channel5, DISABLE);
+		DMA_SetCurrDataCounter(DMA1_Channel5, bufferSize);
+		DMA_Cmd(DMA1_Channel5, ENABLE);
+
+		BarstowControlBuffer->checkValue = CHECK_VALUE;
+	}
+}
+/*
+void DMA1_Channel5_Event(uint32_t events){
+	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
+		DMA_Cmd(DMA1_Channel5, DISABLE);
+		DMA_SetCurrDataCounter(DMA1_Channel5, bufferSize);
+		DMA_Cmd(DMA1_Channel5, ENABLE);
+	}
+}*/

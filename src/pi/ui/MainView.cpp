@@ -14,6 +14,7 @@
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
 #include "car/MotorModel.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "view/KeyboardInput.hpp"
 #include "view/trackbar/Trackbar_Horizontal.hpp"
 #include "view/trackbar/Trackbar_Vertical.hpp"
@@ -217,6 +218,9 @@ void MainView::updateViews(ViewManager & mgr) {
 	Car::getModelStructure(model);
 	Car::getControlStructure(control);
 	
+	DiagnosticMotor diagnosticRight("motor_propulsion", Car::RightWheelMotor);
+	DiagnosticMotor diagnosticLeft("motor_propulsion", Car::LeftWheelMotor);
+
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
       		
@@ -227,8 +231,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dVoltage2Front").setValue(((float) model.directionMotor.voltage2)/1000.0);
 		l.getTrackbarView("tbVoltage2Front").setPosition(model.directionMotor.voltage2);
 		l.getDigitalView("dCurrentFront").setValue(((float) model.directionMotor.current));
-		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current);
-		l.getTrackbarView("tbCurrentFront").setInnerBounds(860, 1140); // example: add inner bounds 
+		l.getTrackbarView("tbCurrentFront").setPosition(model.directionMotor.current); 
 		
 		l.getDigitalView("dCmdLeft").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdLeft").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
@@ -240,6 +243,11 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbSpeedLeft").setPosition(model.leftWheelMotor.speed/60);
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
+
+		l.getTrackbarView("tbVoltage1Left").setInnerBounds(diagnosticLeft.getMinVoltage(v1), diagnosticLeft.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Left").setInnerBounds(diagnosticLeft.getMinVoltage(v2), diagnosticLeft.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbVoltage1Right").setInnerBounds(diagnosticRight.getMinVoltage(v1), diagnosticRight.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Right").setInnerBounds(diagnosticRight.getMinVoltage(v2), diagnosticRight.getMaxVoltage(v2)); // add inner bounds
 
 		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
