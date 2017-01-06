@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <vector>
 #include "car/Camera.hpp"
+#include "utils/Log.hpp"
 #include "UserPatternDetection.hpp"
 
 using namespace cv;
@@ -23,20 +24,23 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0){
 	//parameters:
 	float halfWidth = Camera::getFrameWidth() * 0.5f;
 	float focalLength = halfWidth / tan(Camera::horizontalFOV/2);
-	float v_max_user=5; //m per seconds
-	float time =UserPattern::frameDurationMillis; //seconds
+	float v_max_user=1.38; //m per seconds; (5km/h)
+	float time = (float)UserPattern::frameDurationMillis / 1000; //seconds
 	float d=1.80;
 	float R_cible= UserPattern::CircleRadius;
-	float delta_x_max = focalLength * 1/(d * v_max_user * time); 
-	float delta_r_max =focalLength * R_cible/(d-v_max_user*time) - focalLength * R_cible/d; 
+	float delta_x_max = focalLength / d * (v_max_user * time); 
+	float delta_r_max = fabs(focalLength * R_cible/(d-v_max_user*time) - focalLength * R_cible/d); 
+
+	LogI << "d max: "<< (v_max_user*time)<<" Delta X max: "<<delta_x_max << "   Delta R max: "<<delta_r_max << endl;
+
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(0.0));//Q 
-	K_Filter.processNoiseCov.at<float>(2,2) = 0.0;
 	K_Filter.processNoiseCov.at<float>(1,1) = delta_x_max;
+	K_Filter.processNoiseCov.at<float>(2,2) = 5;
 	K_Filter.processNoiseCov.at<float>(3,3) = delta_r_max;
 		
 	//setIdentity(K_Filter.measurementNoiseCov, Scalar::all(1.0));  //R
 	//K_Filter.measurementNoiseCov.at<float>(2,2) = 5.0;
-	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	50,0,0,   0,50,0,  0,0,65); //TAB EXCEL
+	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	10,0,0,   0,10,0,  0,0,65); //TAB EXCEL
 	setIdentity(K_Filter.errorCovPost, Scalar::all(1));//P
 
 	
