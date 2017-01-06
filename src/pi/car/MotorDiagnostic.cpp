@@ -10,7 +10,7 @@
 
 using namespace std;
 
-DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(0.2), MotorModel_Prop(size_model), failure(NO), MotorType(MotorType_)
+DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(600.0), MotorModel_Prop(size_model), failure(NO), MotorType(MotorType_)
 {
   Car::getControlStructure(BarstowControl);
   Car::getModelStructure(BarstowModel);
@@ -40,6 +40,9 @@ float DiagnosticMotor::getMaxVoltage(numVoltage n){
 
 void DiagnosticMotor::compareModel(){
   float volt1, volt2;
+
+  Car::getModelStructure(BarstowModel);
+
   switch (MotorType){
   case Car::LeftWheelMotor:
     volt1 =  BarstowModel.leftWheelMotor.voltage1;
@@ -65,7 +68,10 @@ void DiagnosticMotor::compareModel(){
 }
 
 float DiagnosticMotor::getCmd(){
-  float cmd;  
+  float cmd;
+
+  Car::getControlStructure(BarstowControl);
+
   switch (MotorType){
   case Car::DirectionMotor:
     cmd = BarstowControl.directionMotor.speed;
