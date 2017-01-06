@@ -56,13 +56,7 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
  
 	//! Project user real position on road matrix !//
 	cv::Point userCamPos = project2D(userPosition);
-	cv::Point wayPointLeft = project2D(cv::Point_<float>{userPosition.x - Car::CarWidth*0.8f, userPosition.y});
-	cv::Point wayPointRight = project2D(cv::Point_<float>{userPosition.x + Car::CarWidth*0.8f, userPosition.y});
 
-	
-	/*std::cout << wayPointLeft.x << std::endl << userPosition.x - Car::CarWidth << std::endl << userPosition.y << std::endl << std::endl;
-	std::cout << userCamPos.x << "," << userCamPos.y << std::endl << std::endl;
-*/
 	//! Scale points to the threshold image !//
 	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
 	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
@@ -72,12 +66,84 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
 	userMatPos.y = scaleY * userCamPos.y;
 
 	//! Display the user on the interface !//
-	m_displayedImage.at<Vec3b>(Point(userMatPos.x,userMatPos.y)) = blue;
+	if (userMatPos.x >=0 and userMatPos.x <ROADMATCOL and userMatPos.y>=0 and userMatPos.y <=ROADMATROW)
+            m_displayedImage.at<Vec3b>(Point(userMatPos.x,userMatPos.y)) = blue;
 
-	//! Display direct path !//
-	//roadInQuad(m_forwardRect[3], m_forwardRect[2], wayPointRight, wayPointLeft);
-	//roadInQuad(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
-	maxDistInPath(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
+        //! Get the best next point
+        bool best = false;
+        int minDist;
+        
+        cv::Point_<float> targetPoint = userPosition;
+        
+        cv::Point wayPointLeft = project2D(cv::Point_<float>{targetPoint.x - Car::CarWidth*0.8f, targetPoint.y});
+        cv::Point wayPointRight = project2D(cv::Point_<float>{targetPoint.x + Car::CarWidth*0.8f, targetPoint.y});
+            
+        cv::Point bestPoint = maxDistInPath(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
+        minDist = pow(abs(bestPoint.x - userMatPos.x), 2) + pow(abs(bestPoint.y - userMatPos.y), 2);
+            
+        //! Best guess left
+        float offset = -0.5f;
+        int it =0;
+        while(not best and it <10)
+        {
+            it ++;
+            wayPointLeft = project2D(cv::Point_<float>{targetPoint.x - Car::CarWidth*0.8f + offset, targetPoint.y});
+            wayPointRight = project2D(cv::Point_<float>{targetPoint.x + Car::CarWidth*0.8f + offset, targetPoint.y});
+            
+            cv::Point point = maxDistInPath(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
+            int dist = pow(abs(point.x - userMatPos.x), 2) + pow(abs(point.y - userMatPos.y), 2);
+            
+            if (dist <= minDist)
+            {
+                minDist = dist;
+                bestPoint = point;
+                best = false;
+                offset -= 0.5f;
+            }
+            else if ((float)dist >= (float)minDist * 1.2f)
+            {
+                best = true;
+            }
+            else
+            {
+                offset -= 0.5f;
+            }
+        }
+        //Best guess right
+        offset = 0.5f;
+        best = false;
+        it = 0;
+        while(not best and it<10)
+        {
+            it ++;
+            //cout << "o : ";
+            wayPointLeft = project2D(cv::Point_<float>{targetPoint.x - Car::CarWidth*0.8f + offset, targetPoint.y});
+            wayPointRight = project2D(cv::Point_<float>{targetPoint.x + Car::CarWidth*0.8f + offset, targetPoint.y});
+            
+            m_displayedImage.at<Vec3b>(cv::Point(wayPointRight.x * scaleX, wayPointRight.y * scaleY)) = orange;
+            
+            cv::Point point = maxDistInPath(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
+            int dist = pow(abs(point.x - userMatPos.x), 2) + pow(abs(point.y - userMatPos.y), 2);
+         
+            //cout << "=>" << dist << endl;
+            if (dist <= minDist)
+            {
+                minDist = dist;
+                bestPoint = point;
+                best = false;
+                offset += 0.5f;
+            }
+            else if ((float)dist >= (float)minDist * 1.2f)
+            {
+                best = true;
+            }
+            else
+            {
+                offset += 0.5f;
+            }
+        }
+        //cout << "n" << endl << endl;
+        return bestPoint;
 }
 
 void RoadDetection::drawForwardRect()
@@ -167,67 +233,17 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	drawForwardRect();
 	
 	//! DEBUG CODE, TODO REMOVE !//
-	//roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);	
-	computeNextWayPoint(cv::Point_<float>{1.37f, 3.18f});
-}
-
-int RoadDetection::roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft)
-{
-	//! Create the bounding box of the quad !//
-	int bMinX = min(topLeft.x, 	bottomLeft.x);
-	int bMaxX = max(topRight.x, 	bottomRight.x);
-	int bMinY = min(topLeft.y, 	topRight.y);
-	int bMaxY = max(bottomLeft.y, 	bottomRight.y);
-	
-	//! Display the bounding box !//
-	/*vector<cv::Point> shape;
-	shape.push_back(cv::Point(bMinX, bMinY));
-	shape.push_back(cv::Point(bMaxX, bMinY));
-	shape.push_back(cv::Point(bMaxX, bMaxY));
-	shape.push_back(cv::Point(bMinX, bMaxY));
-	polylines(m_cameraImage,  shape, true, 0x198423);*/
-	
-	//! Scale points to the threshold image !//
-	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
-	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
-	bMinX *= scaleX;
-	bMaxX *= scaleX;
-	bMinY *= scaleY;
-	bMaxY *= scaleY;
-
-	//! Test each pixel in the bounding box !//
-	for (int x=bMinX ; x<=bMaxX ; x++)
-	{
-		float xAdv = (float)(x-bMinX) / (float)(bMaxX - bMinX);
-		for (int y=bMinY; y<=bMaxY ; y++)
-		{
-			float yAdv 	= (float)(y-bMinY) / (float)(bMaxY - bMinY);
-			float left 	= scaleX * (topLeft.x * (1-yAdv) + bottomLeft.x * yAdv);
-			float right 	= scaleX * (topRight.x * (1-yAdv) + bottomRight.x * yAdv);
-			float top	= scaleY * (topLeft.y * (1-xAdv) + topRight.y * xAdv);
-			float bottom	= scaleY * (bottomLeft.y * (1-xAdv) + bottomRight.y * xAdv);
-			
-			//! Check that the pixel is inside the image		
-			if (x>=0 and x<ROADMATCOL and y>=0 and y<ROADMATROW)
-			{
-				//! Check that the pixel is inside the quad
-				if (x>left and x<right and y>top and y<bottom)
-				{
-					m_displayedImage.at<Vec3b>(Point(x,y)) = blue;
-				}
-			}			
-			
-		}
-	}
-	
-	return 0;
+	//roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
+        cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
+        if (test.x >=0 and test.x <ROADMATCOL and test.y>=0 and test.y <=ROADMATROW)
+            m_displayedImage.at<Vec3b>(test) = orange;
 }
 
 
-int RoadDetection::maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft)
+cv::Point RoadDetection::maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft)
 {
-	//! Maximum distance before entering into grass or reaching user
-	int dist;
+	//! Last achivable point before reaching grass
+	cv::Point lPoint;
 	
 	//! Create the bounding box of the path !//
 	int bMinX = min(topLeft.x, 	bottomLeft.x);
@@ -250,48 +266,65 @@ int RoadDetection::maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Poin
 	bMaxX *= scaleX;
 	bMinY *= scaleY;
 	bMaxY *= scaleY;
+        
+        lPoint.x = ROADMATCOL /2;
+        lPoint.y = bMaxY;
 
 	bool grass = false;
 	int y=bMaxY;	
 	while (y>=bMinY and not grass)
 	{
-		float yAdv = (float)(y-bMinY) / (float)(bMaxY - bMinY);
-			
-		for (int x=bMinX ; x<=bMaxX ; x++)
-		{
-			float xAdv = (float)(x-bMinX) / (float)(bMaxX - bMinX);
-	
-			float left 	= scaleX * (topLeft.x * (1-yAdv) + bottomLeft.x * yAdv);
-			float right 	= scaleX * (topRight.x * (1-yAdv) + bottomRight.x * yAdv);
-			float top	= scaleY * (topLeft.y * (1-xAdv) + topRight.y * xAdv);
-			float bottom	= scaleY * (bottomLeft.y * (1-xAdv) + bottomRight.y * xAdv);
-		
-			//! Check that the pixel is inside the image		
-			if (x>=0 and x<ROADMATCOL and y>=0 and y<ROADMATROW)
-			{
-				//! Check that the pixel is inside the quad
-				if (x>left and x<right and y>top and y<bottom)
-				{
-					if (m_displayedImage.at<Vec3b>(Point(x,y)) == red)
-					{
-						grass = true;
-					}
-					else
-					{
-						m_displayedImage.at<Vec3b>(Point(x,y)) = blue;
-					}				
-				}
+            float yAdv = (float)(y-bMinY) / (float)(bMaxY - bMinY);
+            int moyX = 0;
+            int countX = 0;
 
-			}
-			else
-			{
-				grass = true;
-			}			
-		}
-		dist ++;
-		y--;
+            for (int x=bMinX ; x<=bMaxX ; x++)
+            {
+                    float xAdv = (float)(x-bMinX) / (float)(bMaxX - bMinX);
+
+                    float left 	= scaleX * (topLeft.x * (1-yAdv) + bottomLeft.x * yAdv);
+                    float right 	= scaleX * (topRight.x * (1-yAdv) + bottomRight.x * yAdv);
+                    float top	= scaleY * (topLeft.y * (1-xAdv) + topRight.y * xAdv);
+                    float bottom	= scaleY * (bottomLeft.y * (1-xAdv) + bottomRight.y * xAdv);
+
+                    //! Check that the pixel is inside the image		
+                    if (x>=0 and x<ROADMATCOL and y>=0 and y<ROADMATROW)
+                    {
+                            //! Check that the pixel is inside the quad
+                            if (x>left and x<right and y>top and y<bottom)
+                            {
+                                    if (m_thresholdedImage.at<Vec3b>(Point(x,y)) == red
+                                            or m_thresholdedImage.at<Vec3b>(Point(x,y)) == white)
+                                    {
+                                            grass = true;
+                                    }
+                                    else
+                                    {
+                                            //m_displayedImage.at<Vec3b>(Point(x,y)) = blue;
+                                            moyX += x;
+                                            countX ++;
+                                    }				
+                            }
+
+                    }
+                    else
+                    {
+                            grass = true;
+                    }			
+            }
+
+            if (not grass)
+            {
+                lPoint.x = countX != 0 ? moyX / countX : lPoint.x;
+                lPoint.y = y;
+            }
+            y--;
 	}
-	return dist;
+        
+        /*if (lPoint.x >=0 and lPoint.x <ROADMATCOL and lPoint.y>=0 and lPoint.y <=ROADMATROW)
+            m_displayedImage.at<Vec3b>(lPoint) = orange;*/
+        //cout << "{" << lPoint.x << " ; " << lPoint.y << "}" << endl;
+	return lPoint;
 }
 
 

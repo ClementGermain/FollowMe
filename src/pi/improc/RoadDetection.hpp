@@ -1,3 +1,4 @@
+
 #ifndef __ROAD_DETECTION_HPP__
 #define __ROAD_DETECTION_HPP__
 
@@ -70,7 +71,7 @@ private:
 	
 	/*! Detect the road beetween 4 points !*/
 	int roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
-	int maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
+	cv::Point maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
 	
 	//! Detect road in front of the car
 	std::vector<cv::Point> m_forwardRect;
