@@ -83,6 +83,13 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		y_mes =y;
 		r_mes =r;
 
+		// The user has just become detected
+		if(!isUserDetected)
+			kalmanFilter.resetState(x, y, r);
+
+		// TODO update kalman noises
+
+		// Correct measurement with kalman filter
 		cv::Mat corrected = kalmanFilter.correctMeasurement(x, y, r);
 		filteredCircle[0] = corrected.at<float>(0);
 		filteredCircle[1] = corrected.at<float>(1);
@@ -99,8 +106,10 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		}
 		// User has remained undetected for a short time
 		else {
-			// apply kalman filter with old values as input
-			cv::Mat corrected = kalmanFilter.correctMeasurement(filteredCircle[0], filteredCircle[1], filteredCircle[2]);
+			// TODO update kalman noises
+			
+			// predict next state with kalman filter
+			cv::Mat corrected = kalmanFilter.predictNoMeasurement();
 			filteredCircle[0] = corrected.at<float>(0);
 			filteredCircle[1] = corrected.at<float>(1);
 			filteredCircle[2] = corrected.at<float>(2);

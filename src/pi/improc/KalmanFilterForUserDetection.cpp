@@ -28,15 +28,16 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0)
 	// R
 	updateMeasurementNoise(d);
 	// P
-	setIdentity(K_Filter.errorCovPost, Scalar::all(1));
+	setIdentity(K_Filter.errorCovPost, Scalar::all(1)); // TODO test with 0.1
 }
 
 void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
 	// select radius variance from table according to the current distance
 	const int nbValues = 2;
-	float distances[nbValues] = {0.8, 1.8};
-	float variances[nbValues] = {31, 65};
+	float distances[nbValues] = {0.8, 1.8}; //----+--->  values from excel
+	float variances[nbValues] = {31, 65}; //------'
 	float var;
+
 	if(userDistance <= distances[0])
 		var = variances[0];
 	else if(userDistance >= distances[nbValues-1])
@@ -51,7 +52,11 @@ void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
 
 	LogI << "Radius Variance: " << var << " for distance: " << userDistance << endl;
 
-	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	1E-4,0,0,   0,1E-4,0,  0,0,var); // TAB EXCEL
+	float XYvar = 1.0e-4;
+
+	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << XYvar, 0, 0,
+														  0, XYvar, 0,
+														  0, 0,   var);
 }
 
 void Kalman_Filter_User::resetState(float x, float y, float r) {
