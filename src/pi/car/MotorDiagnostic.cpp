@@ -4,50 +4,86 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <algorithm>
 #include "../utils/Log.hpp"
 #include "MotorDiagnostic.hpp"
-/*
+
 using namespace std;
 
-DiagnosticMotor::DiagnosticMotor(const char * fileName,  BarstowControl_Typedef * BarstowControl_, int size_model = 1200): BarstowControl(BarstowControl_)
+DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(600.0), MotorModel_Prop(size_model), failure(NO), MotorType(MotorType_)
 {
-  Model_TypeDef * Model();
-  Model->load(filename);
-  failure_TypeDef failure = {False, False};
-  float delta_voltage = 0.2; //V 
-  }
+  Car::getControlStructure(BarstowControl);
+  Car::getModelStructure(BarstowModel);
+  MotorModel_Prop.load(filename);
+}
 
-void getDeltaVoltage(){
+Failure_Typedef DiagnosticMotor::getFailure(){
+  return failure;
+}
+
+float DiagnosticMotor::getDeltaVoltage(){
   return delta_voltage;
 }
-=======
-DiagnosticMotor::DiagnosticMotor(void):MotorModel(),panne(false){}
 
-DiagnosticMotor::DiagnosticMotor(int size_model):MotorModel(size_model),panne(false){}
-
-void DiagnosticMotor::Diagnostic_create_and_save_model(int CmdStart, int CmdStop, float waitTime, const std::string & fileName){
-	 MotorModel::create(CmdStart, CmdStop, waitTime);
-	//MotorModel::save(std::fileName);
+float DiagnosticMotor::getValVoltage(numVoltage n){
+  float cmd = getCmd();
+  return MotorModel_Prop.getVoltage(cmd, n);
 }
 
-bool DiagnosticMotor::Comparison_RealModel(int delta_current, int delta_voltage1, int delta_voltage2, int delta_speed){
-
-	model=MotorModel::getState(Cmd);
-	
-	if (not((Model_value.current-delta_current)<barstow_model.directionMotor) && ((Model_value.current+delta_current)>barstow_model.directionMotor)){panne=true;}
-
-	if (not((Model_value.current-delta_current)<barstow_model.leftWheelMotor) && ((Model_value.current+delta_current)>barstow_model.leftWheelMotor)){panne=true;}
-	
-	if (not((Model_value.current-delta_current)<barstow_model.rightWheelMotor) && ((Model_value.current+delta_current)>barstow_model.rightWheelMotor)){panne=true;}
-return panne;
+float DiagnosticMotor::getMinVoltage(numVoltage n){
+  return getValVoltage(n) - delta_voltage;
 }
 
+float DiagnosticMotor::getMaxVoltage(numVoltage n){
+  return getValVoltage(n) + delta_voltage;
+}
 
-float getValVotage1(){
-  float cmd = BarstowControl->propulsionMotor.speed;
-  if (BarstowControl->propulsionMotor.direction == -1)
-    cmd = -cmd;
-  MotorModel_Typedef MotorModel = Model->getState(cmd);
-  return MotorModel.voltage1
+void DiagnosticMotor::compareModel(){
+  float volt1, volt2;
 
-*/
+  Car::getModelStructure(BarstowModel);
+
+  switch (MotorType){
+  case Car::LeftWheelMotor:
+    volt1 =  BarstowModel.leftWheelMotor.voltage1;
+    volt2 =  BarstowModel.leftWheelMotor.voltage2;
+    break;
+  case Car::RightWheelMotor:
+    volt1 =  BarstowModel.rightWheelMotor.voltage1;
+    volt2 =  BarstowModel.rightWheelMotor.voltage2;
+    break;
+  case Car::BothWheelMotors:
+    break;
+  case Car::DirectionMotor:
+    volt1 =  BarstowModel.directionMotor.voltage1;
+    volt2 =  BarstowModel.directionMotor.voltage2;
+    break;
+  }
+  
+  if ((fabs(getValVoltage(v1) - volt1) < delta_voltage) ||
+	(fabs(getValVoltage(v2) - volt2) < delta_voltage))
+    failure = CMD;
+  else
+    failure = NO;
+}
+
+float DiagnosticMotor::getCmd(){
+  float cmd;
+
+  Car::getControlStructure(BarstowControl);
+
+  switch (MotorType){
+  case Car::DirectionMotor:
+    cmd = BarstowControl.directionMotor.speed;
+    cmd = (BarstowControl.directionMotor.direction==-1) ? cmd : -cmd;
+    break;
+  case Car::LeftWheelMotor:
+  case Car::RightWheelMotor:
+  case Car::BothWheelMotors:
+    cmd = BarstowControl.propulsionMotor.speed;
+    cmd = (BarstowControl.propulsionMotor.direction==-1) ? cmd : -cmd;
+    break;
+  }
+  return cmd;
+}
+

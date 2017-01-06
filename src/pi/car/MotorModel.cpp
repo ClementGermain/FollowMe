@@ -95,3 +95,20 @@ void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
 	MotorModel = Model[index].MotorModel;
 }
 
+float MotorModel::getVoltage(float cmd, numVoltage n){
+  int index=0;
+  float delta=1000;
+  for (int i=0; i<sizeModel ; i++){
+    if (abs(Model[i].cmd - cmd) < delta){
+	delta = abs(Model[i].cmd - cmd);
+	index = i;
+    }
+  }
+
+  if (n==1)
+    return Model[index].MotorModel.voltage1;
+  else if (n==2)
+    return Model[index].MotorModel.voltage2;
+  else
+    return 0;
+}
