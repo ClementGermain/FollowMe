@@ -39,11 +39,26 @@ float DiagnosticMotor::getMaxVoltage(numVoltage n){
 }
 
 void DiagnosticMotor::compareModel(){
+  float volt1, volt2;
+  switch (MotorType){
+  case Car::LeftWheelMotor:
+    volt1 =  BarstowModel.leftWheelMotor.voltage1;
+    volt2 =  BarstowModel.leftWheelMotor.voltage2;
+    break;
+  case Car::RightWheelMotor:
+    volt1 =  BarstowModel.rightWheelMotor.voltage1;
+    volt2 =  BarstowModel.rightWheelMotor.voltage2;
+    break;
+  case Car::BothWheelMotors:
+    break;
+  case Car::DirectionMotor:
+    volt1 =  BarstowModel.directionMotor.voltage1;
+    volt2 =  BarstowModel.directionMotor.voltage2;
+    break;
+  }
   
-  if ((fabs(getValVoltage(v1) - BarstowModel.leftWheelMotor.voltage1) < delta_voltage) ||
-	(fabs(getValVoltage(v2) - BarstowModel.leftWheelMotor.voltage2) < delta_voltage) ||
-	(fabs(getValVoltage(v1) - BarstowModel.rightWheelMotor.voltage1) < delta_voltage) ||
-	(fabs(getValVoltage(v2) - BarstowModel.rightWheelMotor.voltage2) < delta_voltage))
+  if ((fabs(getValVoltage(v1) - volt1) < delta_voltage) ||
+	(fabs(getValVoltage(v2) - volt2) < delta_voltage))
     failure = CMD;
   else
     failure = NO;
