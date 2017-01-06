@@ -37,7 +37,8 @@ void LinkSTM32::run() {
 		
 		// Get 'control' from Car
 		Car::getControlStructure(control);
-		
+		control.checkValue = CHECK_VALUE;
+
 		// Exchange data with SPI
 		std::memcpy(spiBuffer, &control, sizeof(BarstowControl_Typedef));
 		SPI.Send(spiBuffer, bufferSize);
