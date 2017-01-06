@@ -12,12 +12,36 @@ using namespace std;
 
 
 
-Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0)
+Kalman_Filter_User::Kalman_Filter_User() : K_Filter(9,3,0)
 {
+	/**
+	 * x, y, r, vx, vy, vr, ax, ay, ar
+	 * A : 9,9
+	 * H : 9,3
+	 * Q : 9,9
+	 * R : 3,3
+	 */
+	LogD << "transition "<<K_Filter.transitionMatrix.size().width << " " << K_Filter.transitionMatrix.size().height << endl;
+	LogD << "measurement "<<K_Filter.measurementMatrix.size().width << " " << K_Filter.measurementMatrix.size().height << endl;
+	LogD << "process noise "<<K_Filter.processNoiseCov.size().width << " " << K_Filter.processNoiseCov.size().height << endl;
+	LogD << "measurement noise "<<K_Filter.measurementNoiseCov.size().width << " " << K_Filter.measurementNoiseCov.size().height << endl;
+
 	resetState(0,0,0);
 
 	// A, should take in account speed and acceleration
-	setIdentity(K_Filter.transitionMatrix);	// = *(Mat_<float>(3, 3) << 1,0,0,   0,1,0,  0,0,1); // A
+	setIdentity(K_Filter.transitionMatrix);
+	K_Filter.transitionMatrix = *(Mat_<float>(9, 9) <<
+								1,0,0, 1,0,0, 0,0,0,
+	 							0,1,0, 0,1,0, 0,0,0,
+	 							0,0,1, 0,0,1, 0,0,0,
+	
+	 							0,0,0, 1,0,0, 1,0,0,
+	 							0,0,0, 0,1,0, 0,1,0,
+	 							0,0,0, 0,0,1, 0,0,1,
+	
+	 							0,0,0, 0,0,0, 0,0,0,
+	 							0,0,0, 0,0,0, 0,0,0,
+	 							0,0,0, 0,0,0, 0,0,0); // A
 	// H
 	setIdentity(K_Filter.measurementMatrix);
 	
@@ -29,6 +53,7 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(3,3,0)
 	updateMeasurementNoise(d);
 	// P
 	setIdentity(K_Filter.errorCovPost, Scalar::all(1)); // TODO test with 0.1
+
 }
 
 void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
@@ -52,7 +77,7 @@ void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
 
 	LogI << "Radius Variance: " << var << " for distance: " << userDistance << endl;
 
-	float XYvar = 1.0e-4;
+	float XYvar = 13.37;//1.0e-4;
 
 	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << XYvar, 0, 0,
 														  0, XYvar, 0,
@@ -82,10 +107,18 @@ void Kalman_Filter_User::updateProcessNoise(float userDistance) {
 
 	LogI << "d max: "<< moving << " Delta X max: " << delta_x_max << "   Delta R max: " << delta_r_max << endl;
 
-	setIdentity(K_Filter.processNoiseCov, Scalar::all(0.0)); // Q 
-	K_Filter.processNoiseCov.at<float>(0,0) = 100;//delta_x_max;
-	K_Filter.processNoiseCov.at<float>(1,1) = 100;//Camera::getFrameHeight() * 0.02;
-	K_Filter.processNoiseCov.at<float>(2,2) = delta_r_max;
+	setIdentity(K_Filter.processNoiseCov, Scalar::all(1.0)); // Q 
+	K_Filter.processNoiseCov.at<float>(0,0) = 0.1;//100;//delta_x_max;
+	K_Filter.processNoiseCov.at<float>(1,1) = 0.1;//100;//Camera::getFrameHeight() * 0.02;
+	K_Filter.processNoiseCov.at<float>(2,2) = 0.1;//delta_r_max;
+
+	K_Filter.processNoiseCov.at<float>(6,6) = 0.1; // vx
+	K_Filter.processNoiseCov.at<float>(7,7) = 0.1; // vy
+	K_Filter.processNoiseCov.at<float>(8,8) = 0.1; // vr
+
+	K_Filter.processNoiseCov.at<float>(6,6) = 1.0; // ax
+	K_Filter.processNoiseCov.at<float>(7,7) = 1.0; // ay
+	K_Filter.processNoiseCov.at<float>(8,8) = 1.0; // ar
 }
 
 Mat Kalman_Filter_User::correctMeasurement(float x, float y, float r){
