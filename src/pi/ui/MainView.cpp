@@ -218,7 +218,8 @@ void MainView::updateViews(ViewManager & mgr) {
 	Car::getModelStructure(model);
 	Car::getControlStructure(control);
 	
-	DiagnosticMotor diagnosticLeft("motor_propulsion", Car::BothWheelMotors);
+	DiagnosticMotor diagnosticRight("motor_propulsion", Car::RightWheelMotor);
+	DiagnosticMotor diagnosticLeft("motor_propulsion", Car::LeftWheelMotor);
 
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
@@ -245,6 +246,8 @@ void MainView::updateViews(ViewManager & mgr) {
 
 		l.getTrackbarView("tbVoltage1Left").setInnerBounds(diagnosticLeft.getMinVoltage(v1), diagnosticLeft.getMaxVoltage(v1)); // add inner bounds
 		l.getTrackbarView("tbVoltage2Left").setInnerBounds(diagnosticLeft.getMinVoltage(v2), diagnosticLeft.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbVoltage1Right").setInnerBounds(diagnosticRight.getMinVoltage(v1), diagnosticRight.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Right").setInnerBounds(diagnosticRight.getMinVoltage(v2), diagnosticRight.getMaxVoltage(v2)); // add inner bounds
 
 		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );

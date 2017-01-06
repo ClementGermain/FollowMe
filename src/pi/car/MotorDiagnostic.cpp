@@ -10,11 +10,15 @@
 
 using namespace std;
 
-DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(0.2), MotorModel_Prop(size_model), failure({false, false, false, false}), MotorType(MotorType_)
+DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(0.2), MotorModel_Prop(size_model), failure(NO), MotorType(MotorType_)
 {
   Car::getControlStructure(BarstowControl);
   Car::getModelStructure(BarstowModel);
   MotorModel_Prop.load(filename);
+}
+
+Failure_Typedef DiagnosticMotor::getFailure(){
+  return failure;
 }
 
 float DiagnosticMotor::getDeltaVoltage(){
@@ -37,14 +41,12 @@ float DiagnosticMotor::getMaxVoltage(numVoltage n){
 void DiagnosticMotor::compareModel(){
   
   if ((fabs(getValVoltage(v1) - BarstowModel.leftWheelMotor.voltage1) < delta_voltage) ||
-	(fabs(getValVoltage(v2) - BarstowModel.leftWheelMotor.voltage2) < delta_voltage))
-    failure.failure_cmd = true;
+	(fabs(getValVoltage(v2) - BarstowModel.leftWheelMotor.voltage2) < delta_voltage) ||
+	(fabs(getValVoltage(v1) - BarstowModel.rightWheelMotor.voltage1) < delta_voltage) ||
+	(fabs(getValVoltage(v2) - BarstowModel.rightWheelMotor.voltage2) < delta_voltage))
+    failure = CMD;
   else
-    failure.failure_cmd = false;
-
-    if (failure.failure_cmd || failure.failure_current || failure.failure_speed)
-	failure.yes = true;
-    else failure.yes = false;
+    failure = NO;
 }
 
 float DiagnosticMotor::getCmd(){

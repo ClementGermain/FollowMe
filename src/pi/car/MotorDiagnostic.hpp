@@ -8,12 +8,7 @@
 #include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 #include "Car.hpp"
 
-typedef struct{
-  bool yes;              //if there is at least one failure
-  bool failure_cmd;
-  bool failure_current;
-  bool failure_speed;
-} failure_TypeDef;
+enum Failure_Typedef {NO, CMD, CURRENT, SPEED};
 
 class DiagnosticMotor {
   
@@ -23,7 +18,7 @@ public:
   
   void compareModel();
 
-  void getFailure(failure_TypeDef * failure);
+  Failure_Typedef getFailure();
   
   float getDeltaVoltage();
   float getValVoltage(numVoltage n);
@@ -39,7 +34,7 @@ protected:
   float delta_voltage;
   float delta_current;
   MotorModel MotorModel_Prop;
-  failure_TypeDef failure;
+  Failure_Typedef failure;
   Car::Motor MotorType;
 };
 #endif
