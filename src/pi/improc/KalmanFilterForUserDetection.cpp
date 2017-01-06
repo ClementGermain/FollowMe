@@ -51,7 +51,7 @@ void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
 
 	LogI << "Radius Variance: " << var << " for distance: " << userDistance << endl;
 
-	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	10,0,0,   0,10,0,  0,0,var); // TAB EXCEL
+	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << 	1E-4,0,0,   0,1E-4,0,  0,0,var); // TAB EXCEL
 }
 
 void Kalman_Filter_User::resetState(float x, float y, float r) {
@@ -78,8 +78,8 @@ void Kalman_Filter_User::updateProcessNoise(float userDistance) {
 	LogI << "d max: "<< moving << " Delta X max: " << delta_x_max << "   Delta R max: " << delta_r_max << endl;
 
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(0.0)); // Q 
-	K_Filter.processNoiseCov.at<float>(0,0) = delta_x_max;
-	K_Filter.processNoiseCov.at<float>(1,1) = Camera::getFrameHeight() * 0.02;
+	K_Filter.processNoiseCov.at<float>(0,0) = 100;//delta_x_max;
+	K_Filter.processNoiseCov.at<float>(1,1) = 100;//Camera::getFrameHeight() * 0.02;
 	K_Filter.processNoiseCov.at<float>(2,2) = delta_r_max;
 }
 
