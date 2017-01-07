@@ -127,7 +127,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		// draw kalman filtered circle on camera image
 		if(isUserDetected) {
 			cv::Point center(std::round(filteredCircle[0] + Camera::getFrameWidth() * 0.5f), std::round(filteredCircle[1] + Camera::getFrameHeight() * 0.5f));
-			int radius = std::round(filteredCircle[2]);
+			int radius = std::round(std::max(0.0f, filteredCircle[2]));
 
 			cv::circle(resultImage, center, radius, cv::Scalar(255, 128, 0), 2);
 		}

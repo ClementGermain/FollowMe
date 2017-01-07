@@ -12,13 +12,13 @@ using namespace std;
 
 
 
-Kalman_Filter_User::Kalman_Filter_User() : K_Filter(9,3,0)
+Kalman_Filter_User::Kalman_Filter_User() : K_Filter(6,3,0)
 {
 	/**
 	 * x, y, r, vx, vy, vr, ax, ay, ar
-	 * A : 9,9
-	 * H : 9,3
-	 * Q : 9,9
+	 * A : 6,6
+	 * H : 6,3
+	 * Q : 6,6
 	 * R : 3,3
 	 */
 	LogD << "transition "<<K_Filter.transitionMatrix.size().width << " " << K_Filter.transitionMatrix.size().height << endl;
@@ -30,18 +30,14 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(9,3,0)
 
 	// A, should take in account speed and acceleration
 	setIdentity(K_Filter.transitionMatrix);
-	K_Filter.transitionMatrix = *(Mat_<float>(9, 9) <<
-								1,0,0, 1,0,0, 0,0,0,
-	 							0,1,0, 0,1,0, 0,0,0,
-	 							0,0,1, 0,0,1, 0,0,0,
+	K_Filter.transitionMatrix = *(Mat_<float>(6, 6) <<
+								1,0,0, 1,0,0, 
+	 							0,1,0, 0,1,0, 
+	 							0,0,1, 0,0,1, 
 	
-	 							0,0,0, 1,0,0, 1,0,0,
-	 							0,0,0, 0,1,0, 0,1,0,
-	 							0,0,0, 0,0,1, 0,0,1,
-	
-	 							0,0,0, 0,0,0, 0,0,0,
-	 							0,0,0, 0,0,0, 0,0,0,
-	 							0,0,0, 0,0,0, 0,0,0); // A
+	 							0,0,0, 1,0,0, 
+	 							0,0,0, 0,1,0, 
+	 							0,0,0, 0,0,1); // A
 	// H
 	setIdentity(K_Filter.measurementMatrix);
 	
@@ -88,6 +84,9 @@ void Kalman_Filter_User::resetState(float x, float y, float r) {
 	K_Filter.statePre.at<float>(0) = x;
 	K_Filter.statePre.at<float>(1) = y;
 	K_Filter.statePre.at<float>(2) = r;
+	K_Filter.statePre.at<float>(3) = 0;
+	K_Filter.statePre.at<float>(4) = 0;
+	K_Filter.statePre.at<float>(5) = 0;
 }
 
 void Kalman_Filter_User::updateProcessNoise(float userDistance) {
@@ -112,13 +111,9 @@ void Kalman_Filter_User::updateProcessNoise(float userDistance) {
 	K_Filter.processNoiseCov.at<float>(1,1) = 0.1;//100;//Camera::getFrameHeight() * 0.02;
 	K_Filter.processNoiseCov.at<float>(2,2) = 0.1;//delta_r_max;
 
-	K_Filter.processNoiseCov.at<float>(6,6) = 0.1; // vx
-	K_Filter.processNoiseCov.at<float>(7,7) = 0.1; // vy
-	K_Filter.processNoiseCov.at<float>(8,8) = 0.1; // vr
-
-	K_Filter.processNoiseCov.at<float>(6,6) = 1.0; // ax
-	K_Filter.processNoiseCov.at<float>(7,7) = 1.0; // ay
-	K_Filter.processNoiseCov.at<float>(8,8) = 1.0; // ar
+	K_Filter.processNoiseCov.at<float>(3,3) = 1; // vx
+	K_Filter.processNoiseCov.at<float>(4,4) = 1; // vy
+	K_Filter.processNoiseCov.at<float>(5,5) = 1; // vr
 }
 
 Mat Kalman_Filter_User::correctMeasurement(float x, float y, float r){
