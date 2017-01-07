@@ -18,7 +18,7 @@ const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::frameDurationMillis) {
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::frameDurationMillis), detectedDistance(1.8) {
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
@@ -88,6 +88,8 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 			kalmanFilter.resetState(x, y, r);
 
 		// TODO update kalman noises
+		kalmanFilter.updateMeasurementNoise(detectedDistance);
+		kalmanFilter.updateProcessNoise(detectedDistance);
 
 		// Correct measurement with kalman filter
 		cv::Mat corrected = kalmanFilter.correctMeasurement(x, y, r);
@@ -107,6 +109,8 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		// User has remained undetected for a short time
 		else {
 			// TODO update kalman noises
+		kalmanFilter.updateMeasurementNoise(detectedDistance);
+		kalmanFilter.updateProcessNoise(detectedDistance);
 			
 			// predict next state with kalman filter
 			cv::Mat corrected = kalmanFilter.predictNoMeasurement();
