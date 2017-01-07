@@ -56,28 +56,37 @@ void Kalman_Filter_User::updateMeasurementNoise(float userDistance) {
 	// select radius variance from table according to the current distance
 	const int nbValues = 2;
 	float distances[nbValues] = {0.8, 1.8}; //----+--->  values from excel
-	float variances[nbValues] = {31, 65}; //------'
-	float var;
+	float variancesR[nbValues] = {31, 65}; // (9.82,3) 
+	float variancesX[nbValues] = {20.25,12.98};
+	float variancesY[nbValues] = {57.05,136.13};
 
-	if(userDistance <= distances[0])
-		var = variances[0];
-	else if(userDistance >= distances[nbValues-1])
-		var = variances[nbValues-1];
+	float varX;
+	float varY;
+	float varR;
+
+	if(userDistance <= distances[0]) {
+		varR = variancesR[0];
+		varX = variancesX[0];
+		varY = variancesY[0];
+	}
+	else if(userDistance >= distances[nbValues-1]) {
+		varR = variancesR[nbValues-1];
+		varX = variancesX[nbValues-1];
+		varY = variancesY[nbValues-1];
+	}
 	else {
 		int i = 1;
 		while(userDistance > distances[i])
 			i++;
 		float k = (userDistance - distances[i-1]) / (distances[i] - distances[i-1]);
-		var = k * variances[i-1] + (1-k) * variances[i];
+		varR = k * variancesR[i-1] + (1-k) * variancesR[i];
+		varX = k * variancesX[i-1] + (1-k) * variancesX[i];
+		varY = k * variancesY[i-1] + (1-k) * variancesY[i];
 	}
-
-	LogI << "Radius Variance: " << var << " for distance: " << userDistance << endl;
-
-	float XYvar = 13.37;//1.0e-4;
-
-	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << XYvar, 0, 0,
-														  0, XYvar, 0,
-														  0, 0,   var);
+	
+	K_Filter.measurementNoiseCov = *(Mat_<float>(3, 3) << varX, 0, 0,
+														  0, varY, 0,
+														  0, 0, varR);
 }
 
 void Kalman_Filter_User::resetState(float x, float y, float r) {
@@ -107,9 +116,9 @@ void Kalman_Filter_User::updateProcessNoise(float userDistance) {
 	LogI << "d max: "<< moving << " Delta X max: " << delta_x_max << "   Delta R max: " << delta_r_max << endl;
 
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(1.0)); // Q 
-	K_Filter.processNoiseCov.at<float>(0,0) = 0.1;//100;//delta_x_max;
-	K_Filter.processNoiseCov.at<float>(1,1) = 0.1;//100;//Camera::getFrameHeight() * 0.02;
-	K_Filter.processNoiseCov.at<float>(2,2) = 0.1;//delta_r_max;
+	K_Filter.processNoiseCov.at<float>(0,0) = delta_x_max;
+	K_Filter.processNoiseCov.at<float>(1,1) = 1;//100;//Camera::getFrameHeight() * 0.02;
+	K_Filter.processNoiseCov.at<float>(2,2) = delta_r_max;
 
 	K_Filter.processNoiseCov.at<float>(3,3) = 1; // vx
 	K_Filter.processNoiseCov.at<float>(4,4) = 1; // vy
