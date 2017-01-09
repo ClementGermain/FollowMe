@@ -116,7 +116,7 @@ void UserPatternDetectionTest::printMeasures() {
 		varY = varY / count - meanY * meanY;
 		varR = varR / count - meanR * meanR;
 
-		cout << "-- " << (K ? "Measured" : "Filtered") << "(" << count << ") --" << endl;
+		cout << "-- " << (K == 0 ? "Measured" : "Filtered") << "(" << count << ") --" << endl;
 		cout << "Means:" << endl;
 		cout << "\tx: " << meanX << endl;
 		cout << "\ty: " << meanY << endl;
