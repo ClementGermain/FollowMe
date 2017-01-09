@@ -42,6 +42,7 @@ class UserPatternDetection {
 		float Get_x_kalman();
 		float Get_y_kalman();
 		float Get_r_kalman();
+		void toggleMode();
 	private:
 		bool resultImageCreated;
 		cv::Mat resultImage;
@@ -52,7 +53,7 @@ class UserPatternDetection {
 		bool isUserDetected;
 		float detectedDirection, detectedDistance;
 		Kalman_Filter_User kalmanFilter;
-		
+		bool useRevolutionnaryMode;
 };
 
 #endif

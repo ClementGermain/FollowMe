@@ -20,7 +20,7 @@ const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8) {
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8), useRevolutionnaryMode(false) {
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
@@ -41,68 +41,73 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	cv::Mat hsv_image;
 	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
 	cv::Mat gray;
-	cv::cvtColor(bgr_image, gray, CV_BGR2GRAY);
-	int hWidth = (UserPattern::hLo > UserPattern::hHi ? 180 : 0) + (UserPattern::hHi - UserPattern::hLo);
-	int hMean = (UserPattern::hLo + hWidth / 2) % 180;
-	hWidth /= 2;
-	double h0 = 0.70, h1 = 0.93;
-	double s0 = 0.20, s1 = 0.40;
-	double v0 = 0.15, v1 = 0.30;
-	for(int i = 0; i < hsv_image.rows; i++)
-	{
-		for(int j = 0; j < hsv_image.cols; j++)
+	if(useRevolutionnaryMode) {
+		cv::cvtColor(bgr_image, gray, CV_BGR2GRAY);
+		int hWidth = (UserPattern::hLo > UserPattern::hHi ? 180 : 0) + (UserPattern::hHi - UserPattern::hLo);
+		int hMean = (UserPattern::hLo + hWidth / 2) % 180;
+		double h0 = (90-hWidth/2)/90.0-0.4, h1 = (90-hWidth/2)/90.0;
+		double s0 = 0.2, s1 = 0.4;
+		double v0 = 0.13, v1 = 0.27;
+		for(int i = 0; i < hsv_image.rows; i++)
 		{
-			cv::Vec3b pxl = hsv_image.at<cv::Vec3b>(i,j);
-			int hWrap = ((pxl[0] - hMean) + 90 + 180) % 180;
-			double h = (double) (hWrap > 90 ? 180 - hWrap : hWrap) / 90;
-			h = CLAMP((h-h0) / (h1-h0));
-			double s = pxl[1] / 255.0;
-			s = CLAMP((s-s0) / (s1-s0)); //s > UserPattern::sLo/255.0 ? 1.0 : s / (UserPattern::sLo/255.0);
-			double v = pxl[2] / 255.0;
-			v = CLAMP((v-v0) / (v1-v0)); //v > UserPattern::vLo/255.0 ? 1.0 : v / (UserPattern::vLo/255.0);
-			gray.at<uchar>(i,j) = 255 * h * s * v;
+			for(int j = 0; j < hsv_image.cols; j++)
+			{
+				cv::Vec3b pxl = hsv_image.at<cv::Vec3b>(i,j);
+				int hWrap = ((pxl[0] - hMean) + 90 + 180) % 180;
+				double h = (double) (hWrap > 90 ? 180 - hWrap : hWrap) / 90;
+				h = CLAMP((h-h0) / (h1-h0));
+				double s = pxl[1] / 255.0;
+				s = CLAMP((s-s0) / (s1-s0)); //s > UserPattern::sLo/255.0 ? 1.0 : s / (UserPattern::sLo/255.0);
+				double v = pxl[2] / 255.0;
+				v = CLAMP((v-v0) / (v1-v0)); //v > UserPattern::vLo/255.0 ? 1.0 : v / (UserPattern::vLo/255.0);
+				gray.at<uchar>(i,j) = 255 * h*s*v;
+			}
 		}
-	}
-	/*
-	// Threshold the HSV image, keep only the red pixels
-	cv::Mat hue_image;
-	// Case of low hue > high hue (use cyclic propertie of hue)
-	if(UserPattern::hLo > UserPattern::hHi) {
-		// upper hue
-		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(180, UserPattern::sHi, UserPattern::vHi), hue_image);
-		// lower hue
-		cv::Mat lowerHue;
-		cv::inRange(hsv_image, cv::Scalar(0, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), lowerHue);
-		// Combine lower and upper hue
-		cv::addWeighted(hue_image, 1.0, lowerHue, 1.0, 0.0, hue_image);
-	}
-	// Case : low hue < high hue
-	else {
-		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), hue_image);
+		// Apply blur
+		cv::GaussianBlur(gray, gray, cv::Size(3, 3), 2, 2);
+
+	} else {
+		// Threshold the HSV image, keep only the red pixels
+		cv::Mat hue_image;
+		// Case of low hue > high hue (use cyclic propertie of hue)
+		if(UserPattern::hLo > UserPattern::hHi) {
+			// upper hue
+			cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(180, UserPattern::sHi, UserPattern::vHi), hue_image);
+			// lower hue
+			cv::Mat lowerHue;
+			cv::inRange(hsv_image, cv::Scalar(0, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), lowerHue);
+			// Combine lower and upper hue
+			cv::addWeighted(hue_image, 1.0, lowerHue, 1.0, 0.0, hue_image);
+		}
+		// Case : low hue < high hue
+		else {
+			cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), hue_image);
+		}
+
+		//morphological opening (remove small objects from the foreground)
+		cv::erode(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+		cv::dilate(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+
+		//morphological closing (fill small holes in the foreground)
+		cv::dilate(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+		cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+
+		// Apply blur
+		cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
+
+		// Use the Hough transform to detect circles in the combined threshold image
+		std::vector<cv::Vec3f> imageCircles;
+		cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
+		gray = hue_image;
 	}
 
-	//morphological opening (remove small objects from the foreground)
-	cv::erode(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-	cv::dilate(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-
-	//morphological closing (fill small holes in the foreground)
-	cv::dilate(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-	cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-
-	// Apply blur
-	cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
-	
-	// Use the Hough transform to detect circles in the combined threshold image
-	std::vector<cv::Vec3f> imageCircles;
-	cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
-*/
 	// Use the Hough transform to detect circles in the combined threshold image
 	std::vector<cv::Vec3f> imageCircles;
 	cv::HoughCircles(gray, imageCircles, CV_HOUGH_GRADIENT, 1, gray.rows/8, 100, 20, 0, 0);
-	
+
 	// User is detected
 	if(imageCircles.size() > 0) {
 		frameCountSinceUserUndetected = 0;
@@ -246,4 +251,8 @@ float UserPatternDetection::getDirection() {
 
 float UserPatternDetection::getDistance() {
 	return detectedDistance;
+}
+
+void UserPatternDetection::toggleMode() {
+	useRevolutionnaryMode = !useRevolutionnaryMode;
 }
