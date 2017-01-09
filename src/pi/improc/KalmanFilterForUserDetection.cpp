@@ -21,11 +21,12 @@ Kalman_Filter_User::Kalman_Filter_User() : K_Filter(6,3,0)
 	 * Q : 6,6
 	 * R : 3,3
 	 */
+	/*
 	LogD << "transition "<<K_Filter.transitionMatrix.size().width << " " << K_Filter.transitionMatrix.size().height << endl;
 	LogD << "measurement "<<K_Filter.measurementMatrix.size().width << " " << K_Filter.measurementMatrix.size().height << endl;
 	LogD << "process noise "<<K_Filter.processNoiseCov.size().width << " " << K_Filter.processNoiseCov.size().height << endl;
 	LogD << "measurement noise "<<K_Filter.measurementNoiseCov.size().width << " " << K_Filter.measurementNoiseCov.size().height << endl;
-
+	*/
 	resetState(0,0,0);
 
 	// A, should take in account speed and acceleration
@@ -113,7 +114,7 @@ void Kalman_Filter_User::updateProcessNoise(float userDistance) {
 	float delta_x_max = focalLength / userDistance * moving;
 	float delta_r_max = (userDistance - moving > 0.8f) ? focalLength * R_cible * (1.0f / (userDistance - moving) - 1.0f / userDistance) : 1; 
 
-	LogI << "d max: "<< moving << " Delta X max: " << delta_x_max << "   Delta R max: " << delta_r_max << endl;
+	//LogI << "d max: "<< moving << " Delta X max: " << delta_x_max << "   Delta R max: " << delta_r_max << endl;
 
 	setIdentity(K_Filter.processNoiseCov, Scalar::all(1.0)); // Q 
 	K_Filter.processNoiseCov.at<float>(0,0) = delta_x_max;

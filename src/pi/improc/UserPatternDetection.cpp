@@ -18,18 +18,21 @@ const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::frameDurationMillis), detectedDistance(1.8) {
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8) {
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
-	x_mes =0.0;
-	y_mes=0.0;
-	r_mes=0.0;
+	x_mes = 0.0;
+	y_mes = 0.0;
+	r_mes = 0.0;
 }
 
-float UserPatternDetection::Get_x_mes(){ return x_mes;};
-float UserPatternDetection::Get_y_mes(){ return y_mes;};
-float UserPatternDetection::Get_r_mes(){ return r_mes;};
+float UserPatternDetection::Get_x_mes() { return x_mes; }
+float UserPatternDetection::Get_y_mes() { return y_mes; }
+float UserPatternDetection::Get_r_mes() { return r_mes; }
+float UserPatternDetection::Get_x_kalman() { return filteredCircle[0]; }
+float UserPatternDetection::Get_y_kalman() { return filteredCircle[1]; }
+float UserPatternDetection::Get_r_kalman() { return filteredCircle[2]; }
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	// Convert input image to HSV
@@ -79,15 +82,15 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		float x = imageCircles[0][0] - Camera::getFrameWidth() * 0.5f;
 		float y = imageCircles[0][1] - Camera::getFrameHeight() * 0.5f;
 		float r = imageCircles[0][2];
-		x_mes =x;
-		y_mes =y;
-		r_mes =r;
+		x_mes = x;
+		y_mes = y;
+		r_mes = r;
 
 		// The user has just become detected
 		if(!isUserDetected)
 			kalmanFilter.resetState(x, y, r);
 
-		// TODO update kalman noises
+		// update kalman noises
 		kalmanFilter.updateMeasurementNoise(detectedDistance);
 		kalmanFilter.updateProcessNoise(detectedDistance);
 
@@ -108,9 +111,9 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		}
 		// User has remained undetected for a short time
 		else {
-			// TODO update kalman noises
-		kalmanFilter.updateMeasurementNoise(detectedDistance);
-		kalmanFilter.updateProcessNoise(detectedDistance);
+			// update kalman noises
+			kalmanFilter.updateMeasurementNoise(detectedDistance);
+			kalmanFilter.updateProcessNoise(detectedDistance);
 			
 			// predict next state with kalman filter
 			cv::Mat corrected = kalmanFilter.predictNoMeasurement();
@@ -203,6 +206,10 @@ bool UserPatternDetection::hasImage() {
 
 bool UserPatternDetection::isDetected() {
 	return isUserDetected;
+}
+
+bool UserPatternDetection::isVisible() {
+	return frameCountSinceUserUndetected == 0;
 }
 
 float UserPatternDetection::getDirection() {
