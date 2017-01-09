@@ -89,6 +89,12 @@ void UserPatternDetectionTest::Get_measures(){
 	fclose(pFile);
 }
 
+void UserPatternDetectionTest::resetMeasures() {
+	memset(x_mes_1000, 0, 4*2*1000);
+	memset(x_mes_1000, 0, 4*2*1000);
+	memset(x_mes_1000, 0, 4*2*1000);
+}
+
 void UserPatternDetectionTest::printMeasures() {
 	for(int K = 0; K < 2; K++)
 	{

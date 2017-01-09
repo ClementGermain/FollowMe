@@ -17,6 +17,7 @@ class UserPatternDetectionTest {
 		float r_mes_1000[2][1000];
 
 		void Get_measures(void);
+		void resetMeasures();
 		void printMeasures();
 
 	private:

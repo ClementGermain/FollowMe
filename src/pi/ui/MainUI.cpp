@@ -33,6 +33,7 @@ int runIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
 int printUserData(istream & input, vector<int> i, vector<string> s);
+int resetUserData(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -59,6 +60,7 @@ void runUI() {
 			new Menu("yellow", 2, userDetectionSettings, NULL),
 			new Menu("save", 0, saveUserData, NULL),
 			new Menu("print", 0, printUserData, NULL),
+			new Menu("reset", 0, resetUserData, NULL),
 			NULL
 		),
 		new Menu("gui", 0, openGUI, NULL),
@@ -271,5 +273,10 @@ int saveUserData(istream & input, vector<int> i, vector<string> s) {
 
 int printUserData(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.printMeasures();
+	return 0;
+}
+
+int resetUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.resetMeasures();
 	return 0;
 }
