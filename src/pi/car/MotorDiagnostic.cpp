@@ -27,6 +27,9 @@ float DiagnosticMotor::getDeltaVoltage(){
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
+  static int a=0;
+  LogI << "Cmd = " << cmd << "  " << a << " " << MotorModel_Prop.getVoltage(cmd, n) << endl;
+  a++;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
@@ -75,13 +78,13 @@ float DiagnosticMotor::getCmd(){
   switch (MotorType){
   case Car::DirectionMotor:
     cmd = BarstowControl.directionMotor.speed;
-    cmd = (BarstowControl.directionMotor.direction==-1) ? cmd : -cmd;
+    cmd = (BarstowControl.directionMotor.direction==1) ? cmd : -cmd;
     break;
   case Car::LeftWheelMotor:
   case Car::RightWheelMotor:
   case Car::BothWheelMotors:
     cmd = BarstowControl.propulsionMotor.speed;
-    cmd = (BarstowControl.propulsionMotor.direction==-1) ? cmd : -cmd;
+    cmd = (BarstowControl.propulsionMotor.direction==1) ? cmd : -cmd;
     break;
   }
   return cmd;
