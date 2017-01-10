@@ -215,12 +215,10 @@ void MainView::initializeViews(ViewManager & mgr) {
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	BarstowControl_Typedef control;
-	Car::getModelStructure(model);
-	Car::getControlStructure(control);
 	
-	DiagnosticMotor diagnosticRight("motor_propulsion", Car::RightWheelMotor);
-	DiagnosticMotor diagnosticLeft("motor_propulsion", Car::LeftWheelMotor);
-
+	static DiagnosticMotor diagnosticRight("test_modelAquire", Car::RightWheelMotor);
+	static DiagnosticMotor diagnosticLeft("test_modelAquire", Car::LeftWheelMotor);
+	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
       		

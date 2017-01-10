@@ -65,7 +65,6 @@ void MotorModel::save(const char * fileName){
 	FILE * file = fopen(filepath, "wb");
 
 	if (file){
-		fwrite(Model, sizeof(Model_TypeDef), sizeModel, file);
 		fclose(file);
 	}
 }
@@ -75,12 +74,13 @@ void MotorModel::load(const char * fileName){
 	strcat(filepath, fileName);
 	strcat(filepath, ".bin");
 
-	FILE * file = fopen(filepath, "wb");
+	FILE * file = fopen(filepath, "rb");
 
 	if (file){
-		fread(Model, sizeof(Model_TypeDef), sizeModel, file);
-		fclose(file);
+	  LogD << "Nb Octets lues : " << fread(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
+	  fclose(file);
 	}
+	
 }
 
 void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
@@ -103,6 +103,7 @@ float MotorModel::getVoltage(float cmd, numVoltage n){
 	delta = abs(Model[i].cmd - cmd);
 	index = i;
     }
+    LogD << "val : " << Model[i].MotorModel.voltage1 << endl;
   }
 
   if (n==1)
