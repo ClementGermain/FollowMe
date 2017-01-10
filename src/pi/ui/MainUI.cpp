@@ -32,6 +32,9 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
+int printUserData(istream & input, vector<int> i, vector<string> s);
+int resetUserData(istream & input, vector<int> i, vector<string> s);
+int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -57,6 +60,9 @@ void runUI() {
 			new Menu("red", 1, userDetectionSettings, NULL),
 			new Menu("yellow", 2, userDetectionSettings, NULL),
 			new Menu("save", 0, saveUserData, NULL),
+			new Menu("print", 0, printUserData, NULL),
+			new Menu("reset", 0, resetUserData, NULL),
+			new Menu("mode", 0, toggleModeUserDetection, NULL),
 			NULL
 		),
 		new Menu("gui", 0, openGUI, NULL),
@@ -264,5 +270,20 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 
 int saveUserData(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.Get_measures();
+	return 0;
+}
+
+int printUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.printMeasures();
+	return 0;
+}
+
+int resetUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.resetMeasures();
+	return 0;
+}
+
+int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.detector.toggleMode();
 	return 0;
 }

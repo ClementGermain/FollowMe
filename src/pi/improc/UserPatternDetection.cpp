@@ -5,6 +5,8 @@
 #include <iostream>
 #include "car/Camera.hpp"
 
+#define CLAMP(X) std::min(std::max((double)(X), 0.0), 1.0)
+
 using namespace std;
 
 const float UserPattern::CircleRadius = 0.065f; // diameter = 13 cm
@@ -18,60 +20,94 @@ const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::frameDurationMillis) {
+UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8), useRevolutionnaryMode(false) {
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
-	x_mes =0.0;
-	y_mes=0.0;
-	r_mes=0.0;
+	x_mes = 0.0;
+	y_mes = 0.0;
+	r_mes = 0.0;
 }
 
-float UserPatternDetection::Get_x_mes(){ return x_mes;};
-float UserPatternDetection::Get_y_mes(){ return y_mes;};
-float UserPatternDetection::Get_r_mes(){ return r_mes;};
+float UserPatternDetection::Get_x_mes() { return x_mes; }
+float UserPatternDetection::Get_y_mes() { return y_mes; }
+float UserPatternDetection::Get_r_mes() { return r_mes; }
+float UserPatternDetection::Get_x_kalman() { return filteredCircle[0]; }
+float UserPatternDetection::Get_y_kalman() { return filteredCircle[1]; }
+float UserPatternDetection::Get_r_kalman() { return filteredCircle[2]; }
 
 void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	// Convert input image to HSV
 	cv::Mat hsv_image;
 	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
+	cv::Mat gray;
+	if(useRevolutionnaryMode) {
+		cv::cvtColor(bgr_image, gray, CV_BGR2GRAY);
+		int hWidth = (UserPattern::hLo > UserPattern::hHi ? 180 : 0) + (UserPattern::hHi - UserPattern::hLo);
+		int hMean = (UserPattern::hLo + hWidth / 2) % 180;
+		double h0 = (90-hWidth/2)/90.0-0.4, h1 = (90-hWidth/2)/90.0;
+		double s0 = 0.2, s1 = 0.4;
+		double v0 = 0.13, v1 = 0.27;
+		for(int i = 0; i < hsv_image.rows; i++)
+		{
+			for(int j = 0; j < hsv_image.cols; j++)
+			{
+				cv::Vec3b pxl = hsv_image.at<cv::Vec3b>(i,j);
+				int hWrap = ((pxl[0] - hMean) + 90 + 180) % 180;
+				double h = (double) (hWrap > 90 ? 180 - hWrap : hWrap) / 90;
+				h = CLAMP((h-h0) / (h1-h0));
+				double s = pxl[1] / 255.0;
+				s = CLAMP((s-s0) / (s1-s0)); //s > UserPattern::sLo/255.0 ? 1.0 : s / (UserPattern::sLo/255.0);
+				double v = pxl[2] / 255.0;
+				v = CLAMP((v-v0) / (v1-v0)); //v > UserPattern::vLo/255.0 ? 1.0 : v / (UserPattern::vLo/255.0);
+				gray.at<uchar>(i,j) = 255 * h*s*v;
+			}
+		}
+		// Apply blur
+		cv::GaussianBlur(gray, gray, cv::Size(3, 3), 2, 2);
 
-	// Threshold the HSV image, keep only the red pixels
-	cv::Mat hue_image;
-	// Case of low hue > high hue (use cyclic propertie of hue)
-	if(UserPattern::hLo > UserPattern::hHi) {
-		// upper hue
-		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(180, UserPattern::sHi, UserPattern::vHi), hue_image);
-		// lower hue
-		cv::Mat lowerHue;
-		cv::inRange(hsv_image, cv::Scalar(0, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), lowerHue);
-		// Combine lower and upper hue
-		cv::addWeighted(hue_image, 1.0, lowerHue, 1.0, 0.0, hue_image);
+	} else {
+		// Threshold the HSV image, keep only the red pixels
+		cv::Mat hue_image;
+		// Case of low hue > high hue (use cyclic propertie of hue)
+		if(UserPattern::hLo > UserPattern::hHi) {
+			// upper hue
+			cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(180, UserPattern::sHi, UserPattern::vHi), hue_image);
+			// lower hue
+			cv::Mat lowerHue;
+			cv::inRange(hsv_image, cv::Scalar(0, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), lowerHue);
+			// Combine lower and upper hue
+			cv::addWeighted(hue_image, 1.0, lowerHue, 1.0, 0.0, hue_image);
+		}
+		// Case : low hue < high hue
+		else {
+			cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
+					cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), hue_image);
+		}
+
+		//morphological opening (remove small objects from the foreground)
+		cv::erode(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+		cv::dilate(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+
+		//morphological closing (fill small holes in the foreground)
+		cv::dilate(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
+		cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
+
+		// Apply blur
+		cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
+
+		// Use the Hough transform to detect circles in the combined threshold image
+		std::vector<cv::Vec3f> imageCircles;
+		cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
+		gray = hue_image;
 	}
-	// Case : low hue < high hue
-	else {
-		cv::inRange(hsv_image, cv::Scalar(UserPattern::hLo, UserPattern::sLo, UserPattern::vLo),
-				cv::Scalar(UserPattern::hHi, UserPattern::sHi, UserPattern::vHi), hue_image);
-	}
-
-	//morphological opening (remove small objects from the foreground)
-	cv::erode(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-	cv::dilate(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-
-	//morphological closing (fill small holes in the foreground)
-	cv::dilate(hue_image, hsv_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) ); 
-	cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
-
-	// Apply blur
-	cv::GaussianBlur(hue_image, hue_image, cv::Size(9, 9), 2, 2);
 
 	// Use the Hough transform to detect circles in the combined threshold image
 	std::vector<cv::Vec3f> imageCircles;
-	cv::HoughCircles(hue_image, imageCircles, CV_HOUGH_GRADIENT, 1, hue_image.rows/8, 100, 20, 0, 0);
+	cv::HoughCircles(gray, imageCircles, CV_HOUGH_GRADIENT, 1, gray.rows/8, 100, 20, 0, 0);
 
-	
 	// User is detected
 	if(imageCircles.size() > 0) {
 		frameCountSinceUserUndetected = 0;
@@ -79,11 +115,20 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		float x = imageCircles[0][0] - Camera::getFrameWidth() * 0.5f;
 		float y = imageCircles[0][1] - Camera::getFrameHeight() * 0.5f;
 		float r = imageCircles[0][2];
-		x_mes =x;
-		y_mes =y;
-		r_mes =r;
+		x_mes = x;
+		y_mes = y;
+		r_mes = r;
 
-		cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(x, y, r);
+		// The user has just become detected
+		if(!isUserDetected)
+			kalmanFilter.resetState(x, y, r);
+
+		// update kalman noises
+		kalmanFilter.updateMeasurementNoise(detectedDistance);
+		kalmanFilter.updateProcessNoise(detectedDistance);
+
+		// Correct measurement with kalman filter
+		cv::Mat corrected = kalmanFilter.correctMeasurement(x, y, r);
 		filteredCircle[0] = corrected.at<float>(0);
 		filteredCircle[1] = corrected.at<float>(1);
 		filteredCircle[2] = corrected.at<float>(2);
@@ -99,8 +144,12 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		}
 		// User has remained undetected for a short time
 		else {
-			// apply kalman filter with old values as input
-			cv::Mat corrected = kalmanFilter.Kalman_Filter_User_Detection(filteredCircle[0], filteredCircle[1], filteredCircle[2]);
+			// update kalman noises
+			kalmanFilter.updateMeasurementNoise(detectedDistance);
+			kalmanFilter.updateProcessNoise(detectedDistance);
+			
+			// predict next state with kalman filter
+			cv::Mat corrected = kalmanFilter.predictNoMeasurement();
 			filteredCircle[0] = corrected.at<float>(0);
 			filteredCircle[1] = corrected.at<float>(1);
 			filteredCircle[2] = corrected.at<float>(2);
@@ -111,14 +160,14 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	// Loop over all detected circles and outline them on the original image
 	if(drawResult)  {
 		// copy filtered image
-		hue_image.copyTo(filterImage);
+		gray.copyTo(filterImage);
 		// copy camera image
 		bgr_image.copyTo(resultImage);
 
 		// draw kalman filtered circle on camera image
 		if(isUserDetected) {
 			cv::Point center(std::round(filteredCircle[0] + Camera::getFrameWidth() * 0.5f), std::round(filteredCircle[1] + Camera::getFrameHeight() * 0.5f));
-			int radius = std::round(filteredCircle[2]);
+			int radius = std::round(std::max(0.0f, filteredCircle[2]));
 
 			cv::circle(resultImage, center, radius, cv::Scalar(255, 128, 0), 2);
 		}
@@ -192,10 +241,18 @@ bool UserPatternDetection::isDetected() {
 	return isUserDetected;
 }
 
+bool UserPatternDetection::isVisible() {
+	return frameCountSinceUserUndetected == 0;
+}
+
 float UserPatternDetection::getDirection() {
 	return detectedDirection;
 }
 
 float UserPatternDetection::getDistance() {
 	return detectedDistance;
+}
+
+void UserPatternDetection::toggleMode() {
+	useRevolutionnaryMode = !useRevolutionnaryMode;
 }

@@ -31,7 +31,9 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
-  LogD << "Model_V : " << MotorModel_Prop.getVoltage(cmd, n) << endl;
+  static int a=0;
+  LogI << "Cmd = " << cmd << "  " << a << " " << MotorModel_Prop.getVoltage(cmd, n) << endl;
+  a++;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
@@ -86,17 +88,7 @@ float DiagnosticMotor::getCmd(){
   case Car::RightWheelMotor:
   case Car::BothWheelMotors:
     cmd = BarstowControl.propulsionMotor.speed;
-    switch (BarstowControl.propulsionMotor.direction){
-    case -1:
-	cmd = -cmd;
-	break;
-    case 0:
-	cmd = 0;
-	break;
-    case 1:
-	  break;
-    }
-    LogD << "Cmd :" << cmd << endl;
+    cmd = (BarstowControl.propulsionMotor.direction==1) ? cmd : -cmd;
     break;
   }
   return cmd;
