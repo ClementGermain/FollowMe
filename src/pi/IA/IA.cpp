@@ -16,6 +16,7 @@ float IA::directionSpeed=0.0;
 Car::Turn IA::Direction=Car::NoTurn; 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
+float IA::previousAngle = 0.f;
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
@@ -85,9 +86,11 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 		directionSpeed=0.0;
 	}
 	else {
-		const float dirAcceleration = 0.4f;
+		const float dirAcceleration = 0.4f;	//car direction can not move MORE than 0.4
+	//TO BE ADJUSTED
+		const float dirGain = 2.0f; 		//if angle & pre_angle far, move faster
 		const float dirSpeedMin = 0.35f;
-		const float dirSpeedMax = 0.6f;
+		const float dirSpeedMax = 1.0f;
 		// hysteresis threshold: if car is moving then stop less than 2° else start if angle>4°.
 		//const float angleMin = IA::directionSpeed > 0 ? 0.03f : 0.07f; //2° - 8°. To be adjusted
 		const float angleMin = 1 * M_PI/180;
@@ -104,7 +107,6 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			targetDirSpeed = (angleUserToCamera-angleMin) / (angleMax-angleMin) * (dirSpeedMax-dirSpeedMin) + dirSpeedMin;
 		}
 
-
 		if (endOfCourseLeft || endOfCourseRight){
 			directionSpeed-=dirAcceleration;
 		}				
@@ -117,6 +119,12 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			else
 				IA::Direction = Car::NoTurn;
 
+			if ((angleUserToCamera>IA::previousAngle && IA::Direction==Car::TurnRight)||(angleUserToCamera<IA::previousAngle && IA::Direction==Car::TurnLeft))
+				targetDirSpeed-=abs(angleUserToCamera-IA::previousAngle)/(angleMax-angleMin)*dirGain;
+			if ((angleUserToCamera<IA::previousAngle && IA::Direction==Car::TurnRight)||(angleUserToCamera>IA::previousAngle && IA::Direction==Car::TurnLeft))
+				targetDirSpeed+=abs(angleUserToCamera-IA::previousAngle)/(angleMax-angleMin)*dirGain;
+
+
 			// update direction speed : iterative command to be smoother
 			if(targetDirSpeed - IA::directionSpeed > 0)
 				IA::directionSpeed = min(IA::directionSpeed + dirAcceleration, targetDirSpeed); //smooth acceleration
@@ -128,6 +136,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 
 		}
 	}
+	IA::previousAngle = angleUserToCamera;
 }
 
 // --------------------------------------- //

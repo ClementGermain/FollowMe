@@ -24,6 +24,8 @@ class IA {
 		static bool endThread;
 		static std::thread * threadTest;
 
+		static float previousAngle;
+
 };
 
 
