@@ -194,10 +194,6 @@ void IA::IAMotorDirection(){
 void IA::start() {
 	if(threadTest == NULL) {
 		endThread = false;
-                
-                /* Init */
-                uAngleT1 = 0.f;
-                uAngleT2 = 0.f;
 		threadTest = new thread(IA::run);
 	}
 }
