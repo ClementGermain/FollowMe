@@ -31,7 +31,7 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 		const float speedMin = 0.35f;
 		const float speedMax = 1.0f;
 		// hysteresis threshold: if car is moving then stop at 0.5m else start at 1m.
-		const float distanceMin = IA::Speed > 0 ? 0.5f : 1.0f;
+		const float distanceMin = IA::Speed > 0 ? 0.3f : 0.5f;
 		const float distanceMax = 2.5f;
 
 		// Get target speed
@@ -85,12 +85,12 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 		directionSpeed=0.0;
 	}
 	else {
-		const float dirAcceleration = 0.1f;
+		const float dirAcceleration = 0.4f;
 		const float dirSpeedMin = 0.35f;
 		const float dirSpeedMax = 0.6f;
 		// hysteresis threshold: if car is moving then stop less than 2° else start if angle>4°.
 		//const float angleMin = IA::directionSpeed > 0 ? 0.03f : 0.07f; //2° - 8°. To be adjusted
-		const float angleMin = 5 * M_PI/180;
+		const float angleMin = 1 * M_PI/180;
 		const float angleMax = 30 * M_PI/180; //10°. To be adjusted
 
 		float targetDirSpeed;
@@ -100,8 +100,8 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			targetDirSpeed = dirSpeedMax;
 		else {
 			//a tester
-			targetDirSpeed = dirSpeedMin;
-			//targetSpeed = (angleUserToCamera-angleMin) / (angleMax-angleMin) * (dirSpeedMax-dirSpeedMin) + dirSpeedMin;
+			//targetDirSpeed = dirSpeedMin;
+			targetDirSpeed = (angleUserToCamera-angleMin) / (angleMax-angleMin) * (dirSpeedMax-dirSpeedMin) + dirSpeedMin;
 		}
 
 
