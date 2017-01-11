@@ -33,8 +33,8 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
   if (n==v1)
-    LogD << "Diagnostic : Cmd = " << cmd << endl;
-  LogD << "Diagnostic : Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd,n) << endl;
+    LogD << "Cmd: " << cmd << endl;
+    //LogD << "Diagnostic : Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd,n) << endl;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
@@ -67,12 +67,20 @@ void DiagnosticMotor::compareModel(){
     volt2 =  BarstowModel.directionMotor.voltage2;
     break;
   }
-  
-  if ((fabs(ValVoltage[0] - volt1) < delta_voltage) ||
-	(fabs(ValVoltage[1] - volt2) < delta_voltage))
+  LogD << "----------------" << endl;
+  LogD << "   MOTOR  MODEL" << endl;
+  LogD << "V1 : " << volt1 << "   " << ValVoltage[0] << endl;
+  LogD << "V2 : " << volt2 << "   " << ValVoltage[1] <<endl;
+
+  if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
+	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
     failure = CMD;
-  else
+    LogD << "MOTOR FAILURE" << endl;
+  }
+  else{
     failure = NO;
+    LogD << "MOTOR OK" << endl;
+  }
 }
 
 float DiagnosticMotor::getCmd(){
