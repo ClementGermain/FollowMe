@@ -39,11 +39,11 @@ float DiagnosticMotor::getValVoltage(numVoltage n){
 }
 
 float DiagnosticMotor::getMinVoltage(numVoltage n){
-  return ValVoltage[n+1] - delta_voltage;
+  return ValVoltage[n-1] - delta_voltage;
 }
 
 float DiagnosticMotor::getMaxVoltage(numVoltage n){
-  return ValVoltage[n+1] + delta_voltage;
+  return ValVoltage[n-1] + delta_voltage;
 }
 
 void DiagnosticMotor::compareModel(){
@@ -82,14 +82,22 @@ float DiagnosticMotor::getCmd(){
 
   switch (MotorType){
   case Car::DirectionMotor:
-    cmd = BarstowControl.directionMotor.speed;
-    cmd = (BarstowControl.directionMotor.direction==1) ? cmd : -cmd;
+    if (BarstowControl.directionMotor.direction==0)
+      cmd=0;
+    else{
+      cmd = BarstowControl.directionMotor.speed;
+      cmd = (BarstowControl.directionMotor.direction==1) ? cmd : -cmd;
+    }
     break;
   case Car::LeftWheelMotor:
   case Car::RightWheelMotor:
   case Car::BothWheelMotors:
-    cmd = BarstowControl.propulsionMotor.speed;
-    cmd = (BarstowControl.propulsionMotor.direction==1) ? cmd : -cmd;
+    if (BarstowControl.propulsionMotor.direction==0)
+      cmd=0;
+    else {
+      cmd = BarstowControl.propulsionMotor.speed;
+      cmd = (BarstowControl.propulsionMotor.direction==1) ? cmd : -cmd;
+    }
     break;
   }
   return cmd;

@@ -241,7 +241,6 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbSpeedLeft").setPosition(model.leftWheelMotor.speed/60);
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
-		
 		l.getTrackbarView("tbVoltage1Left").setInnerBounds(Diag_Prop.getMinVoltage(v1), Diag_Prop.getMaxVoltage(v1)); // add inner bounds
 		l.getTrackbarView("tbVoltage2Left").setInnerBounds(Diag_Prop.getMinVoltage(v2), Diag_Prop.getMaxVoltage(v2)); // add inner bounds
 		l.getTrackbarView("tbVoltage1Right").setInnerBounds(Diag_Prop.getMinVoltage(v1), Diag_Prop.getMaxVoltage(v1)); // add inner bounds
@@ -260,7 +259,10 @@ void MainView::updateViews(ViewManager & mgr) {
 		
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 
-		l.getToggleBoxView("toggle_motor").toggle(true);
+		if (Diag_Prop.getFailure()==NO)
+		  l.getToggleBoxView("toggle_motor").toggle(false);
+		else
+		  l.getToggleBoxView("toggle_motor").toggle(true);
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
