@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include "car/Car.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -16,6 +17,8 @@ float IA::directionSpeed=0.0;
 Car::Turn IA::Direction=Car::NoTurn; 
 thread * IA::threadTest = NULL;
 bool IA::endThread = true;
+float IA::uAngleT1 =0.f;
+float IA::uAngleT2 =0.f;
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
@@ -129,8 +132,38 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 		}
 	}
 }
+void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
+    const float maxSpeed = 1.f;
+    const float minSpeed = 0.1f;
+    
+    if (!isUserDetected){
+        IA::Direction = Car::NoTurn;
+        directionSpeed=0.0;
+    }
+    else {
+        float angularSpeed = (angleUserToCamera + uAngleT1 + uAngleT2) / (0.002f * IA_PERIOD);
+        float angularTarget = angleUserToCamera * Speed * 1.f; 
+        
+        float deltaAngularSpeed = angularTarget - angularSpeed;
+        IA::directionSpeed = deltaAngularSpeed * 0.15f;       
+     
+        /* Set direction*/
+        IA::Direction = IA::directionSpeed <= 0.f ? Car::TurnLeft : Car::TurnRight; 
+      
+        /* Clamp direction speed */
+        
+        cout << IA::directionSpeed << endl;
+        IA::directionSpeed = abs(IA::directionSpeed);
+        IA::directionSpeed = min (IA::directionSpeed, maxSpeed);
+        IA::directionSpeed = IA::directionSpeed < minSpeed ? 0 : IA::directionSpeed ;
+        cout << IA::directionSpeed << endl << endl;
+        
+    }
+    
+    uAngleT2 = uAngleT1;
+    uAngleT1 = angleUserToCamera;
+}
 
-// --------------------------------------- //
 
 // ---------Direction motors management-------- //
 
@@ -139,7 +172,7 @@ void IA::IAMotorDirection(){
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
-	IA::DirectionControl(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
+	IA::DirectionControl2(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }
@@ -152,6 +185,10 @@ void IA::IAMotorDirection(){
 void IA::start() {
 	if(threadTest == NULL) {
 		endThread = false;
+                
+                /* Init */
+                uAngleT1 = 0.f;
+                uAngleT2 = 0.f;
 		threadTest = new thread(IA::run);
 	}
 }
@@ -170,7 +207,7 @@ void IA::run() {
 		IA::IAMotorBack();
 		IA::IAMotorDirection();
 		// sleep 
-		this_thread::sleep_for(chrono::milliseconds(100));
+		this_thread::sleep_for(chrono::milliseconds(IA_PERIOD));
 	}
 }
 // --------------------------------------- //
