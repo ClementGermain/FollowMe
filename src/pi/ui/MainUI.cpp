@@ -9,6 +9,7 @@
 #include "MainView.hpp"
 #include "car/Camera.hpp"
 #include "car/MotorModel.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
@@ -31,7 +32,11 @@ int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
+int runDiag(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
+int printUserData(istream & input, vector<int> i, vector<string> s);
+int resetUserData(istream & input, vector<int> i, vector<string> s);
+int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -57,6 +62,9 @@ void runUI() {
 			new Menu("red", 1, userDetectionSettings, NULL),
 			new Menu("yellow", 2, userDetectionSettings, NULL),
 			new Menu("save", 0, saveUserData, NULL),
+			new Menu("print", 0, printUserData, NULL),
+			new Menu("reset", 0, resetUserData, NULL),
+			new Menu("mode", 0, toggleModeUserDetection, NULL),
 			NULL
 		),
 		new Menu("gui", 0, openGUI, NULL),
@@ -83,6 +91,7 @@ void runUI() {
 			NULL
 		),
 		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
+		new Menu("Diagnostic", 0, runDiag, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -240,6 +249,11 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   return 0;
 }
 
+int runDiag(istream & input, vector<int> i, vector<string> s){
+  Diag_Prop.start();
+  return 0;
+}
+
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 	switch(i.back()) {
 		case 1: // red
@@ -264,5 +278,20 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 
 int saveUserData(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.Get_measures();
+	return 0;
+}
+
+int printUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.printMeasures();
+	return 0;
+}
+
+int resetUserData(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.resetMeasures();
+	return 0;
+}
+
+int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
+	UserDetectionTest.detector.toggleMode();
 	return 0;
 }

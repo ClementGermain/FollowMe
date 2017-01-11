@@ -27,15 +27,22 @@ class UserPatternDetection {
 		cv::Mat & getResultImage();
 		cv::Mat & getFilterImage();
 	
+		/** The circle has been recently found but necessarly in the very last frames **/
 		bool isDetected();
+		/** A circle has been found in the last frame **/
+		bool isVisible();
 		float getDirection();
 		float getDistance();
 		float x_mes;
 		float y_mes;
 		float r_mes;
-		float Get_x_mes(void);
-		float Get_y_mes(void);
-		float Get_r_mes(void);
+		float Get_x_mes();
+		float Get_y_mes();
+		float Get_r_mes();
+		float Get_x_kalman();
+		float Get_y_kalman();
+		float Get_r_kalman();
+		void toggleMode();
 	private:
 		bool resultImageCreated;
 		cv::Mat resultImage;
@@ -46,7 +53,7 @@ class UserPatternDetection {
 		bool isUserDetected;
 		float detectedDirection, detectedDistance;
 		Kalman_Filter_User kalmanFilter;
-		
+		bool useRevolutionnaryMode;
 };
 
 #endif

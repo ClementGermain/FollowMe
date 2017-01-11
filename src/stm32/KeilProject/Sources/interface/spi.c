@@ -51,7 +51,6 @@ void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char
 	NVIC_Init(&NVIC_InitStructure);
 
 
-
 	/*<! ==Configure DMA1 - Channel4== (SPI -> memory). */
 	DMA_DeInit(DMA1_Channel4); //Set DMA registers to default values
 	DMA_InitTypeDef DMA_InitStructure; /*<! Variable used to setup the DMA. */
@@ -97,4 +96,14 @@ void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char
 	DMA_ITConfig(DMA1_Channel4, DMA_IT_TC, ENABLE);
 	DMA_ITConfig(DMA1_Channel5, DMA_IT_TE, ENABLE);
 }
+
+/*void DMA1_Channel4_IRQHandler(void)
+{
+  //Test on DMA1 Channel1 Transfer Complete interrupt
+  if(DMA_GetITStatus(DMA1_IT_TC1))
+  {
+   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+    DMA_ClearITPendingBit(DMA1_IT_GL1);
+  }
+}*/
 

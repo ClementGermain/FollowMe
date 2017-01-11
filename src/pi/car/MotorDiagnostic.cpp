@@ -7,35 +7,42 @@
 #include <algorithm>
 #include "../utils/Log.hpp"
 #include "MotorDiagnostic.hpp"
+#include "Car.hpp"
 
 using namespace std;
 
-DiagnosticMotor::DiagnosticMotor(const char * filename, Car::Motor MotorType_, int size_model) :  delta_voltage(600.0), MotorModel_Prop(size_model), failure(NO), MotorType(MotorType_)
-{
-  Car::getControlStructure(BarstowControl);
-  Car::getModelStructure(BarstowModel);
-  MotorModel_Prop.load(filename);
+DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
+
+DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
+
+  threadTest = NULL;
+  endThread = true;
+
+  delta_voltage = 600.0;
+  MotorModel_Prop.load("model_propulsion");
+  failure = NO;
+  MotorType = Car::LeftWheelMotor;
+  ValVoltage[0] = 0;
+  ValVoltage[1] = 0;
 }
 
 Failure_Typedef DiagnosticMotor::getFailure(){
   return failure;
 }
 
-float DiagnosticMotor::getDeltaVoltage(){
-  return delta_voltage;
-}
-
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
+  LogD << "Cmd = " << cmd << endl;
+  LogD << "Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd, n) << endl;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
 float DiagnosticMotor::getMinVoltage(numVoltage n){
-  return getValVoltage(n) - delta_voltage;
+  return ValVoltage[n+1] - delta_voltage;
 }
 
 float DiagnosticMotor::getMaxVoltage(numVoltage n){
-  return getValVoltage(n) + delta_voltage;
+  return ValVoltage[n+1] + delta_voltage;
 }
 
 void DiagnosticMotor::compareModel(){
@@ -60,8 +67,8 @@ void DiagnosticMotor::compareModel(){
     break;
   }
   
-  if ((fabs(getValVoltage(v1) - volt1) < delta_voltage) ||
-	(fabs(getValVoltage(v2) - volt2) < delta_voltage))
+  if ((fabs(ValVoltage[0] - volt1) < delta_voltage) ||
+	(fabs(ValVoltage[1] - volt2) < delta_voltage))
     failure = CMD;
   else
     failure = NO;
@@ -75,15 +82,49 @@ float DiagnosticMotor::getCmd(){
   switch (MotorType){
   case Car::DirectionMotor:
     cmd = BarstowControl.directionMotor.speed;
-    cmd = (BarstowControl.directionMotor.direction==-1) ? cmd : -cmd;
+    cmd = (BarstowControl.directionMotor.direction==1) ? cmd : -cmd;
     break;
   case Car::LeftWheelMotor:
   case Car::RightWheelMotor:
   case Car::BothWheelMotors:
     cmd = BarstowControl.propulsionMotor.speed;
-    cmd = (BarstowControl.propulsionMotor.direction==-1) ? cmd : -cmd;
+    cmd = (BarstowControl.propulsionMotor.direction==1) ? cmd : -cmd;
     break;
   }
   return cmd;
 }
 
+
+// ------------ Thread management -------- //
+void DiagnosticMotor::start() {
+  if(threadTest == NULL) {
+    endThread = false;
+    threadTest = new thread([this] { this->run();});
+  }
+}
+
+void DiagnosticMotor::stop() {
+  if(threadTest != NULL) {
+    endThread = true;
+    threadTest->join();
+    delete threadTest;
+    threadTest = NULL;
+  }
+}
+
+void DiagnosticMotor::run() {
+  while(!DiagnosticMotor::endThread) {
+    
+    numVoltage v;
+    for (int i=0; i<2; i++){
+	v=(i=0)?v1:v2;
+	//LogD << "Model_V : " << getValVoltage(v) << endl;
+	ValVoltage[i] = getValVoltage(v);
+    }
+    compareModel();
+    
+    // sleep 
+    this_thread::sleep_for(chrono::milliseconds(100));
+  }
+}
+// --------------------------------------- //

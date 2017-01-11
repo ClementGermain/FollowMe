@@ -347,6 +347,24 @@ cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 	return cv::Point(x, y);
 }
 
+cv::Point RoadDetection::unproject2D(cv::Point_<float> Point)
+{
+	cv::Point_<float> relativePoint;
+
+	//! Set points coordinates
+	Point.x -= Camera::getFrameWidth()/2;	
+	Point.y -= Camera::getFrameHeight()/2;
+
+	//! Calculate y from relativePoint
+	float dtetay = atan2(Point.y, m_dfy);
+	float tetay = M_PI*90.f/180.f + Camera::pitch - dtetay;	
+	relativePoint.y = tan(tetay)*Camera::PosZ;
+
+	//! Calculate x from relativePoint
+	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
+	relativePoint.x = Point.x * distx / m_dfx;
+	return relativePoint;
+}
 
 Mat & RoadDetection::getImage() {
 	return m_displayedImage;	

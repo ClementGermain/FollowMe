@@ -110,12 +110,12 @@
         <DllOption>
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments> -REMAP</SimDllArguments>
-          <SimDlgDll>DCM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM3</SimDlgDllArguments>
+          <SimDlgDll>DARMSTM.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pSTM32F103RB</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
-          <TargetDlgDll>TCM.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCM3</TargetDlgDllArguments>
+          <TargetDlgDll>TARMSTM.DLL</TargetDlgDll>
+          <TargetDlgDllArguments>-pSTM32F103RB</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -450,11 +450,6 @@
           <GroupName>interface</GroupName>
           <Files>
             <File>
-              <FileName>motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\interface\motor.c</FilePath>
-            </File>
-            <File>
               <FileName>motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\motor.h</FilePath>
@@ -468,6 +463,11 @@
               <FileName>us_sensor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\us_sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\motor.c</FilePath>
             </File>
             <File>
               <FileName>spi.c</FileName>
@@ -996,11 +996,6 @@
           <GroupName>interface</GroupName>
           <Files>
             <File>
-              <FileName>motor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Sources\interface\motor.c</FilePath>
-            </File>
-            <File>
               <FileName>motor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\motor.h</FilePath>
@@ -1014,6 +1009,11 @@
               <FileName>us_sensor.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Sources\interface\us_sensor.h</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Sources\interface\motor.c</FilePath>
             </File>
             <File>
               <FileName>spi.c</FileName>
@@ -1141,20 +1141,6 @@
       </component>
       <component Capiversion="1.00" Cbundle="NUCLEO-F103RB" Cclass="Board Support" Cgroup="LED" Cvendor="Keil" Cversion="1.0.0" condition="F103RB CMSIS Device">
         <package name="STM32NUCLEO_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.0"/>
-        <targetInfos>
-          <targetInfo name="Real"/>
-          <targetInfo name="Simulation"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="DMA" Cvendor="Keil" Cversion="1.2" condition="STM32F1xx CMSIS">
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
-        <targetInfos>
-          <targetInfo name="Real"/>
-          <targetInfo name="Simulation"/>
-        </targetInfos>
-      </component>
-      <component Cclass="Device" Cgroup="GPIO" Cvendor="Keil" Cversion="1.2" condition="STM32F1xx CMSIS">
-        <package name="STM32F1xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="2.1.0"/>
         <targetInfos>
           <targetInfo name="Real"/>
           <targetInfo name="Simulation"/>
