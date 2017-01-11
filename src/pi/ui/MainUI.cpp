@@ -250,7 +250,6 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
 }
 
 int runDiag(istream & input, vector<int> i, vector<string> s){
-  DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
   Diag_Prop.start();
   return 0;
 }

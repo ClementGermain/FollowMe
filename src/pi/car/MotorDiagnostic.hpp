@@ -44,4 +44,8 @@ protected:
   Failure_Typedef failure;
   Car::Motor MotorType;
 };
+
+extern DiagnosticMotor Diag_Prop;
+
 #endif
+

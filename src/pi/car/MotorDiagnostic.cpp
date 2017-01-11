@@ -11,6 +11,7 @@
 
 using namespace std;
 
+DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
 
@@ -31,9 +32,8 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
-  static int a=0;
-  LogI << "Cmd = " << cmd << "  " << a << " " << MotorModel_Prop.getVoltage(cmd, n) << endl;
-  a++;
+  LogD << "Cmd = " << cmd << endl;
+  LogD << "Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd, n) << endl;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
@@ -118,7 +118,7 @@ void DiagnosticMotor::run() {
     numVoltage v;
     for (int i=0; i<2; i++){
 	v=(i=0)?v1:v2;
-	LogD << "Model_V : " << getValVoltage(v) << endl;
+	//LogD << "Model_V : " << getValVoltage(v) << endl;
 	ValVoltage[i] = getValVoltage(v);
     }
     compareModel();
