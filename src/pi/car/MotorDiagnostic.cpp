@@ -32,8 +32,9 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
-  LogD << "Cmd = " << cmd << endl;
-  LogD << "Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd, n) << endl;
+  if (n==v1)
+    LogD << "Diagnostic : Cmd = " << cmd << endl;
+  LogD << "Diagnostic : Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd,n) << endl;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
@@ -115,12 +116,8 @@ void DiagnosticMotor::stop() {
 void DiagnosticMotor::run() {
   while(!DiagnosticMotor::endThread) {
     
-    numVoltage v;
-    for (int i=0; i<2; i++){
-	v=(i=0)?v1:v2;
-	//LogD << "Model_V : " << getValVoltage(v) << endl;
-	ValVoltage[i] = getValVoltage(v);
-    }
+    ValVoltage[0] = getValVoltage(v1);
+    ValVoltage[1] = getValVoltage(v2);
     compareModel();
     
     // sleep 

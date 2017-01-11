@@ -54,7 +54,7 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 		LogD << "Cmd : " << Model[i].cmd << endl;
 		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
 		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
-
+		
 		i++;
 	}
 	Car::writeControlMotor(Car::Stop, 0.0);
