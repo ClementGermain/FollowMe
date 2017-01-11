@@ -9,6 +9,7 @@
 #include "MainView.hpp"
 #include "car/Camera.hpp"
 #include "car/MotorModel.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
@@ -31,6 +32,7 @@ int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
+int runDiag(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
 int printUserData(istream & input, vector<int> i, vector<string> s);
 int resetUserData(istream & input, vector<int> i, vector<string> s);
@@ -89,6 +91,7 @@ void runUI() {
 			NULL
 		),
 		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
+		new Menu("Diagnostic", 0, runDiag, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -243,6 +246,12 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   MotorModel model;
   model.create(-1.0, 1.0, 10000);
   model.save("model_propulsion");
+  return 0;
+}
+
+int runDiag(istream & input, vector<int> i, vector<string> s){
+  DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
+  Diag_Prop.start();
   return 0;
 }
 
