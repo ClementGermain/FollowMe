@@ -108,6 +108,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			//a tester
 			//targetDirSpeed = dirSpeedMin;
 			targetDirSpeed = (angleUserToCamera-angleMin) / (angleMax-angleMin) * (dirSpeedMax-dirSpeedMin) + dirSpeedMin;
+			cout << "target speed : " << targetDirSpeed <<endl;
 		}
 
 		if (endOfCourseLeft || endOfCourseRight){
@@ -127,6 +128,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 			if ((angleUserToCamera<IA::previousAngle && IA::Direction==Car::TurnRight)||(angleUserToCamera>IA::previousAngle && IA::Direction==Car::TurnLeft))
 				targetDirSpeed+=abs(angleUserToCamera-IA::previousAngle)/(angleMax-angleMin)*dirGain;
 
+			cout << "target speed2 : "<< targetDirSpeed <<endl;
 
 			// update direction speed : iterative command to be smoother
 			if(targetDirSpeed - IA::directionSpeed > 0)
@@ -135,12 +137,15 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 				IA::directionSpeed = max(IA::directionSpeed - dirAcceleration, targetDirSpeed); //smooth desceleration
 			else
 				IA::directionSpeed = targetDirSpeed;
+			cout << "real cmd : "<<directionSpeed <<endl;
 
 
 		}
 	}
 	IA::previousAngle = angleUserToCamera;
 }
+
+
 void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
     const float maxSpeed = 0.5f;
     const float minSpeed = 0.1f;

@@ -260,9 +260,10 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 
 		if (Diag_Prop.getFailure()==NO)
-		  l.getToggleBoxView("toggle_motor").toggle(false);
-		else
 		  l.getToggleBoxView("toggle_motor").toggle(true);
+		else
+		  l.getToggleBoxView("toggle_motor").toggle(false);
+		
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
