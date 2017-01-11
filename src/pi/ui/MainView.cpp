@@ -215,9 +215,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	BarstowControl_Typedef control;
-	
-	static DiagnosticMotor diagnosticRight("test_modelAquire", Car::RightWheelMotor);
-	static DiagnosticMotor diagnosticLeft("test_modelAquire", Car::LeftWheelMotor);
+
+	Car::getControlStructure(control);
+	Car::getModelStructure(model);
 	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
@@ -241,12 +241,12 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbSpeedLeft").setPosition(model.leftWheelMotor.speed/60);
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
-
+		/*
 		l.getTrackbarView("tbVoltage1Left").setInnerBounds(diagnosticLeft.getMinVoltage(v1), diagnosticLeft.getMaxVoltage(v1)); // add inner bounds
 		l.getTrackbarView("tbVoltage2Left").setInnerBounds(diagnosticLeft.getMinVoltage(v2), diagnosticLeft.getMaxVoltage(v2)); // add inner bounds
 		l.getTrackbarView("tbVoltage1Right").setInnerBounds(diagnosticRight.getMinVoltage(v1), diagnosticRight.getMaxVoltage(v1)); // add inner bounds
 		l.getTrackbarView("tbVoltage2Right").setInnerBounds(diagnosticRight.getMinVoltage(v2), diagnosticRight.getMaxVoltage(v2)); // add inner bounds
-
+		*/
 		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 	    	l.getDigitalView("dVoltage1Right").setValue(((float) model.rightWheelMotor.voltage1)/1000.0);
