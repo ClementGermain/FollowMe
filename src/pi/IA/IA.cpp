@@ -133,7 +133,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 	}
 }
 void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
-    const float maxSpeed = 1.f;
+    const float maxSpeed = 0.5f;
     const float minSpeed = 0.1f;
     
     if (!isUserDetected){
@@ -145,10 +145,10 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
         float angularTarget = angleUserToCamera * Speed * 1.f; 
         
         float deltaAngularSpeed = angularTarget - angularSpeed;
-        IA::directionSpeed = deltaAngularSpeed * 0.15f;       
+        IA::directionSpeed = deltaAngularSpeed * 0.05f;       
      
         /* Set direction*/
-        IA::Direction = IA::directionSpeed <= 0.f ? Car::TurnLeft : Car::TurnRight; 
+        IA::Direction = IA::directionSpeed <= 0.f ? Car::TurnRight : Car::TurnLeft; 
       
         /* Clamp direction speed */
         
