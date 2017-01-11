@@ -150,14 +150,21 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
         directionSpeed=0.0;
     }
     else {
-        float angularSpeed = (angleUserToCamera + uAngleT1 + uAngleT2) / (0.002f * IA_PERIOD);
-        float angularTarget = angleUserToCamera * Speed * 1.f; 
+        //float angularSpeed = (angleUserToCamera + uAngleT1 + uAngleT2) / (0.002f * IA_PERIOD);
+        float angularSpeed = (angleUserToCamera - uAngleT2) / (0.002f * IA_PERIOD);
+		
+		float aST1 = (angleUserToCamera - uAngleT1) / (0.001f * IA_PERIOD);
+		cout << "Predicted angular delta :" << angularSpeed << endl;
+		cout << "aST1:" << aST1 << endl;
+		//float angularTarget = angleUserToCamera * Speed * 1.f;
+		float angularTarget = angleUserToCamera / (0.001f * IA_PERIOD);
         
+		cout << "Angular delat targeted :" << angularTarget << endl;
         float deltaAngularSpeed = angularTarget - angularSpeed;
-        IA::directionSpeed = deltaAngularSpeed * 0.05f;       
+        IA::directionSpeed = deltaAngularSpeed * 0.15f;       
      
         /* Set direction*/
-        IA::Direction = IA::directionSpeed <= 0.f ? Car::TurnRight : Car::TurnLeft; 
+        IA::Direction = IA::directionSpeed <= 0.f ? Car::TurnLeft : Car::TurnRight; 
       
         /* Clamp direction speed */
         
@@ -166,7 +173,7 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
         IA::directionSpeed = min (IA::directionSpeed, maxSpeed);
         IA::directionSpeed = IA::directionSpeed < minSpeed ? 0 : IA::directionSpeed ;
         cout << IA::directionSpeed << endl << endl;
-        
+        IA::directionSpeed = 0.f; 
     }
     
     uAngleT2 = uAngleT1;
