@@ -44,13 +44,16 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 			usleep(500000);
 		else
 			usleep(waitTime);
-		Car::updateModelStructure(BarstowModel);
-		LogD << cmd << endl;
+		Car::getModelStructure(BarstowModel);
 		Model[i].cmd = cmd;
 		Model[i].MotorModel.current = BarstowModel.leftWheelMotor.current;
 		Model[i].MotorModel.voltage1 = BarstowModel.leftWheelMotor.voltage1;
 		Model[i].MotorModel.voltage2 = BarstowModel.leftWheelMotor.voltage2;
 		Model[i].MotorModel.speed = BarstowModel.leftWheelMotor.speed; 
+
+		LogD << "Cmd : " << Model[i].cmd << endl;
+		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
+		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
 
 		i++;
 	}
@@ -63,9 +66,9 @@ void MotorModel::save(const char * fileName){
 	strcat(filepath, ".bin");
 
 	FILE * file = fopen(filepath, "wb");
-
 	if (file){
-		fclose(file);
+	  LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
+	  fclose(file);
 	}
 }
 
@@ -77,15 +80,14 @@ void MotorModel::load(const char * fileName){
 	FILE * file = fopen(filepath, "rb");
 
 	if (file){
-	  LogD << "Nb Octets lues : " << fread(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
+	  fread(Model, sizeof(Model_TypeDef), sizeModel, file);
 	  fclose(file);
 	}
-	
 }
 
 void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
 	int index=0;
-	float delta=1000;
+	float delta=100000;
 	for (int i=0; i<sizeModel ; i++){
 		if (abs(Model[i].cmd - cmd) < delta){
 			delta = abs(Model[i].cmd - cmd);
@@ -97,15 +99,13 @@ void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
 
 float MotorModel::getVoltage(float cmd, numVoltage n){
   int index=0;
-  float delta=1000;
-  for (int i=0; i<sizeModel ; i++){
+  float delta=1000000;
+  for (int i=0 ; i<sizeModel ; i++){
     if (abs(Model[i].cmd - cmd) < delta){
 	delta = abs(Model[i].cmd - cmd);
 	index = i;
     }
-    LogD << "val : " << Model[i].MotorModel.voltage1 << endl;
   }
-
   if (n==1)
     return Model[index].MotorModel.voltage1;
   else if (n==2)
