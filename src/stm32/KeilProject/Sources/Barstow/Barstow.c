@@ -1,6 +1,5 @@
 #include "barstow.h"
 #include "stm32f10x_dma.h"
-#include "DMA_STM32F10x.h"
 
 int bufferSize;
 BarstowControl_Typedef 	* BarstowControlBuffer;
@@ -34,7 +33,7 @@ void StartBarstow(void)
 	//Start_US_Sensor(BarstowModel);
 	
 	/*!< Init EOC sensors. */
-	Init_All_EOC_Sensors();
+	//Init_All_EOC_Sensors();
 	
 	/*< Init Motor Sensors. */
 	MotorSensor_Init(BarstowModel);
@@ -42,15 +41,18 @@ void StartBarstow(void)
 	/*< Init SPI communication. */
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
 	
-	
 	/*< Init Gyrophare. */
-	Gyro_Init();
+	//Gyro_Init();
+	
+	/*< Debug code.*/
+	BarstowModel->frontCenterUSensor.distance = 200;
+	BarstowModel->frontRightUSensor.distance = 300;
 		
 	/*!< Entering main loop. */
-	int i;
 	while(1)
 	{
-		i++;
+		BarstowModel->frontLeftUSensor.distance = BarstowControl->propulsionMotor.speed +1 ;
+		BarstowModel->frontCenterUSensor.distance +=2;	
 		
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
@@ -59,10 +61,10 @@ void StartBarstow(void)
 		MotorSensor_Update(BarstowModel);
 		
 		/*!< Updating EOC Sensor. */
-		EOC_Sensor_Update(BarstowModel);
+		//EOC_Sensor_Update(BarstowModel);
 		
 		/*!< Updating Gyro. */
-		Gyro_Toggle(BarstowControl);
+		//Gyro_Toggle(BarstowControl);
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction
@@ -70,7 +72,7 @@ void StartBarstow(void)
 	}
 }
 
-void DMA1_Channel4_Event(uint32_t events){
+/*void DMA1_Channel4_Event(uint32_t events){
 	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
 		DMA_Cmd(DMA1_Channel4, DISABLE);
 		DMA_SetCurrDataCounter(DMA1_Channel4, bufferSize);
@@ -82,7 +84,7 @@ void DMA1_Channel4_Event(uint32_t events){
 
 		BarstowControlBuffer->checkValue = CHECK_VALUE;
 	}
-}
+}*/
 /*
 void DMA1_Channel5_Event(uint32_t events){
 	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
@@ -91,3 +93,24 @@ void DMA1_Channel5_Event(uint32_t events){
 		DMA_Cmd(DMA1_Channel5, ENABLE);
 	}
 }*/
+
+
+void DMA1_Channel4_IRQHandler(void)
+{
+  //Test on DMA1 Channel1 Transfer Complete interrupt
+  if(DMA_GetITStatus(DMA1_IT_TC4))
+  {
+   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+    DMA_ClearITPendingBit(DMA1_IT_GL4);
+  }
+}
+
+void DMA1_Channel5_IRQHandler(void)
+{
+  //Test on DMA1 Channel1 Transfer Complete interrupt
+  if(DMA_GetITStatus(DMA1_IT_TC4))
+  {
+   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
+    DMA_ClearITPendingBit(DMA1_IT_GL4);
+  }
+}
