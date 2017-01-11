@@ -70,7 +70,7 @@ int main() {
 	// start Image Processing threads
 	UserDetectionTest.start();
 	roadDetectionTest.start();
-
+    roadDetectionTest.detector.init();
 	// Main loop
 	runUI();
 

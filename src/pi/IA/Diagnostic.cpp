@@ -3,7 +3,7 @@
 
 using namespace std;
 
-
+/*
 thread * Diagnostic::threadTest = NULL;
 bool Diagnostic::endThread = true;
 
@@ -71,3 +71,5 @@ void Diagnostic::run() {
 	}
 }
 // --------------------------------------- //
+
+*/

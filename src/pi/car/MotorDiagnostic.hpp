@@ -24,17 +24,23 @@ public:
   Failure_Typedef getFailure();
   float getMinVoltage(numVoltage n);
   float getMaxVoltage(numVoltage n);
+  float getMinCurrent();
+  float getMaxCurrent();
   
   float getCmd();
   
 protected:
   
   BarstowControl_Typedef BarstowControl;
-   BarstowModel_Typedef BarstowModel;
-
+  BarstowModel_Typedef BarstowModel;
+  
   float delta_voltage;
+  float delta_current;
   float ValVoltage[2];
+  float ValCurrent;
+
   float getValVoltage(numVoltage n);
+  float getValCurrent();
 
   void run();
   bool endThread;
@@ -44,4 +50,9 @@ protected:
   Failure_Typedef failure;
   Car::Motor MotorType;
 };
+
+extern DiagnosticMotor Diag_Prop_Right;
+extern DiagnosticMotor Diag_Prop_Left;
+
 #endif
+

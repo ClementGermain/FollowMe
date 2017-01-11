@@ -1,4 +1,6 @@
 #include "RoadDetection.hpp"
+#include "UserPatternDetection.hpp"
+#include "UserPatternDetectionTest.hpp"
 #include "../car/Car.hpp"
 
 #include <iostream>
@@ -20,10 +22,26 @@ RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3
 				m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_8UC3}
 				
 {	
+
+}
+
+RoadDetection::~RoadDetection()
+{
+}
+
+int RoadDetection::canGoForward()
+{
+	return m_forwardBool;
+}
+
+void RoadDetection::init()
+{
+
 	//! Calculate the camera's focal distances
 	m_dfy = Camera::getFrameHeight() / (2.f*tan(Camera::verticalFOV / 2.f));
 	m_dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
-
+	//cout << "FH = " << Camera::getFrameHeight() << endl;
+	//cout << "FW = " << Camera::getFrameWidth() << endl;
 	//! Set real point distance from car
 	float py = Car::CarSize*1.2f;
 	float px = Car::CarWidth*0.8f;
@@ -39,16 +57,7 @@ RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3
 	//! Set points coordinates
 	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
 	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));
-
-}
-
-RoadDetection::~RoadDetection()
-{
-}
-
-int RoadDetection::canGoForward()
-{
-	return m_forwardBool;
+	return;
 }
 
 cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
@@ -56,7 +65,8 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
  
 	//! Project user real position on road matrix !//
 	cv::Point userCamPos = project2D(userPosition);
-
+	//cout <<	"User x=" << userPosition.x << "\t camX="<< userCamPos.x << endl;
+	//cout << "User y=" << userPosition.y << "\t camY" << userCamPos.y << endl;
 	//! Scale points to the threshold image !//
 	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
 	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
@@ -120,7 +130,7 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
             wayPointLeft = project2D(cv::Point_<float>{targetPoint.x - Car::CarWidth*0.8f + offset, targetPoint.y});
             wayPointRight = project2D(cv::Point_<float>{targetPoint.x + Car::CarWidth*0.8f + offset, targetPoint.y});
             
-            m_displayedImage.at<Vec3b>(cv::Point(wayPointRight.x * scaleX, wayPointRight.y * scaleY)) = orange;
+            //m_displayedImage.at<Vec3b>(cv::Point(wayPointRight.x * scaleX, wayPointRight.y * scaleY)) = orange;
             
             cv::Point point = maxDistInPath(wayPointLeft, wayPointRight, m_forwardRect[1], m_forwardRect[0]);
             int dist = pow(abs(point.x - userMatPos.x), 2) + pow(abs(point.y - userMatPos.y), 2);
@@ -232,11 +242,23 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	image.copyTo(m_cameraImage);
 	drawForwardRect();
 	
-	//! DEBUG CODE, TODO REMOVE !//
+	
 	//roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
-        cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
-        if (test.x >=0 and test.x <ROADMATCOL and test.y>=0 and test.y <=ROADMATROW)
-            m_displayedImage.at<Vec3b>(test) = orange;
+		//create next target and give it the distance and direction (relative point) 
+		cv::Point_<float> relativeTarget;
+		relativeTarget.x = sin(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
+		relativeTarget.y = cos(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
+		cv::Point computedPoint = computeNextWayPoint(relativeTarget);
+        //cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
+        if (computedPoint.x >=0 and computedPoint.x <ROADMATCOL and computedPoint.y>=0 and computedPoint.y <=ROADMATROW)
+            m_displayedImage.at<Vec3b>(computedPoint) = orange;
+        computedPoint.x = computedPoint.x * (float)Camera::getFrameWidth() / (float)ROADMATCOL;
+        computedPoint.y = computedPoint.y * (float)Camera::getFrameHeight() / (float)ROADMATROW;
+        cv::Point_<float> absolutPoint = unproject2D(computedPoint);
+        float x = absolutPoint.x;
+        float y = absolutPoint.y;
+        Target.x = atan2(x, y);
+        Target.y = sqrt(pow(x,2)+pow(y,2));
 }
 
 
@@ -334,7 +356,9 @@ cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 	float tetay = atan2(relativePoint.y, Camera::PosZ);
 	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
 	float y = tan(dtetay) * m_dfy;
-	
+
+	//cout << tetay << ", " << dtetay << ", " << y << endl;
+	//cout << Camera::PosZ << " ; " << Camera::pitch << " ; " << m_dfy << endl << endl;
 	//! Calculate x coord
 	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
 	//float dtetax = atan2(relativePoint.x, distx);	
@@ -347,6 +371,24 @@ cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 	return cv::Point(x, y);
 }
 
+cv::Point RoadDetection::unproject2D(cv::Point_<float> Point)
+{
+	cv::Point_<float> relativePoint;
+
+	//! Set points coordinates
+	Point.x -= Camera::getFrameWidth()/2;	
+	Point.y -= Camera::getFrameHeight()/2;
+
+	//! Calculate y from relativePoint
+	float dtetay = atan2(Point.y, m_dfy);
+	float tetay = M_PI*90.f/180.f + Camera::pitch - dtetay;	
+	relativePoint.y = tan(tetay)*Camera::PosZ;
+
+	//! Calculate x from relativePoint
+	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
+	relativePoint.x = Point.x * distx / m_dfx;
+	return relativePoint;
+}
 
 Mat & RoadDetection::getImage() {
 	return m_displayedImage;	

@@ -124,18 +124,18 @@ void MainView::initializeViews(ViewManager & mgr) {
 	// motors trackbar
 
 	defaultLayout.addView("tbCmdFront", new Trackbar_Horizontal(-1, 1, 385, 70, 90, 10, CENTREE));
-	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 2000, 385, 100, 90, 10));
+	defaultLayout.addView("tbCurrentFront", new Trackbar_Horizontal(0, 1500, 385, 100, 90, 10));
 	defaultLayout.addView("tbVoltage1Front", new Trackbar_Horizontal(0, 8000, 385, 130, 90, 10));
 	defaultLayout.addView("tbVoltage2Front", new Trackbar_Horizontal(0, 8000, 385, 160, 90, 10));
 
 	defaultLayout.addView("tbCmdLeft", new Trackbar_Horizontal(-1, 1, 333, 240, 90, 10, CENTREE));
-	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 2000, 333, 270, 90, 10));
+	defaultLayout.addView("tbCurrentLeft", new Trackbar_Horizontal(0, 1500, 333, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Left", new Trackbar_Horizontal(0, 8000, 333, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Left", new Trackbar_Horizontal(0, 8000, 333, 330, 90, 10));
 	defaultLayout.addView("tbSpeedLeft", new Trackbar_Horizontal(0, 10, 333, 360, 90, 10));
 
 	defaultLayout.addView("tbCmdRight", new Trackbar_Horizontal(-1, 1, 438, 240, 90, 10, CENTREE));
-	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 2000, 438, 270, 90, 10));
+	defaultLayout.addView("tbCurrentRight", new Trackbar_Horizontal(0, 1500, 438, 270, 90, 10));
 	defaultLayout.addView("tbVoltage1Right", new Trackbar_Horizontal(0, 8000, 438, 300, 90, 10));
 	defaultLayout.addView("tbVoltage2Right", new Trackbar_Horizontal(0, 8000, 438, 330, 90, 10));
 	defaultLayout.addView("tbSpeedRight", new Trackbar_Horizontal(0, 10, 438, 360, 90, 10));
@@ -160,6 +160,11 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	// Toggle Informations
 	sensorLayout.addView("sensor_toggle_motor", new ToggleBox("MOTOR OK", "MOTOR FAILURE", 535, 70));
+	/*sensorLayout.addView("sensor_toggle_motor", new StateBox(535, 70));
+	sensorLayout.getStateBoxView("sensor_toggle_motor").add_state("MOTOR OK", 0, 150, 0); //NO ROAD DETECTED
+	sensorLayout.getStateBoxView("sensor_toggle_motor").add_state("FAILURE CMD", 150, 0, 0); //NO ROAD DETECTED
+	sensorLayout.getStateBoxView("sensor_toggle_motor").add_state("FAILURE MOTOR", 150, 0, 0); //NO ROAD DETECTED
+	*/
 	sensorLayout.addView("sensor_toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 110));
 	sensorLayout.addView("sensor_toggle_obstacle", new ToggleBox("NO OBSTACLES", "OBSTACLE DETECTED", 535, 150));
 	sensorLayout.addView("sensor_state_road", new StateBox(535, 190));
@@ -215,9 +220,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	BarstowControl_Typedef control;
-	
-	static DiagnosticMotor diagnosticRight("test_modelAquire", Car::RightWheelMotor);
-	static DiagnosticMotor diagnosticLeft("test_modelAquire", Car::LeftWheelMotor);
+
+	Car::getControlStructure(control);
+	Car::getModelStructure(model);
 	
 	if(mgr.isActive("Motor")) {
 		Layout & l = mgr.getLayout("Motor");
@@ -242,11 +247,13 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getTrackbarView("tbVoltage1Left").setInnerBounds(diagnosticLeft.getMinVoltage(v1), diagnosticLeft.getMaxVoltage(v1)); // add inner bounds
-		l.getTrackbarView("tbVoltage2Left").setInnerBounds(diagnosticLeft.getMinVoltage(v2), diagnosticLeft.getMaxVoltage(v2)); // add inner bounds
-		l.getTrackbarView("tbVoltage1Right").setInnerBounds(diagnosticRight.getMinVoltage(v1), diagnosticRight.getMaxVoltage(v1)); // add inner bounds
-		l.getTrackbarView("tbVoltage2Right").setInnerBounds(diagnosticRight.getMinVoltage(v2), diagnosticRight.getMaxVoltage(v2)); // add inner bounds
-
+		l.getTrackbarView("tbVoltage1Left").setInnerBounds(Diag_Prop_Left.getMinVoltage(v1), Diag_Prop_Left.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Left").setInnerBounds(Diag_Prop_Left.getMinVoltage(v2), Diag_Prop_Left.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbCurrentLeft").setInnerBounds(Diag_Prop_Left.getMinCurrent(), Diag_Prop_Left.getMaxCurrent()); // add inner bounds
+		l.getTrackbarView("tbVoltage1Right").setInnerBounds(Diag_Prop_Right.getMinVoltage(v1), Diag_Prop_Right.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Right").setInnerBounds(Diag_Prop_Right.getMinVoltage(v2), Diag_Prop_Right.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbCurrentRight").setInnerBounds(Diag_Prop_Right.getMinCurrent(), Diag_Prop_Right.getMaxCurrent()); // add inner bounds
+		
 		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
 	    	l.getDigitalView("dVoltage1Right").setValue(((float) model.rightWheelMotor.voltage1)/1000.0);
@@ -259,8 +266,15 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("tbCurrentRight").setPosition(model.rightWheelMotor.current);
 		
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
+		
+		if (Diag_Prop_Right.getFailure()==NO)
+		  l.getToggleBoxView("toggle_motor").toggle(true);
+		else
+		  l.getToggleBoxView("toggle_motor").toggle(false);
+		
 
-		l.getToggleBoxView("toggle_motor").toggle(true);
+		//l.getStateBoxView("state_motor").set_state(Diag_Prop.getFailure());
+
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getToggleBoxView("toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
