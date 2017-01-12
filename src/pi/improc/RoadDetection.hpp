@@ -37,6 +37,9 @@ public:
 	RoadDetection();
 	~RoadDetection();
 
+	/*! Target to follow. Direction and distance. !*/
+ 	cv::Point_<float> Target;
+
 	/*! Start an iteration of te road detection algoritm !*/
 	//@Param : camera image on which the algorithm will be applied
 	void applyRoadThreshold(cv::Mat image);

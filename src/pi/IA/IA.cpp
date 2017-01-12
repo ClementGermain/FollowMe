@@ -1,4 +1,6 @@
 #include "IA.hpp"
+#include "improc/RoadDetection.hpp"
+#include "improc/RoadDetectionTest.hpp"
 #include "improc/UserPatternDetection.hpp"
 #include "improc/UserPatternDetectionTest.hpp"
 #include "car/Obstacle.hpp"
@@ -20,6 +22,9 @@ bool IA::endThread = true;
 float IA::previousAngle = 0.f;
 float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
+
+//Direction = UserDetectionTest.detector.Target[0];
+//Distance = UserDetectionTest.detector.Target[1];
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
@@ -62,9 +67,13 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 // ---------Back motors management-------- //
 void IA::IAMotorBack() {
 	// Update speed value
-	float distance = UserDetectionTest.detector.getDistance();
+
+	//float distance = UserDetectionTest.detector.getDistance();
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
-	IA::SpeedControl(distance, isUserDetected);
+	
+	//IA::SpeedControl(distance, isUserDetected);
+	IA::SpeedControl(UserDetectionTest.detector.Target[1], isUserDetected);
+
 
 	// Send speed command if no obstacle detected
 	bool obstacleDetected = ObstacleDetection::isGlobalDetected();
@@ -227,11 +236,13 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
 // ---------Direction motors management-------- //
 
 void IA::IAMotorDirection(){
-	float angleUserToCamera = UserDetectionTest.detector.getDirection();
+
+	//float angleUserToCamera = UserDetectionTest.detector.getDirection();
+	
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
-	IA::DirectionControl3(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
+	IA::DirectionControl3(UserDetectionTest.detector.Target[0], isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }

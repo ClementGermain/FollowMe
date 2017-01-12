@@ -1,4 +1,5 @@
 #include "RoadDetection.hpp"
+#include "UserPatternDetection.hpp"
 #include "../car/Car.hpp"
 
 #include <iostream>
@@ -232,11 +233,23 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	image.copyTo(m_cameraImage);
 	drawForwardRect();
 	
-	//! DEBUG CODE, TODO REMOVE !//
+	
 	//roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
-        cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
-        if (test.x >=0 and test.x <ROADMATCOL and test.y>=0 and test.y <=ROADMATROW)
-            m_displayedImage.at<Vec3b>(test) = orange;
+		//create next target and give it the distance and direction (relative point) 
+		cv::Point relativeTarget;
+		relativeTarget[0] = sin(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
+		relativeTarget[1] = cos(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
+		cv::Point computedPoint = computeNextWayPoint(relativeTarget);
+        //cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
+        if (computedPoint.x >=0 and computedPoint.x <ROADMATCOL and computedPoint.y>=0 and computedPoint.y <=ROADMATROW)
+            m_displayedImage.at<Vec3b>(computedPoint) = orange;
+        computedPoint[0]= computedPoint[0] * (float)Camera::getFrameWidth() / (float)ROADMATCOL;
+        computedPoint[1]= computedPoint[1] * (float)Camera::getFrameHeight() / (float)ROADMATROW;
+        cv::Point absolutPoint = unproject2D(computedPoint);
+        float x = absolutPoint[0];
+        float y = absolutPoint[1];
+        Target[0]=atan2(x, y);
+        Target[1]=sqrt((x^2)+(y^2));
 }
 
 
