@@ -85,19 +85,26 @@ void MotorModel::load(const char * fileName){
 	}
 }
 
-void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
-	int index=0;
-	float delta=100000;
-	for (int i=0; i<sizeModel ; i++){
-		if (abs(Model[i].cmd - cmd) < delta){
-			delta = abs(Model[i].cmd - cmd);
-			index = i;
-		}
-	}
-	MotorModel = Model[index].MotorModel;
+float MotorModel::getVoltage(float cmd, numVoltage n){
+  switch (n){
+  case v1:
+    return Model[getIndex(cmd)].MotorModel.voltage1;
+    break;
+  case v2:
+    return Model[getIndex(cmd)].MotorModel.voltage2;
+    break;
+  default:
+    return 0;
+    break;
+  }
 }
 
-float MotorModel::getVoltage(float cmd, numVoltage n){
+float MotorModel::getCurrent(float cmd){
+  return Model[getIndex(cmd)].MotorModel.current;
+}
+
+
+int MotorModel::getIndex(float cmd){
   int index=0;
   float delta=1000000;
   for (int i=0 ; i<sizeModel ; i++){
@@ -106,10 +113,7 @@ float MotorModel::getVoltage(float cmd, numVoltage n){
 	index = i;
     }
   }
-  if (n==1)
-    return Model[index].MotorModel.voltage1;
-  else if (n==2)
-    return Model[index].MotorModel.voltage2;
-  else
-    return 0;
+  return index;
 }
+
+
