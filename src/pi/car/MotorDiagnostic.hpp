@@ -38,7 +38,9 @@ protected:
   float delta_current;
   float ValVoltage[2];
   float ValCurrent;
-
+  int delay;
+  int delay_compt;
+  
   float getValVoltage(numVoltage n);
   float getValCurrent();
 
