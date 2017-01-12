@@ -14,6 +14,7 @@ class IA {
 		static void SpeedControl(float distanceUserToCamera, bool isUserDetected);
 		static void DirectionControl(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight);
 		static void DirectionControl2(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight);
+		static void DirectionControl3(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight);
 		static void IAMotorBack();
 		static void IAMotorDirection();
 

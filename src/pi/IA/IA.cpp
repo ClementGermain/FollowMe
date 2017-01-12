@@ -188,6 +188,41 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
     uAngleT1 = angleUserToCamera;
 }
 
+void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
+    const float dAngle = 0.05f;
+    const float hist = 0.1f;
+
+    cout << angleUserToCamera << endl;
+
+    if (!isUserDetected){
+        IA::Direction = Car::NoTurn;
+        directionSpeed=0.0;
+    }
+    else {
+        if (IA::directionSpeed != 0)
+        {
+            IA::directionSpeed = 0;
+        }
+        else
+        {
+	    if (uAngleT1 <= angleUserToCamera - hist)
+	    {
+	        IA::Direction = Car::TurnLeft;
+	        cout << "LEFT" << endl;
+                uAngleT1 += dAngle;
+        	directionSpeed=1.0;
+	    }
+            else if (uAngleT1 > angleUserToCamera + hist)
+	    {
+	        IA::Direction = Car::TurnRight;
+                cout << "Right" << endl;
+	        uAngleT1 -=dAngle;		
+        	directionSpeed=1.0;
+	    }
+        }
+    }
+}
+
 
 // ---------Direction motors management-------- //
 
@@ -196,7 +231,7 @@ void IA::IAMotorDirection(){
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
-	IA::DirectionControl(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
+	IA::DirectionControl3(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }
