@@ -67,7 +67,7 @@ void MotorModel::save(const char * fileName){
 
 	FILE * file = fopen(filepath, "wb");
 	if (file){
-	  //LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
+	  LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
 	  fclose(file);
 	}
 }
