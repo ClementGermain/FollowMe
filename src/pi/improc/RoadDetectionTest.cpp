@@ -16,7 +16,6 @@ RoadDetectionTest::RoadDetectionTest() :
 }
 
 RoadDetectionTest::~RoadDetectionTest() {
-	stop();
 }
 
 void RoadDetectionTest::start() {
