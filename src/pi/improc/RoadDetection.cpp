@@ -44,7 +44,7 @@ void RoadDetection::init()
 	//cout << "FW = " << Camera::getFrameWidth() << endl;
 	//! Set real point distance from car
 	float py = Car::CarSize*1.2f;
-	float px = Car::CarWidth*0.8f;
+	float px = Car::CarWidth*0.4f;
 	
 	//! Set points coordinates	
 	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));	
