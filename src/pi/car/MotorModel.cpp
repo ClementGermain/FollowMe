@@ -46,10 +46,10 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 			usleep(waitTime);
 		Car::getModelStructure(BarstowModel);
 		Model[i].cmd = cmd;
-		Model[i].MotorModel.current = BarstowModel.leftWheelMotor.current;
-		Model[i].MotorModel.voltage1 = BarstowModel.leftWheelMotor.voltage1;
-		Model[i].MotorModel.voltage2 = BarstowModel.leftWheelMotor.voltage2;
-		Model[i].MotorModel.speed = BarstowModel.leftWheelMotor.speed; 
+		Model[i].MotorModel.current = BarstowModel.rightWheelMotor.current;
+		Model[i].MotorModel.voltage1 = BarstowModel.rightWheelMotor.voltage1;
+		Model[i].MotorModel.voltage2 = BarstowModel.rightWheelMotor.voltage2;
+		Model[i].MotorModel.speed = BarstowModel.rightWheelMotor.speed; 
 		/*
 		LogD << "Cmd : " << Model[i].cmd << endl;
 		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
