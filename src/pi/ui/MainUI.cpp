@@ -250,7 +250,8 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
 }
 
 int runDiag(istream & input, vector<int> i, vector<string> s){
-  Diag_Prop.start();
+  Diag_Prop_Left.start();
+  Diag_Prop_Right.start();
   return 0;
 }
 

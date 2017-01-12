@@ -247,12 +247,12 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("dCurrentLeft").setValue(((float) model.leftWheelMotor.current));
 		l.getTrackbarView("tbCurrentLeft").setPosition(model.leftWheelMotor.current);
 
-		l.getTrackbarView("tbVoltage1Left").setInnerBounds(Diag_Prop.getMinVoltage(v1), Diag_Prop.getMaxVoltage(v1)); // add inner bounds
-		l.getTrackbarView("tbVoltage2Left").setInnerBounds(Diag_Prop.getMinVoltage(v2), Diag_Prop.getMaxVoltage(v2)); // add inner bounds
-		l.getTrackbarView("tbCurrentLeft").setInnerBounds(Diag_Prop.getMinCurrent(), Diag_Prop.getMaxCurrent()); // add inner bounds
-		l.getTrackbarView("tbVoltage1Right").setInnerBounds(Diag_Prop.getMinVoltage(v1), Diag_Prop.getMaxVoltage(v1)); // add inner bounds
-		l.getTrackbarView("tbVoltage2Right").setInnerBounds(Diag_Prop.getMinVoltage(v2), Diag_Prop.getMaxVoltage(v2)); // add inner bounds
-		l.getTrackbarView("tbCurrentRight").setInnerBounds(Diag_Prop.getMinCurrent(), Diag_Prop.getMaxCurrent()); // add inner bounds
+		l.getTrackbarView("tbVoltage1Left").setInnerBounds(Diag_Prop_Left.getMinVoltage(v1), Diag_Prop_Left.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Left").setInnerBounds(Diag_Prop_Left.getMinVoltage(v2), Diag_Prop_Left.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbCurrentLeft").setInnerBounds(Diag_Prop_Left.getMinCurrent(), Diag_Prop_Left.getMaxCurrent()); // add inner bounds
+		l.getTrackbarView("tbVoltage1Right").setInnerBounds(Diag_Prop_Right.getMinVoltage(v1), Diag_Prop_Right.getMaxVoltage(v1)); // add inner bounds
+		l.getTrackbarView("tbVoltage2Right").setInnerBounds(Diag_Prop_Right.getMinVoltage(v2), Diag_Prop_Right.getMaxVoltage(v2)); // add inner bounds
+		l.getTrackbarView("tbCurrentRight").setInnerBounds(Diag_Prop_Right.getMinCurrent(), Diag_Prop_Right.getMaxCurrent()); // add inner bounds
 		
 		l.getDigitalView("dCmdRight").setValue( control.propulsionMotor.speed * control.propulsionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdRight").setPosition( control.propulsionMotor.speed * control.propulsionMotor.direction );
@@ -267,7 +267,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 		
-		if (Diag_Prop.getFailure()==NO)
+		if (Diag_Prop_Right.getFailure()==NO)
 		  l.getToggleBoxView("toggle_motor").toggle(true);
 		else
 		  l.getToggleBoxView("toggle_motor").toggle(false);

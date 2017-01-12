@@ -11,7 +11,8 @@
 
 using namespace std;
 
-DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
+DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
+DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
 
@@ -22,7 +23,7 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
   delta_current = 100.0;
   MotorModel_Prop.load("model_propulsion");
   failure = NO;
-  MotorType = Car::LeftWheelMotor;
+  MotorType = MotorType_;
   ValVoltage[0] = 0;
   ValVoltage[1] = 0;
   ValCurrent = 0;
@@ -34,8 +35,8 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
-  if (n==v1)
-    LogD << "Cmd: " << cmd << endl;
+  //if (n==v1)
+    //LogD << "Cmd: " << cmd << endl;
     //LogD << "Diagnostic : Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd,n) << endl;
   return MotorModel_Prop.getVoltage(cmd, n);
 }
@@ -84,12 +85,13 @@ void DiagnosticMotor::compareModel(){
     current =  BarstowModel.directionMotor.current;
     break;
   }
+/*
   LogD << "----------------" << endl;
   LogD << "   MOTOR  MODEL" << endl;
   LogD << "V1 : " << volt1 << "   " << ValVoltage[0] << endl;
   LogD << "V2 : " << volt2 << "   " << ValVoltage[1] << endl;
   LogD << "Cur: " << current << "   " << ValCurrent << endl;
-
+*/
   if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
 	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
     failure = CMD;

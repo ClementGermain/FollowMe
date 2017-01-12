@@ -32,8 +32,8 @@ public:
 protected:
   
   BarstowControl_Typedef BarstowControl;
-   BarstowModel_Typedef BarstowModel;
-
+  BarstowModel_Typedef BarstowModel;
+  
   float delta_voltage;
   float delta_current;
   float ValVoltage[2];
@@ -51,7 +51,8 @@ protected:
   Car::Motor MotorType;
 };
 
-extern DiagnosticMotor Diag_Prop;
+extern DiagnosticMotor Diag_Prop_Right;
+extern DiagnosticMotor Diag_Prop_Left;
 
 #endif
 

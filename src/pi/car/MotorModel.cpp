@@ -50,11 +50,11 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 		Model[i].MotorModel.voltage1 = BarstowModel.leftWheelMotor.voltage1;
 		Model[i].MotorModel.voltage2 = BarstowModel.leftWheelMotor.voltage2;
 		Model[i].MotorModel.speed = BarstowModel.leftWheelMotor.speed; 
-
+		/*
 		LogD << "Cmd : " << Model[i].cmd << endl;
 		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
 		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
-		
+		*/
 		i++;
 	}
 	Car::writeControlMotor(Car::Stop, 0.0);
@@ -67,7 +67,7 @@ void MotorModel::save(const char * fileName){
 
 	FILE * file = fopen(filepath, "wb");
 	if (file){
-	  LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
+	  //LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
 	  fclose(file);
 	}
 }
