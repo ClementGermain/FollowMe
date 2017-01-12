@@ -63,7 +63,7 @@ float DiagnosticMotor::getMinCurrent(){
 
 void DiagnosticMotor::compareModel(){
   float volt1, volt2, current;
-
+  static int delay = 0;
   Car::getModelStructure(BarstowModel);
 
   switch (MotorType){
@@ -94,12 +94,19 @@ void DiagnosticMotor::compareModel(){
 */
   if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
 	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
-    failure = CMD;
+    if (delay < 20)
+	delay++;
+    else
+	failure = CMD;
   }
   else if (fabs(ValCurrent - current) >= delta_current)
-    failure = CURRENT;
+    if (delay < 20)
+	delay++;
+    else
+	failure = CURRENT;
   else{
     failure = NO;
+    delay = 0;
   }
 }
 

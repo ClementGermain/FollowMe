@@ -12,7 +12,7 @@
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
 #include "car/MotorModel.hpp"
-#include "IA/Diagnostic.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
@@ -69,8 +69,11 @@ int main() {
 
 	// start Image Processing threads
 	UserDetectionTest.start();
-	roadDetectionTest.start();
-    roadDetectionTest.detector.init();
+	roadDetectionTest.start();  
+	Diag_Prop_Left.start();
+	Diag_Prop_Right.start();
+	
+	roadDetectionTest.detector.init();
 	// Main loop
 	runUI();
 

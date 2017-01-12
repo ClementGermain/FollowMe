@@ -91,7 +91,6 @@ void runUI() {
 			NULL
 		),
 		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
-		new Menu("Diagnostic", 0, runDiag, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -246,12 +245,6 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   MotorModel model;
   model.create(-1.0, 1.0, 10000);
   model.save("model_propulsion");
-  return 0;
-}
-
-int runDiag(istream & input, vector<int> i, vector<string> s){
-  Diag_Prop_Left.start();
-  Diag_Prop_Right.start();
   return 0;
 }
 
