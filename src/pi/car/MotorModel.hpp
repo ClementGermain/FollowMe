@@ -34,10 +34,13 @@ public :
   void getState(float cmd, MotorModel_Typedef & MotorModel);
   
   float getVoltage(float cmd, numVoltage n);
+  float getCurrent(float cmd);
   
 protected :
   int sizeModel;  
   Model_TypeDef * Model;
+
+  int getIndex(float cmd);
 };
 
 #endif
