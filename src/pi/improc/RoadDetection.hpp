@@ -36,6 +36,8 @@ class RoadDetection
 public:
 	RoadDetection();
 	~RoadDetection();
+	
+	void init();
 
 	/*! Target to follow. Direction and distance. !*/
  	cv::Point_<float> Target;

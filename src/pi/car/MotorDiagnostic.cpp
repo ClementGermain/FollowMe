@@ -11,7 +11,7 @@
 
 using namespace std;
 
-DiagnosticMotor Diag_Prop("model_propulsion", Car::LeftWheelMotor);
+DiagnosticMotor Diag_Prop("model_propulsion", Car::RightWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
 

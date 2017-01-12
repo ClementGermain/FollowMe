@@ -201,7 +201,7 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
     const float dAngle = 0.15f;
     const float hist = 0.15f;
 
-    cout << angleUserToCamera << endl;
+    //cout << angleUserToCamera << endl;
 
     if (!isUserDetected){
         IA::Direction = Car::NoTurn;
@@ -218,7 +218,7 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
 				and uAngleT1 < 0.3f)
 	    {
 	        IA::Direction = Car::TurnRight;
-	        cout << "LEFT" << endl;
+	        //cout << "LEFT" << endl;
                 uAngleT1 += dAngle;
         	directionSpeed=1.0;
 	    }
@@ -226,7 +226,7 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
 					and uAngleT1 > -0.3f)
 	    {
 	        IA::Direction = Car::TurnLeft;
-                cout << "Right" << endl;
+                //cout << "Right" << endl;
 	        uAngleT1 -=dAngle;		
         	directionSpeed=1.0;
 	    }

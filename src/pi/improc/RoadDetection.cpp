@@ -22,10 +22,26 @@ RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3
 				m_thresholdedImage{ROADMATROW, ROADMATCOL, CV_8UC3}
 				
 {	
+
+}
+
+RoadDetection::~RoadDetection()
+{
+}
+
+int RoadDetection::canGoForward()
+{
+	return m_forwardBool;
+}
+
+void RoadDetection::init()
+{
+
 	//! Calculate the camera's focal distances
 	m_dfy = Camera::getFrameHeight() / (2.f*tan(Camera::verticalFOV / 2.f));
 	m_dfx = Camera::getFrameWidth() / (2.f*tan(Camera::horizontalFOV / 2.f));
-
+	//cout << "FH = " << Camera::getFrameHeight() << endl;
+	//cout << "FW = " << Camera::getFrameWidth() << endl;
 	//! Set real point distance from car
 	float py = Car::CarSize*1.2f;
 	float px = Car::CarWidth*0.8f;
@@ -41,16 +57,7 @@ RoadDetection::RoadDetection() :m_displayedImage{ROADMATROW, ROADMATCOL, CV_8UC3
 	//! Set points coordinates
 	m_forwardRect.push_back(project2D(cv::Point_<float>(px, py)));
 	m_forwardRect.push_back(project2D(cv::Point_<float>(-1*px, py)));
-
-}
-
-RoadDetection::~RoadDetection()
-{
-}
-
-int RoadDetection::canGoForward()
-{
-	return m_forwardBool;
+	return;
 }
 
 cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
@@ -58,8 +65,8 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
  
 	//! Project user real position on road matrix !//
 	cv::Point userCamPos = project2D(userPosition);
-	cout <<	"User x=" << userPosition.x << "\t camX="<< userCamPos.x << endl;
-	cout << "User y=" << userPosition.y << "\t camY" << userCamPos.y << endl;
+	//cout <<	"User x=" << userPosition.x << "\t camX="<< userCamPos.x << endl;
+	//cout << "User y=" << userPosition.y << "\t camY" << userCamPos.y << endl;
 	//! Scale points to the threshold image !//
 	float scaleX = (float)ROADMATCOL / (float)Camera::getFrameWidth();
 	float scaleY = (float)ROADMATROW / (float)Camera::getFrameHeight();
@@ -350,8 +357,8 @@ cv::Point RoadDetection::project2D(cv::Point_<float> relativePoint)
 	float dtetay = M_PI*90.f/180.f + Camera::pitch - tetay;
 	float y = tan(dtetay) * m_dfy;
 
-	cout << tetay << ", " << dtetay << ", " << y << endl;
-	cout << Camera::PosZ << " ; " << Camera::pitch << " ; " << m_dfy << endl << endl;
+	//cout << tetay << ", " << dtetay << ", " << y << endl;
+	//cout << Camera::PosZ << " ; " << Camera::pitch << " ; " << m_dfy << endl << endl;
 	//! Calculate x coord
 	float distx = sqrt(Camera::PosZ + pow(relativePoint.y,2));
 	//float dtetax = atan2(relativePoint.x, distx);	
