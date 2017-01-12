@@ -263,9 +263,11 @@ void IA::start() {
 
 void IA::stop() {
 	if(threadTest != NULL) {
-		Speed=0.0f;
-		directionSpeed=0.0f;
 		endThread = true;
+		IA::Speed=0.0f;
+		IA::directionSpeed=0.0f;
+		Car::writeControlMotor(Car::Stop, IA::Speed);
+		Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 		threadTest->join();
 		delete threadTest;
 		threadTest = NULL;
