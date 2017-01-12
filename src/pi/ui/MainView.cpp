@@ -90,11 +90,21 @@ void MainView::initializeViews(ViewManager & mgr) {
 	defaultLayout.addView("cpu", new Digital("CPU: %.0f%%", 540, 40, 80, 16, false));
 
 	// Toggle Informations
-	//	defaultLayout.addView("state_motor", new StateBox(535, 70));
 
-     	defaultLayout.addView("toggle_motor_left", new ToggleBox("MOTOR LEFT OK", "MOTOR LEFT FAILURE", 535, 70));
-	defaultLayout.addView("toggle_motor_right", new ToggleBox("MOTOR RIGHT OK", "MOTOR RIGHT FAILURE", 535, 110));
+	//	defaultLayout.addView("toggle_motor_left", new ToggleBox("MOTOR LEFT OK", "MOTOR LEFT FAILURE", 535, 70));
+	defaultLayout.addView("state_motor_left", new StateBox(535, 70));
+	defaultLayout.getStateBoxView("state_motor_left").add_state("MOTOR LEFT OK", 0, 150, 0);
+	defaultLayout.getStateBoxView("state_motor_left").add_state("CMD LEFT FAILURE", 150, 0, 0);
+	defaultLayout.getStateBoxView("state_motor_left").add_state("MOTOR LEFT FAILURE", 150, 0, 0);
+
+	//	defaultLayout.addView("toggle_motor_right", new ToggleBox("MOTOR RIGHT OK", "MOTOR RIGHT FAILURE", 535, 110));
+	defaultLayout.addView("state_motor_right", new StateBox(535, 110));
+	defaultLayout.getStateBoxView("state_motor_right").add_state("MOTOR RIGHT OK", 0, 150, 0);
+	defaultLayout.getStateBoxView("state_motor_right").add_state("CMD RIGHT FAILURE", 150, 0, 0);
+	defaultLayout.getStateBoxView("state_motor_right").add_state("MOTOR RIGHT FAILURE", 150, 0, 0);
+
 	defaultLayout.addView("toggle_user", new ToggleBox("USER DETECTED", "NO USER", 535, 150));
+
 	defaultLayout.addView("state_road", new StateBox(535, 190));
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : NO IDEA", 150, 0, 0); //NO ROAD DETECTED
 	defaultLayout.getStateBoxView("state_road").add_state("ROAD : YES", 0, 150, 0); //ROAD DETECTED
@@ -259,13 +269,8 @@ void MainView::updateViews(ViewManager & mgr) {
 		
 		l.getDigitalView("cpu").setValue(cpuLoad.get());
 		
-		if (Diag_Prop_Right.getFailure()==NO)
-		  l.getToggleBoxView("toggle_motor_right").toggle(true);
-		else
-		  l.getToggleBoxView("toggle_motor_right").toggle(false);
-		
-
-		//l.getStateBoxView("state_motor").set_state(Diag_Prop.getFailure());
+		l.getStateBoxView("state_motor_left").set_state(Diag_Prop_Left.getFailure());
+		l.getStateBoxView("state_motor_right").set_state(Diag_Prop_Right.getFailure());
 
 		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
