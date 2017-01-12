@@ -96,7 +96,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 		cv::erode(hsv_image, hue_image, cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)) );
 
 		// Apply blur
-		int bSize = 1 + 8 / OVERSCALE_FRAME;
+		int bSize = (9 / OVERSCALE_FRAME) | 1;
 		cv::GaussianBlur(hue_image, hue_image, cv::Size(bSize, bSize), 2, 2);
 
 		// Use the Hough transform to detect circles in the combined threshold image
