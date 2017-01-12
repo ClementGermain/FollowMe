@@ -19,11 +19,13 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
   endThread = true;
 
   delta_voltage = 600.0;
+  delta_current = 100.0;
   MotorModel_Prop.load("model_propulsion");
   failure = NO;
   MotorType = Car::LeftWheelMotor;
   ValVoltage[0] = 0;
   ValVoltage[1] = 0;
+  ValCurrent = 0;
 }
 
 Failure_Typedef DiagnosticMotor::getFailure(){
@@ -38,6 +40,10 @@ float DiagnosticMotor::getValVoltage(numVoltage n){
   return MotorModel_Prop.getVoltage(cmd, n);
 }
 
+float DiagnosticMotor::getValCurrent(){
+  return MotorModel_Prop.getCurrent(getCmd());
+}
+
 float DiagnosticMotor::getMinVoltage(numVoltage n){
   return ValVoltage[n-1] - delta_voltage;
 }
@@ -46,8 +52,16 @@ float DiagnosticMotor::getMaxVoltage(numVoltage n){
   return ValVoltage[n-1] + delta_voltage;
 }
 
+float DiagnosticMotor::getMaxCurrent(){
+  return ValCurrent + delta_current;
+}
+
+float DiagnosticMotor::getMinCurrent(){
+  return ValCurrent - delta_current;
+}
+
 void DiagnosticMotor::compareModel(){
-  float volt1, volt2;
+  float volt1, volt2, current;
 
   Car::getModelStructure(BarstowModel);
 
@@ -55,31 +69,35 @@ void DiagnosticMotor::compareModel(){
   case Car::LeftWheelMotor:
     volt1 =  BarstowModel.leftWheelMotor.voltage1;
     volt2 =  BarstowModel.leftWheelMotor.voltage2;
+    current =  BarstowModel.leftWheelMotor.current;
     break;
   case Car::RightWheelMotor:
     volt1 =  BarstowModel.rightWheelMotor.voltage1;
     volt2 =  BarstowModel.rightWheelMotor.voltage2;
+    current =  BarstowModel.rightWheelMotor.current;
     break;
   case Car::BothWheelMotors:
     break;
   case Car::DirectionMotor:
     volt1 =  BarstowModel.directionMotor.voltage1;
     volt2 =  BarstowModel.directionMotor.voltage2;
+    current =  BarstowModel.directionMotor.current;
     break;
   }
   LogD << "----------------" << endl;
   LogD << "   MOTOR  MODEL" << endl;
   LogD << "V1 : " << volt1 << "   " << ValVoltage[0] << endl;
-  LogD << "V2 : " << volt2 << "   " << ValVoltage[1] <<endl;
+  LogD << "V2 : " << volt2 << "   " << ValVoltage[1] << endl;
+  LogD << "Cur: " << current << "   " << ValCurrent << endl;
 
   if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
 	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
     failure = CMD;
-    LogD << "MOTOR FAILURE" << endl;
   }
+  else if (fabs(ValCurrent - current) >= delta_current)
+    failure = CURRENT;
   else{
     failure = NO;
-    LogD << "MOTOR OK" << endl;
   }
 }
 
@@ -134,6 +152,8 @@ void DiagnosticMotor::run() {
     
     ValVoltage[0] = getValVoltage(v1);
     ValVoltage[1] = getValVoltage(v2);
+    ValCurrent = getValCurrent();
+
     compareModel();
     
     // sleep 

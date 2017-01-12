@@ -24,6 +24,8 @@ public:
   Failure_Typedef getFailure();
   float getMinVoltage(numVoltage n);
   float getMaxVoltage(numVoltage n);
+  float getMinCurrent();
+  float getMaxCurrent();
   
   float getCmd();
   
@@ -33,8 +35,12 @@ protected:
    BarstowModel_Typedef BarstowModel;
 
   float delta_voltage;
+  float delta_current;
   float ValVoltage[2];
+  float ValCurrent;
+
   float getValVoltage(numVoltage n);
+  float getValCurrent();
 
   void run();
   bool endThread;
