@@ -23,8 +23,8 @@ float IA::previousAngle = 0.f;
 float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
 
-//Direction = UserDetectionTest.detector.Target[0];
-//Distance = UserDetectionTest.detector.Target[1];
+//Direction = roadDetectionTest.detector.Target[0];
+//Distance = roadDetectionTest.detector.Target[1];
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
@@ -72,7 +72,7 @@ void IA::IAMotorBack() {
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	
 	//IA::SpeedControl(distance, isUserDetected);
-	IA::SpeedControl(UserDetectionTest.detector.Target[1], isUserDetected);
+	IA::SpeedControl(roadDetectionTest.detector.Target.y, isUserDetected);
 
 
 	// Send speed command if no obstacle detected
@@ -244,7 +244,7 @@ void IA::IAMotorDirection(){
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
-	IA::DirectionControl3(UserDetectionTest.detector.Target[0], isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
+	IA::DirectionControl3(roadDetectionTest.detector.Target.x, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }
