@@ -16,6 +16,7 @@
 #define DEFAULT_FRAME_WIDTH		320
 #define DEFAULT_FRAME_HEIGHT	240
 #define DEFAULT_FRAMERATE		30
+#define OVERSCALE_FRAME			3
 
 class Camera {
 	public:
@@ -23,6 +24,8 @@ class Camera {
 		static void init(int width=DEFAULT_FRAME_WIDTH, int height=DEFAULT_FRAME_HEIGHT, int framerate=DEFAULT_FRAMERATE);
 		// Release the camera
 		static void destroy();
+		// Indicates whether the camera has been destroyed (or just never been initialized)
+		static bool isDestroyed();
 		// update the current frame
 		static void updateImage();
 		// Give image from camera

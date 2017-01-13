@@ -32,8 +32,8 @@ void Camera::init(int width, int height, int framerate)
 #ifndef __NO_RASPI__
 	if(raspiCam == NULL) {
 		// Init configuration
-		configCam.width = width;
-		configCam.height = height;
+		configCam.width = width * OVERSCALE_FRAME;
+		configCam.height = height * OVERSCALE_FRAME;
 		configCam.bitrate = 0; // default
 		configCam.framerate = framerate;
 		configCam.monochrome = 0; // default
@@ -45,20 +45,30 @@ void Camera::init(int width, int height, int framerate)
 }
 
 void Camera::destroy() {
+	camLock.lock();
 #ifndef __NO_RASPI__
 	if(raspiCam != NULL) {
 		// Release camera
 		raspiCamCvReleaseCapture(&raspiCam);
 	}
 #endif
+	camLock.unlock();
 	if(imageCam != NULL) {
 		cvReleaseImage(&imageCam);
 	}
 }
 
+bool Camera::isDestroyed() {
+#ifndef __NO_RASPI__
+	return raspiCam == NULL;
+#else
+	return false;
+#endif
+}
+
 int Camera::getFrameWidth() {
 #ifndef __NO_RASPI__
-	return configCam.width;
+	return configCam.width / OVERSCALE_FRAME;
 #else
 	return DEFAULT_FRAME_WIDTH;
 #endif
@@ -66,7 +76,7 @@ int Camera::getFrameWidth() {
 
 int Camera::getFrameHeight() {
 #ifndef __NO_RASPI__
-	return configCam.height;
+	return configCam.height / OVERSCALE_FRAME;
 #else
 	return DEFAULT_FRAME_HEIGHT;
 #endif
@@ -89,26 +99,29 @@ void Camera::updateImage() {
 	// FIXME->it can block the current thread and all the others mutex-locked threads for 30ms
 	camLock.lock();
 
-	// Get elapsed time since last capture in milliseconds
-	int timeSinceLastCapture = timerCapture.elapsed() * 1000;
+	if(!isDestroyed()) {
+		// Get elapsed time since last capture in milliseconds
+		int timeSinceLastCapture = timerCapture.elapsed() * 1000;
 
-	// Update the capture if too old
-	if(timeSinceLastCapture > getFrameDuration() || imageCam == NULL) {
+		// Update the capture if too old
+		if(timeSinceLastCapture > getFrameDuration() || imageCam == NULL) {
 #ifndef __NO_RASPI__
-		// release the previous image
-		if(imageCam != NULL)
-			cvReleaseImage(&imageCam);
-		
-		// If the pending frame is too old, skip it
-		if(timeSinceLastCapture > 2*getFrameDuration())
-			raspiCamCvQueryFrame(raspiCam);
-		
-		// get the next frame (can wait for 1/framerate second max...)
-		imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
+			// release the previous image
+			if(imageCam != NULL)
+				cvReleaseImage(&imageCam);
+
+			// If the pending frame is too old, skip it
+			if(timeSinceLastCapture > 2*getFrameDuration())
+				raspiCamCvQueryFrame(raspiCam);
+
+			// get the next frame (can wait for 1/framerate second max...)
+			imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
+			cv::resize(imageCam, imageCam, cv::Size(getFrameWidth(), getFrameHeight()));
 #endif
 
-		// update the capture date
-		timerCapture.reset();
+			// update the capture date
+			timerCapture.reset();
+		}
 	}
 
 	// unlock the mutex
@@ -122,8 +135,10 @@ void Camera::getImage(cv::Mat & out) {
 	// lock the mutex 
 	camLock.lock();
 
-	// Create a new matrix from the current capture
-	out = cv::Mat(imageCam, true);
+	if(!isDestroyed()) {
+		// Create a new matrix from the current capture
+		out = cv::Mat(imageCam, true);
+	}
 
 	// unlock the mutex
 	camLock.unlock();
@@ -139,14 +154,16 @@ SDL_Surface * Camera::getBitmap() {
 	// lock the mutex 
 	camLock.lock();
 
-	// Create a new SDL_SUrface from the current capture
-	s = SDL_CreateRGBSurfaceFrom((void*)imageCam->imageData,
-			imageCam->width,
-			imageCam->height,
-			imageCam->depth * imageCam->nChannels,
-			imageCam->widthStep,
-			0xff0000, 0x00ff00, 0x0000ff, 0
-	);
+	if(!isDestroyed()) {
+		// Create a new SDL_SUrface from the current capture
+		s = SDL_CreateRGBSurfaceFrom((void*)imageCam->imageData,
+				imageCam->width,
+				imageCam->height,
+				imageCam->depth * imageCam->nChannels,
+				imageCam->widthStep,
+				0xff0000, 0x00ff00, 0x0000ff, 0
+				);
+	}
 
 	// unlock the mutex
 	camLock.unlock();
