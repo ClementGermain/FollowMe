@@ -29,7 +29,7 @@ float IA::uAngleT2 =0.f;
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 	float realDistance = distanceUserToCamera - Car::CarSize;
-	const float minCriticalDistance = 0.5f; // Requirement: car must not get closer than 0.5m
+	const float minCriticalDistance = 0.1f; // Requirement: car must not get closer than 0.1m
 	const float acceleration = 0.1f;
 
 	// Stop instantly the car if closer than 0.5m
@@ -40,8 +40,8 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 		const float speedMin = 0.35f;
 		const float speedMax = 1.0f;
 		// hysteresis threshold: if car is moving then stop at 0.5m else start at 1m.
-		const float distanceMin = IA::Speed > 0 ? 0.3f : 0.5f;
-		const float distanceMax = 2.5f;
+		const float distanceMin = IA::Speed > 0 ? 0.3f : 0.7f;
+		const float distanceMax = 1.7f;
 
 		// Get target speed
 		float targetSpeed;
