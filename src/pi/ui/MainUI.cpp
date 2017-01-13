@@ -293,7 +293,7 @@ int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
 }
 
 int toggleRoadDetectionIA(istream & input, vector<int> i, vector<string> s) {
-	IA::toggleRoadDetectionIA();
+	IA::toggleRoadDetection();
 	cout << "Road detection is now " << (IA::enableRoadDetection ? "enabled" : "disabled") << endl;
 	return 0;
 }
