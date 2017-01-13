@@ -16,7 +16,7 @@
 #define DEFAULT_FRAME_WIDTH		320
 #define DEFAULT_FRAME_HEIGHT	240
 #define DEFAULT_FRAMERATE		30
-#define OVERSCALE_FRAME			3
+#define OVERSCALE_FRAME			4
 
 class Camera {
 	public:
@@ -51,6 +51,7 @@ class Camera {
 	
 		static std::mutex camLock;
 		static IplImage * imageCam;
+		static cv::Mat imageMat;
 		static Timer timerCapture;
 #ifndef __NO_RASPI__
 		static RaspiCamCvCapture * raspiCam;

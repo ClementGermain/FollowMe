@@ -21,6 +21,7 @@ const float Camera::horizontalFOV	= 62.2f * M_PI/180.f;
 const float Camera::verticalFOV		= 48.8f * M_PI/180.f;
 std::mutex Camera::camLock;
 IplImage * Camera::imageCam;
+cv::Mat Camera::imageMat;
 Timer Camera::timerCapture;
 #ifndef __NO_RASPI__
 RaspiCamCvCapture * Camera::raspiCam = NULL;
@@ -116,7 +117,8 @@ void Camera::updateImage() {
 
 			// get the next frame (can wait for 1/framerate second max...)
 			imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
-			cv::resize(imageCam, imageCam, cv::Size(getFrameWidth(), getFrameHeight()));
+			imageMat = imageCam;
+			cv::resize(imageMat, imageMat, cv::Size(getFrameWidth(), getFrameHeight()));
 #endif
 
 			// update the capture date
@@ -137,7 +139,8 @@ void Camera::getImage(cv::Mat & out) {
 
 	if(!isDestroyed()) {
 		// Create a new matrix from the current capture
-		out = cv::Mat(imageCam, true);
+		imageMat.copyTo(out);
+		// out = cv::Mat(imageMat, true);
 	}
 
 	// unlock the mutex
