@@ -27,6 +27,8 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
   ValVoltage[0] = 0;
   ValVoltage[1] = 0;
   ValCurrent = 0;
+  delay_compt = 0;
+  delay = 10;
 }
 
 Failure_Typedef DiagnosticMotor::getFailure(){
@@ -63,7 +65,6 @@ float DiagnosticMotor::getMinCurrent(){
 
 void DiagnosticMotor::compareModel(){
   float volt1, volt2, current;
-
   Car::getModelStructure(BarstowModel);
 
   switch (MotorType){
@@ -94,12 +95,19 @@ void DiagnosticMotor::compareModel(){
 */
   if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
 	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
-    failure = CMD;
+    if (delay_compt < delay)
+	delay_compt++;
+    else
+	failure = CMD;
   }
   else if (fabs(ValCurrent - current) >= delta_current)
-    failure = CURRENT;
+    if (delay_compt < delay)
+	delay_compt++;
+    else
+	failure = CURRENT;
   else{
     failure = NO;
+    delay_compt = 0;
   }
 }
 

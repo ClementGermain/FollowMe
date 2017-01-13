@@ -12,7 +12,7 @@
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
 #include "car/MotorModel.hpp"
-#include "IA/Diagnostic.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
@@ -54,7 +54,7 @@ void handler(int sig) {
 
 	// Release camera and sound
 	Sound::stop();
-	Camera::destroy();
+	Camera::destroyAndStop();
 
 	// Exit program
 	exit(1);
@@ -64,24 +64,27 @@ int main() {
 	// Initializations
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
-	Camera::init();
+	Camera::initAndStart();
 	ObstacleDetection::start();
 
 	// start Image Processing threads
 	UserDetectionTest.start();
-	roadDetectionTest.start();
-    roadDetectionTest.detector.init();
+	roadDetectionTest.start();  
+	Diag_Prop_Left.start();
+	Diag_Prop_Right.start();
+	
+	roadDetectionTest.detector.init();
 	// Main loop
 	runUI();
 
 	// Destroying
 	IA::stop();
-	Camera::destroy();
 	Sound::stop();
 	//Diagnostic::stop();
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
 	ObstacleDetection::stop();
+	Camera::destroyAndStop();
 	return 0;
 }
 

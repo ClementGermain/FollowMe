@@ -7,6 +7,7 @@
 #include <SDL/SDL.h>
 #include <chrono>
 #include <mutex>
+#include <thread>
 #include "utils/Timer.hpp"
 
 #ifndef __NO_RASPI__
@@ -16,18 +17,23 @@
 #define DEFAULT_FRAME_WIDTH		320
 #define DEFAULT_FRAME_HEIGHT	240
 #define DEFAULT_FRAMERATE		30
+#define OVERSCALE_FRAME			4
 
 class Camera {
 	public:
-		// Initialize the camera
-		static void init(int width=DEFAULT_FRAME_WIDTH, int height=DEFAULT_FRAME_HEIGHT, int framerate=DEFAULT_FRAMERATE);
-		// Release the camera
-		static void destroy();
+		// Initialize the camera and start the thread
+		static void initAndStart(int width=DEFAULT_FRAME_WIDTH, int height=DEFAULT_FRAME_HEIGHT, int framerate=DEFAULT_FRAMERATE);
+		// Release the camera and stop the thread
+		static void destroyAndStop();
+		// Indicate whether the camera is ready to fetch an image
+		static bool imageCanBeFetchFromCamera();
+		// Indicate whether an image has been already put in buffer
+		static bool imageIsInBuffer();
 		// update the current frame
 		static void updateImage();
-		// Give image from camera
+		// Give image from camera and write to 'out'
+		// if camera is not ready, 'out' will not be updated
 		static void getImage(cv::Mat & out);
-		static SDL_Surface * getBitmap();
 		// Dynamic properties
 		static int getFrameWidth(); // in Pixels
 		static int getFrameHeight(); // in Pixels
@@ -45,14 +51,20 @@ class Camera {
 		static const float verticalFOV;
 		
 	private:
+		// Thread runnable method
+		static void run();
 	
 		static std::mutex camLock;
 		static IplImage * imageCam;
+		static cv::Mat imageMat;
 		static Timer timerCapture;
 #ifndef __NO_RASPI__
 		static RaspiCamCvCapture * raspiCam;
 		static RASPIVID_CONFIG configCam;
 #endif
+		static bool isUp;
+		static bool endThread;
+		static std::thread * threadTest;
 };
 
 
