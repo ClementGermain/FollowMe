@@ -22,6 +22,7 @@ bool IA::endThread = true;
 float IA::previousAngle = 0.f;
 float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
+bool IA::enableRoadDetection = true;
 
 //Direction = roadDetectionTest.detector.Target[0];
 //Distance = roadDetectionTest.detector.Target[1];
@@ -30,22 +31,23 @@ float IA::uAngleT2 =0.f;
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 	float realDistance = distanceUserToCamera - Car::CarSize;
 	const float minCriticalDistance = 0.1f; // Requirement: car must not get closer than 0.1m
-	const float acceleration = 0.1f;
+	const float acceleration = 0.05f;
 
-	// Stop instantly the car if closer than 0.5m
+	// Stop instantly the car if closer than the minimal critical distance
 	if(realDistance <= minCriticalDistance) {
 		IA::Speed = 0.0f;
 	}
 	else {
 		const float speedMin = 0.35f;
 		const float speedMax = 1.0f;
-		// hysteresis threshold: if car is moving then stop at 0.5m else start at 1m.
-		const float distanceMin = IA::Speed > 0 ? 0.3f : 0.7f;
+		const float distanceMin = 0.3f;
 		const float distanceMax = 1.7f;
+		// hysteresis threshold: if car is moving then stop at 0.3m else start at 0.7m.
+		const float distanceMinStop = IA::Speed > 0 ? distanceMin : 0.7f;
 
 		// Get target speed
 		float targetSpeed;
-		if(!isUserDetected || realDistance < distanceMin)
+		if(!isUserDetected || realDistance < distanceMinStop)
 			targetSpeed = 0.0f;
 		else if(realDistance > distanceMax)
 			targetSpeed = 1.0f;
@@ -68,11 +70,14 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 void IA::IAMotorBack() {
 	// Update speed value
 
-	//float distance = UserDetectionTest.detector.getDistance();
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
+	float distance;
+	if(enableRoadDetection)
+		distance = roadDetectionTest.detector.Target.y;
+	else
+		distance = UserDetectionTest.detector.getDistance();
 	
-	//IA::SpeedControl(distance, isUserDetected);
-	IA::SpeedControl(roadDetectionTest.detector.Target.y, isUserDetected);
+	IA::SpeedControl(distance, isUserDetected);
 
 
 	// Send speed command if no obstacle detected
@@ -239,16 +244,23 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
 
 void IA::IAMotorDirection(){
 
-	//float angleUserToCamera = UserDetectionTest.detector.getDirection();
+	float angleUserToCamera;
+	if(enableRoadDetection)
+		angleUserToCamera = roadDetectionTest.detector.Target.x;
+	else
+		angleUserToCamera = UserDetectionTest.detector.getDirection();
 	
 	bool isUserDetected = UserDetectionTest.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
-	IA::DirectionControl3(roadDetectionTest.detector.Target.x, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
+	IA::DirectionControl3(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);
 	//send command to direction motor
 	Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 }
 
+void IA::toggleRoadDetection() {
+	enableRoadDetection = !enableRoadDetection;
+}
 
 
 // --------------------------------------- //

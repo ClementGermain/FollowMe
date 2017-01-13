@@ -18,6 +18,9 @@ class IA {
 		static void IAMotorBack();
 		static void IAMotorDirection();
 
+		static void toggleRoadDetection();
+
+		static bool enableRoadDetection;
 	private:		
 		static float Speed;		
 		static float directionSpeed;
@@ -28,8 +31,8 @@ class IA {
 		static bool endThread;
 		static std::thread * threadTest;
                 
-                static float uAngleT1;
-                static float uAngleT2;
+		static float uAngleT1;
+		static float uAngleT2;
 
 		static float previousAngle;
 

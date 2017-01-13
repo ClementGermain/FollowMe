@@ -31,6 +31,7 @@ int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
+int toggleRoadDetectionIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
 int runDiag(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
@@ -88,6 +89,7 @@ void runUI() {
 		new Menu("ai", 0, 0, 
 			new Menu ("start", 1, runIA, NULL),
 			new Menu ("stop", 2, runIA, NULL),
+			new Menu("road", 0, toggleRoadDetectionIA, NULL),
 			NULL
 		),
 		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
@@ -287,5 +289,11 @@ int resetUserData(istream & input, vector<int> i, vector<string> s) {
 
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
 	UserDetectionTest.detector.toggleMode();
+	return 0;
+}
+
+int toggleRoadDetectionIA(istream & input, vector<int> i, vector<string> s) {
+	IA::toggleRoadDetectionIA();
+	cout << "Road detection is now " << (IA::enableRoadDetection ? "enabled" : "disabled") << endl;
 	return 0;
 }
