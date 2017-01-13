@@ -54,7 +54,7 @@ void handler(int sig) {
 
 	// Release camera and sound
 	Sound::stop();
-	Camera::destroy();
+	Camera::destroyAndStop();
 
 	// Exit program
 	exit(1);
@@ -64,7 +64,7 @@ int main() {
 	// Initializations
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
-	Camera::init();
+	Camera::initAndStart();
 	ObstacleDetection::start();
 
 	// start Image Processing threads
@@ -79,12 +79,12 @@ int main() {
 
 	// Destroying
 	IA::stop();
-	Camera::destroy();
 	Sound::stop();
 	//Diagnostic::stop();
 	UserDetectionTest.stop();
 	roadDetectionTest.stop();
 	ObstacleDetection::stop();
+	Camera::destroyAndStop();
 	return 0;
 }
 
