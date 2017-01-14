@@ -53,6 +53,8 @@ OTHER_OBJECTS=Main.o \
 			  IA/Diagnostic.o \
 			  utils/Log.o \
 			  utils/Timer.o \
+			  utils/Thread.o \
+			  utils/PeriodicThread.o \
 			  improc/UserPatternDetection.o \
 			  improc/KalmanFilterForUserDetection.o \
 			  improc/UserPatternDetectionTest.o \

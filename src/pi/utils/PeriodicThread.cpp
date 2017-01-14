@@ -23,7 +23,7 @@ void PeriodicThread::run() {
 		// sleep for period
 		double sleepTime = periodSecond - timer.elapsed();
 		if(sleepTime > 0)
-			this_thread::sleep_for(chrono::milliseconds(sleepTime * 1000));
+			this_thread::sleep_for(chrono::milliseconds((long long int) (sleepTime * 1000L)));
 	}
 	
 	// call end() callback

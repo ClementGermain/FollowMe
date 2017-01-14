@@ -1,7 +1,5 @@
 #include "Thread.hpp"
 
-using namespace std;
-
 
 Thread::Thread() : requestEndThread(true), runningThread(NULL)
 {
@@ -16,21 +14,21 @@ Thread::~Thread() {
 void Thread::start() {
 	if(!isRunning()) {
 		requestEndThread = false;
-		thread = new Thread(run, this);
+		runningThread = new std::thread(&Thread::run, this);
 	}
 }
 
 void Thread::stop() {
 	if(isRunning()) {
 		requestEndThread = true;
-		thread->join();
-		delete thread;
-		thread = NULL;
+		runningThread->join();
+		delete runningThread;
+		runningThread = NULL;
 	}
 }
 
 bool Thread::isRunning() {
-	return thread != NULL;
+	return runningThread != NULL;
 }
 
 bool Thread::isEndRequested() {
