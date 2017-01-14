@@ -219,23 +219,23 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
         }
         else
         {
-	    if (uAngleT1 <= angleUserToCamera - hist
-				and uAngleT1 < 0.3f)
-	    {
-	        IA::Direction = Car::TurnRight;
-	        //cout << "LEFT" << endl;
-                uAngleT1 += dAngle;
-        	directionSpeed=1.0;
-	    }
-            else if (uAngleT1 > angleUserToCamera + hist 
+			if (uAngleT1 <= angleUserToCamera - hist
+					and uAngleT1 < 0.3f)
+			{
+				IA::Direction = Car::TurnRight;
+				//cout << "LEFT" << endl;
+				uAngleT1 += dAngle;
+				directionSpeed=1.0;
+			}
+			else if (uAngleT1 > angleUserToCamera + hist 
 					and uAngleT1 > -0.3f)
-	    {
-	        IA::Direction = Car::TurnLeft;
-                //cout << "Right" << endl;
-	        uAngleT1 -=dAngle;		
-        	directionSpeed=1.0;
-	    }
-        }
+			{
+				IA::Direction = Car::TurnLeft;
+				//cout << "Right" << endl;
+				uAngleT1 -=dAngle;		
+				directionSpeed=1.0;
+			}
+		}
     }
 }
 
@@ -267,6 +267,7 @@ void IA::toggleRoadDetection() {
 
 // ------------ Thread management -------- //
 void IA::start() {
+	LogI << "Starting AI..." << endl;
 	if(threadTest == NULL) {
 		endThread = false;
 		threadTest = new thread(IA::run);
@@ -275,6 +276,7 @@ void IA::start() {
 
 void IA::stop() {
 	if(threadTest != NULL) {
+		LogI << "Joining AI thread..." << endl;
 		endThread = true;
 		IA::Speed=0.0f;
 		IA::directionSpeed=0.0f;
@@ -283,6 +285,7 @@ void IA::stop() {
 		threadTest->join();
 		delete threadTest;
 		threadTest = NULL;
+		LogI << "AI thread terminated" << endl;
 	}
 }
 

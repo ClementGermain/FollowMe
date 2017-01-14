@@ -3,6 +3,7 @@
 #include "Car.hpp"
 #include "LinkSTM32.hpp"
 #include "SPI_Interface.hpp"
+#include "utils/Log.hpp"
 
 using namespace std;
 
@@ -13,12 +14,15 @@ LinkSTM32::LinkSTM32(int period_ms) :
 	SPI{SPI_CHANNEL, SPI_SPEED},
 	threadCom([this] {this->run(); })
 {
+	LogI << "Starting SPI thread..." << endl;
 	SPI.Start();
 }
 
 LinkSTM32::~LinkSTM32() {
+	LogI << "Joining SPI thread..." << endl;
 	endThread = true;
 	threadCom.join();
+	LogI << "SPI thread terminated" << endl;
 }
 
 void LinkSTM32::run() {

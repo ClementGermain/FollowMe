@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 #include <unistd.h>
+#include <cstdlib>
 #include "MainUI.hpp"
 #include "MainView.hpp"
 #include "car/Camera.hpp"
@@ -43,6 +44,11 @@ int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 MainView view;
 
 void runUI() {
+	LogI << "Opening UI (command prompt)..." << endl; 
+
+	// Print pretty logo
+	system("head -15 ../../res/ascii/logo.txt");
+
 	/// Initialize ///
 	CommandInterpreter interpreter;
 

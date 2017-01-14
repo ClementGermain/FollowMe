@@ -1,9 +1,11 @@
 #include "Obstacle.hpp"
 #include "car/Car.hpp"
+#include "utils/Log.hpp"
 #include "../../stm32/KeilProject/Sources/Barstow/Control.h"
 #include <ctime>
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 using namespace std;
 
@@ -97,6 +99,7 @@ void ObstacleDetection::obstacleDetectionGlobalTimed() {
 
 // ------------ Thread management -------- //
 void ObstacleDetection::start() {
+	LogI << "Starting obstacle detection..." << endl;
 	if(threadTest == NULL) {
 		endThread = false;
 		threadTest = new thread(ObstacleDetection::run);
@@ -105,10 +108,12 @@ void ObstacleDetection::start() {
 
 void ObstacleDetection::stop() {
 	if(threadTest != NULL) {
+		LogI << "Obstacle detection thread..." << endl;
 		endThread = true;
 		threadTest->join();
 		delete threadTest;
 		threadTest = NULL;
+		LogI << "Obstacle thread terminated" << endl;
 	}
 }
 

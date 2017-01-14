@@ -3,6 +3,7 @@
 #include <chrono>
 #include "RoadDetectionTest.hpp"
 #include "car/Camera.hpp"
+#include "utils/Log.hpp"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ RoadDetectionTest::~RoadDetectionTest() {
 }
 
 void RoadDetectionTest::start() {
+	LogI << "Starting road detection..." << endl;
 	if(threadTest == NULL) {
 		endThread = false;
 		threadTest = new thread([this] { this->run(); });
@@ -27,10 +29,12 @@ void RoadDetectionTest::start() {
 
 void RoadDetectionTest::stop() {
 	if(threadTest != NULL) {
+		LogI << "Joining road detection thread..." << endl;
 		endThread = true;
 		threadTest->join();
 		delete threadTest;
 		threadTest = NULL;
+		LogI << "Road detection thread terminated" << endl;
 	}
 }
 

@@ -19,10 +19,10 @@ UserPatternDetectionTest::UserPatternDetectionTest() :
 }
 
 UserPatternDetectionTest::~UserPatternDetectionTest() {
-	stop();
 }
 
 void UserPatternDetectionTest::start() {
+	LogI << "Starting user detection..." << endl;
 	if(threadTest == NULL) {
 		endThread = false;
 		threadTest = new thread([this] { this->run(); });
@@ -31,10 +31,12 @@ void UserPatternDetectionTest::start() {
 
 void UserPatternDetectionTest::stop() {
 	if(threadTest != NULL) {
+		LogI << "Joining user detection thread..." << endl;
 		endThread = true;
 		threadTest->join();
 		delete threadTest;
 		threadTest = NULL;
+		LogI << "User detection thread terminated" << endl;
 	}
 }
 

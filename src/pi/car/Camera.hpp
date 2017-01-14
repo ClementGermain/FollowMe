@@ -55,7 +55,7 @@ class Camera {
 		static void run();
 	
 		static std::mutex camLock;
-		static IplImage * imageCam;
+		static bool imageInBuffer;
 		static cv::Mat imageMat;
 		static Timer timerCapture;
 #ifndef __NO_RASPI__

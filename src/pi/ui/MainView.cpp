@@ -38,7 +38,6 @@ MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 }
 
 void commandMotorFront(int direction) {
-	LogD << "Dir " << direction <<endl;
 	float speed = 0.5f;
 	switch(direction) {
 		case KeyboardInput::Idle:
@@ -51,10 +50,10 @@ void commandMotorFront(int direction) {
 			Car::writeControlMotor(Car::TurnRight, speed); 
 			break;
 	}
+	LogD << "Keyboard: change direction to " << (direction*speed) <<endl;
 }
 
 void commandMotorBack(int direction) {
-	LogD << "Prop " << direction<<endl;
 	float speed = 0.5f;
 	float fastspeed = 1.0f;
 	switch(direction) {
@@ -72,6 +71,7 @@ void commandMotorBack(int direction) {
 			Car::writeControlMotor(Car::MoveBackward, speed); 
 			break;
 	}
+	LogD << "Keyboard: change propulsion to " << (direction*speed) <<endl;
 }
 
 void MainView::initializeViews(ViewManager & mgr) {
@@ -396,12 +396,15 @@ void MainView::run() {
 		SDL_framerateDelay(&fpsManager);
 	}
 
+	LogI << "Closing GUI..." << endl;
+
 	// Close SDL
 	SDL_Quit();
 }
 
 void MainView::open() {
 	if(isThreadTerminated) {
+		LogI << "Opening graphical interface..." << endl;
 		isThreadTerminated = false;
 		threadView = new thread([this] {
 				this->run();
@@ -419,10 +422,12 @@ bool MainView::isOpen() {
 
 void MainView::close() {
 	if(threadView != NULL) {
+		LogI << "Joining GUI thread..." << endl;
 		isThreadTerminated = true;
 		threadView->join();
 		delete threadView;
 		threadView = NULL;
+		LogI << "GUI thread terminated" << endl;
 	}
 }
 
