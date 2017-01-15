@@ -1,6 +1,6 @@
 #include "IA.hpp"
 #include "improc/RoadDetection.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetectionThread.hpp"
 #include "improc/UserDetection.hpp"
 #include "improc/UserDetectionThread.hpp"
 #include "car/Obstacle.hpp"
@@ -24,8 +24,8 @@ float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
 bool IA::enableRoadDetection = true;
 
-//Direction = roadDetectionTest.detector.Target[0];
-//Distance = roadDetectionTest.detector.Target[1];
+//Direction = roadDetectionThread.detector.Target[0];
+//Distance = roadDetectionThread.detector.Target[1];
 
 // ---Linar function for speed control---- //
 void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
@@ -73,7 +73,7 @@ void IA::IAMotorBack() {
 	bool isUserDetected = userDetectionThread.detector.isDetected();
 	float distance;
 	if(enableRoadDetection)
-		distance = roadDetectionTest.detector.Target.y;
+		distance = roadDetectionThread.detector.Target.y;
 	else
 		distance = userDetectionThread.detector.getDistance();
 	
@@ -246,7 +246,7 @@ void IA::IAMotorDirection(){
 
 	float angleUserToCamera;
 	if(enableRoadDetection)
-		angleUserToCamera = roadDetectionTest.detector.Target.x;
+		angleUserToCamera = roadDetectionThread.detector.Target.x;
 	else
 		angleUserToCamera = userDetectionThread.detector.getDirection();
 	

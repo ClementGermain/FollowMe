@@ -18,7 +18,7 @@
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserDetectionThread.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetectionThread.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -70,8 +70,8 @@ int main() {
 
 	// start Image Processing threads
 	userDetectionThread.start();
-	roadDetectionTest.detector.init();
-	roadDetectionTest.start();  
+	roadDetectionThread.detector.init();
+	roadDetectionThread.start();  
 	// start diagnosis thread
 	Diag_Prop_Left.start();
 	Diag_Prop_Right.start();
@@ -87,7 +87,7 @@ int main() {
 	Sound::stop();
 	//Diagnostic::stop();
 	userDetectionThread.stop();
-	roadDetectionTest.stop();
+	roadDetectionThread.stop();
 	ObstacleDetection::stop();
 	Camera::destroyAndStop();
 	return 0;

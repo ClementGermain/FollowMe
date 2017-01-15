@@ -60,7 +60,7 @@ OTHER_OBJECTS=Main.o \
 			  improc/KalmanFilterForUserDetection.o \
 			  improc/UserDetectionThread.o \
 			  improc/RoadDetection.o \
-			  improc/RoadDetectionTest.o \
+			  improc/RoadDetectionThread.o \
 			  sound/Sound.o
 
 OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)

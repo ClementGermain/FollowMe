@@ -28,7 +28,7 @@
 #include "view/PlotsView.hpp"
 #include "view/PointerView.hpp"
 #include "improc/UserDetectionThread.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetectionThread.hpp"
 #include "improc/RoadDetection.hpp"
 
 using namespace std;
@@ -273,7 +273,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getStateBoxView("state_motor_right").set_state(Diag_Prop_Right.getFailure());
 
 		l.getToggleBoxView("toggle_user").toggle(userDetectionThread.detector.isDetected());
-		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
+		l.getStateBoxView("state_road").set_state(roadDetectionThread.detector.canGoForward());
 
 		cv::Mat cam;
 		Camera::getImage(cam);
@@ -298,7 +298,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
 		l.getToggleBoxView("sensor_toggle_user").toggle(userDetectionThread.detector.isDetected() && userDetectionThread.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
-		l.getStateBoxView("sensor_state_road").set_state(roadDetectionTest.detector.canGoForward());
+		l.getStateBoxView("sensor_state_road").set_state(roadDetectionThread.detector.canGoForward());
 		l.getToggleBoxView("sensor_toggle_eoc_left").toggle(model.leftEocSensor.endOfCourse);
 		l.getToggleBoxView("sensor_toggle_eoc_right").toggle(model.rightEocSensor.endOfCourse);
 
@@ -316,11 +316,11 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");
-		l.getImageView("roadimage").setImage(&roadDetectionTest.detector.getImage(), ImageView::FITXY);
+		l.getImageView("roadimage").setImage(&roadDetectionThread.detector.getImage(), ImageView::FITXY);
 		cv::Mat cam;
 		Camera::getImage(cam);
 		//l.getImageView("roadcamera").setImage(&cam, ImageView::NORMAL);
-		l.getImageView("roadcamera").setImage(&roadDetectionTest.detector.getCameraImage(), ImageView::FITXY);	
+		l.getImageView("roadcamera").setImage(&roadDetectionThread.detector.getCameraImage(), ImageView::FITXY);	
 	}
 }
 

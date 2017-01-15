@@ -3,7 +3,7 @@
 #include "StateRecorder.hpp"
 #include "car/Car.hpp"
 #include "improc/UserDetectionThread.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetectionThread.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -52,8 +52,8 @@ void StateRecorder::loop() {
 	bool userVis = userDetectionThread.detector.isVisible();
 
 	// Road
-	float roadUserDist = roadDetectionTest.detector.Target.y * 180 / M_PI;
-	float roadUserDir = roadDetectionTest.detector.Target.x;
+	float roadUserDist = roadDetectionThread.detector.Target.y * 180 / M_PI;
+	float roadUserDir = roadDetectionThread.detector.Target.x;
 
 	// Logs
 	string concatenatedLogs;

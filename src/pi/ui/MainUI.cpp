@@ -16,7 +16,7 @@
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
 #include "improc/UserDetectionThread.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/RoadDetectionThread.hpp"
 #include "sound/Sound.hpp"
 #include "IA/IA.hpp"
 
