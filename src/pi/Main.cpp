@@ -65,6 +65,7 @@ int main() {
 	// Initializations
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
+	link.start();
 	Camera::initAndStart();
 	ObstacleDetection::start();
 
@@ -90,6 +91,7 @@ int main() {
 	roadDetectionThread.stop();
 	ObstacleDetection::stop();
 	Camera::destroyAndStop();
+	link.stop();
 	return 0;
 }
 
