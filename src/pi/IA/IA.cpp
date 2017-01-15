@@ -1,8 +1,8 @@
 #include "IA.hpp"
 #include "improc/RoadDetection.hpp"
 #include "improc/RoadDetectionTest.hpp"
-#include "improc/UserPatternDetection.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/UserDetection.hpp"
+#include "improc/UserDetectionThread.hpp"
 #include "car/Obstacle.hpp"
 #include "utils/Log.hpp"
 #include <chrono>
@@ -70,12 +70,12 @@ void IA::SpeedControl (float distanceUserToCamera, bool isUserDetected){
 void IA::IAMotorBack() {
 	// Update speed value
 
-	bool isUserDetected = UserDetectionTest.detector.isDetected();
+	bool isUserDetected = userDetectionThread.detector.isDetected();
 	float distance;
 	if(enableRoadDetection)
 		distance = roadDetectionTest.detector.Target.y;
 	else
-		distance = UserDetectionTest.detector.getDistance();
+		distance = userDetectionThread.detector.getDistance();
 	
 	IA::SpeedControl(distance, isUserDetected);
 
@@ -248,9 +248,9 @@ void IA::IAMotorDirection(){
 	if(enableRoadDetection)
 		angleUserToCamera = roadDetectionTest.detector.Target.x;
 	else
-		angleUserToCamera = UserDetectionTest.detector.getDirection();
+		angleUserToCamera = userDetectionThread.detector.getDirection();
 	
-	bool isUserDetected = UserDetectionTest.detector.isDetected();
+	bool isUserDetected = userDetectionThread.detector.isDetected();
 	bool isEndOfCourseLeft = false; // Car :: ??
 	bool isEndOfCourseRight = false; //Car :: ??
 	IA::DirectionControl3(angleUserToCamera, isUserDetected, isEndOfCourseLeft, isEndOfCourseRight);

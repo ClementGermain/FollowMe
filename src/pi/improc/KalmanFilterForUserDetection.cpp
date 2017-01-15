@@ -5,7 +5,7 @@
 #include <vector>
 #include "car/Camera.hpp"
 #include "utils/Log.hpp"
-#include "UserPatternDetection.hpp"
+#include "UserDetection.hpp"
 
 using namespace cv;
 using namespace std;

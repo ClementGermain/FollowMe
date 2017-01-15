@@ -27,7 +27,7 @@
 #include "view/EmptyBoxView.hpp"
 #include "view/PlotsView.hpp"
 #include "view/PointerView.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
 #include "improc/RoadDetectionTest.hpp"
 #include "improc/RoadDetection.hpp"
 
@@ -272,7 +272,7 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getStateBoxView("state_motor_left").set_state(Diag_Prop_Left.getFailure());
 		l.getStateBoxView("state_motor_right").set_state(Diag_Prop_Right.getFailure());
 
-		l.getToggleBoxView("toggle_user").toggle(UserDetectionTest.detector.isDetected());
+		l.getToggleBoxView("toggle_user").toggle(userDetectionThread.detector.isDetected());
 		l.getStateBoxView("state_road").set_state(roadDetectionTest.detector.canGoForward());
 
 		cv::Mat cam;
@@ -290,13 +290,13 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getDigitalView("sensor_distFrontRight").setValue(model.frontRightUSensor.distance);
 		l.getDigitalView("sensor_distFrontCenter").setValue(model.frontCenterUSensor.distance);
 		
-		l.getTrackbarView("sensor_UserDistance").setPosition(UserDetectionTest.detector.getDistance()-Car::CarSize);
-		l.getTrackbarView("sensor_UserAngle").setPosition(UserDetectionTest.detector.getDirection()*180/M_PI);
-		l.getDigitalView("sensor_UserDistanceText").setValue(UserDetectionTest.detector.getDistance()-Car::CarSize);
-		l.getDigitalView("sensor_UserAngleText").setValue(UserDetectionTest.detector.getDirection()*180/M_PI);
+		l.getTrackbarView("sensor_UserDistance").setPosition(userDetectionThread.detector.getDistance()-Car::CarSize);
+		l.getTrackbarView("sensor_UserAngle").setPosition(userDetectionThread.detector.getDirection()*180/M_PI);
+		l.getDigitalView("sensor_UserDistanceText").setValue(userDetectionThread.detector.getDistance()-Car::CarSize);
+		l.getDigitalView("sensor_UserAngleText").setValue(userDetectionThread.detector.getDirection()*180/M_PI);
 
 		l.getToggleBoxView("sensor_toggle_motor").toggle(true);
-		l.getToggleBoxView("sensor_toggle_user").toggle(UserDetectionTest.detector.isDetected() && UserDetectionTest.detector.getDistance() < 3.0f);
+		l.getToggleBoxView("sensor_toggle_user").toggle(userDetectionThread.detector.isDetected() && userDetectionThread.detector.getDistance() < 3.0f);
 		l.getToggleBoxView("sensor_toggle_obstacle").toggle(!ObstacleDetection::isGlobalDetected());
 		l.getStateBoxView("sensor_state_road").set_state(roadDetectionTest.detector.canGoForward());
 		l.getToggleBoxView("sensor_toggle_eoc_left").toggle(model.leftEocSensor.endOfCourse);
@@ -310,9 +310,9 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 	else if(mgr.isActive("User Detection")) {
 		Layout & l = mgr.getLayout("User Detection");
-		l.getImageView("result").setImage(&UserDetectionTest.detector.getResultImage());
-		l.getImageView("filter").setImage(&UserDetectionTest.detector.getFilterImage());
-		((PlotsView*)l.getView("graph"))->addPlot(UserDetectionTest.detector.getDistance());
+		l.getImageView("result").setImage(&userDetectionThread.detector.getResultImage());
+		l.getImageView("filter").setImage(&userDetectionThread.detector.getFilterImage());
+		((PlotsView*)l.getView("graph"))->addPlot(userDetectionThread.detector.getDistance());
 	}
 	else if(mgr.isActive("Road Detection")) {
 		Layout & l = mgr.getLayout("Road Detection");

@@ -17,7 +17,7 @@
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
@@ -69,7 +69,7 @@ int main() {
 	ObstacleDetection::start();
 
 	// start Image Processing threads
-	UserDetectionTest.start();
+	userDetectionThread.start();
 	roadDetectionTest.detector.init();
 	roadDetectionTest.start();  
 	// start diagnosis thread
@@ -86,7 +86,7 @@ int main() {
 	IA::stop();
 	Sound::stop();
 	//Diagnostic::stop();
-	UserDetectionTest.stop();
+	userDetectionThread.stop();
 	roadDetectionTest.stop();
 	ObstacleDetection::stop();
 	Camera::destroyAndStop();

@@ -56,9 +56,9 @@ OTHER_OBJECTS=Main.o \
 			  utils/Timer.o \
 			  utils/Thread.o \
 			  utils/PeriodicThread.o \
-			  improc/UserPatternDetection.o \
+			  improc/UserDetection.o \
 			  improc/KalmanFilterForUserDetection.o \
-			  improc/UserPatternDetectionTest.o \
+			  improc/UserDetectionThread.o \
 			  improc/RoadDetection.o \
 			  improc/RoadDetectionTest.o \
 			  sound/Sound.o

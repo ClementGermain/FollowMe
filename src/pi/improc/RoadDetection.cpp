@@ -1,6 +1,6 @@
 #include "RoadDetection.hpp"
-#include "UserPatternDetection.hpp"
-#include "UserPatternDetectionTest.hpp"
+#include "UserDetection.hpp"
+#include "UserDetectionThread.hpp"
 #include "car/Car.hpp"
 #include "utils/Log.hpp"
 
@@ -243,8 +243,8 @@ void RoadDetection::applyRoadThreshold(Mat image)
 	//roadInQuad(m_forwardRect[3], m_forwardRect[2], m_forwardRect[1], m_forwardRect[0]);
 		//create next target and give it the distance and direction (relative point) 
 		cv::Point_<float> relativeTarget;
-		relativeTarget.x = sin(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
-		relativeTarget.y = cos(UserDetectionTest.detector.getDirection()) * UserDetectionTest.detector.getDistance();
+		relativeTarget.x = sin(userDetectionThread.detector.getDirection()) * userDetectionThread.detector.getDistance();
+		relativeTarget.y = cos(userDetectionThread.detector.getDirection()) * userDetectionThread.detector.getDistance();
 		cv::Point computedPoint = computeNextWayPoint(relativeTarget);
         //cv::Point test = computeNextWayPoint(cv::Point_<float>{4.0f, 12.18f});
         if (computedPoint.x >=0 and computedPoint.x <ROADMATCOL and computedPoint.y>=0 and computedPoint.y <=ROADMATROW)

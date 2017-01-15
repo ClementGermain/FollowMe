@@ -5,7 +5,7 @@
 using namespace std;
 
 
-PeriodicThread::PeriodicThread(double periodSecond) : periodSecond(periodSecond)
+PeriodicThread::PeriodicThread(int periodMilliseconds) : periodMilliseconds(periodMilliseconds)
 {
 
 }
@@ -13,17 +13,18 @@ PeriodicThread::PeriodicThread(double periodSecond) : periodSecond(periodSecond)
 void PeriodicThread::run() {
 	// call begin() callback
 	begin();
+	
+	Timer timer;
 
 	while(!isEndRequested()) {
-		Timer timer;
-		
+		timer.reset();
+
 		// call loop() callback
 		loop();
 		
-		// sleep for period
-		double sleepTime = periodSecond - timer.elapsed();
-		if(sleepTime > 0)
-			this_thread::sleep_for(chrono::milliseconds((long long int) (sleepTime * 1000L)));
+		// sleep for the rest of the period
+		while(!isEndRequested() && (int)(timer.elapsed() * 1000) < periodMilliseconds)
+			this_thread::sleep_for(chrono::milliseconds(1));
 	}
 	
 	// call end() callback

@@ -15,7 +15,7 @@
 #include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
 #include "improc/RoadDetectionTest.hpp"
 #include "sound/Sound.hpp"
 #include "IA/IA.hpp"
@@ -267,24 +267,24 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 
 int saveUserData(istream & input, vector<int> i, vector<string> s) {
 	cout << "Save user detection measures" << endl;
-	UserDetectionTest.Get_measures();
+	userDetectionThread.Get_measures();
 	return 0;
 }
 
 int printUserData(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.printMeasures();
+	userDetectionThread.printMeasures();
 	return 0;
 }
 
 int resetUserData(istream & input, vector<int> i, vector<string> s) {
 	cout << "Reset user detection measures" << endl;
-	UserDetectionTest.resetMeasures();
+	userDetectionThread.resetMeasures();
 	return 0;
 }
 
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
 	cout << "Toggle user detection mode" << endl;
-	UserDetectionTest.detector.toggleMode();
+	userDetectionThread.detector.toggleMode();
 	return 0;
 }
 

@@ -2,7 +2,7 @@
 #include <fstream>
 #include "StateRecorder.hpp"
 #include "car/Car.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
 #include "improc/RoadDetectionTest.hpp"
 
 using namespace std;
@@ -11,7 +11,7 @@ using namespace std::chrono;
 StateRecorder stateRecorder(MAX_RECORDING_DURATION, RECORDER_SAMPLE_PERIOD);
 
 StateRecorder::StateRecorder(unsigned int maxRecordingMilliseconds, int samplePeriodMillis) :
-	PeriodicThread(samplePeriodMillis / 1000.0),
+	PeriodicThread(samplePeriodMillis),
 	maxSamplesCount(maxRecordingMilliseconds/samplePeriodMillis),
 	firstSampleIndex(0),
 	samplePeriod(samplePeriodMillis),
@@ -46,10 +46,10 @@ void StateRecorder::loop() {
 	uint32_t modEOCR = model.rightEocSensor.endOfCourse;
 
 	// User
-	float userDist = UserDetectionTest.detector.getDistance();
-	float userDir = UserDetectionTest.detector.getDirection() * 180 / M_PI;
-	bool userDetect = UserDetectionTest.detector.isDetected();
-	bool userVis = UserDetectionTest.detector.isVisible();
+	float userDist = userDetectionThread.detector.getDistance();
+	float userDir = userDetectionThread.detector.getDirection() * 180 / M_PI;
+	bool userDetect = userDetectionThread.detector.isDetected();
+	bool userVis = userDetectionThread.detector.isVisible();
 
 	// Road
 	float roadUserDist = roadDetectionTest.detector.Target.y * 180 / M_PI;

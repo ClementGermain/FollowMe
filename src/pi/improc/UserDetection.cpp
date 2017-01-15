@@ -1,5 +1,5 @@
 #include <opencv2/opencv.hpp>
-#include "UserPatternDetection.hpp"
+#include "UserDetection.hpp"
 #include <vector>
 #include "utils/Log.hpp"
 #include <iostream>
@@ -20,7 +20,7 @@ const int UserPattern::maxFrameUserUndetected = 5;
 const int UserPattern::frameDurationMillis = 100;
 
 
-UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8), useRevolutionnaryMode(false) {
+UserDetection::UserDetection() : resultImageCreated(false), frameCountSinceUserUndetected(UserPattern::maxFrameUserUndetected), isUserDetected(false), detectedDirection(0), detectedDistance(1.8), useRevolutionnaryMode(false) {
 	filteredCircle[0] = 0;
 	filteredCircle[1] = 0;
 	filteredCircle[2] = 0;
@@ -29,14 +29,14 @@ UserPatternDetection::UserPatternDetection() : resultImageCreated(false), frameC
 	r_mes = 0.0;
 }
 
-float UserPatternDetection::Get_x_mes() { return x_mes; }
-float UserPatternDetection::Get_y_mes() { return y_mes; }
-float UserPatternDetection::Get_r_mes() { return r_mes; }
-float UserPatternDetection::Get_x_kalman() { return filteredCircle[0]; }
-float UserPatternDetection::Get_y_kalman() { return filteredCircle[1]; }
-float UserPatternDetection::Get_r_kalman() { return filteredCircle[2]; }
+float UserDetection::Get_x_mes() { return x_mes; }
+float UserDetection::Get_y_mes() { return y_mes; }
+float UserDetection::Get_r_mes() { return r_mes; }
+float UserDetection::Get_x_kalman() { return filteredCircle[0]; }
+float UserDetection::Get_y_kalman() { return filteredCircle[1]; }
+float UserDetection::Get_r_kalman() { return filteredCircle[2]; }
 
-void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
+void UserDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	// Convert input image to HSV
 	cv::Mat hsv_image;
 	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
@@ -185,7 +185,7 @@ void UserPatternDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	}
 }
 
-void UserPatternDetection::imageCirclesToPosition() {
+void UserDetection::imageCirclesToPosition() {
 	// Half width of the image in pixels
 	float halfWidth = Camera::getFrameWidth() * 0.5f;
 	// focal length of the camera in pixels (yes, in pixels)
@@ -226,34 +226,34 @@ void UserPatternDetection::imageCirclesToPosition() {
 	}
 }
 
-cv::Mat & UserPatternDetection::getResultImage() {
+cv::Mat & UserDetection::getResultImage() {
 	return resultImage;
 }
 
-cv::Mat & UserPatternDetection::getFilterImage() {
+cv::Mat & UserDetection::getFilterImage() {
 	return filterImage;
 }
 
-bool UserPatternDetection::hasImage() {
+bool UserDetection::hasImage() {
 	return resultImageCreated;
 }
 
-bool UserPatternDetection::isDetected() {
+bool UserDetection::isDetected() {
 	return isUserDetected;
 }
 
-bool UserPatternDetection::isVisible() {
+bool UserDetection::isVisible() {
 	return frameCountSinceUserUndetected == 0;
 }
 
-float UserPatternDetection::getDirection() {
+float UserDetection::getDirection() {
 	return detectedDirection;
 }
 
-float UserPatternDetection::getDistance() {
+float UserDetection::getDistance() {
 	return detectedDistance;
 }
 
-void UserPatternDetection::toggleMode() {
+void UserDetection::toggleMode() {
 	useRevolutionnaryMode = !useRevolutionnaryMode;
 }
