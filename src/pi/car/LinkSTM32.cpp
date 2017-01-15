@@ -1,4 +1,3 @@
-#include <thread>
 #include <cstring>
 #include "Car.hpp"
 #include "LinkSTM32.hpp"

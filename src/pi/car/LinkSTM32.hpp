@@ -1,7 +1,6 @@
 #ifndef __COMMUNICATION_STM32_HPP__
 #define __COMMUNICATION_STM32_HPP__
 
-#include <thread>
 #include "SPI_Interface.hpp"
 #include "utils/PeriodicThread.hpp"
 

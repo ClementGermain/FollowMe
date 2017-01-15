@@ -1,7 +1,6 @@
 #ifndef __ROAD_DETECTION_TEST_HPP__
 #define __ROAD_DETECTION_TEST_HPP__
 
-#include <thread>
 #include "RoadDetection.hpp"
 #include "utils/PeriodicThread.hpp"
 

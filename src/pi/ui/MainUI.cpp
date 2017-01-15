@@ -2,7 +2,6 @@
 #include <chrono>
 #include <string>
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <chrono>
 #include <unistd.h>
 #include <cstdlib>

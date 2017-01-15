@@ -1,7 +1,6 @@
 #include "KalmanFilterForUserDetection.hpp"
 #include <opencv2/opencv.hpp>
-#include <thread>
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 #include "car/Camera.hpp"
 #include "utils/Log.hpp"

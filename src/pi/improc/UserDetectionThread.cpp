@@ -1,5 +1,4 @@
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <chrono>
 #include "utils/Timer.hpp"
 #include "utils/Log.hpp"

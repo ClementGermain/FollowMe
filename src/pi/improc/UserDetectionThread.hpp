@@ -1,7 +1,6 @@
 #ifndef __USER_PATTERN_DETECTION_TEST_HPP__
 #define __USER_PATTERN_DETECTION_TEST_HPP__
 
-#include <thread>
 #include "utils/PeriodicThread.hpp"
 #include "UserDetection.hpp"
 

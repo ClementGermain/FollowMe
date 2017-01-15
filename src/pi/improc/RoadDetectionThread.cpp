@@ -1,5 +1,4 @@
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <chrono>
 #include "RoadDetectionThread.hpp"
 #include "car/Camera.hpp"
