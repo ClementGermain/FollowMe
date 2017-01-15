@@ -19,9 +19,10 @@ void Thread::start() {
 }
 
 void Thread::stop() {
-	if(isRunning()) {
+	if(isRunning() && !requestEndThread && runningThread != NULL) {
 		requestEndThread = true;
-		runningThread->join();
+		if(runningThread->joinable())
+			runningThread->join();
 		delete runningThread;
 		runningThread = NULL;
 	}

@@ -6,6 +6,7 @@
 class PeriodicThread : public Thread {
 	public:
 		PeriodicThread(double periodMillis);
+	protected:
 		virtual void begin();
 		virtual void loop() = 0;
 		virtual void end();

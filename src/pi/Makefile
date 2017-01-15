@@ -29,11 +29,11 @@ VIEW_OBJECTS=ui/view/View.o \
 			 ui/view/PointerView.o \
 			 ui/view/KeyboardInput.o \
 			 ui/view/trackbar/Trackbar.o \
-			 ui/view/trackbar/Trackbar_Horizontal.o\
-			 ui/view/trackbar/Trackbar_Vertical.o\
+			 ui/view/trackbar/Trackbar_Horizontal.o \
+			 ui/view/trackbar/Trackbar_Vertical.o \
 			 ui/view/Digital.o \
-			 ui/view/ToggleBox.o\
-			 ui/view/StateBox.o\
+			 ui/view/ToggleBox.o \
+			 ui/view/StateBox.o \
 			 ui/view/LogView.o \
 			 ui/view/ImageView.o \
 			 ui/view/TextView.o \
@@ -47,9 +47,10 @@ OTHER_OBJECTS=Main.o \
 			  car/Camera.o \
 			  car/Obstacle.o \
 			  car/SPI_Interface.o \
-			  car/MotorModel.o\
-			  car/MotorDiagnostic.o\
-			  IA/IA.o\
+			  car/MotorModel.o \
+			  car/MotorDiagnostic.o \
+			  car/StateRecorder.o \
+			  IA/IA.o \
 			  IA/Diagnostic.o \
 			  utils/Log.o \
 			  utils/Timer.o \

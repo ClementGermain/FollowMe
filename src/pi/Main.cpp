@@ -13,6 +13,7 @@
 #include "car/Obstacle.hpp"
 #include "car/MotorModel.hpp"
 #include "car/MotorDiagnostic.hpp"
+#include "car/StateRecorder.hpp"
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
@@ -69,15 +70,19 @@ int main() {
 
 	// start Image Processing threads
 	UserDetectionTest.start();
+	roadDetectionTest.detector.init();
 	roadDetectionTest.start();  
+	// start diagnosis thread
 	Diag_Prop_Left.start();
 	Diag_Prop_Right.start();
+	// start recorder thread
+	stateRecorder.start();
 	
-	roadDetectionTest.detector.init();
 	// Main loop
 	runUI();
 
 	// Destroying
+	stateRecorder.stop();
 	IA::stop();
 	Sound::stop();
 	//Diagnostic::stop();
