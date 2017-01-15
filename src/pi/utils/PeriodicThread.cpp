@@ -5,7 +5,9 @@
 using namespace std;
 
 
-PeriodicThread::PeriodicThread(int periodMilliseconds) : periodMilliseconds(periodMilliseconds)
+PeriodicThread::PeriodicThread(int periodMilliseconds, string name) :
+	Thread(name + " periodic ("+to_string(periodMilliseconds)+" ms)"),
+	periodMilliseconds(periodMilliseconds)
 {
 
 }

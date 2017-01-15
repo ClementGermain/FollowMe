@@ -6,7 +6,7 @@
 class PeriodicThread : public Thread {
 	public:
 		/** param: Period in millisecond between two calls of loop() **/
-		PeriodicThread(int periodMillis);
+		PeriodicThread(int periodMillis, std::string name);
 	protected:
 		// callback called before the first loop
 		virtual void begin();

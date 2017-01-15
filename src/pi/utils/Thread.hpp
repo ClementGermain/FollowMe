@@ -2,10 +2,11 @@
 #define __THREAD_HPP__
 
 #include <thread>
+#include <string>
 
 class Thread {
 	public:
-		Thread();
+		Thread(std::string name);
 		~Thread();
 		void start();
 		void stop();
@@ -16,6 +17,7 @@ class Thread {
 	private:
 		bool requestEndThread;
 		std::thread * runningThread;
+		std::string name;
 };
 
 #endif

@@ -12,7 +12,7 @@ using namespace std;
 UserDetectionThread userDetectionThread;
 
 UserDetectionThread::UserDetectionThread() :
-	PeriodicThread(UserPattern::frameDurationMillis)
+	PeriodicThread(UserPattern::frameDurationMillis, "User Detection")
 {
 
 }

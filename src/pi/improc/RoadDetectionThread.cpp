@@ -10,7 +10,7 @@ using namespace std;
 RoadDetectionThread roadDetectionThread;
 
 RoadDetectionThread::RoadDetectionThread() :
-	PeriodicThread(100)
+	PeriodicThread(100, "Road Detection")
 {
 
 }

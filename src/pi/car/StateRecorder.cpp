@@ -11,7 +11,7 @@ using namespace std::chrono;
 StateRecorder stateRecorder(MAX_RECORDING_DURATION, RECORDER_SAMPLE_PERIOD);
 
 StateRecorder::StateRecorder(unsigned int maxRecordingMilliseconds, int samplePeriodMillis) :
-	PeriodicThread(samplePeriodMillis),
+	PeriodicThread(samplePeriodMillis, "State Recorder"),
 	maxSamplesCount(maxRecordingMilliseconds/samplePeriodMillis),
 	firstSampleIndex(0),
 	samplePeriod(samplePeriodMillis),
