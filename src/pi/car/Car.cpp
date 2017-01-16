@@ -84,8 +84,8 @@ void Car::writeControlMotor(Car::Moving action, float speed) {
 void Car::writeControlMotor(Car::Turn action, float speed) {
 	MotorControl_Typedef control;
 
-	control.speed = min(max(0.0f, speed), 1.0f);
-
+	//control.speed = min(max(0.0f, speed), 1.0f);
+	control.speed = speed;
 	switch(action) {
 		case Car::TurnLeft:
 			control.direction = MOTOR_DIRECTION_LEFT;
