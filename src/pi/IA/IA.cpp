@@ -5,6 +5,7 @@
 #include "improc/UserDetectionThread.hpp"
 #include "car/MotorDiagnostic.hpp"
 #include "car/Obstacle.hpp"
+#include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include <chrono>
 #include <thread>
@@ -82,15 +83,16 @@ void IA::IAMotorBack() {
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-	if (!(isFailureLeftDetected && isFailureRightDetected)) {
+	if (!isFailureLeftDetected && !isFailureRightDetected) { 
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
 	}
 	// otherwise, emergency brake
 	else {
-		LogW << "Failure detected, motors stopped" << endl;
 		IA::Speed = 0;
 		Car::writeControlMotor(Car::Stop, IA::Speed);
-		Car::writeControlGyro(true);	
+		Car::writeControlGyro(true);
+		Sound::play("../../res/music/nils.mp3");
+		endThread = false;
 	}
 }
 // --------------------------------------- //
@@ -268,7 +270,11 @@ void IA::toggleRoadDetection() {
 // ------------ Thread management -------- //
 void IA::start() {
 	LogI << "Starting AI..." << endl;
-	if(threadTest == NULL) {
+	Car::writeControlGyro(false);
+	if(endThread) {
+		if(threadTest != NULL) {
+			delete threadTest;
+		}
 		endThread = false;
 		threadTest = new thread(IA::run);
 	}
@@ -280,6 +286,7 @@ void IA::stop() {
 		endThread = true;
 		IA::Speed=0.0f;
 		IA::directionSpeed=0.0f;
+		Car::writeControlGyro(false);
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 		threadTest->join();
