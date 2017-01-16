@@ -11,6 +11,7 @@
 #include <cmath>
 #include "car/Car.hpp"
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -80,12 +81,7 @@ void IA::IAMotorBack() {
 	IA::SpeedControl(distance, isUserDetected);
 
 
-	// Send speed command if no obstacle detected
-	bool obstacleDetected = ObstacleDetection::isGlobalDetected();
-	// ignore obstacleDetected because not reliable
-	if (!obstacleDetected || true) {
-		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-	}
+	Car::writeControlMotor(Car::MoveForward, IA::Speed);
 	// otherwise, emergency brake
 	else {
 		IA::Speed = 0;
@@ -212,33 +208,44 @@ void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool en
         IA::Direction = Car::NoTurn;
         directionSpeed=0.0;
     }
-    else {
+    else 
+    {
         if (IA::directionSpeed != 0)
         {
             IA::directionSpeed = 0;
         }
         else
         {
-			if (uAngleT1 <= angleUserToCamera - hist
-					and uAngleT1 < 0.3f)
-			{
-				IA::Direction = Car::TurnRight;
-				//cout << "LEFT" << endl;
-				uAngleT1 += dAngle;
-				directionSpeed=1.0;
-			}
-			else if (uAngleT1 > angleUserToCamera + hist 
-					and uAngleT1 > -0.3f)
-			{
-				IA::Direction = Car::TurnLeft;
-				//cout << "Right" << endl;
-				uAngleT1 -=dAngle;		
-				directionSpeed=1.0;
-			}
+		if (uAngleT1 <= angleUserToCamera - hist
+				and uAngleT1 < 0.3f)
+		{
+			IA::Direction = Car::TurnRight;
+			//cout << "LEFT" << endl;
+			uAngleT1 += dAngle;
+			directionSpeed=1.0;
 		}
+		else if (uAngleT1 > angleUserToCamera + hist 
+				and uAngleT1 > -0.3f)
+		{
+			IA::Direction = Car::TurnLeft;
+			//cout << "Right" << endl;
+			uAngleT1 -=dAngle;		
+			directionSpeed=1.0;
+		}
+	}
     }
 }
 
+void IA::DirectionControl4(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
+    if (!isUserDetected){
+        directionSpeed=0.0;
+    }
+    else 
+    {
+        directionSpeed = angleUserToCamera * M_PI / 180.f;
+cout << directionSpeed << endl;
+    }
+}
 
 // ---------Direction motors management-------- //
 
