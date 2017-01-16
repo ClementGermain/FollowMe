@@ -35,6 +35,10 @@ Failure_Typedef DiagnosticMotor::getFailure(){
   return failure;
 }
 
+bool DiagnosticMotor::isFailure(){
+  return (failure==NO);
+}
+
 float DiagnosticMotor::getValVoltage(numVoltage n){
   float cmd = getCmd();
   //if (n==v1)
