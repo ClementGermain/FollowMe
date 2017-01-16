@@ -49,6 +49,9 @@ MainView view;
 void runUI() {
 	LogI << "Opening UI (command prompt)..." << endl; 
 
+	// Print pretty logo
+	system("head -15 ../../res/ascii/logo.txt");
+
 	/// Initialize ///
 	CommandInterpreter interpreter;
 

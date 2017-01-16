@@ -142,6 +142,7 @@ void IA::start() {
 	Car::writeControlGyro(false);
 	if(endThread) {
 		if(threadTest != NULL) {
+			threadTest->join();
 			delete threadTest;
 		}
 		endThread = false;
