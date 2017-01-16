@@ -30,7 +30,7 @@ public :
 
   // load the model
   void load(const char * FileName);
-  
+  void createFileTxt(const char * fileName);  
   void getState(float cmd, MotorModel_Typedef & MotorModel);
   
   float getVoltage(float cmd, numVoltage n);
