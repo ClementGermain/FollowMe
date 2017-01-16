@@ -103,7 +103,7 @@ bool Camera::imageCanBeFetchFromCamera() {
 }
 bool Camera::imageIsInBuffer() {
 #ifndef __NO_RASPI__
-	return raspiCam != NULL && imageInbuffe;
+	return raspiCam != NULL && Camera::imageInBuffer;
 #else
 	return true;
 #endif

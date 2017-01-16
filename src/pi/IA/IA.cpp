@@ -204,7 +204,7 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
 
 void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
     const float dAngle = 0.15f;
-    const float hist = 0.15f;
+    const float hist = 0.15f /2.f;
 
     //cout << angleUserToCamera << endl;
 
