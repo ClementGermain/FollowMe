@@ -11,19 +11,19 @@
 
 using namespace std;
 
-bool DiagnosticMotor::failureDetected = false;
-
 DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
 DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
+
+  failureDetected = false;
 
   threadTest = NULL;
   endThread = true;
 
   delta_voltage = 600.0;
   delta_current = 100.0;
-  MotorModel_Prop.load("model_propulsion");
+  MotorModel_Prop.load("model_propulsion_reel");
   failure = NO;
   MotorType = MotorType_;
   ValVoltage[0] = 0;

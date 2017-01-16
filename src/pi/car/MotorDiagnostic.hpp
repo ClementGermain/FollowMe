@@ -29,7 +29,7 @@ public:
   float getMaxCurrent();
   float getCmd();
   void checkFailure();
-  static bool isFailureDetected();
+  bool isFailureDetected();
   
 protected:
   
@@ -43,7 +43,7 @@ protected:
   int delay;
   int delay_compt;
 
-  static bool failureDetected;
+  bool failureDetected;
   
   float getValVoltage(numVoltage n);
   float getValCurrent();
