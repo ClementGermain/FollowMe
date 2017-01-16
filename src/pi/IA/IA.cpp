@@ -86,6 +86,7 @@ void IA::IAMotorBack() {
 	
 	// otherwise, emergency brake
 	else {
+		IA::endThread = true;
 		IA::Speed = 0;
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlGyro(true);	
