@@ -92,7 +92,8 @@ void IA::IAMotorBack() {
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlGyro(true);
 		Sound::play("../../res/music/nils.mp3");
-		endThread = false;
+		LogW << "endThread = false" << endl;
+		endThread = true;
 	}
 }
 // --------------------------------------- //
