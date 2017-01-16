@@ -65,9 +65,6 @@ OTHER_OBJECTS=Main.o \
 
 OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)
 
-# pull in dependency info for *existing* .o files
--include $(OBJS:.o=.d)
-
 all: LDFLAGS +=$(RASPI_LDFLAGS)
 all: CXXFLAGS +=$(RASPI_CXXFLAGS)
 all: $(TARGET)
@@ -78,6 +75,9 @@ noraspi: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@echo 'Link and build "$@"'
 	@g++ $+ $(LDFLAGS) -o $@
+
+# pull in dependency info for *existing* .o files
+-include $(OBJECTS:.o=.d)
 
 %.o: %.cpp
 	@echo -e 'Compile "$<"'
