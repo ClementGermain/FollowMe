@@ -19,7 +19,8 @@ public:
   
   void start();
   void stop();
-  
+
+  void changeModel(const char * fileName);  
   void compareModel();
   Failure_Typedef getFailure();
   float getMinVoltage(numVoltage n);
@@ -28,7 +29,7 @@ public:
   float getMaxCurrent();
   float getCmd();
   void checkFailure();
-  static bool isFailureDetected();
+  bool isFailureDetected();
   
 protected:
   
@@ -42,7 +43,7 @@ protected:
   int delay;
   int delay_compt;
 
-  static bool failureDetected;
+  bool failureDetected;
   
   float getValVoltage(numVoltage n);
   float getValCurrent();

@@ -11,26 +11,30 @@
 
 using namespace std;
 
-bool DiagnosticMotor::failureDetected = false;
-
 DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
 DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
+
+  failureDetected = false;
 
   threadTest = NULL;
   endThread = true;
 
   delta_voltage = 600.0;
   delta_current = 100.0;
-  MotorModel_Prop.load("model_propulsion");
+  MotorModel_Prop.load("model_propulsion_reel");
   failure = NO;
   MotorType = MotorType_;
   ValVoltage[0] = 0;
   ValVoltage[1] = 0;
   ValCurrent = 0;
   delay_compt = 0;
-  delay = 10;
+  delay = 5;
+}
+
+void DiagnosticMotor::changeModel(const char * FileName){
+  MotorModel_Prop.load(FileName);
 }
 
 Failure_Typedef DiagnosticMotor::getFailure(){
@@ -173,6 +177,7 @@ void DiagnosticMotor::stop() {
 void DiagnosticMotor::run() {
   while(!DiagnosticMotor::endThread) {
     
+    checkFailure();
     ValVoltage[0] = getValVoltage(v1);
     ValVoltage[1] = getValVoltage(v2);
     ValCurrent = getValCurrent();

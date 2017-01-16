@@ -5,6 +5,7 @@
 #include "improc/UserDetectionThread.hpp"
 #include "car/MotorDiagnostic.hpp"
 #include "car/Obstacle.hpp"
+#include "sound/Sound.hpp"
 #include "utils/Log.hpp"
 #include <chrono>
 #include <thread>
@@ -23,7 +24,7 @@ bool IA::endThread = true;
 float IA::previousAngle = 0.f;
 float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
-bool IA::enableRoadDetection = true;
+bool IA::enableRoadDetection = false;
 
 //Direction = roadDetectionThread.detector.Target[0];
 //Distance = roadDetectionThread.detector.Target[1];
@@ -72,23 +73,27 @@ void IA::IAMotorBack() {
 	// Update speed value
 
 	bool isUserDetected = userDetectionThread.detector.isDetected();
-	bool isFailureDetected = DiagnosticMotor::isFailureDetected();
+	bool isFailureLeftDetected = Diag_Prop_Left.isFailureDetected();
+	bool isFailureRightDetected = Diag_Prop_Right.isFailureDetected();
 	float distance;
-	if(enableRoadDetection)
+	if (enableRoadDetection)
 		distance = roadDetectionThread.detector.Target.y;
 	else
 		distance = userDetectionThread.detector.getDistance();
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-	if (!isFailureDetected)
+	if (!isFailureLeftDetected && !isFailureRightDetected) { 
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-	
+	}
 	// otherwise, emergency brake
 	else {
 		IA::Speed = 0;
 		Car::writeControlMotor(Car::Stop, IA::Speed);
-		Car::writeControlGyro(true);	
+		Car::writeControlGyro(true);
+		Sound::play("../../res/music/nils.mp3");
+		LogW << "endThread = false" << endl;
+		endThread = true;
 	}
 }
 // --------------------------------------- //
@@ -179,7 +184,7 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
 		//float angularTarget = angleUserToCamera * Speed * 1.f;
 		float angularTarget = angleUserToCamera / (0.001f * IA_PERIOD);
         
-		cout << "Angular delat targeted :" << angularTarget << endl;
+		cout << "Angular delta targeted :" << angularTarget << endl;
         float deltaAngularSpeed = angularTarget - angularSpeed;
         IA::directionSpeed = deltaAngularSpeed * 0.15f;       
      
@@ -266,7 +271,11 @@ void IA::toggleRoadDetection() {
 // ------------ Thread management -------- //
 void IA::start() {
 	LogI << "Starting AI..." << endl;
-	if(threadTest == NULL) {
+	Car::writeControlGyro(false);
+	if(endThread) {
+		if(threadTest != NULL) {
+			delete threadTest;
+		}
 		endThread = false;
 		threadTest = new thread(IA::run);
 	}
@@ -278,6 +287,7 @@ void IA::stop() {
 		endThread = true;
 		IA::Speed=0.0f;
 		IA::directionSpeed=0.0f;
+		Car::writeControlGyro(false);
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlMotor(IA::Direction, IA::directionSpeed);
 		threadTest->join();
