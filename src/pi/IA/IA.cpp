@@ -72,7 +72,8 @@ void IA::IAMotorBack() {
 	// Update speed value
 
 	bool isUserDetected = userDetectionThread.detector.isDetected();
-	bool isFailureDetected = DiagnosticMotor::isFailureDetected();
+	bool isFailureLeftDetected = Diag_Prop_Left.isFailureDetected();
+	bool isFailureRightDetected = Diag_Prop_Right.isFailureDetected();
 	float distance;
 	if (enableRoadDetection)
 		distance = roadDetectionThread.detector.Target.y;
@@ -81,8 +82,7 @@ void IA::IAMotorBack() {
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-	if (!isFailureDetected) {
-		LogW << isFailureDetected << endl;
+	if (!(isFailureLeftDetected && isFailureRightDetected)) {
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
 	}
 	// otherwise, emergency brake
@@ -181,7 +181,7 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
 		//float angularTarget = angleUserToCamera * Speed * 1.f;
 		float angularTarget = angleUserToCamera / (0.001f * IA_PERIOD);
         
-		cout << "Angular delat targeted :" << angularTarget << endl;
+		cout << "Angular delta targeted :" << angularTarget << endl;
         float deltaAngularSpeed = angularTarget - angularSpeed;
         IA::directionSpeed = deltaAngularSpeed * 0.15f;       
      
