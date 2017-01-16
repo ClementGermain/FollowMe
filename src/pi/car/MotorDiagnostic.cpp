@@ -11,6 +11,8 @@
 
 using namespace std;
 
+bool DiagnosticMotor::failureDetected = false;
+
 DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
 DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
 
@@ -35,8 +37,15 @@ Failure_Typedef DiagnosticMotor::getFailure(){
   return failure;
 }
 
-bool DiagnosticMotor::isFailure(){
-  return (failure==NO);
+bool DiagnosticMotor::isFailureDetected() {
+  return failureDetected;
+}
+
+void DiagnosticMotor::checkFailure(){
+  if (failure!=NO)
+    failureDetected = true;
+  else 
+    failureDetected = false;   
 }
 
 float DiagnosticMotor::getValVoltage(numVoltage n){

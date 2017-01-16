@@ -26,8 +26,9 @@ public:
   float getMaxVoltage(numVoltage n);
   float getMinCurrent();
   float getMaxCurrent();
-  bool isFailure();
   float getCmd();
+  void checkFailure();
+  static bool isFailureDetected();
   
 protected:
   
@@ -40,6 +41,8 @@ protected:
   float ValCurrent;
   int delay;
   int delay_compt;
+
+  static bool failureDetected;
   
   float getValVoltage(numVoltage n);
   float getValCurrent();
