@@ -18,9 +18,9 @@ class UserPattern {
 		static const int frameDurationMillis;
 };
 
-class UserPatternDetection {
+class UserDetection {
 	public:
-		UserPatternDetection();
+		UserDetection();
 		void findPattern(cv::Mat & bgr_image, bool drawResult=false);
 		void imageCirclesToPosition();
 		bool hasImage();

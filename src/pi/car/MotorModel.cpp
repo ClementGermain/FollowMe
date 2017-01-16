@@ -26,19 +26,33 @@ MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_),
 	}
 }
 
+void writeCmd(float cmd){
+  if (cmd < 0)
+    Car::writeControlMotor(Car::MoveBackward, -cmd);
+  else if (cmd >= 0)
+    Car::writeControlMotor(Car::MoveForward, cmd);
+}
+
 void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 
 	BarstowModel_Typedef BarstowModel;
 	int i=0;
-	float cmd = CmdStart;
-
+	float cmd = 0;
+	
+	// ramp to have a smooth acceleration	
+	while (abs(cmd) < abs(CmdStart)){
+	  cmd += CmdStart / 100.0 ;
+	  writeCmd(cmd);
+	  usleep(10000);
+	  i++;
+	}
+	
+	i=0;
+	cmd = CmdStart;
+	// Model Acquisition
 	while ( i<sizeModel ){
 		cmd = CmdStart + (CmdStop - CmdStart)*i/sizeModel;
-
-		if (cmd < 0)
-			Car::writeControlMotor(Car::MoveBackward, -cmd);
-		else if (cmd >= 0)
-			Car::writeControlMotor(Car::MoveForward, cmd);
+		writeCmd(cmd);
 
 		if (i==0)
 			usleep(500000);
@@ -46,16 +60,25 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 			usleep(waitTime);
 		Car::getModelStructure(BarstowModel);
 		Model[i].cmd = cmd;
-		Model[i].MotorModel.current = BarstowModel.leftWheelMotor.current;
-		Model[i].MotorModel.voltage1 = BarstowModel.leftWheelMotor.voltage1;
-		Model[i].MotorModel.voltage2 = BarstowModel.leftWheelMotor.voltage2;
-		Model[i].MotorModel.speed = BarstowModel.leftWheelMotor.speed; 
-
+		Model[i].MotorModel.current = BarstowModel.rightWheelMotor.current;
+		Model[i].MotorModel.voltage1 = BarstowModel.rightWheelMotor.voltage1;
+		Model[i].MotorModel.voltage2 = BarstowModel.rightWheelMotor.voltage2;
+		Model[i].MotorModel.speed = BarstowModel.rightWheelMotor.speed; 
+		/*
 		LogD << "Cmd : " << Model[i].cmd << endl;
 		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
 		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
-
+		*/
 		i++;
+	}
+
+	// ramp to have a smooth decelration	
+	i=0;
+	while (cmd > 0){
+	  cmd -= CmdStop / 100.0 ;
+	  writeCmd(cmd);
+	  usleep(10000);
+	  i++;
 	}
 	Car::writeControlMotor(Car::Stop, 0.0);
 }
@@ -85,19 +108,26 @@ void MotorModel::load(const char * fileName){
 	}
 }
 
-void MotorModel::getState(float cmd, MotorModel_Typedef & MotorModel){
-	int index=0;
-	float delta=100000;
-	for (int i=0; i<sizeModel ; i++){
-		if (abs(Model[i].cmd - cmd) < delta){
-			delta = abs(Model[i].cmd - cmd);
-			index = i;
-		}
-	}
-	MotorModel = Model[index].MotorModel;
+float MotorModel::getVoltage(float cmd, numVoltage n){
+  switch (n){
+  case v1:
+    return Model[getIndex(cmd)].MotorModel.voltage1;
+    break;
+  case v2:
+    return Model[getIndex(cmd)].MotorModel.voltage2;
+    break;
+  default:
+    return 0;
+    break;
+  }
 }
 
-float MotorModel::getVoltage(float cmd, numVoltage n){
+float MotorModel::getCurrent(float cmd){
+  return Model[getIndex(cmd)].MotorModel.current;
+}
+
+
+int MotorModel::getIndex(float cmd){
   int index=0;
   float delta=1000000;
   for (int i=0 ; i<sizeModel ; i++){
@@ -106,10 +136,7 @@ float MotorModel::getVoltage(float cmd, numVoltage n){
 	index = i;
     }
   }
-  if (n==1)
-    return Model[index].MotorModel.voltage1;
-  else if (n==2)
-    return Model[index].MotorModel.voltage2;
-  else
-    return 0;
+  return index;
 }
+
+

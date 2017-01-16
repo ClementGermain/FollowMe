@@ -1,85 +1,59 @@
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <chrono>
 #include "utils/Timer.hpp"
 #include "utils/Log.hpp"
-#include "UserPatternDetectionTest.hpp"
+#include "UserDetectionThread.hpp"
 #include "car/Camera.hpp"
 #include <stdio.h>
 
 using namespace std;
 
-UserPatternDetectionTest UserDetectionTest;
+UserDetectionThread userDetectionThread;
 
-UserPatternDetectionTest::UserPatternDetectionTest() :
-	endThread(true),
-	threadTest(NULL)
+UserDetectionThread::UserDetectionThread() :
+	PeriodicThread(UserPattern::frameDurationMillis, "User Detection")
 {
 
 }
 
-UserPatternDetectionTest::~UserPatternDetectionTest() {
-	stop();
+void UserDetectionThread::begin() {
+	num_mesure = 0;
+	num_kalman = 0;
 }
 
-void UserPatternDetectionTest::start() {
-	if(threadTest == NULL) {
-		endThread = false;
-		threadTest = new thread([this] { this->run(); });
-	}
-}
-
-void UserPatternDetectionTest::stop() {
-	if(threadTest != NULL) {
-		endThread = true;
-		threadTest->join();
-		delete threadTest;
-		threadTest = NULL;
-	}
-}
-
-void UserPatternDetectionTest::run() {
-	int num_mesure = 0, num_kalman = 0;
-	while(!endThread) {
-		cv::Mat img;
+void UserDetectionThread::loop() {
+	cv::Mat img;
 #ifdef __NO_RASPI__
-		img = cv::imread("../../res/img/red_circle3.png");
+	img = cv::imread("../../res/img/red_circle3.png");
 #else
-		Camera::getImage(img);
+	Camera::getImage(img);
 #endif
 
-		Timer t;
-		if(img.data)
-			detector.findPattern(img, true);
+	if(img.data)
+		detector.findPattern(img, true);
 
-		if(detector.isVisible())
-		{
-			x_mes_1000[0][num_mesure] = detector.Get_x_mes();
-			y_mes_1000[0][num_mesure] = detector.Get_y_mes();
-			r_mes_1000[0][num_mesure] = detector.Get_r_mes();
-			if(++num_mesure >= 1000)
-				num_mesure = 0;
-		}
-
-		if(detector.isDetected()) {
-			x_mes_1000[1][num_kalman] = detector.Get_x_kalman();
-			y_mes_1000[1][num_kalman] = detector.Get_y_kalman();
-			r_mes_1000[1][num_kalman] = detector.Get_r_kalman();
-			if(++num_kalman >= 1000)
-				num_kalman = 0;
-		}
-
-		detector.imageCirclesToPosition();
-
-		int sleep_ms = max(0, UserPattern::frameDurationMillis - (int) (t.elapsed() * 1000));
-		// sleep 
-		for(int s = 0; s < sleep_ms && !endThread; s++)
-			this_thread::sleep_for(chrono::milliseconds(1));
+	if(detector.isVisible())
+	{
+		x_mes_1000[0][num_mesure] = detector.Get_x_mes();
+		y_mes_1000[0][num_mesure] = detector.Get_y_mes();
+		r_mes_1000[0][num_mesure] = detector.Get_r_mes();
+		if(++num_mesure >= 1000)
+			num_mesure = 0;
 	}
+
+	if(detector.isDetected()) {
+		x_mes_1000[1][num_kalman] = detector.Get_x_kalman();
+		y_mes_1000[1][num_kalman] = detector.Get_y_kalman();
+		r_mes_1000[1][num_kalman] = detector.Get_r_kalman();
+		if(++num_kalman >= 1000)
+			num_kalman = 0;
+	}
+
+	detector.imageCirclesToPosition();
 }
 
 
-void UserPatternDetectionTest::Get_measures(){
+void UserDetectionThread::Get_measures(){
 	FILE * pFile;
 	pFile = fopen ("mymeasure.csv","w");
 	fprintf(pFile, "mes_x mes_y mes_r km_x km_y km_r\n");
@@ -89,13 +63,13 @@ void UserPatternDetectionTest::Get_measures(){
 	fclose(pFile);
 }
 
-void UserPatternDetectionTest::resetMeasures() {
+void UserDetectionThread::resetMeasures() {
 	memset(x_mes_1000, 0, 4*2*1000);
 	memset(x_mes_1000, 0, 4*2*1000);
 	memset(x_mes_1000, 0, 4*2*1000);
 }
 
-void UserPatternDetectionTest::printMeasures() {
+void UserDetectionThread::printMeasures() {
 	for(int K = 0; K < 2; K++)
 	{
 		// Compute means and variances (with Konig-Huygens theorem)

@@ -19,22 +19,34 @@ public:
   
   void start();
   void stop();
-  
+
+  void changeModel(const char * fileName);  
   void compareModel();
   Failure_Typedef getFailure();
   float getMinVoltage(numVoltage n);
   float getMaxVoltage(numVoltage n);
-  
+  float getMinCurrent();
+  float getMaxCurrent();
   float getCmd();
+  void checkFailure();
+  bool isFailureDetected();
   
 protected:
   
   BarstowControl_Typedef BarstowControl;
-   BarstowModel_Typedef BarstowModel;
+  BarstowModel_Typedef BarstowModel;
 
   float delta_voltage;
+  float delta_current;
   float ValVoltage[2];
+  float ValCurrent;
+  int delay;
+  int delay_compt;
+
+  bool failureDetected;
+  
   float getValVoltage(numVoltage n);
+  float getValCurrent();
 
   void run();
   bool endThread;
@@ -45,7 +57,8 @@ protected:
   Car::Motor MotorType;
 };
 
-extern DiagnosticMotor Diag_Prop;
+extern DiagnosticMotor Diag_Prop_Right;
+extern DiagnosticMotor Diag_Prop_Left;
 
 #endif
 

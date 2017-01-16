@@ -166,6 +166,8 @@ typename basic_seqbuf<Ch, Traits>::int_type
 	if(traits_type::eq_int_type(ch, traits_type::eof()))
 		return traits_type::eof();
 
+	writingLock.lock();
+
 	if(ch == '\n') {
 		// Here, the end of a line is reached
 		// We ignore empty lines
@@ -179,6 +181,8 @@ typename basic_seqbuf<Ch, Traits>::int_type
 		// append the character to the current line
 		currentLine += ch;
 	}
+
+	writingLock.unlock();
 
 	return ch;
 }

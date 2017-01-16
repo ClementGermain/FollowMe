@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <mutex>
 
 /** Examples of use:
  * 		LogE << "This is a fatal error" << endl;
@@ -38,6 +39,7 @@ class basic_seqbuf : public std::basic_streambuf<Ch, Traits> {
 
 	private:
 		std::string currentLine;
+		std::mutex writingLock; 
 };
 
 class LogStream : public std::ostream {
@@ -66,7 +68,6 @@ class LogStream : public std::ostream {
 		std::ostream & info();
 	private:
 		basic_seqbuf<char> buffer;
-
 };
 
 // Global variable, must be used to write logs
