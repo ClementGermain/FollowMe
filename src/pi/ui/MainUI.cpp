@@ -40,6 +40,7 @@ int printUserData(istream & input, vector<int> i, vector<string> s);
 int resetUserData(istream & input, vector<int> i, vector<string> s);
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 int saveStateRecord(istream & input, vector<int> i, vector<string> s);
+int changeModel(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -85,8 +86,12 @@ void runUI() {
 			new Menu("road", 0, toggleRoadDetectionIA, NULL),
 			NULL
 		),
+	      new Menu ("diag", 0, 0,
+			new Menu("acquire", 0, runModelAcquire, NULL),
+			new Menu("change", 0, changeModel, NULL),
+			NULL
+		),
 		new Menu("record", 0, saveStateRecord, NULL),
-		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
 		new Menu("logo", 0, printLogoFollowMe, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
@@ -194,6 +199,17 @@ int tailLog(istream & input, vector<int> i, vector<string> s) {
 	return 0;
 }
 
+int changeModel(istream & input, vector<int> i, vector<string> s) {
+string modelName;
+  
+  MotorModel model;
+  if(input >> modelName){
+    Diag_Prop_Left.changeModel(modelName.c_str());
+    Diag_Prop_Right.changeModel(modelName.c_str());
+  }
+  return 0;
+}
+
 int runSound(istream & input, vector<int> i, vector<string> s) {
 	// Read a music, a file name can be given in parameter
 	// filename of the music
@@ -232,12 +248,16 @@ int runIA(istream & input, vector<int> i, vector<string> s) {
 
 int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   cout << "Acquiring model for diagnosis, please wait..." << endl;
+  string modelName;
   
   MotorModel model;
   model.create(-1.0, 1.0, 10000);
-  model.save("model_propulsion");
+  if(input >> modelName)
+    model.save(modelName.c_str());
+  else
+    model.save("model_propulsion_reel");
 
-  cout << "Saved in \"model_propulsion.bin\"" << endl;
+  cout << "Saved in \" "<< modelName << ".bin\"" << endl;
   
   return 0;
 }
