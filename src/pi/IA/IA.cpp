@@ -81,8 +81,10 @@ void IA::IAMotorBack() {
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-	if (!isFailureDetected && false)
+	if (!isFailureDetected) {
+		LogW << isFailureDetected << endl;
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
+	}
 	// otherwise, emergency brake
 	else {
 		LogW << "Failure detected, motors stopped" << endl;
