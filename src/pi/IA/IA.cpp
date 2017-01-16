@@ -23,7 +23,7 @@ bool IA::endThread = true;
 float IA::previousAngle = 0.f;
 float IA::uAngleT1 =0.f;
 float IA::uAngleT2 =0.f;
-bool IA::enableRoadDetection = true;
+bool IA::enableRoadDetection = false;
 
 //Direction = roadDetectionThread.detector.Target[0];
 //Distance = roadDetectionThread.detector.Target[1];
@@ -74,20 +74,18 @@ void IA::IAMotorBack() {
 	bool isUserDetected = userDetectionThread.detector.isDetected();
 	bool isFailureDetected = DiagnosticMotor::isFailureDetected();
 	float distance;
-	if(enableRoadDetection)
+	if (enableRoadDetection)
 		distance = roadDetectionThread.detector.Target.y;
 	else
 		distance = userDetectionThread.detector.getDistance();
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-	if (!isFailureDetected)
+	if (!isFailureDetected || true)
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-	
 	// otherwise, emergency brake
 	else {
-		LogW << "" << endl;
-		IA::endThread = true;
+		LogW << "Failure detected, motors stopped" << endl;
 		IA::Speed = 0;
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlGyro(true);	
