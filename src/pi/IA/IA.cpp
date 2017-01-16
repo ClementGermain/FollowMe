@@ -107,8 +107,7 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
     }
     else 
     {
-        directionSpeed = angleUserToCamera * M_PI / 180.f;
-cout << directionSpeed << endl;
+        directionSpeed = -1*angleUserToCamera *180.f / M_PI;
     }
 }
 
