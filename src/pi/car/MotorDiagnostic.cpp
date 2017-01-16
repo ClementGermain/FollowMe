@@ -11,12 +11,12 @@
 
 using namespace std;
 
-bool DiagnosticMotor::failureDetected = false;
-
 DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
 DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
 
 DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
+
+  failureDetected = false;
 
   threadTest = NULL;
   endThread = true;
