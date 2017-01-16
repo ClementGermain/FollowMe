@@ -23,7 +23,7 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
 
   delta_voltage = 600.0;
   delta_current = 100.0;
-  MotorModel_Prop.load("model_propulsion");
+  MotorModel_Prop.load("model_propulsion_reel");
   failure = NO;
   MotorType = MotorType_;
   ValVoltage[0] = 0;
