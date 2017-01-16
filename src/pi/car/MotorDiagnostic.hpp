@@ -26,20 +26,23 @@ public:
   float getMaxVoltage(numVoltage n);
   float getMinCurrent();
   float getMaxCurrent();
-  
   float getCmd();
+  void checkFailure();
+  static bool isFailureDetected();
   
 protected:
   
   BarstowControl_Typedef BarstowControl;
   BarstowModel_Typedef BarstowModel;
-  
+
   float delta_voltage;
   float delta_current;
   float ValVoltage[2];
   float ValCurrent;
   int delay;
   int delay_compt;
+
+  static bool failureDetected;
   
   float getValVoltage(numVoltage n);
   float getValCurrent();
