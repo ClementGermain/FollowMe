@@ -30,7 +30,7 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
   ValVoltage[1] = 0;
   ValCurrent = 0;
   delay_compt = 0;
-  delay = 5;
+  delay = 10;
 }
 
 void DiagnosticMotor::changeModel(const char * FileName){
