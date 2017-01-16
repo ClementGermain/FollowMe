@@ -177,6 +177,7 @@ void DiagnosticMotor::stop() {
 void DiagnosticMotor::run() {
   while(!DiagnosticMotor::endThread) {
     
+    checkFailure();
     ValVoltage[0] = getValVoltage(v1);
     ValVoltage[1] = getValVoltage(v2);
     ValCurrent = getValCurrent();
