@@ -3,6 +3,7 @@
 #include "improc/RoadDetectionThread.hpp"
 #include "improc/UserDetection.hpp"
 #include "improc/UserDetectionThread.hpp"
+#include "car/MotorDiagnostic.hpp"
 #include "car/Obstacle.hpp"
 #include "utils/Log.hpp"
 #include <chrono>
@@ -71,6 +72,7 @@ void IA::IAMotorBack() {
 	// Update speed value
 
 	bool isUserDetected = userDetectionThread.detector.isDetected();
+	bool isFailureDetected = DiagnosticMotor::isFailureDetected();
 	float distance;
 	if(enableRoadDetection)
 		distance = roadDetectionThread.detector.Target.y;
@@ -79,17 +81,15 @@ void IA::IAMotorBack() {
 	
 	IA::SpeedControl(distance, isUserDetected);
 
-
-	// Send speed command if no obstacle detected
-	bool obstacleDetected = ObstacleDetection::isGlobalDetected();
-	// ignore obstacleDetected because not reliable
-	if (!obstacleDetected || true) {
+	if (!isFailureDetected)
 		Car::writeControlMotor(Car::MoveForward, IA::Speed);
-	}
+	
 	// otherwise, emergency brake
 	else {
+		IA::endThread = true;
 		IA::Speed = 0;
-		Car::writeControlMotor(Car::Stop, IA::Speed);	
+		Car::writeControlMotor(Car::Stop, IA::Speed);
+		Car::writeControlGyro(true);	
 	}
 }
 // --------------------------------------- //
@@ -119,7 +119,6 @@ void IA::DirectionControl(float angleUserToCamera, bool isUserDetected, bool end
 		else if(abs(angleUserToCamera) > angleMax)
 			targetDirSpeed = dirSpeedMax;
 		else {
-			//a tester
 			//targetDirSpeed = dirSpeedMin;
 			targetDirSpeed = (angleUserToCamera-angleMin) / (angleMax-angleMin) * (dirSpeedMax-dirSpeedMin) + dirSpeedMin;
 		}
@@ -204,7 +203,7 @@ void IA::DirectionControl2(float angleUserToCamera, bool isUserDetected, bool en
 
 void IA::DirectionControl3(float angleUserToCamera, bool isUserDetected, bool endOfCourseLeft, bool endOfCourseRight){
     const float dAngle = 0.15f;
-    const float hist = 0.15f;
+    const float hist = 0.15f /2.f;
 
     //cout << angleUserToCamera << endl;
 

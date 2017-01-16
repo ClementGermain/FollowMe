@@ -39,7 +39,7 @@ VIEW_OBJECTS=ui/view/View.o \
 			 ui/view/TextView.o \
 			 ui/view/Layout.o \
 			 ui/view/PlotsView.o \
-			 ui/ViewManager.o \
+			 ui/ViewManager.o
 
 OTHER_OBJECTS=Main.o \
 			  car/Car.o \
@@ -66,7 +66,7 @@ OTHER_OBJECTS=Main.o \
 OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)
 
 # pull in dependency info for *existing* .o files
--include $(OBJECTS:.o=.d)
+-include $(OBJS:.o=.d)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)
 all: CXXFLAGS +=$(RASPI_CXXFLAGS)
