@@ -19,7 +19,8 @@ public:
   
   void start();
   void stop();
-  
+
+  void changeModel(const char * fileName);  
   void compareModel();
   Failure_Typedef getFailure();
   float getMinVoltage(numVoltage n);

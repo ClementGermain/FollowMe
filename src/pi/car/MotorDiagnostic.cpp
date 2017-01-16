@@ -33,6 +33,10 @@ DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, 
   delay = 5;
 }
 
+void DiagnosticMotor::changeModel(const char * FileName){
+  MotorModel_Prop.load(FileName);
+}
+
 Failure_Typedef DiagnosticMotor::getFailure(){
   return failure;
 }
