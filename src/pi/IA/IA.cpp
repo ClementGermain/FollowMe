@@ -93,7 +93,7 @@ void IA::IAMotorBack() {
 		Car::writeControlMotor(Car::Stop, IA::Speed);
 		Car::writeControlGyro(true);
 		Sound::play("../../res/music/nils.mp3");
-		LogW << "Thread ended beacause of moto failure" << endl;
+		LogE << "AI thread terminated because of motor(s) failure" << endl;
 		endThread = true;
 	}
 }

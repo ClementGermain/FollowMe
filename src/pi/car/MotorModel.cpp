@@ -95,6 +95,23 @@ void MotorModel::save(const char * fileName){
 	}
 }
 
+void MotorModel::createFileTxt(const char * fileName){
+  this->load(fileName);
+  char filepath[150] = "../../res/model/";
+  strcat(filepath, fileName);
+  strcat(filepath, ".txt");
+  
+  ofstream file(filepath , ios::out | ios::trunc);  // ouverture en écriture avec effacement du fichier ouvert
+
+  if (file){
+    file << "Cmd Voltage1 Voltage2 Current" << endl;
+    for (int i=0 ; i<sizeModel ; i++){
+	file << Model[i].cmd << " " << Model[i].MotorModel.voltage1 << " "  << Model[i].MotorModel.voltage2 << " " << Model[i].MotorModel.current << endl;
+    }
+    file.close();
+  }
+}
+
 void MotorModel::load(const char * fileName){
 	char filepath[150] = "../../res/model/";
 	strcat(filepath, fileName);
