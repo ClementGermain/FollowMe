@@ -26,19 +26,33 @@ MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_),
 	}
 }
 
+void writeCmd(float cmd){
+  if (cmd < 0)
+    Car::writeControlMotor(Car::MoveBackward, -cmd);
+  else if (cmd >= 0)
+    Car::writeControlMotor(Car::MoveForward, cmd);
+}
+
 void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 
 	BarstowModel_Typedef BarstowModel;
 	int i=0;
-	float cmd = CmdStart;
-
+	float cmd = 0;
+	
+	// ramp to have a smooth acceleration	
+	while (abs(cmd) < abs(CmdStart)){
+	  cmd += CmdStart / 100.0 ;
+	  writeCmd(cmd);
+	  usleep(10000);
+	  i++;
+	}
+	
+	i=0;
+	cmd = CmdStart;
+	// Model Acquisition
 	while ( i<sizeModel ){
 		cmd = CmdStart + (CmdStop - CmdStart)*i/sizeModel;
-
-		if (cmd < 0)
-			Car::writeControlMotor(Car::MoveBackward, -cmd);
-		else if (cmd >= 0)
-			Car::writeControlMotor(Car::MoveForward, cmd);
+		writeCmd(cmd);
 
 		if (i==0)
 			usleep(500000);
@@ -56,6 +70,15 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
 		*/
 		i++;
+	}
+
+	// ramp to have a smooth decelration	
+	i=0;
+	while (cmd > 0){
+	  cmd -= CmdStop / 100.0 ;
+	  writeCmd(cmd);
+	  usleep(10000);
+	  i++;
 	}
 	Car::writeControlMotor(Car::Stop, 0.0);
 }
