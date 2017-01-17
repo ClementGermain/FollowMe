@@ -51,7 +51,6 @@ OTHER_OBJECTS=Main.o \
 			  car/MotorDiagnostic.o \
 			  car/StateRecorder.o \
 			  IA/IA.o \
-			  IA/Diagnostic.o \
 			  utils/Log.o \
 			  utils/Timer.o \
 			  utils/Thread.o \

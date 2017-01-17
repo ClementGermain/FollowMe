@@ -93,7 +93,7 @@ void runUI() {
 	      new Menu ("diag", 0, 0,
 			new Menu("acquire", 0, runModelAcquire, NULL),
 			new Menu("change", 0, changeModel, NULL),
-			new Menu("txt", 0, createTxtFile, NULL),
+			new Menu("export", 0, createTxtFile, NULL),
 			NULL
 		),
 		new Menu("record", 0, saveStateRecord, NULL),
@@ -259,8 +259,6 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   model.create(-1.0, 1.0, 10000);
   if(input >> modelName)
     model.save(modelName.c_str());
-  else
-    model.save("model_propulsion_reel");
 
   cout << "Saved in \" "<< modelName << ".bin\"" << endl;
   
@@ -332,7 +330,7 @@ int createTxtFile(istream & input, vector<int> i, vector<string> s) {
 	if(input >> filename){
 	  MotorModel Model;
 	  Model.load(filename.c_str());
-	  Model.createFileTxt(filename.c_str());
+	  Model.exportTxt(filename.c_str());
 	}
 	return 0;
 }
