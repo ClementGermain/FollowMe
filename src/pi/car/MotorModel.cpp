@@ -26,20 +26,13 @@ MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_),
 	}
 }
 
-void writeCmd(float cmd){
-  if (cmd < 0)
-    Car::writeControlMotor(Car::MoveBackward, -cmd);
-  else if (cmd >= 0)
-    Car::writeControlMotor(Car::MoveForward, cmd);
-}
-
 void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 
 	BarstowModel_Typedef BarstowModel;
 	int i=0;
 	float cmd = 0;
 	
-	// ramp to have a smooth acceleration	
+	// ramp to cmd = CmdStart to have a smooth acceleration	
 	while (abs(cmd) < abs(CmdStart)){
 	  cmd += CmdStart / 100.0 ;
 	  writeCmd(cmd);
@@ -47,32 +40,29 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 	  i++;
 	}
 	
+	// Model Acquisition
 	i=0;
 	cmd = CmdStart;
-	// Model Acquisition
 	while ( i<sizeModel ){
 		cmd = CmdStart + (CmdStop - CmdStart)*i/sizeModel;
-		writeCmd(cmd);
+		writeCmd(cmd); // send a command to the motors
 
 		if (i==0)
 			usleep(500000);
 		else
-			usleep(waitTime);
+			usleep(waitTime); // wait to give the motor enough time to be stable
+
+		// get the motors values and store them into the Model tab
 		Car::getModelStructure(BarstowModel);
 		Model[i].cmd = cmd;
 		Model[i].MotorModel.current = BarstowModel.rightWheelMotor.current;
 		Model[i].MotorModel.voltage1 = BarstowModel.rightWheelMotor.voltage1;
 		Model[i].MotorModel.voltage2 = BarstowModel.rightWheelMotor.voltage2;
-		Model[i].MotorModel.speed = BarstowModel.rightWheelMotor.speed; 
-		/*
-		LogD << "Cmd : " << Model[i].cmd << endl;
-		LogD << "Val1 : " << Model[i].MotorModel.voltage1 << endl;
-		LogD << "Val2 : " << Model[i].MotorModel.voltage2 << endl;
-		*/
+		Model[i].MotorModel.speed = BarstowModel.rightWheelMotor.speed;
 		i++;
 	}
 
-	// ramp to have a smooth decelration	
+	// ramp to cmd = 0 to have a smooth decelration	
 	i=0;
 	while (cmd > 0){
 	  cmd -= CmdStop / 100.0 ;
@@ -80,32 +70,66 @@ void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
 	  usleep(10000);
 	  i++;
 	}
+
+	// stop the car
 	Car::writeControlMotor(Car::Stop, 0.0);
 }
 
-void MotorModel::save(const char * fileName){
-	char filepath[150] = "../../res/model/";
-	strcat(filepath, fileName);
-	strcat(filepath, ".bin");
+void MotorModel::save(const char * filename){
 
+	// create the filepath
+	char filepath[150] = "../../res/model/";
+	strcat(filepath, filename);
+	strcat(filepath, ".bin");
+	
+	// open/create the file
 	FILE * file = fopen(filepath, "wb");
+
+	// write the datas
 	if (file){
 	  LogD << "Nb Objets ecrit : " << fwrite(Model, sizeof(Model_TypeDef), sizeModel, file) << endl;
 	  fclose(file);
 	}
 }
 
-void MotorModel::load(const char * fileName){
+void MotorModel::load(const char * filename){
+
+	// create the filepath
 	char filepath[150] = "../../res/model/";
-	strcat(filepath, fileName);
+	strcat(filepath, filename);
 	strcat(filepath, ".bin");
 
+	// open the file
 	FILE * file = fopen(filepath, "rb");
 
+	// read the file
 	if (file){
 	  fread(Model, sizeof(Model_TypeDef), sizeModel, file);
 	  fclose(file);
 	}
+}
+
+void MotorModel::exportTxt(const char * filename){
+	
+	// load some data from a binary file
+  this->load(filename);
+
+	// create the filepath
+  char filepath[150] = "../../res/model/";
+  strcat(filepath, filename);
+  strcat(filepath, ".txt");
+  
+	//open/create the file and write the datas
+  ofstream file(filepath , ios::out | ios::trunc); 
+
+	// write the datas
+  if (file){
+    file << "Cmd Voltage1 Voltage2 Current" << endl;
+    for (int i=0 ; i<sizeModel ; i++){
+			file << Model[i].cmd << " " << Model[i].MotorModel.voltage1 << " "  << Model[i].MotorModel.voltage2 << " " << Model[i].MotorModel.current << endl;
+    }
+    file.close();
+  }
 }
 
 float MotorModel::getVoltage(float cmd, numVoltage n){
@@ -126,7 +150,6 @@ float MotorModel::getCurrent(float cmd){
   return Model[getIndex(cmd)].MotorModel.current;
 }
 
-
 int MotorModel::getIndex(float cmd){
   int index=0;
   float delta=1000000;
@@ -139,4 +162,10 @@ int MotorModel::getIndex(float cmd){
   return index;
 }
 
+void MotorModel::writeCmd(float cmd){
+  if (cmd < 0)
+    Car::writeControlMotor(Car::MoveBackward, -cmd);
+  else if (cmd >= 0)
+    Car::writeControlMotor(Car::MoveForward, cmd);
+}
 

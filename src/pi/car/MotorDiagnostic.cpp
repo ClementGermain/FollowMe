@@ -11,30 +11,28 @@
 
 using namespace std;
 
-DiagnosticMotor Diag_Prop_Right("model_propulsion", Car::RightWheelMotor);
-DiagnosticMotor Diag_Prop_Left("model_propulsion", Car::LeftWheelMotor);
+DiagnosticMotor Diag_Prop_Right(Car::RightWheelMotor);
+DiagnosticMotor Diag_Prop_Left(Car::LeftWheelMotor);
 
-DiagnosticMotor::DiagnosticMotor(const char * filename,  Car::Motor MotorType_, int size_model): MotorModel_Prop(1200){
+DiagnosticMotor::DiagnosticMotor(Car::Motor MotorType_, const char * filename, int sizeModel, int delay_): Model(sizeModel){
 
-  failureDetected = false;
-
+  // init the class
   threadTest = NULL;
   endThread = true;
-
   delta_voltage = 600.0;
   delta_current = 100.0;
-  MotorModel_Prop.load("model_propulsion_reel");
+  Model.load(filename);
   failure = NO;
   MotorType = MotorType_;
   ValVoltage[0] = 0;
   ValVoltage[1] = 0;
   ValCurrent = 0;
   delay_compt = 0;
-  delay = 5;
+  delay = delay_;
 }
 
-void DiagnosticMotor::changeModel(const char * FileName){
-  MotorModel_Prop.load(FileName);
+void DiagnosticMotor::changeModel(const char * filename){
+  Model.load(filename);
 }
 
 Failure_Typedef DiagnosticMotor::getFailure(){
@@ -42,26 +40,15 @@ Failure_Typedef DiagnosticMotor::getFailure(){
 }
 
 bool DiagnosticMotor::isFailureDetected() {
-  return failureDetected;
-}
-
-void DiagnosticMotor::checkFailure(){
-  if (failure!=NO)
-    failureDetected = true;
-  else 
-    failureDetected = false;   
+  return (failure!=NO);
 }
 
 float DiagnosticMotor::getValVoltage(numVoltage n){
-  float cmd = getCmd();
-  //if (n==v1)
-    //LogD << "Cmd: " << cmd << endl;
-    //LogD << "Diagnostic : Voltage" << n << " : " << MotorModel_Prop.getVoltage(cmd,n) << endl;
-  return MotorModel_Prop.getVoltage(cmd, n);
+  return Model.getVoltage(getCmd(), n);
 }
 
 float DiagnosticMotor::getValCurrent(){
-  return MotorModel_Prop.getCurrent(getCmd());
+  return Model.getCurrent(getCmd());
 }
 
 float DiagnosticMotor::getMinVoltage(numVoltage n){
@@ -84,6 +71,7 @@ void DiagnosticMotor::compareModel(){
   float volt1, volt2, current;
   Car::getModelStructure(BarstowModel);
 
+  // read the real time voltages/current
   switch (MotorType){
   case Car::LeftWheelMotor:
     volt1 =  BarstowModel.leftWheelMotor.voltage1;
@@ -103,13 +91,8 @@ void DiagnosticMotor::compareModel(){
     current =  BarstowModel.directionMotor.current;
     break;
   }
-/*
-  LogD << "----------------" << endl;
-  LogD << "   MOTOR  MODEL" << endl;
-  LogD << "V1 : " << volt1 << "   " << ValVoltage[0] << endl;
-  LogD << "V2 : " << volt2 << "   " << ValVoltage[1] << endl;
-  LogD << "Cur: " << current << "   " << ValCurrent << endl;
-*/
+
+  // compare the real time voltage to the model 
   if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
 	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
     if (delay_compt < delay)
@@ -117,6 +100,8 @@ void DiagnosticMotor::compareModel(){
     else
 	failure = CMD;
   }
+
+  // compare the real time current to the model 
   else if (fabs(ValCurrent - current) >= delta_current)
     if (delay_compt < delay)
 	delay_compt++;
@@ -177,7 +162,6 @@ void DiagnosticMotor::stop() {
 void DiagnosticMotor::run() {
   while(!DiagnosticMotor::endThread) {
     
-    checkFailure();
     ValVoltage[0] = getValVoltage(v1);
     ValVoltage[1] = getValVoltage(v2);
     ValCurrent = getValCurrent();

@@ -41,12 +41,16 @@ int resetUserData(istream & input, vector<int> i, vector<string> s);
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 int saveStateRecord(istream & input, vector<int> i, vector<string> s);
 int changeModel(istream & input, vector<int> i, vector<string> s);
+int createTxtFile(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
 
 void runUI() {
 	LogI << "Opening UI (command prompt)..." << endl; 
+
+	// Print pretty logo
+	system("head -15 ../../res/ascii/logo.txt");
 
 	/// Initialize ///
 	CommandInterpreter interpreter;
@@ -89,6 +93,7 @@ void runUI() {
 	      new Menu ("diag", 0, 0,
 			new Menu("acquire", 0, runModelAcquire, NULL),
 			new Menu("change", 0, changeModel, NULL),
+			new Menu("export", 0, createTxtFile, NULL),
 			NULL
 		),
 		new Menu("record", 0, saveStateRecord, NULL),
@@ -254,8 +259,6 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   model.create(-1.0, 1.0, 10000);
   if(input >> modelName)
     model.save(modelName.c_str());
-  else
-    model.save("model_propulsion_reel");
 
   cout << "Saved in \" "<< modelName << ".bin\"" << endl;
   
@@ -319,5 +322,15 @@ int saveStateRecord(istream & input, vector<int> i, vector<string> s) {
 		stateRecorder.save(filename);
 	else
 		stateRecorder.save();
+	return 0;
+}
+
+int createTxtFile(istream & input, vector<int> i, vector<string> s) {
+	string filename;
+	if(input >> filename){
+	  MotorModel Model;
+	  Model.load(filename.c_str());
+	  Model.exportTxt(filename.c_str());
+	}
 	return 0;
 }
