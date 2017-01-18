@@ -27,6 +27,7 @@
 #include "view/EmptyBoxView.hpp"
 #include "view/PlotsView.hpp"
 #include "view/PointerView.hpp"
+#include "view/TabView.hpp"
 #include "improc/UserDetectionThread.hpp"
 #include "improc/RoadDetectionThread.hpp"
 #include "improc/RoadDetection.hpp"
@@ -329,7 +330,7 @@ void MainView::run() {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		return;
 	// Open a window
-	if(!(screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE)))
+	if(!(screen = SDL_SetVideoMode(800, 420, 32, SDL_SWSURFACE)))
 		return;
 	
 	// Manage sleep duration between two updates
@@ -337,7 +338,8 @@ void MainView::run() {
 	SDL_initFramerate(&fpsManager);
 
 	// Create the views
-	ViewManager mgr;
+	TabView tabView(0, 400, 800, 20);
+	ViewManager mgr(&tabView);
 	initializeViews(mgr);
 
 	bool end = false;
@@ -346,6 +348,22 @@ void MainView::run() {
 		/// Handle event queue
 		SDL_Event event;
 		while(SDL_PollEvent(&event)) {
+			// trasmit event to tabview
+			int t;
+			switch(t = tabView.handleEvent(event)) {
+			case NO_CHANGE:
+				break;
+			case PREV_TAB:
+				mgr.switchToPrevLayout();
+				continue;
+			case NEXT_TAB:
+				mgr.switchToNextLayout();
+				continue;
+			default:
+				if(mgr.switchToLayout(t))
+					continue;
+				break;
+			}
 			// Trasmit event to keyboard if necessary
 			if(mgr.isActive("Motor") || mgr.isActive("Sensor"))
 			if(mgr.getActiveLayout().getKeyboardView("keyboard").handleEvent(event))
@@ -372,13 +390,13 @@ void MainView::run() {
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								end = true;
 							break;
-						case SDLK_TAB:
+						/*case SDLK_TAB:
 							// Switch view with 'TABULATION' or 'CTRL-TABULATION'
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								mgr.switchToPrevLayout();
 							else
 								mgr.switchToNextLayout();
-							break;
+							break;*/
 						default:
 							break;
 					}

@@ -5,10 +5,11 @@
 #include <string>
 #include <vector>
 #include "view/Layout.hpp"
+#include "view/TabView.hpp"
 
 class ViewManager {
 	public:
-		ViewManager();
+		ViewManager(TabView * tabView = NULL);
 		/** Create a new layout with the given name **/
 		Layout & createLayout(const std::string & name);
 		/** Return a reference to the currently active layout **/
@@ -23,6 +24,8 @@ class ViewManager {
 		void switchToNextLayout();
 		/** Switch to the previous layout */
 		void switchToPrevLayout();
+		/** Switch to the given layout, return true upon success, usually false means invalid number 'n' **/
+		bool switchToLayout(int n);
 		/** Update the title of the window according to the active layout **/
 		void updateWindowTitle();
 		/** Draw the currently active layout on the screen.
@@ -33,6 +36,7 @@ class ViewManager {
 		std::vector<std::string> names;
 		int activeLayoutIndex;
 		bool invalidate;
+		TabView * tabView;
 };
 
 #endif
