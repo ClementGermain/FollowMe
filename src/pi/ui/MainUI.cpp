@@ -2,18 +2,20 @@
 #include <chrono>
 #include <string>
 #include <opencv2/opencv.hpp>
-#include <thread>
 #include <chrono>
 #include <unistd.h>
+#include <cstdlib>
 #include "MainUI.hpp"
 #include "MainView.hpp"
 #include "car/Camera.hpp"
 #include "car/MotorModel.hpp"
+#include "car/MotorDiagnostic.hpp"
+#include "car/StateRecorder.hpp"
 #include "sound/Sound.hpp"
 #include "CommandLine.hpp"
 #include "utils/Log.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
+#include "improc/RoadDetectionThread.hpp"
 #include "sound/Sound.hpp"
 #include "IA/IA.hpp"
 
@@ -22,7 +24,7 @@ using namespace std::chrono;
 
 /** Menu function prototypes **/
 int exitInterpreter(istream & input, vector<int> i, vector<string> s);
-int commandMotor(istream & input, vector<int> i, vector<string> s);
+int printLogoFollowMe(istream & input, vector<int> i, vector<string> s);
 int openGUI(istream & input, vector<int> i, vector<string> s);
 int writeLog(istream & input, vector<int> i, vector<string> s);
 int saveLog(istream & input, vector<int> i, vector<string> s);
@@ -30,32 +32,31 @@ int tailLog(istream & input, vector<int> i, vector<string> s);
 int runSound(istream & input, vector<int> i, vector<string> s);
 int userDetectionSettings(istream & input, vector<int> i, vector<string> s);
 int runIA(istream & input, vector<int> i, vector<string> s);
+int toggleRoadDetectionIA(istream & input, vector<int> i, vector<string> s);
 int runModelAcquire(istream & input, vector<int> i, vector<string> s);
+int runDiag(istream & input, vector<int> i, vector<string> s);
 int saveUserData(istream & input, vector<int> i, vector<string> s);
 int printUserData(istream & input, vector<int> i, vector<string> s);
 int resetUserData(istream & input, vector<int> i, vector<string> s);
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
+int saveStateRecord(istream & input, vector<int> i, vector<string> s);
+int changeModel(istream & input, vector<int> i, vector<string> s);
+int createTxtFile(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
 
 void runUI() {
+	LogI << "Opening UI (command prompt)..." << endl; 
+
+	// Print pretty logo
+	system("head -15 ../../res/ascii/logo.txt");
+
 	/// Initialize ///
 	CommandInterpreter interpreter;
 
 	// Define the commands
 	Menu options("", 0, 0,
-		new Menu("motor", 0, 0, 
-			new Menu("pwm", 0, commandMotor,
-				new Menu("left", 1, commandMotor, NULL),
-				new Menu("right", 2, commandMotor, NULL),
-				new Menu("back", 3, commandMotor, NULL),
-				new Menu("front", 4, commandMotor, NULL),
-				new Menu("all", 7, commandMotor, NULL),
-				NULL
-			),
-			NULL
-		),
 		new Menu("user", 0, 0,
 			new Menu("red", 1, userDetectionSettings, NULL),
 			new Menu("yellow", 2, userDetectionSettings, NULL),
@@ -86,9 +87,17 @@ void runUI() {
 		new Menu("ai", 0, 0, 
 			new Menu ("start", 1, runIA, NULL),
 			new Menu ("stop", 2, runIA, NULL),
+			new Menu("road", 0, toggleRoadDetectionIA, NULL),
 			NULL
 		),
-		new Menu("ModelAcquire", 0, runModelAcquire, NULL),
+	      new Menu ("diag", 0, 0,
+			new Menu("acquire", 0, runModelAcquire, NULL),
+			new Menu("change", 0, changeModel, NULL),
+			new Menu("export", 0, createTxtFile, NULL),
+			NULL
+		),
+		new Menu("record", 0, saveStateRecord, NULL),
+		new Menu("logo", 0, printLogoFollowMe, NULL),
 		new Menu("exit", 0, exitInterpreter, NULL),
 		NULL
 	);
@@ -109,31 +118,17 @@ int exitInterpreter(istream & input, vector<int> i, vector<string> s) {
 	return -1;
 }
 
-int commandMotor(istream & input, vector<int> i, vector<string> s) {
-	// Read pwm value
-	int pwm;
-	input >> pwm;
-	if(input.fail()) {
-		cout << "Missing PWM value" << endl;
-		return 1;
-	}
-	
-	// Read motor target
-	cout << "TODO send pwm to motor {";
-	if(i.back() & 1)
-		cout << "l";
-	if(i.back() & 2)
-		cout << "r";
-	if(i.back() & 4)
-		cout << "f";
-	cout <<"} with value "<< pwm <<endl;
 
+int printLogoFollowMe(istream & input, vector<int> i, vector<string> s) {
+	// Print pretty logo
+	system("head -15 ../../res/ascii/logo.txt");
 	return 0;
 }
 
 int openGUI(istream & input, vector<int> i, vector<string> s) {
 	// Open the graphic window
 	view.open();
+	cout << "Open GUI." << endl;
 	return 0;
 }
 
@@ -170,8 +165,11 @@ int saveLog(istream & input, vector<int> i, vector<string> s) {
 	std::time_t tt = system_clock::to_time_t ( today );
 	
 	string date(ctime(&tt));
+	date.pop_back(); // remove '\n' at the end
 	string dir("../../out/");
-	fstream file((dir+"Log "+date+".txt").c_str(), std::fstream::out);
+	string filename(dir+"Log "+date+".txt");
+	cout << "Write log in \"" << filename << "\"" << endl;
+	ofstream file(filename);
 
 	// Write log content
 	LogStream::Cursor cur(Log.getCursor(false));
@@ -206,6 +204,17 @@ int tailLog(istream & input, vector<int> i, vector<string> s) {
 	return 0;
 }
 
+int changeModel(istream & input, vector<int> i, vector<string> s) {
+string modelName;
+  
+  MotorModel model;
+  if(input >> modelName){
+    Diag_Prop_Left.changeModel(modelName.c_str());
+    Diag_Prop_Right.changeModel(modelName.c_str());
+  }
+  return 0;
+}
+
 int runSound(istream & input, vector<int> i, vector<string> s) {
 	// Read a music, a file name can be given in parameter
 	// filename of the music
@@ -213,6 +222,7 @@ int runSound(istream & input, vector<int> i, vector<string> s) {
 	
 	switch (i.back()){
 		case 1:
+			cout << "Let's play some music!" << endl;
 			if(input >> musicName)
 				Sound::play(musicName);
 			else
@@ -230,9 +240,11 @@ int runIA(istream & input, vector<int> i, vector<string> s) {
 
 	switch (i.back()){
 		case 1:
+			cout << "Start AI" << endl;
 			IA::start();
 			break;
 		case 2:
+			cout << "Stop AI" << endl;
 			IA::stop();
 			break;
 	}
@@ -240,9 +252,16 @@ int runIA(istream & input, vector<int> i, vector<string> s) {
 }
 
 int runModelAcquire(istream & input, vector<int> i, vector<string> s){
+  cout << "Acquiring model for diagnosis, please wait..." << endl;
+  string modelName;
+  
   MotorModel model;
   model.create(-1.0, 1.0, 10000);
-  model.save("model_propulsion");
+  if(input >> modelName)
+    model.save(modelName.c_str());
+
+  cout << "Saved in \" "<< modelName << ".bin\"" << endl;
+  
   return 0;
 }
 
@@ -269,21 +288,49 @@ int userDetectionSettings(istream & input, vector<int> i, vector<string> s) {
 }
 
 int saveUserData(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.Get_measures();
+	cout << "Save user detection measures" << endl;
+	userDetectionThread.Get_measures();
 	return 0;
 }
 
 int printUserData(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.printMeasures();
+	userDetectionThread.printMeasures();
 	return 0;
 }
 
 int resetUserData(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.resetMeasures();
+	cout << "Reset user detection measures" << endl;
+	userDetectionThread.resetMeasures();
 	return 0;
 }
 
 int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s) {
-	UserDetectionTest.detector.toggleMode();
+	cout << "Toggle user detection mode" << endl;
+	userDetectionThread.detector.toggleMode();
+	return 0;
+}
+
+int toggleRoadDetectionIA(istream & input, vector<int> i, vector<string> s) {
+	IA::toggleRoadDetection();
+	cout << "Road detection is now " << (IA::enableRoadDetection ? "enabled" : "disabled") << endl;
+	return 0;
+}
+
+int saveStateRecord(istream & input, vector<int> i, vector<string> s) {
+	string filename;
+	if(input >> filename)
+		stateRecorder.save(filename);
+	else
+		stateRecorder.save();
+	return 0;
+}
+
+int createTxtFile(istream & input, vector<int> i, vector<string> s) {
+	string filename;
+	if(input >> filename){
+	  MotorModel Model;
+	  Model.load(filename.c_str());
+	  Model.exportTxt(filename.c_str());
+	}
 	return 0;
 }

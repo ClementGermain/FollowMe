@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <cmath>
 #include "Camera.hpp"
+#include "utils/Log.hpp"
 
 #ifndef __NO_RASPI__
 #include "RaspiCamCV.h"
@@ -20,45 +21,97 @@ const float Camera::pitch			= -31.75f * M_PI/180.f;
 const float Camera::horizontalFOV	= 62.2f * M_PI/180.f;
 const float Camera::verticalFOV		= 48.8f * M_PI/180.f;
 std::mutex Camera::camLock;
-IplImage * Camera::imageCam;
+bool Camera::imageInBuffer = false;
+cv::Mat Camera::imageMat;
 Timer Camera::timerCapture;
 #ifndef __NO_RASPI__
 RaspiCamCvCapture * Camera::raspiCam = NULL;
 RASPIVID_CONFIG Camera::configCam;
 #endif
+thread * Camera::threadTest = NULL;
+bool Camera::endThread = true;
 
-void Camera::init(int width, int height, int framerate)
+void Camera::initAndStart(int width, int height, int framerate)
 {
+	LogI << "Starting camera (" << width << "x" << height << "pxl, " << framerate << "fps)..." << endl;
+
 #ifndef __NO_RASPI__
 	if(raspiCam == NULL) {
 		// Init configuration
-		configCam.width = width;
-		configCam.height = height;
+		configCam.width = width * OVERSCALE_FRAME;
+		configCam.height = height * OVERSCALE_FRAME;
 		configCam.bitrate = 0; // default
 		configCam.framerate = framerate;
 		configCam.monochrome = 0; // default
 
 		// Initialize the camera
 		raspiCam = raspiCamCvCreateCameraCapture2(0, &configCam);
+		if(raspiCam == NULL) {
+			LogE << "Cannot initialize camera!" << endl;
+		}
+	}
+	else {
+		LogW << "Camera was already initialized!" << endl;
 	}
 #endif
+	if(threadTest == NULL) {
+		endThread = false;
+		threadTest = new thread(Camera::run);
+	}
 }
 
-void Camera::destroy() {
+void Camera::run() {
+	while(!Camera::endThread) {
+		// wait the next frame and update the buffer
+		updateImage();
+		this_thread::sleep_for(chrono::milliseconds(Camera::getFrameDuration()-1));
+	}
+}
+
+void Camera::destroyAndStop() {
+	LogI << "Releasing camera..." << endl;
+
+	camLock.lock();
 #ifndef __NO_RASPI__
 	if(raspiCam != NULL) {
 		// Release camera
 		raspiCamCvReleaseCapture(&raspiCam);
 	}
-#endif
-	if(imageCam != NULL) {
-		cvReleaseImage(&imageCam);
+	else {
+		LogW << "Camera has not been initialized!" << endl;
 	}
+#endif
+	Camera::imageInBuffer = false;
+	camLock.unlock();
+
+	if(threadTest != NULL) {
+		LogI << "Joining camera thread..." << endl;
+		endThread = true;
+		threadTest->join();
+		delete threadTest;
+		threadTest = NULL;
+		LogI << "Camera thread terminated" << endl;
+	}
+}
+
+bool Camera::imageCanBeFetchFromCamera() {
+#ifndef __NO_RASPI__
+	return raspiCam != NULL && !endThread && threadTest != NULL;
+#else
+	return !endThread && threadTest != NULL;
+#endif
+}
+bool Camera::imageIsInBuffer() {
+#ifndef __NO_RASPI__
+	return raspiCam != NULL && Camera::imageInBuffer;
+#else
+	return true;
+#endif
 }
 
 int Camera::getFrameWidth() {
 #ifndef __NO_RASPI__
-	return configCam.width;
+	return configCam.width / OVERSCALE_FRAME;
 #else
 	return DEFAULT_FRAME_WIDTH;
 #endif
@@ -66,7 +119,7 @@ int Camera::getFrameWidth() {
 
 int Camera::getFrameHeight() {
 #ifndef __NO_RASPI__
-	return configCam.height;
+	return configCam.height / OVERSCALE_FRAME;
 #else
 	return DEFAULT_FRAME_HEIGHT;
 #endif
@@ -86,29 +139,15 @@ int Camera::getFrameDuration() {
 
 void Camera::updateImage() {
 	// lock the mutex 
-	// FIXME->it can block the current thread and all the others mutex-locked threads for 30ms
 	camLock.lock();
 
-	// Get elapsed time since last capture in milliseconds
-	int timeSinceLastCapture = timerCapture.elapsed() * 1000;
-
-	// Update the capture if too old
-	if(timeSinceLastCapture > getFrameDuration() || imageCam == NULL) {
+	if(Camera::imageCanBeFetchFromCamera()) {
 #ifndef __NO_RASPI__
-		// release the previous image
-		if(imageCam != NULL)
-			cvReleaseImage(&imageCam);
-		
-		// If the pending frame is too old, skip it
-		if(timeSinceLastCapture > 2*getFrameDuration())
-			raspiCamCvQueryFrame(raspiCam);
-		
 		// get the next frame (can wait for 1/framerate second max...)
-		imageCam = cvCloneImage(raspiCamCvQueryFrame(raspiCam));
+		cv::Mat mat(raspiCamCvQueryFrame(raspiCam), true);
+		cv::resize(mat, imageMat, cv::Size(getFrameWidth(), getFrameHeight()));
 #endif
-
-		// update the capture date
-		timerCapture.reset();
+		Camera::imageInBuffer = true;
 	}
 
 	// unlock the mutex
@@ -116,44 +155,17 @@ void Camera::updateImage() {
 }
 
 void Camera::getImage(cv::Mat & out) {
-	updateImage();
-
 #ifndef __NO_RASPI__
 	// lock the mutex 
 	camLock.lock();
 
-	// Create a new matrix from the current capture
-	out = cv::Mat(imageCam, true);
+	if(Camera::imageIsInBuffer()) {
+		// Copy the matrix to the ouput
+		imageMat.copyTo(out);
+	}
 
 	// unlock the mutex
 	camLock.unlock();
 #endif
-}
-
-SDL_Surface * Camera::getBitmap() {
-	updateImage();
-
-	SDL_Surface * s;
-
-#ifndef __NO_RASPI__
-	// lock the mutex 
-	camLock.lock();
-
-	// Create a new SDL_SUrface from the current capture
-	s = SDL_CreateRGBSurfaceFrom((void*)imageCam->imageData,
-			imageCam->width,
-			imageCam->height,
-			imageCam->depth * imageCam->nChannels,
-			imageCam->widthStep,
-			0xff0000, 0x00ff00, 0x0000ff, 0
-	);
-
-	// unlock the mutex
-	camLock.unlock();
-#else
-	s = SDL_CreateRGBSurface(SDL_SWSURFACE, DEFAULT_FRAME_WIDTH, DEFAULT_FRAME_HEIGHT, 32, 0,0,0,0);
-#endif
-
-	 return s;
 }
 

@@ -36,6 +36,11 @@ class RoadDetection
 public:
 	RoadDetection();
 	~RoadDetection();
+	
+	void init();
+
+	/*! Target to follow. Direction and distance. !*/
+ 	cv::Point_<float> Target;
 
 	/*! Start an iteration of te road detection algoritm !*/
 	//@Param : camera image on which the algorithm will be applied
@@ -64,15 +69,27 @@ public:
 	/*Shoudn't be there, should be replace by canGoForward function ! !*/
 	bool grassDetected;
 
+	//! Project a 3D point on the camera
+	//@Param : relative distance from the car (see car documentation)
+	cv::Point project2D(cv::Point_<float> relativePoint);
+
+	//! Get the real distance from a point on the camera
+	//@Param : coordinates x and y
+	cv::Point unproject2D(cv::Point_<float> Point);
+
+
 	enum{Yes, Likely, Unlikely, No, NoIdea};
 
 private:
 	/*! **** Methods **** !*/	
 	
 	/*! Detect the road beetween 4 points !*/
-	int roadInQuad(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
 	cv::Point maxDistInPath(cv::Point topLeft, cv::Point topRight, cv::Point bottomRight, cv::Point bottomLeft);
 	
+	/*! Return the closest point in the center of the road !*/	
+	cv::Point getRoadCenter(cv::Point position);	
+
+
 	//! Detect road in front of the car
 	std::vector<cv::Point> m_forwardRect;
 	std::vector<cv::Point> m_path;
@@ -99,10 +116,6 @@ private:
 
 	//! Color constant for display
 	static const cv::Vec3b white, green, yellow, red, blue, orange;
-
-	//! Project a 3D point on the camera
-	//@Param : relative distance from the car (see car documentation)
-	cv::Point project2D(cv::Point_<float> relativePoint);
 
 
 	//! **** Attributes ***** !//

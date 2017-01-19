@@ -1,24 +1,25 @@
 #ifndef __COMMUNICATION_STM32_HPP__
 #define __COMMUNICATION_STM32_HPP__
 
-#include <thread>
 #include "SPI_Interface.hpp"
+#include "utils/PeriodicThread.hpp"
 
 #define SPI_SPEED 500000
 #define SPI_CHANNEL 0
 
-class LinkSTM32 {
+class LinkSTM32 : public PeriodicThread {
 	public:
-		LinkSTM32(int period_ms=50);
-		~LinkSTM32();
+		LinkSTM32(int period_ms);
 
 	private:
-		void run();
+		void begin();
+		void loop();
+		void end();
 
-		const int period_ms;
-		bool endThread;
+		const int bufferSize;
+		unsigned char * spiBuffer;
+
 		SPI_Interface SPI;
-		std::thread threadCom;
 };
 
 #endif

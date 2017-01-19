@@ -12,12 +12,13 @@
 #include "car/Camera.hpp"
 #include "car/Obstacle.hpp"
 #include "car/MotorModel.hpp"
-#include "IA/Diagnostic.hpp"
+#include "car/MotorDiagnostic.hpp"
+#include "car/StateRecorder.hpp"
 #include "IA/IA.hpp"
 #include "sound/Sound.hpp"
 #include "utils/Log.hpp"
-#include "improc/UserPatternDetectionTest.hpp"
-#include "improc/RoadDetectionTest.hpp"
+#include "improc/UserDetectionThread.hpp"
+#include "improc/RoadDetectionThread.hpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -54,7 +55,7 @@ void handler(int sig) {
 
 	// Release camera and sound
 	Sound::stop();
-	Camera::destroy();
+	Camera::destroyAndStop();
 
 	// Exit program
 	exit(1);
@@ -64,24 +65,33 @@ int main() {
 	// Initializations
 	signal(SIGSEGV, handler);   // install our segfault handler 
 	LinkSTM32 link(100);
-	Camera::init();
+	link.start();
+	Camera::initAndStart();
 	ObstacleDetection::start();
 
 	// start Image Processing threads
-	UserDetectionTest.start();
-	roadDetectionTest.start();
-
+	userDetectionThread.start();
+	roadDetectionThread.detector.init();
+	roadDetectionThread.start();  
+	// start diagnosis thread
+	//	Diag_Prop_Left.start();
+	//	Diag_Prop_Right.start();
+	// start recorder thread
+	stateRecorder.start();
+	
 	// Main loop
 	runUI();
 
 	// Destroying
+	stateRecorder.stop();
 	IA::stop();
-	Camera::destroy();
 	Sound::stop();
 	//Diagnostic::stop();
-	UserDetectionTest.stop();
-	roadDetectionTest.stop();
+	userDetectionThread.stop();
+	roadDetectionThread.stop();
 	ObstacleDetection::stop();
+	Camera::destroyAndStop();
+	link.stop();
 	return 0;
 }
 

@@ -29,17 +29,18 @@ VIEW_OBJECTS=ui/view/View.o \
 			 ui/view/PointerView.o \
 			 ui/view/KeyboardInput.o \
 			 ui/view/trackbar/Trackbar.o \
-			 ui/view/trackbar/Trackbar_Horizontal.o\
-			 ui/view/trackbar/Trackbar_Vertical.o\
+			 ui/view/trackbar/Trackbar_Horizontal.o \
+			 ui/view/trackbar/Trackbar_Vertical.o \
 			 ui/view/Digital.o \
-			 ui/view/ToggleBox.o\
-			 ui/view/StateBox.o\
+			 ui/view/ToggleBox.o \
+			 ui/view/StateBox.o \
 			 ui/view/LogView.o \
 			 ui/view/ImageView.o \
 			 ui/view/TextView.o \
 			 ui/view/Layout.o \
 			 ui/view/PlotsView.o \
-			 ui/ViewManager.o \
+			 ui/view/TabView.o \
+			 ui/ViewManager.o
 
 OTHER_OBJECTS=Main.o \
 			  car/Car.o \
@@ -47,23 +48,22 @@ OTHER_OBJECTS=Main.o \
 			  car/Camera.o \
 			  car/Obstacle.o \
 			  car/SPI_Interface.o \
-			  car/MotorModel.o\
-			  car/MotorDiagnostic.o\
-			  IA/IA.o\
-			  IA/Diagnostic.o \
+			  car/MotorModel.o \
+			  car/MotorDiagnostic.o \
+			  car/StateRecorder.o \
+			  IA/IA.o \
 			  utils/Log.o \
 			  utils/Timer.o \
-			  improc/UserPatternDetection.o \
+			  utils/Thread.o \
+			  utils/PeriodicThread.o \
+			  improc/UserDetection.o \
 			  improc/KalmanFilterForUserDetection.o \
-			  improc/UserPatternDetectionTest.o \
+			  improc/UserDetectionThread.o \
 			  improc/RoadDetection.o \
-			  improc/RoadDetectionTest.o \
+			  improc/RoadDetectionThread.o \
 			  sound/Sound.o
 
 OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)
-
-# pull in dependency info for *existing* .o files
--include $(OBJS:.o=.d)
 
 all: LDFLAGS +=$(RASPI_LDFLAGS)
 all: CXXFLAGS +=$(RASPI_CXXFLAGS)
@@ -75,6 +75,9 @@ noraspi: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@echo 'Link and build "$@"'
 	@g++ $+ $(LDFLAGS) -o $@
+
+# pull in dependency info for *existing* .o files
+-include $(OBJECTS:.o=.d)
 
 %.o: %.cpp
 	@echo -e 'Compile "$<"'
