@@ -150,6 +150,16 @@ cv::Point RoadDetection::computeNextWayPoint(cv::Point_<float>  userPosition)
             }
         }
 
+	//! Get a point closer to the center of the road
+	cv::Point center = getRoadCenter(bestPoint);
+	int dx = center.x - bestPoint.x;
+	const int maxdx = 4;
+
+	//! Set max / min delta
+	dx = dx > maxdx ? maxdx : dx;
+	dx = dx < -1*maxdx ? -1*maxdx : dx;
+
+	bestPoint.x += dx;
         return bestPoint;
 }
 
@@ -344,6 +354,54 @@ cv::Point RoadDetection::maxDistInPath(cv::Point topLeft, cv::Point topRight, cv
 	  m_displayedImage.at<Vec3b>(lPoint) = orange;*/
 
 	return lPoint;
+}
+
+cv::Point RoadDetection::getRoadCenter(cv::Point position)
+{
+	int x = 0;
+	int y = position.y;
+	bool valid = false;
+	bool road = false;
+
+	int minX;
+	int maxX;
+	while(x < ROADMATCOL and (not valid or road))
+	{
+		if(x == position.x)
+			valid = true;
+
+		if(x == ROADMATCOL-1)
+			maxX = x;
+
+		//! Road not detected
+		if (m_thresholdedImage.at<Vec3b>(Point(x,y)) == red
+			or m_thresholdedImage.at<Vec3b>(Point(x,y)) == white)
+		{
+			if (road == true)
+			{
+				maxX = x-1;
+			}
+			road = false;
+		}
+
+		//! Road detected
+		else
+		{
+			if (road == false)
+			{
+				road = true;
+				minX = x;
+			}
+		}
+		x++;
+	}
+
+	cv::Point result;
+		result.x = (minX + maxX) /2;
+		result.y = y;
+
+	return result;
+
 }
 
 
