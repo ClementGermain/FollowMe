@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ViewManager::ViewManager() : activeLayoutIndex(-1), invalidate(true) {
+ViewManager::ViewManager(TabView * tabView) : activeLayoutIndex(-1), invalidate(true), tabView(tabView) {
 
 }
 
@@ -19,9 +19,12 @@ Layout & ViewManager::createLayout(const string & name) {
 
 	// Add the name in the list
 	names.push_back(name);
+	if(tabView != NULL)
+		tabView->addTab(name);
 	if(activeLayoutIndex == -1)
-		activeLayoutIndex = 0;
-	updateWindowTitle();
+		switchToLayout(0);
+	else
+		updateWindowTitle();
 
 	// Create and return a new layout
 	return layouts[name];
@@ -55,19 +58,33 @@ Layout & ViewManager::getLayout(const string & name) {
 /** Switch to the next layout */
 void ViewManager::switchToNextLayout() {
 	assert(names.size() > 0);
-	if(++activeLayoutIndex == (int) names.size())
-		activeLayoutIndex = 0;
-	invalidate = true;
-	updateWindowTitle();
+	int t = activeLayoutIndex + 1;
+	if(t >= (int) names.size())
+		t = 0;
+	switchToLayout(t);
 }
 
 /** Switch to the previous layout */
 void ViewManager::switchToPrevLayout() {
 	assert(names.size() > 0);
-	if(--activeLayoutIndex < 0)
-		activeLayoutIndex = (int) names.size()-1;
-	invalidate = true;
-	updateWindowTitle();
+	int t = activeLayoutIndex - 1;
+	if(t < 0)
+		t = (int) names.size()-1;
+	switchToLayout(t);
+}
+
+/** Switch to the given layout, return true upon success, usually false means invalid number 'n' **/
+bool ViewManager::switchToLayout(int n) {
+	if(n < 0 || n >= (int)names.size())
+		return false;
+	if(activeLayoutIndex != n) {
+		activeLayoutIndex = n;
+		invalidate = true;
+		updateWindowTitle();
+		if(tabView != NULL)
+			tabView->setSelectedTab(activeLayoutIndex);
+	}
+	return true;
 }
 
 /** Update the title of the window according to the active layout **/
@@ -87,6 +104,9 @@ void ViewManager::drawActiveLayout(SDL_Surface * screen, bool useLocalScreenUpda
 		SDL_FillRect(screen, NULL, 0xffffffff);
 		// Draw tle layout
 		getActiveLayout().draw(screen, true, false);
+		// Draw the tab view
+		if(tabView != NULL)
+			tabView->draw(screen, true, false);
 		// Update the whole screen
 		SDL_Flip(screen);
 		invalidate = false;
@@ -94,6 +114,9 @@ void ViewManager::drawActiveLayout(SDL_Surface * screen, bool useLocalScreenUpda
 	else {
 		// Draw the layout
 		getActiveLayout().draw(screen, false, useLocalScreenUpdate);
+		// Draw the tab view
+		if(tabView != NULL)
+			tabView->draw(screen, false, useLocalScreenUpdate);
 		// Update the whole screen if required
 		if(!useLocalScreenUpdate)
 			SDL_Flip(screen);

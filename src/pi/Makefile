@@ -39,6 +39,7 @@ VIEW_OBJECTS=ui/view/View.o \
 			 ui/view/TextView.o \
 			 ui/view/Layout.o \
 			 ui/view/PlotsView.o \
+			 ui/view/TabView.o \
 			 ui/ViewManager.o
 
 OTHER_OBJECTS=Main.o \
@@ -51,7 +52,6 @@ OTHER_OBJECTS=Main.o \
 			  car/MotorDiagnostic.o \
 			  car/StateRecorder.o \
 			  IA/IA.o \
-			  IA/Diagnostic.o \
 			  utils/Log.o \
 			  utils/Timer.o \
 			  utils/Thread.o \
