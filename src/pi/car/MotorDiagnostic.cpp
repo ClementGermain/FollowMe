@@ -69,48 +69,54 @@ float DiagnosticMotor::getMinCurrent(){
 
 void DiagnosticMotor::compareModel(){
   float volt1, volt2, current;
-  Car::getModelStructure(BarstowModel);
+  if (!isFailureDetected()){
+    Car::getModelStructure(BarstowModel);
 
-  // read the real time voltages/current
-  switch (MotorType){
-  case Car::LeftWheelMotor:
-    volt1 =  BarstowModel.leftWheelMotor.voltage1;
-    volt2 =  BarstowModel.leftWheelMotor.voltage2;
-    current =  BarstowModel.leftWheelMotor.current;
-    break;
-  case Car::RightWheelMotor:
-    volt1 =  BarstowModel.rightWheelMotor.voltage1;
-    volt2 =  BarstowModel.rightWheelMotor.voltage2;
-    current =  BarstowModel.rightWheelMotor.current;
-    break;
-  case Car::BothWheelMotors:
-    break;
-  case Car::DirectionMotor:
-    volt1 =  BarstowModel.directionMotor.voltage1;
-    volt2 =  BarstowModel.directionMotor.voltage2;
-    current =  BarstowModel.directionMotor.current;
-    break;
-  }
+    // read the real time voltages/current
+    switch (MotorType){
+    case Car::LeftWheelMotor:
+	volt1 =  BarstowModel.leftWheelMotor.voltage1;
+	volt2 =  BarstowModel.leftWheelMotor.voltage2;
+	current =  BarstowModel.leftWheelMotor.current;
+	break;
+    case Car::RightWheelMotor:
+	volt1 =  BarstowModel.rightWheelMotor.voltage1;
+	volt2 =  BarstowModel.rightWheelMotor.voltage2;
+	current =  BarstowModel.rightWheelMotor.current;
+	break;
+    case Car::BothWheelMotors:
+	break;
+    case Car::DirectionMotor:
+	volt1 =  BarstowModel.directionMotor.voltage1;
+	volt2 =  BarstowModel.directionMotor.voltage2;
+	current =  BarstowModel.directionMotor.current;
+	break;
+    }
 
-  // compare the real time voltage to the model 
-  if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
-	(fabs(ValVoltage[1] - volt2) >= delta_voltage)){
-    if (delay_compt < delay)
-	delay_compt++;
-    else
-	failure = CMD;
-  }
+    // compare the real time voltage to the model 
+    if ((fabs(ValVoltage[0] - volt1) >= delta_voltage) ||	
+	  (fabs(ValVoltage[1] - volt2) >= delta_voltage)){
+	if (delay_compt < delay)
+	  delay_compt++;
+	else
+	  failure = CMD;
+    }
 
-  // compare the real time current to the model 
-  else if (fabs(ValCurrent - current) >= delta_current)
-    if (delay_compt < delay)
-	delay_compt++;
-    else
-	failure = CURRENT;
-  else{
-    failure = NO;
-    delay_compt = 0;
+    // compare the real time current to the model 
+    else if (fabs(ValCurrent - current) >= delta_current)
+	if (delay_compt < delay)
+	  delay_compt++;
+	else
+	  failure = CURRENT;
+    else{
+	failure = NO;
+	delay_compt = 0;
+    }
   }
+}
+
+void DiagnosticMotor::reset(){
+  failure = NO;
 }
 
 float DiagnosticMotor::getCmd(){

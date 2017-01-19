@@ -71,6 +71,11 @@ public:
   float getMaxVoltage(numVoltage n);
   float getMinCurrent();
   float getMaxCurrent();
+
+  /*
+  reset the diagnostic
+  */
+  void reset();
   
   /*
   get the command value send to the motor
