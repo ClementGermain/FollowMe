@@ -51,7 +51,7 @@ void StartBarstow(void)
 	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize, DMA1_Channel4_Event, DMA1_Channel5_Event);
 	
 	/*< Init Gyrophare. */
-	//Gyro_Init();
+	Gyro_Init();
 	
 	/*< Debug code.*/
 	BarstowModel->frontCenterUSensor.distance = 200;
@@ -72,7 +72,7 @@ void StartBarstow(void)
 		//EOC_Sensor_Update(BarstowModel);
 		
 		/*!< Updating Gyro. */
-		//Gyro_Toggle(BarstowControl);
+		Gyro_Toggle(BarstowControl);
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction
