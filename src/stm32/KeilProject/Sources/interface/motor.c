@@ -1,5 +1,42 @@
 #include "motor.h"
 
+float angle = 0.f;
+int isTurning = 0;
+
+void Update_Direction_Motors(BarstowControl_Typedef * Control)
+{
+	float hist = 6.f;
+	float dAngle = 10.f;
+	float maxAngle = 20.f;
+	
+	if(isTurning)
+	{
+		isTurning = 0;
+		Stop_Turn();
+	}
+	else
+	{
+		if (Control->directionMotor.speed > angle + hist
+				&& angle + dAngle <= maxAngle)
+		{
+			isTurning = 1;
+			Turn_Left(1);
+			angle += dAngle;
+		}
+		else if(Control->directionMotor.speed < angle - hist
+						&& angle - dAngle >= -maxAngle)
+		{
+			isTurning = 1;
+			Turn_Right(1);
+			angle-=dAngle;
+		}
+		else
+		{
+			Stop_Turn();
+		}
+	}
+}
+
 void Update_Motors(BarstowControl_Typedef * Control){
 	switch (Control->propulsionMotor.direction){
 		case MOTOR_DIRECTION_STOP:
@@ -12,8 +49,8 @@ void Update_Motors(BarstowControl_Typedef * Control){
 			Go_Forward(Control->propulsionMotor.speed);
 			break;
 	}
-			
-	switch(Control->directionMotor.direction){
+	
+	/*switch(Control->directionMotor.direction){
 		case MOTOR_DIRECTION_STOP:
 			Stop_Turn();
 			break;
@@ -23,7 +60,7 @@ void Update_Motors(BarstowControl_Typedef * Control){
 		case MOTOR_DIRECTION_LEFT:
 			Turn_Left(Control->directionMotor.speed);
 			break;
-	}
+	}*/
 }
 
 void Init_All_Motor(void){

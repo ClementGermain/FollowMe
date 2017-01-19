@@ -1,8 +1,15 @@
 #include "barstow.h"
 #include "stm32f10x_dma.h"
+#include <stddef.h>
+#include "Board_LED.h"
 
 int bufferSize;
-BarstowControl_Typedef 	* BarstowControlBuffer;
+BarstowControl_Typedef 	* BarstowControl;
+BarstowModel_Typedef * BarstowModel;
+
+/*!< Local event function for spi sync */
+void DMA1_Channel4_Event(void);
+void DMA1_Channel5_Event(void);
 
 void StartBarstow(void)
 {	
@@ -15,9 +22,8 @@ void StartBarstow(void)
 	unsigned char sendBuffer[bufferSize];
 	unsigned char receiveBuffer[bufferSize];
 	
-	BarstowControl_Typedef 	* BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
-	BarstowModel_Typedef * BarstowModel 			= (BarstowModel_Typedef*) sendBuffer;
-	BarstowControlBuffer = BarstowControl;
+	BarstowControl 	= (BarstowControl_Typedef*) receiveBuffer;
+	BarstowModel 			= (BarstowModel_Typedef*) sendBuffer;
 	
 	/*!< Init control structures. */
 	BarstowControl->directionMotor.direction=0;
@@ -25,6 +31,9 @@ void StartBarstow(void)
 	BarstowControl->propulsionMotor.direction=0;
 	BarstowControl->propulsionMotor.speed=0;
 	BarstowControl->gyro=0;
+	
+	/*!< Init Systic. */
+	InitSystick();
 	
 	/*!< Init motors. */
 	Init_All_Motor();
@@ -39,7 +48,7 @@ void StartBarstow(void)
 	MotorSensor_Init(BarstowModel);
 	
 	/*< Init SPI communication. */
-	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize);
+	InitializeSPI2(receiveBuffer,bufferSize, sendBuffer, bufferSize, DMA1_Channel4_Event, DMA1_Channel5_Event);
 	
 	/*< Init Gyrophare. */
 	//Gyro_Init();
@@ -51,8 +60,7 @@ void StartBarstow(void)
 	/*!< Entering main loop. */
 	while(1)
 	{
-		BarstowModel->frontLeftUSensor.distance = BarstowControl->propulsionMotor.speed +1 ;
-		BarstowModel->frontCenterUSensor.distance +=2;	
+		BarstowModel->frontLeftUSensor.distance +=1;	
 		
 		/*!< Updating motors. */
 		Update_Motors(BarstowControl);
@@ -68,12 +76,13 @@ void StartBarstow(void)
 		
 		/*! < Global temporisation. */
 		//TODO use more precise delay fonction
-		 for (int i=0 ; i < 50000 ; i++);
+		
+		for (int i=0 ; i < 50000 ; i++);
 	}
 }
 
-/*void DMA1_Channel4_Event(uint32_t events){
-	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
+void DMA1_Channel4_Event(){
+	/*if (BarstowControlBuffer->checkValue != CHECK_VALUE){
 		DMA_Cmd(DMA1_Channel4, DISABLE);
 		DMA_SetCurrDataCounter(DMA1_Channel4, bufferSize);
 		DMA_Cmd(DMA1_Channel4, ENABLE);
@@ -83,34 +92,31 @@ void StartBarstow(void)
 		DMA_Cmd(DMA1_Channel5, ENABLE);
 
 		BarstowControlBuffer->checkValue = CHECK_VALUE;
-	}
-}*/
-/*
-void DMA1_Channel5_Event(uint32_t events){
-	if (BarstowControlBuffer->checkValue != CHECK_VALUE){
+	}*/
+}
+
+void DMA1_Channel5_Event(){
+	/*if (BarstowControlBuffer->checkValue != CHECK_VALUE){
 		DMA_Cmd(DMA1_Channel5, DISABLE);
 		DMA_SetCurrDataCounter(DMA1_Channel5, bufferSize);
 		DMA_Cmd(DMA1_Channel5, ENABLE);
-	}
-}*/
-
-
-void DMA1_Channel4_IRQHandler(void)
-{
-  //Test on DMA1 Channel1 Transfer Complete interrupt
-  if(DMA_GetITStatus(DMA1_IT_TC4))
-  {
-   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-    DMA_ClearITPendingBit(DMA1_IT_GL4);
-  }
+	}*/
 }
 
-void DMA1_Channel5_IRQHandler(void)
-{
-  //Test on DMA1 Channel1 Transfer Complete interrupt
-  if(DMA_GetITStatus(DMA1_IT_TC4))
-  {
-   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-    DMA_ClearITPendingBit(DMA1_IT_GL4);
-  }
+void SysticHandler(void){
+	Update_Direction_Motors(BarstowControl);
 }
+	
+float InitSystick(void){
+	Time=0;
+	float period; //period systick us
+	period=Systick_Period(SYSTIC_PERIOD);
+	Systick_Prio_IT(6,&SysticHandler);
+	SysTick_On;
+	SysTick_Enable_IT;
+	
+	return period;
+}
+
+
+
