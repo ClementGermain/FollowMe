@@ -115,6 +115,9 @@ void MainView::initializeViews(ViewManager & mgr) {
 
 	//// PAGE 2 : MOTORS ////
 	Layout & page2Layout = mgr.createLayout("Motors");	
+
+	//Camera	
+	page2Layout.addView("camera", new ImageView(0, 0, 290, 240));
 	
 	// keyboard
 	page2Layout.addView("keyboard", new KeyboardInput(commandMotorFront, commandMotorBack, 0, 240, 290, 160));
@@ -177,15 +180,39 @@ void MainView::initializeViews(ViewManager & mgr) {
 	//// PAGE 3 : USER ////
 	Layout & page3Layout = mgr.createLayout("User");	
 
-	page3Layout.addView("target_camera", new ImageView(280,0,320,200));
-	page3Layout.addView("white_target", new ImageView(0,200,320,200));
+	page3Layout.addView("target_camera", new ImageView(290,0,290,200));
+	page3Layout.addView("white_target", new ImageView(0,200,290,200));
 
 	// position user trackbar
-	page3Layout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 125, 85, 10, 100, INVERSE));
-	page3Layout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 45, 7, 170, 11, CENTREE));
+	page3Layout.addView("sensor_UserDistance", new Trackbar_Vertical(0, 3, 105, 85, 10, 100, INVERSE));
+	page3Layout.addView("sensor_UserAngle", new Trackbar_Horizontal(-30, 30, 25, 7, 170, 11, CENTREE));
 	// position user text
-	page3Layout.addView("sensor_UserDistanceText", new Digital("%.2fm", 65, 85, 60));
-	page3Layout.addView("sensor_UserAngleText", new Digital("%+3.0fdeg", 45, 25, 60));
+	page3Layout.addView("sensor_UserDistanceText", new Digital("%.2fm", 45, 85, 60));
+	page3Layout.addView("sensor_UserAngleText", new Digital("%+3.0fdeg", 25, 25, 60));
+
+	// Smiley top view
+	page3Layout.addView("sensor_imgSmiley", new ImageView(77, 25, 71, 59));
+	SDL_Surface * smiley_view_user = SDL_LoadBMP("../../res/img/target_bonhomme.bmp");
+	page3Layout.getImageView("sensor_imgSmiley").setImage(smiley_view_user);
+	SDL_FreeSurface(smiley_view_user);
+
+	//user detection toggle
+	page3Layout.addView("toggle_user_p3", new ToggleBox("USER DETECTED", "NO USER", 150, 160, 120));
+
+	//road detection
+	page3Layout.addView("roadimage_filtered", new ImageView(290, 200, 290, 200));
+
+	//road detection toggle
+	page3Layout.addView("toggle_road", new StateBox(150, 120, 120));
+	page3Layout.getStateBoxView("toggle_road").add_state("ROAD : NO IDEA", 150, 0, 0); //NO ROAD DETECTED
+	page3Layout.getStateBoxView("toggle_road").add_state("ROAD : YES", 0, 150, 0); //ROAD DETECTED
+	page3Layout.getStateBoxView("toggle_road").add_state("ROAD : LIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	page3Layout.getStateBoxView("toggle_road").add_state("ROAD : UNLIKELY", 255, 153, 0); //ROAD UNCERTAIN
+	page3Layout.getStateBoxView("toggle_road").add_state("ROAD : NO", 150, 0, 0);
+
+	//prompt + CPU
+	page3Layout.addView("logs", new LogView(580,0,220,400));
+	page3Layout.addView("cpu", new Digital("CPU: %.0f%%", 650, 5, 80, 16, false));
 
 
 	//// DEFAULT VIEW ////
@@ -373,6 +400,10 @@ void MainView::updateViews(ViewManager & mgr) {
 	if(mgr.isActive("Motors")) {
 		Layout & l = mgr.getLayout("Motors");
 
+		cv::Mat cam;
+		Camera::getImage(cam);
+		l.getImageView("camera").setImage(&cam, ImageView::NORMAL);
+
 		l.getDigitalView("dCmdFront").setValue( control.directionMotor.speed * control.directionMotor.direction * 100.0);
 		l.getTrackbarView("tbCmdFront").setPosition( control.directionMotor.speed * control.directionMotor.direction );
 		l.getDigitalView("dVoltage1Front").setValue(((float) model.directionMotor.voltage1)/1000.0);
@@ -420,7 +451,9 @@ void MainView::updateViews(ViewManager & mgr) {
 		l.getTrackbarView("sensor_UserAngle").setPosition(userDetectionThread.detector.getDirection()*180/M_PI);
 		l.getDigitalView("sensor_UserDistanceText").setValue(userDetectionThread.detector.getDistance()-Car::CarSize);
 		l.getDigitalView("sensor_UserAngleText").setValue(userDetectionThread.detector.getDirection()*180/M_PI);
-
+		l.getToggleBoxView("toggle_user_p3").toggle(userDetectionThread.detector.isDetected());
+		l.getImageView("roadimage_filtered").setImage(&roadDetectionThread.detector.getImage(), ImageView::FITXY);
+		l.getStateBoxView("toggle_road").set_state(roadDetectionThread.detector.canGoForward());
 	}
 	
 	if(mgr.isActive("Motor")) {
