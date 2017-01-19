@@ -11,10 +11,14 @@
 #include "../interface/spi.h"
 #include "../interface/motor_sensor.h"
 #include "../interface/gyrophare.h"
+
+#define SYSTIC_PERIOD 100000
 	
 /** @brief Start the Barstow car's programm
 	* @retval None
 */
 void StartBarstow(void);
+
+float InitSystick(void);
 
 #endif

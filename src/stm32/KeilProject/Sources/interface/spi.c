@@ -1,5 +1,7 @@
 #include "spi.h"
 
+#include <stddef.h>
+
 // include stm32 library
 #include "stm32f10x_spi.h"
 #include "stm32f10x_dma.h"
@@ -8,9 +10,15 @@
 // include local library
 #include "../library/gpio.h"
 
+/*<! Function called when dma transfer is done */
+dmaEventFunc rEventFunc;
+dmaEventFunc sEventFunc;
 
-void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char * sendBuffer, int sendLen)
+void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char * sendBuffer, int sendLen, void receiveEventFunc(void), void sendEventFunc(void))
 {
+	rEventFunc = receiveEventFunc;
+	sEventFunc = sendEventFunc;
+	
 	/********** GPIO configuration *************************/
 	/*<! Configure used pins for GPIOB. */
 	Init_GPIO(GPIOB, 	GPIO_Pin_14, GPIO_Mode_AF_PP);
@@ -97,13 +105,36 @@ void InitializeSPI2(unsigned char * receiveBuffer, int receiveLen, unsigned char
 	DMA_ITConfig(DMA1_Channel5, DMA_IT_TE, ENABLE);
 }
 
-/*void DMA1_Channel4_IRQHandler(void)
+/*<! Receiver IRQ handler. */
+void DMA1_Channel4_IRQHandler(void)
 {
-  //Test on DMA1 Channel1 Transfer Complete interrupt
-  if(DMA_GetITStatus(DMA1_IT_TC1))
+  //Test on DMA1 Channel4 Transfer Complete interrupt
+  if(DMA_GetITStatus(DMA1_IT_TC4))
   {
-   //Clear DMA1 Channel1 Half Transfer, Transfer Complete and Global interrupt pending bits
-    DMA_ClearITPendingBit(DMA1_IT_GL1);
+   //Clear DMA1 Channel4 Half Transfer, Transfer Complete and Global interrupt pending bits
+    DMA_ClearITPendingBit(DMA1_IT_GL4);
+		
+		//Call event function
+		if (rEventFunc != NULL)
+		{
+			rEventFunc();
+		}
   }
-}*/
+}
 
+/*<! Sender IRQ handler. */
+void DMA1_Channel5_IRQHandler(void)
+{
+  //Test on DMA1 Channel4 Transfer Complete interrupt
+  if(DMA_GetITStatus(DMA1_IT_TC4))
+  {
+   //Clear DMA1 Channel4 Half Transfer, Transfer Complete and Global interrupt pending bits
+    DMA_ClearITPendingBit(DMA1_IT_GL4);
+		
+		//Call event function
+		if (sEventFunc != NULL)
+		{
+			rEventFunc();
+		}
+  }
+}
