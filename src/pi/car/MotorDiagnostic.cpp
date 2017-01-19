@@ -19,8 +19,8 @@ DiagnosticMotor::DiagnosticMotor(Car::Motor MotorType_, const char * filename, i
   // init the class
   threadTest = NULL;
   endThread = true;
-  delta_voltage = 600.0;
-  delta_current = 100.0;
+  delta_voltage = 1000.0;
+  delta_current = 200.0;
   Model.load(filename);
   failure = NO;
   MotorType = MotorType_;
