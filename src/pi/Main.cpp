@@ -74,8 +74,8 @@ int main() {
 	roadDetectionThread.detector.init();
 	roadDetectionThread.start();  
 	// start diagnosis thread
-	//	Diag_Prop_Left.start();
-	//	Diag_Prop_Right.start();
+	Diag_Prop_Left.start();
+	Diag_Prop_Right.start();
 	// start recorder thread
 	stateRecorder.start();
 	
