@@ -67,7 +67,7 @@ int main() {
 	LinkSTM32 link(100);
 	link.start();
 	Camera::initAndStart();
-	ObstacleDetection::start();
+     	//ObstacleDetection::start();
 
 	// start Image Processing threads
 	userDetectionThread.start();
