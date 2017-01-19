@@ -43,12 +43,18 @@ public :
   MotorModel(int sizeModel = 1200);
   
   /*
+  reset the model values to 0
+  */
+  void reset();
+
+  /*
   Create the model by running a simulation and get motor's value
     @param : cmdStart : command value to start the simulation
     @param : cmdStop : command value to stop the simulation
     @param : waitTime : time to wait between each new command (in micro second)
+    @param : N : number of iterations of the simulations cycle to get a mean Model
   */
-  void create(float cmdStart, float CmdStop, float waitTime);
+  void create(float cmdStart, float CmdStop, float waitTime, int N=1);
   
   /* 
   Save the model into a binary file
