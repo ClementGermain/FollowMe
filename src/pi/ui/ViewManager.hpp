@@ -7,8 +7,13 @@
 #include "view/Layout.hpp"
 #include "view/TabView.hpp"
 
+/**
+ * The view manager can store different layouts.
+ * It handles user inputs to change the active layout and display it.
+ */
 class ViewManager {
 	public:
+		/** Create an empty view manger. A tab view can be associated to display tabs. */ 
 		ViewManager(TabView * tabView = NULL);
 		/** Create a new layout with the given name **/
 		Layout & createLayout(const std::string & name);

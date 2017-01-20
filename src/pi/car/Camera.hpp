@@ -21,37 +21,37 @@
 
 class Camera {
 	public:
-		// Initialize the camera and start the thread
+		//! Initialize the camera and start the thread
 		static void initAndStart(int width=DEFAULT_FRAME_WIDTH, int height=DEFAULT_FRAME_HEIGHT, int framerate=DEFAULT_FRAMERATE);
-		// Release the camera and stop the thread
+		//! Release the camera and stop the thread
 		static void destroyAndStop();
-		// Indicate whether the camera is ready to fetch an image
+		//! Indicate whether the camera is ready to fetch an image
 		static bool imageCanBeFetchFromCamera();
-		// Indicate whether an image has been already put in buffer
+		//! Indicate whether an image has been already put in buffer
 		static bool imageIsInBuffer();
-		// update the current frame
+		//! update the current frame
 		static void updateImage();
-		// Give image from camera and write to 'out'
-		// if camera is not ready, 'out' will not be updated
+		//! Give image from camera and write to 'out'
+		//! if camera is not ready, 'out' will not be updated
 		static void getImage(cv::Mat & out);
-		// Dynamic properties
+		//! Dynamic properties
 		static int getFrameWidth(); // in Pixels
 		static int getFrameHeight(); // in Pixels
 		static int getFrameRate(); // in Hertz
 		static int getFrameDuration(); // in Milliseconds
 
 		/// Static camera's position and properties
-		// Camera position in the car (relative to center of car) (meter)
+		//! Camera position in the car (relative to center of car) (meter)
 		static const float PosX,PosY,PosZ;
-		// pitch angle from horizontal (radians)
+		//! pitch angle from horizontal (radians)
 		static const float pitch;
-		// horizontal field of view of the camera sensor (radians)
+		//! horizontal field of view of the camera sensor (radians)
 		static const float horizontalFOV;
-		// vertical field of view of the camera sensor (radians)
+		//! vertical field of view of the camera sensor (radians)
 		static const float verticalFOV;
 		
 	private:
-		// Thread runnable method
+		//! Thread runnable method
 		static void run();
 	
 		static std::mutex camLock;
@@ -62,7 +62,6 @@ class Camera {
 		static RaspiCamCvCapture * raspiCam;
 		static RASPIVID_CONFIG configCam;
 #endif
-		static bool isUp;
 		static bool endThread;
 		static std::thread * threadTest;
 };
