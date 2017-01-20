@@ -6,6 +6,9 @@
 #include <SDL/SDL.h>
 #include <string>
 
+/**
+ * Text view to display a text.
+ */
 class TextView : public View {
 public:
   TextView(const std::string & text, int x, int y, int w=0, int h=0, bool center=false);
