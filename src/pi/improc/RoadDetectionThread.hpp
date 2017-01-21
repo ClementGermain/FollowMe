@@ -6,6 +6,7 @@
 
 /**
  * Periodic task that executes the RoadDetection algorithm.
+ */
 class RoadDetectionThread : public PeriodicThread {
 	public:
 		RoadDetectionThread();

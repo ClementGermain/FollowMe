@@ -5,6 +5,9 @@
 #include <thread>
 #include <ctime>
 
+/**
+ * Thread that reads ultrasonic sensor values to identify the position of physical obstacles.
+ */
 class ObstacleDetection {
 	public:
 		static void obstacleDetectionLeft();

@@ -7,9 +7,11 @@ extern "C" {
 #include "../../stm32/KeilProject/Sources/Barstow/Model.h"
 }
 
-// This class is fully static
-// You cannot create an instance of Car
-// You can instead use 'Car::functionName()'
+/**
+ * This class is fully static (cannot create an instance of Car).
+ * It contains structures that describe the state of the car (sensors) and commands to send.
+ * The internal structures are protected with mutex and can be read or writen using copy of these structures.
+ */
 class Car {
 	public:
 		enum Motor {DirectionMotor, LeftWheelMotor, RightWheelMotor, BothWheelMotors};

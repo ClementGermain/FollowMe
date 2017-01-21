@@ -19,6 +19,10 @@
 #define DEFAULT_FRAMERATE		30
 #define OVERSCALE_FRAME			4
 
+/**
+ * Thread that permanently fetchs image from camera.
+ * The fetched image is very large but the stored image is downscaled to reduce jpeg compression loss.
+ */
 class Camera {
 	public:
 		//! Initialize the camera and start the thread
