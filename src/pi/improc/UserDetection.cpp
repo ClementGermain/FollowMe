@@ -41,7 +41,9 @@ void UserDetection::findPattern(cv::Mat & bgr_image, bool drawResult) {
 	cv::Mat hsv_image;
 	cv::cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
 	cv::Mat gray;
+
 	if(useRevolutionnaryMode) {
+		// Alternative color detection that does not work.
 		cv::cvtColor(bgr_image, gray, CV_BGR2GRAY);
 		int hWidth = (UserPattern::hLo > UserPattern::hHi ? 180 : 0) + (UserPattern::hHi - UserPattern::hLo);
 		int hMean = (UserPattern::hLo + hWidth / 2) % 180;

@@ -5,33 +5,49 @@
 #include <opencv2/opencv.hpp>
 #include "KalmanFilterForUserDetection.hpp"
 
+/**
+ * This class contains global parameters conncerning the user circle to detect
+ */
 class UserPattern {
 	public:
-		// Radius in meter
+		//! Radius of the disk in meter
 		static const float CircleRadius;
-		// HSV thresholds
-		static int hLo, hHi; // in range 0-180
-		static int sLo, sHi; // in range 0-255
-		static int vLo, vHi; // in range 0-255
+		//! Hue thresholds (0-180) of the circle color
+		static int hLo, hHi;
+		//! Saturation thresholds (0-255) of the circle color
+		static int sLo, sHi;
+		//! Value thresholds (0-255) of the circle color
+		static int vLo, vHi;
 
+		//! The maximum number of consecutive frames during which the user is considered as detected meanwhile it is not visible.
 		static const int maxFrameUserUndetected;
+		//! Duration of a frame
 		static const int frameDurationMillis;
 };
 
+/**
+ * Algorithm to get the position of the user relatively to the car only from the camera image.
+ */
 class UserDetection {
 	public:
 		UserDetection();
+		//! Detected the circle on the image (position and size), with kalman filter.
 		void findPattern(cv::Mat & bgr_image, bool drawResult=false);
+		//! Compute user position relatively to car from the result of findPattern(cv::Mat, bool)
 		void imageCirclesToPosition();
 		bool hasImage();
+		//! Camera image with the detected circle in green and the filtered circle in blue.
 		cv::Mat & getResultImage();
+		//! Black and white image that isolates the color of the user circle.
 		cv::Mat & getFilterImage();
 	
 		/** The circle has been recently found but necessarly in the very last frames **/
 		bool isDetected();
 		/** A circle has been found in the last frame **/
 		bool isVisible();
+		//! return the direction of the user in radians
 		float getDirection();
+		//! return the distance of the user in meters
 		float getDistance();
 		float x_mes;
 		float y_mes;

@@ -5,6 +5,10 @@
 #include <vector>
 #include <stdio.h>
 
+
+/**
+ * Use of kalman filter for the circle detection in UserDetection
+ */
 class Kalman_Filter_User{
 	public:
 		Kalman_Filter_User() ; //constructor to initialize 
