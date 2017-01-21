@@ -86,7 +86,6 @@ int main() {
 	stateRecorder.stop();
 	IA::stop();
 	Sound::stop();
-	//Diagnostic::stop();
 	userDetectionThread.stop();
 	roadDetectionThread.stop();
 	ObstacleDetection::stop();

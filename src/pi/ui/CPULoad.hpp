@@ -4,6 +4,11 @@
 #include <unistd.h>
 #include "utils/Timer.hpp"
 
+/**
+ * Small class that provides CPU usage.
+ * THe CPU usage is in ppercentage and is calculated with the average over the last second.
+ * The method get() must be call frequently to keep the value up to date.
+ */
 class CPULoad {
 	public:
 		CPULoad();

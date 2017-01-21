@@ -4,6 +4,10 @@
 #include "View.hpp"
 #include <SDL/SDL.h>
 
+/**
+ * Simple view to display a box to decorate the screen.
+ * This view does not have an image buffer.
+ */
 class EmptyBoxView : public View {
 	public:
 		EmptyBoxView(int x, int y, int w, int h);

@@ -23,6 +23,7 @@ using namespace std;
 Menu::Menu(string const& name, int id, MenuCallback func, ...) :
 	name(name), id(id), callback(func)
 {
+	// Read the optional arguments
 	va_list args;
 	va_start(args, func);
 
@@ -39,6 +40,9 @@ Menu::~Menu() {
 		delete i;
 }
 
+/**
+ * Print all the words for this menu node.
+ */
 void Menu::printHelp(vector<string> & pathName) {
 	cout << "#> ";
 	for(string s : pathName)

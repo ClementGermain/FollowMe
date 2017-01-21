@@ -38,6 +38,9 @@ MainView::MainView() : threadView(NULL), isThreadTerminated(true) {
 
 }
 
+/**
+ * Callback for KeyboardInput to send command to direction motor.
+ */
 void commandMotorFront(int direction) {
 	float speed = 0.5f;
 	switch(direction) {
@@ -54,6 +57,9 @@ void commandMotorFront(int direction) {
 	LogD << "Keyboard: change direction to " << (direction*speed) <<endl;
 }
 
+/**
+ * Callcak for KeyboardInput to send command to propulsion motors
+ */
 void commandMotorBack(int direction) {
 	float speed = 0.5f;
 	float fastspeed = 1.0f;
@@ -75,6 +81,10 @@ void commandMotorBack(int direction) {
 	LogD << "Keyboard: change propulsion to " << (direction*speed) <<endl;
 }
 
+/**
+ * Initialize all the views. This method is called once when the windows is open.
+ * Here, we create many layouts which contain many views.
+ */
 void MainView::initializeViews(ViewManager & mgr) {
 	//// PAGE 1 : ALL (DEFAULT VIEW) ////
 	Layout & page1Layout = mgr.createLayout("All");	
@@ -200,6 +210,11 @@ void MainView::initializeViews(ViewManager & mgr) {
 	page3Layout.addView("cpu", new Digital("CPU: %.0f%%", 650, 5, 80, 16, false));
 }
 
+/**
+ * Update the content of the views.
+ * This method is called each time the windows is updated.
+ * Here, we get the current active layout, and we update the content of its views.
+ */
 void MainView::updateViews(ViewManager & mgr) {
 	BarstowModel_Typedef model;
 	BarstowControl_Typedef control;
@@ -276,6 +291,11 @@ void MainView::updateViews(ViewManager & mgr) {
 	}
 }
 
+/**
+ * Main function of the class.
+ * Here, we initialize SDL, open a window, and create views.
+ * In a loop, the window content is updated and the user input are handled.
+ */
 void MainView::run() {
 	// Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -341,13 +361,6 @@ void MainView::run() {
 							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
 								end = true;
 							break;
-						/*case SDLK_TAB:
-							// Switch view with 'TABULATION' or 'CTRL-TABULATION'
-							if((SDL_GetModState() & KMOD_LCTRL) == KMOD_LCTRL)
-								mgr.switchToPrevLayout();
-							else
-								mgr.switchToNextLayout();
-							break;*/
 						default:
 							break;
 					}
