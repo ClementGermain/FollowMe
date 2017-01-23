@@ -140,6 +140,8 @@ void IA::toggleRoadDetection() {
 void IA::start() {
 	LogI << "Starting AI..." << endl;
 	Car::writeControlGyro(false);
+	Diag_Prop_Left.reset();
+	Diag_Prop_Right.reset();
 	if(endThread) {
 		if(threadTest != NULL) {
 			threadTest->join();

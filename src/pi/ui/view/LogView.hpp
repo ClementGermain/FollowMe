@@ -6,6 +6,10 @@
 #include "utils/Log.hpp"
 #include "View.hpp"
 
+/**
+ * Multiple line text view to display the last data writen in the Log (utils/Log.hpp).
+ * Display the lines with the matching color.
+ */
 class LogView : public View {
 	public:
 		LogView(int x, int y, int w, int h);

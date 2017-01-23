@@ -21,6 +21,8 @@ Layout & ViewManager::createLayout(const string & name) {
 	names.push_back(name);
 	if(tabView != NULL)
 		tabView->addTab(name);
+
+	// if this is the first tab, set it to active
 	if(activeLayoutIndex == -1)
 		switchToLayout(0);
 	else
@@ -58,18 +60,24 @@ Layout & ViewManager::getLayout(const string & name) {
 /** Switch to the next layout */
 void ViewManager::switchToNextLayout() {
 	assert(names.size() > 0);
+
+	// tab rotation
 	int t = activeLayoutIndex + 1;
 	if(t >= (int) names.size())
 		t = 0;
+
 	switchToLayout(t);
 }
 
 /** Switch to the previous layout */
 void ViewManager::switchToPrevLayout() {
 	assert(names.size() > 0);
+
+	// tab rotation
 	int t = activeLayoutIndex - 1;
 	if(t < 0)
 		t = (int) names.size()-1;
+
 	switchToLayout(t);
 }
 
@@ -77,10 +85,15 @@ void ViewManager::switchToPrevLayout() {
 bool ViewManager::switchToLayout(int n) {
 	if(n < 0 || n >= (int)names.size())
 		return false;
+
+	// Update the active layout if needed
 	if(activeLayoutIndex != n) {
 		activeLayoutIndex = n;
 		invalidate = true;
+
 		updateWindowTitle();
+
+		// update tab view
 		if(tabView != NULL)
 			tabView->setSelectedTab(activeLayoutIndex);
 	}
@@ -91,7 +104,7 @@ bool ViewManager::switchToLayout(int n) {
 void ViewManager::updateWindowTitle() {
 	// Make a title with format: "FollowMe - Layout name (Layout Position/Layout Count)"
 	char title[256];
-	sprintf(title, "FollowMe - %s (%d/%lu)", getActiveLayoutName().c_str(), activeLayoutIndex+1, names.size());	
+	sprintf(title, "FollowMe - %s (%d/%d)", getActiveLayoutName().c_str(), activeLayoutIndex+1, (int)names.size());	
 	// Commit title
 	SDL_WM_SetCaption(title, NULL);
 }

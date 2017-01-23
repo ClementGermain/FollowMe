@@ -42,6 +42,7 @@ int toggleModeUserDetection(istream & input, vector<int> i, vector<string> s);
 int saveStateRecord(istream & input, vector<int> i, vector<string> s);
 int changeModel(istream & input, vector<int> i, vector<string> s);
 int createTxtFile(istream & input, vector<int> i, vector<string> s);
+int diagnosticReset(istream & input, vector<int> i, vector<string> s);
 
 // Local global variable
 MainView view;
@@ -94,6 +95,7 @@ void runUI() {
 			new Menu("acquire", 0, runModelAcquire, NULL),
 			new Menu("change", 0, changeModel, NULL),
 			new Menu("export", 0, createTxtFile, NULL),
+			new Menu("reset", 0, diagnosticReset, NULL),
 			NULL
 		),
 		new Menu("record", 0, saveStateRecord, NULL),
@@ -256,7 +258,7 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   string modelName;
   
   MotorModel model;
-  model.create(-1.0, 1.0, 10000);
+  model.create(-1.0, 1.0, 10000, 1);
   if(input >> modelName)
     model.save(modelName.c_str());
 
@@ -333,4 +335,10 @@ int createTxtFile(istream & input, vector<int> i, vector<string> s) {
 	  Model.exportTxt(filename.c_str());
 	}
 	return 0;
+}
+
+int diagnosticReset(istream & input, vector<int> i, vector<string> s){
+  Diag_Prop_Left.reset();
+  Diag_Prop_Right.reset();
+  return 0;
 }

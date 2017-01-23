@@ -4,6 +4,9 @@
 #include "utils/PeriodicThread.hpp"
 #include "UserDetection.hpp"
 
+/**
+ * Periodic task that execute the UserDetection algorithm.
+ */
 class UserDetectionThread : public PeriodicThread {
 	public:
 		UserDetectionThread();

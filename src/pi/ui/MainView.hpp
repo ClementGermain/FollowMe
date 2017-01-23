@@ -7,6 +7,10 @@
 #include "CPULoad.hpp"
 #include "ViewManager.hpp"
 
+/**
+ * The MainView is the graphical user interface (GUI) that display information about the car and the raspberry pi program, it runs in a thread.
+ * It creates a windows, displays many views, and handle input event.
+ **/
 class MainView {
 	public:
 		MainView();

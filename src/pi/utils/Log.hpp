@@ -7,19 +7,20 @@
 #include <chrono>
 #include <mutex>
 
-/** Examples of use:
- * 		LogE << "This is a fatal error" << endl;
- * 		LogW << "This is a simple warning" << endl;
- * 		LogI << "Hello world!" << endl;
- * 		LogD << "Message for debug only. ";
- * 		Log << "End of the previous line" << endl;
- **/
-
+/**
+ * Small class to store a log line. Contains the text content and the date of the line.
+ * The text starts with the flag identifier 'I/' (info), 'D/' (debug), 'W/' (warning) or 'E/' (error).
+ * A color is associated with each one.
+ */
 class LogLine {
 	public:
+		/** Create a log line with the given string as text content and with current system date. **/
 		LogLine(std::string const& s);
+		/** Return a formated and bash-colored string of this log line. **/
 		std::string coloredString(bool includeDate=true) const;
+		/** Return a formated string of this log line. **/
 		std::string formatedString(bool includeDate=true) const;
+		/** Return the color of this line in 32-bit-long integer **/
 		int getColor() const;
 
 		std::string str;
@@ -42,6 +43,17 @@ class basic_seqbuf : public std::basic_streambuf<Ch, Traits> {
 		std::mutex writingLock; 
 };
 
+/** This class inheri from std::ostream (standard output stream) and redirect the stream to
+ * a internal buffer array.
+ * The buffer can be read at any time.
+ *
+ * Examples of use:
+ * 		LogE << "This is a fatal error" << endl;
+ * 		LogW << "This is a simple warning" << endl;
+ * 		LogI << "Hello world!" << endl;
+ * 		LogD << "Message for debug only. ";
+ * 		Log << "End of the previous line" << endl;
+ **/
 class LogStream : public std::ostream {
 	public:
 		LogStream();

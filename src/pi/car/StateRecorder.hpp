@@ -10,9 +10,15 @@
 #include <vector>
 #include <chrono>
 
+/**
+ * This class is an observer that save continously everything that happens in the car.
+ * It save commands, sensors values, user and road detection, logs, and even more in csv text format.
+ */
 class StateRecorder : public PeriodicThread {
 	public:
+		//! Configure the sampling rate and the maximum time to remember
 		StateRecorder(unsigned int maxRecordingMilliseconds, int samplePeriodMillis);
+		//! save the recorded value in a file. The file name is automatically prepended with ../../out/ and appended with a timestamp and '.csv'
 		void save(std::string const& filename="records");
 	private:
 		void loop();

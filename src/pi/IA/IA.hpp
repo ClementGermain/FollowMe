@@ -6,6 +6,12 @@
 
 #define IA_PERIOD 100
 
+/**
+ * Artificial intelligence of the car.
+ * Make the car follow the user with unknown reliability...
+ * Must stop the car in case of emergency.
+ * It sends commands to motor, read sensor values, and use road and user detection.
+ */
 class IA {
 	public:
 		static void start();

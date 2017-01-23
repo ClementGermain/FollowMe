@@ -6,6 +6,12 @@
 #include "View.hpp"
 #include <opencv2/opencv.hpp>
 
+/**
+ * Display an image (SDL_Surface or cv::Mat).
+ * Can draw image with different scale type:
+ * 		NORMAL: the image is centered but not rescaled.
+ * 		FITXY: the image is scaled in x and y to perfectly fit the view.
+ */
 class ImageView : public View {
 	public:
 		enum ScaleType { NORMAL, FITXY };

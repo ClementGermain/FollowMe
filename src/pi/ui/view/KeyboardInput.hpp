@@ -6,6 +6,10 @@
 #include <memory>
 #include "View.hpp"
 
+/**
+ * Display arrow keys and handle user keyboard inputs to trigger event when the arrows key are pressed.
+ * Used to send commands to the car.
+ */
 class KeyboardInput : public View {
 	public:
 		KeyboardInput(void (*commandMotorFront)(int), void (*commandMotorBack)(int), int x, int y, int w, int h);

@@ -4,6 +4,9 @@
 #include "RoadDetection.hpp"
 #include "utils/PeriodicThread.hpp"
 
+/**
+ * Periodic task that executes the RoadDetection algorithm.
+ */
 class RoadDetectionThread : public PeriodicThread {
 	public:
 		RoadDetectionThread();

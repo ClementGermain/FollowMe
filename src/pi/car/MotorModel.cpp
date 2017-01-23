@@ -14,65 +14,76 @@ MotorModel::~MotorModel() {
 }
 
 MotorModel::MotorModel(int sizeModel_) : sizeModel (sizeModel_),
-	Model(new Model_TypeDef[sizeModel])
-{
-	// init the state model
-	for (int i=0 ; i<sizeModel ; i++) {
-		Model[i].cmd = 0;
-		Model[i].MotorModel.current = 0;
-		Model[i].MotorModel.voltage1 = 0;
-		Model[i].MotorModel.voltage2 = 0;
-		Model[i].MotorModel.speed = 0;
-	}
+	Model(new Model_TypeDef[sizeModel]){
 }
 
-void MotorModel::create(float CmdStart, float CmdStop, float waitTime){
+void MotorModel::reset(){
+  // init the state model
+  for (int i=0 ; i<sizeModel ; i++) {
+    Model[i].cmd = 0;
+    Model[i].MotorModel.current = 0;
+    Model[i].MotorModel.voltage1 = 0;
+    Model[i].MotorModel.voltage2 = 0;
+    Model[i].MotorModel.speed = 0;
+  }
+}
+
+void MotorModel::create(float CmdStart, float CmdStop, float waitTime, int N){
 
 	BarstowModel_Typedef BarstowModel;
 	int i=0;
 	float cmd = 0;
+	N = max(N,0);
+
+	reset();
+
+	for (int n=0 ; n<N; n++){
+	  // ramp to cmd = CmdStart to have a smooth acceleration	
+	  while (abs(cmd) < abs(CmdStart)){
+	    cmd += CmdStart / 100.0 ;
+	    writeCmd(cmd);
+	    usleep(10000);
+	  }
 	
-	// ramp to cmd = CmdStart to have a smooth acceleration	
-	while (abs(cmd) < abs(CmdStart)){
-	  cmd += CmdStart / 100.0 ;
-	  writeCmd(cmd);
-	  usleep(10000);
-	  i++;
-	}
-	
-	// Model Acquisition
-	i=0;
-	cmd = CmdStart;
-	while ( i<sizeModel ){
-		cmd = CmdStart + (CmdStop - CmdStart)*i/sizeModel;
-		writeCmd(cmd); // send a command to the motors
+	  // Model Acquisition
+	  cmd = CmdStart;
+	  for (i=0 ; i<sizeModel ; i++){
+	    cmd = CmdStart + (CmdStop - CmdStart)*i/sizeModel;
+	    writeCmd(cmd); // send a command to the motors
 
-		if (i==0)
-			usleep(500000);
-		else
-			usleep(waitTime); // wait to give the motor enough time to be stable
+	    if (i==0)
+		usleep(500000);
+	    else
+		usleep(waitTime); // wait to give the motor enough time to be stable
 
-		// get the motors values and store them into the Model tab
-		Car::getModelStructure(BarstowModel);
-		Model[i].cmd = cmd;
-		Model[i].MotorModel.current = BarstowModel.rightWheelMotor.current;
-		Model[i].MotorModel.voltage1 = BarstowModel.rightWheelMotor.voltage1;
-		Model[i].MotorModel.voltage2 = BarstowModel.rightWheelMotor.voltage2;
-		Model[i].MotorModel.speed = BarstowModel.rightWheelMotor.speed;
-		i++;
-	}
+	    // get the motors values and store them into the Model tab
+	    Car::getModelStructure(BarstowModel);
+	    Model[i].cmd += cmd;
+	    Model[i].MotorModel.current += BarstowModel.rightWheelMotor.current;
+	    Model[i].MotorModel.voltage1 += BarstowModel.rightWheelMotor.voltage1;
+	    Model[i].MotorModel.voltage2 += BarstowModel.rightWheelMotor.voltage2;
+	    Model[i].MotorModel.speed += BarstowModel.rightWheelMotor.speed;
+	  }
 
-	// ramp to cmd = 0 to have a smooth decelration	
-	i=0;
-	while (cmd > 0){
-	  cmd -= CmdStop / 100.0 ;
-	  writeCmd(cmd);
-	  usleep(10000);
-	  i++;
+	  // ramp to cmd = 0 to have a smooth decelration	
+
+	  while (cmd > 0){
+	    cmd -= CmdStop / 100.0 ;
+	    writeCmd(cmd);
+	    usleep(10000);
+	  }
+
+	  // stop the car
+	  Car::writeControlMotor(Car::Stop, 0.0);
 	}
 
-	// stop the car
-	Car::writeControlMotor(Car::Stop, 0.0);
+	for (i=0 ; i<sizeModel ; i++){
+	    Model[i].cmd /= N;
+	    Model[i].MotorModel.current /= N;
+	    Model[i].MotorModel.voltage1 /= N;
+	    Model[i].MotorModel.voltage2 /= N;
+	    Model[i].MotorModel.speed /= N;
+	}
 }
 
 void MotorModel::save(const char * filename){

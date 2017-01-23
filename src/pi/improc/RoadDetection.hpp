@@ -31,6 +31,9 @@ typedef struct{
 	float NoIdea;
 }  fuzzyModel_TypeDef;
 
+/**
+ * Algorithm to detect the road and find a path to move closer to the detected user.
+ */
 class RoadDetection
 {
 public:

@@ -6,7 +6,7 @@ using namespace std;
 using namespace std::chrono;
 
 
-// Global variable, must be used to write logs
+//! Global variable, must be used to write logs
 LogStream Log;
 
 // Local constant string tags for log types
@@ -163,9 +163,11 @@ template<typename Ch, typename Traits>
 typename basic_seqbuf<Ch, Traits>::int_type
 	basic_seqbuf<Ch, Traits>::overflow(typename basic_seqbuf<Ch, Traits>::int_type ch) {
 	
+	// do not handle End Of File
 	if(traits_type::eq_int_type(ch, traits_type::eof()))
 		return traits_type::eof();
 
+	// Lock write access to ensure multithread safety
 	writingLock.lock();
 
 	if(ch == '\n') {
@@ -182,6 +184,7 @@ typename basic_seqbuf<Ch, Traits>::int_type
 		currentLine += ch;
 	}
 
+	// Release write access
 	writingLock.unlock();
 
 	return ch;

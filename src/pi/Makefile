@@ -65,10 +65,13 @@ OTHER_OBJECTS=Main.o \
 
 OBJECTS=$(VIEW_OBJECTS) $(OTHER_OBJECTS) $(UI_OBJECTS)
 
+# with the default target (for raspberry pi), we add the raspi flags
 all: LDFLAGS +=$(RASPI_LDFLAGS)
 all: CXXFLAGS +=$(RASPI_CXXFLAGS)
 all: $(TARGET)
 
+# with the noraspi target (for other computer), we defined a #define __NO_RASPI__ for c++ code.
+# -> the code between "#ifndef __NO_RASPI__" and "#endif" will not be compilated.
 noraspi: CXXFLAGS += -D__NO_RASPI__
 noraspi: $(TARGET)
 
@@ -88,9 +91,11 @@ $(TARGET): $(OBJECTS)
 	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
 	@rm -f $*.d.tmp
 
+# target clean to remove all the auto generated files.
 cleanall:
 	@echo "Remove all *.o and *.d files"
 	@rm -f $(OBJECTS) $(OBJECTS:.o=.d)
+# target clean, remove the auto generated files except those in ui/view/ directory.
 clean:
 	@echo "Remove all *.o and *.d files (excluding ui/view/)"
 	@rm -f $(OTHER_OBJECTS) $(OTHER_OBJECTS:.o=.d)

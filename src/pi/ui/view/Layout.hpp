@@ -15,6 +15,10 @@
 #include "ToggleBox.hpp"
 #include "StateBox.hpp"
 
+/**
+ * A view container. The views inside it are identified by a name.
+ * The position of this view is not used and does not influe on the position of the contained views.
+ **/
 class Layout : public View {
 	public:
 		Layout();

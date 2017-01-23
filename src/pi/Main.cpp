@@ -67,15 +67,15 @@ int main() {
 	LinkSTM32 link(100);
 	link.start();
 	Camera::initAndStart();
-	ObstacleDetection::start();
+     	//ObstacleDetection::start();
 
 	// start Image Processing threads
 	userDetectionThread.start();
 	roadDetectionThread.detector.init();
 	roadDetectionThread.start();  
 	// start diagnosis thread
-	//	Diag_Prop_Left.start();
-	//	Diag_Prop_Right.start();
+	Diag_Prop_Left.start();
+	Diag_Prop_Right.start();
 	// start recorder thread
 	stateRecorder.start();
 	
@@ -86,7 +86,6 @@ int main() {
 	stateRecorder.stop();
 	IA::stop();
 	Sound::stop();
-	//Diagnostic::stop();
 	userDetectionThread.stop();
 	roadDetectionThread.stop();
 	ObstacleDetection::stop();
