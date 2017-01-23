@@ -258,7 +258,7 @@ int runModelAcquire(istream & input, vector<int> i, vector<string> s){
   string modelName;
   
   MotorModel model;
-  model.create(-1.0, 1.0, 10000, 3);
+  model.create(-1.0, 1.0, 10000, 1);
   if(input >> modelName)
     model.save(modelName.c_str());
 
